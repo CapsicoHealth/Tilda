@@ -61,11 +61,11 @@
     ,{"prop":"columns", "flatPrint":true
      ,"subProps":[
           {"prop":"name"       , "group":1 }
-         ,{"prop":"sameAs"     , "group":2 }
-         ,{"prop":"type"       , "group":2 }
-         ,{"prop":"size"       , "group":2 }
-         ,{"prop":"precision"  , "group":2 }
-         ,{"prop":"scale"      , "group":2 }
+         ,{"prop":"sameAs"     , "group":2, "collection":1 }
+         ,{"prop":"type"       , "group":2, "collection":2 }
+         ,{"prop":"size"       , "group":2, "collection":2 }
+         ,{"prop":"precision"  , "group":2, "collection":2 }
+         ,{"prop":"scale"      , "group":2, "collection":2 }
          ,{"prop":"nullable"   , "group":3 }
          ,{"prop":"invariant"  , "group":4 }
          ,{"prop":"mode"       , "group":5 }
@@ -81,7 +81,7 @@
 //          ,"subProps":[
 //            ]
 //          }
-         ,{"prop":"values"     , "nextLine":true, "alignOn":2, "flatPrint":true
+         ,{"prop":"values"     , "nextLine":true, "group":2, "flatPrint":true
           ,"subProps":[
                {"prop":"name"        }
               ,{"prop":"value"       }
@@ -91,7 +91,7 @@
               ,{"prop":"default"     }
             ]
           }
-         ,{"prop":"jsonSchema"     , "nextLine":true, "alignOn":2
+         ,{"prop":"jsonSchema"     , "nextLine":true, "group":2
           ,"subProps":[
                
             ]

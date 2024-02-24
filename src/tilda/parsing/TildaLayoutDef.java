@@ -7,10 +7,10 @@ public class TildaLayoutDef
     /*@formatter:off*/
     @SerializedName("prop"      ) public String            _prop ;
     @SerializedName("label"     ) public String            _label;
-    @SerializedName("group"     ) public int               _group = -1 ;
+    @SerializedName("group"     ) public int               _group = 0 ;
     @SerializedName("flatPrint" ) public boolean           _flatPrint = false ;
     @SerializedName("nextLine"  ) public boolean           _nextLine = false ;
-    @SerializedName("alignOn"   ) public int               _alignOn = -1 ;
+//    @SerializedName("alignOn"   ) public int               _alignOn = -1 ;
     @SerializedName("subProps"  ) public TildaLayoutDef[]  _subProps = new TildaLayoutDef[] { } ;
     /*@formatter:on*/
 
