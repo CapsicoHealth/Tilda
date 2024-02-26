@@ -471,10 +471,10 @@ public class Column extends TypeDef
 
     private boolean validateValues(ParserSession PS)
       {
-        if (_Values != null && _Values.length > 0 && TextUtil.isNullOrEmpty(_Default) == false)
+        if (_Values != null && _Values.length > 0 && _Default != null) // we want to allow "" as a default value, so only checking for null here, not isNullOrEmpty.
           return PS.AddError("Column '" + getFullName() + "' defines a 'default' and 'values' attributes. Only one or the other is alowed.");
 
-        if (TextUtil.isNullOrEmpty(_Default) == false)
+        if (_Default != null) // we want to allow "" as a default value, so only checking for null here, not isNullOrEmpty.
           {
             _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
             };

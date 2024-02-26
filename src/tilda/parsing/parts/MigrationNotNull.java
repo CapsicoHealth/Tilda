@@ -86,7 +86,7 @@ public class MigrationNotNull
                     else if (c._Nullable == true)
                       PS.AddError("Migration definition for not nulls of column '" + _Schema.getShortName() + "." + _ObjectName + "." + col + "', which was defined as nullable.");
                     else if (c._DefaultCreateValue != null)
-                      PS.AddError("Migration definition for not nulls of column '" + _Schema.getShortName() + "." + _ObjectName + "." + col + "', which was not defined already with a default value.");
+                      PS.AddError("Migration definition for not nulls of column '" + _Schema.getShortName() + "." + _ObjectName + "." + col + "', which was defined already with a default value.");
                     else
                       {
                         _Columns.add(c);

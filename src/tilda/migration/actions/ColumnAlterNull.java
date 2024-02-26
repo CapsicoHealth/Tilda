@@ -43,6 +43,6 @@ public class ColumnAlterNull extends MigrationAction
         return "Alter table "+_Col._ParentObject.getFullName()
               +" alter column "+_Col.getName()
               +(_Col._Nullable==true?" null":" not null")
-              +(_Col._DefaultCreateValue == null ? "" : " with default "+_Col._DefaultCreateValue._Value);
+              +(_Col._DefaultCreateValue == null ? "" : " with default '"+_Col._DefaultCreateValue._Value+"'");
       }
   }

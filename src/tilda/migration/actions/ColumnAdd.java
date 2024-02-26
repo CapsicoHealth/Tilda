@@ -43,6 +43,9 @@ public class ColumnAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Alter table "+_col._ParentObject.getFullName()+" add column "+_col.getName()+(_col._Nullable == false ? " SET NOT NULL" : "");
+        return "Alter table "+_col._ParentObject.getFullName()+" add column "+_col.getName()
+        +(_col._Nullable == false ? " SET NOT NULL" : "")
+        +(_col._DefaultCreateValue == null ? "" : " with default '"+_col._DefaultCreateValue._Value+"'")
+        ;
       }
   }

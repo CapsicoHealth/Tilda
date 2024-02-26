@@ -92,7 +92,7 @@ public class ColumnValue
             return;
           }
 
-        if (TextUtil.isNullOrEmpty(_Value) == true)
+        if (_Value == null)
           _Value = _Name;
 
         if (TextUtil.isNullOrEmpty(_Label) == true)
