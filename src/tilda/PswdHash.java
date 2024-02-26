@@ -16,6 +16,8 @@
 
 package tilda;
 
+import tilda.utils.EncryptionUtil;
+
 public class PswdHash
   {
     public static void main(String[] args)
@@ -28,7 +30,8 @@ public class PswdHash
                 System.err.println("Program needs one argument: the password to hash.");
                 System.exit(-1);
               }
-            System.out.println(tilda.utils.EncryptionUtil.hash(args[0]));
+            String salt = EncryptionUtil.getToken(8);
+            System.out.println("Salt: "+salt+"; Password: "+tilda.utils.EncryptionUtil.hash(args[0], salt));
           }
         catch (Throwable T)
           {

@@ -16,7 +16,10 @@
 
 package tilda.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -40,12 +43,13 @@ public class EncryptionUtil
      * uses the strongest available SHA function (i.e., at this time, SHA-512). You are responsible for
      * salting the plaintext for stronger pswd protection. A Base64 String is returned.
      * 
-     * @param plaintext
+     * @param plaintext The plaintext password.
+     * @param salt The salt, which could be empty, or null (for no salt).
      * @return
      */
-    public static String hash(String plaintext)
+    public static String hash(String plaintext, String salt)
       {
-        return hashStr(plaintext, "SHA-512");
+        return hashStr(plaintext, salt, "SHA-512");
       }
 
     /**
@@ -57,25 +61,25 @@ public class EncryptionUtil
      * @param plaintext
      * @return
      */
-    public static byte[] hash256(String plaintext)
+    public static byte[] hash256(String plaintext, String salt)
       {
-        return hashByteArrray(plaintext, "SHA-256");
+        return hashByteArrray(plaintext, salt, "SHA-256");
       }
 
-    protected static String hashStr(String plaintext, String algo)
+    protected static String hashStr(String plaintext, String salt, String algo)
       {
-        byte[] hash = hashByteArrray(plaintext, algo);
+        byte[] hash = hashByteArrray(plaintext, salt, algo);
         return hash == null ? null : new String(Base64.getEncoder().encodeToString(hash));
       }
 
-    protected static byte[] hashByteArrray(String plainText, String shaAlgo)
+    protected static byte[] hashByteArrray(String plainText, String salt, String shaAlgo)
       {
         if (TextUtil.isNullOrEmpty(plainText) == true)
           return null;
         try
           {
             MessageDigest md5 = MessageDigest.getInstance(shaAlgo);
-            byte[] digest = md5.digest(plainText.getBytes("UTF-8"));
+            byte[] digest = md5.digest((TextUtil.print(salt,"")+plainText).getBytes("UTF-8"));
             return digest;
           }
         catch (Exception e)
@@ -129,7 +133,7 @@ public class EncryptionUtil
       {
         try
           {
-            byte[] aesKeyBytes = EncryptionUtil.hash256(aesKeyStr);
+            byte[] aesKeyBytes = EncryptionUtil.hash256(aesKeyStr, ""); // no salt
             SecretKey aesKeySpec = new SecretKeySpec(aesKeyBytes, "AES");
             IvParameterSpec firstIV = new IvParameterSpec(new byte[16]);
 
@@ -145,26 +149,27 @@ public class EncryptionUtil
           }
       }
     
-    
+
     public static String hmacSHA1(String plaintext, String key)
     throws Exception
       {
-        byte[] keyBytes = key.getBytes();
-        SecretKeySpec signingKey = new SecretKeySpec(keyBytes, "HmacSHA1");
-        Mac mac = Mac.getInstance("HmacSHA1");
-        mac.init(signingKey);
-        byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(plaintext.getBytes("UTF-8")));
-        return new String(rawHmac, "UTF-8");
+        return hmac(plaintext, key, "HmacSHA1");
       }
 
     public static String hmacSHA256(String plaintext, String key)
     throws Exception
       {
+        return hmac(plaintext, key, "HmacSHA256");
+      }
+
+    protected static String hmac(String plaintext, String key, String algo)
+    throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException
+      {
         byte[] keyBytes = key.getBytes();
-        SecretKeySpec signingKey = new SecretKeySpec(keyBytes, "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec signingKey = new SecretKeySpec(keyBytes, algo);
+        Mac mac = Mac.getInstance(algo);
         mac.init(signingKey);
         byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(plaintext.getBytes("UTF-8")));
         return new String(rawHmac, "UTF-8");
-      }
+      }  
   }
