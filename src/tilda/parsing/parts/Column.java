@@ -54,6 +54,7 @@ public class Column extends TypeDef
 	@SerializedName("sameas"     ) public String         _SameAs__DEPRECATED;
     @SerializedName("sameAs"     ) public String         _SameAs     ;
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
+    @SerializedName("allowEmpty" ) public Boolean        _AllowEmpty ;
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
     @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("protect"    ) public String         _ProtectStr ;
@@ -105,6 +106,7 @@ public class Column extends TypeDef
         _SameAs__DEPRECATED = c._SameAs__DEPRECATED;
         _SameAs = c._SameAs;
         _Nullable = c._Nullable;
+        _AllowEmpty = c._AllowEmpty;
         _ModeStr = c._ModeStr;
         _Invariant = c._Invariant;
         _ProtectStr = c._ProtectStr;
@@ -135,11 +137,12 @@ public class Column extends TypeDef
 
       }
 
-    public Column(String name, String typeStr, Integer size, boolean nullable, ColumnMode mode, boolean invariant, ProtectionType protect, String Description, Integer Precision, Integer Scale, String maskDef, TZMode tzMode)
+    public Column(String name, String typeStr, Integer size, boolean nullable, boolean allowEmpty, ColumnMode mode, boolean invariant, ProtectionType protect, String Description, Integer Precision, Integer Scale, String maskDef, TZMode tzMode)
       {
         super(typeStr, size, Precision, Scale);
         _Name = name;
         _Nullable = nullable;
+        _AllowEmpty = allowEmpty;
         _ModeStr = mode == null ? null : mode.name();
         _Invariant = invariant;
         _ProtectStr = protect == null ? null : protect.name();
@@ -278,6 +281,14 @@ public class Column extends TypeDef
               PS.AddError("Column '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
             if (isCollection() == true && _TzMode == TZMode.ROW)
               PS.AddError("Column '" + getFullName() + "' is a datetime collection with tzMode='" + _TzModeStr + "': datetime collections cannot have row-level tzMode.");
+          }
+        
+        if (_AllowEmpty == true)
+          {
+            if (_Type != ColumnType.STRING) 
+              PS.AddError("Column '" + getFullName() + "' is not a String: 'allowEmpty' only makes sense for Strings.");
+            if (_Nullable == true) 
+              PS.AddError("Column '" + getFullName() + "' is nullable: 'allowEmpty' is set to true, which doesn't make sense for nullables.");
           }
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
@@ -447,6 +458,9 @@ public class Column extends TypeDef
         if (_Nullable == null)
           _Nullable = _SameAsObj._Nullable;
 
+        if (_AllowEmpty == null)
+          _AllowEmpty = _SameAsObj._AllowEmpty;
+
         // Only reuse Invariant definition if the destination column is not a PK. By definition, PKs are invariant, so when
         // their definition are reused, mostly as part of an FK definition, most likely Invariant=true makes no sense as
         // an automatically inherited thing. The developer can always re-define "invariantness".
@@ -461,6 +475,8 @@ public class Column extends TypeDef
       {
         if (_Nullable == null)
           _Nullable = Boolean.TRUE;
+        if (_AllowEmpty == null)
+          _AllowEmpty = Boolean.FALSE;        
         if (_Mode == null)
           _Mode = ColumnMode.NORMAL;
         if (_Invariant == null)

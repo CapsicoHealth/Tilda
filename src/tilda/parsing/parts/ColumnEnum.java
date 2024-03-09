@@ -85,7 +85,7 @@ public class ColumnEnum
              PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn.getName()+"MappedName'. That name clashes with an already defined column.");
             else
               {
-                Column Col = new Column(_ParentColumn.getName()+"EnumValue", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
+                Column Col = new Column(_ParentColumn.getName()+"EnumValue", null, 0, _ParentColumn._Nullable, _ParentColumn._AllowEmpty, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
                                         _ParentColumn._Invariant, null, "Enum value for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.", _ParentColumn._Precision, _ParentColumn._Scale, null, _ParentColumn._TzMode);
                 Col._SameAs = _DestObjectObj.getColumn("value").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_NAME;

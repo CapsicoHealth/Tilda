@@ -477,7 +477,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)");
                 Out.println("        throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");
               }
-            Out.println("       if (v == null " + (C._Nullable == true ? " || v.isEmpty() == true" : "") + ")");
+            Out.println("       if (v == null " + (C._Nullable == true && C._AllowEmpty==false ? " || v.isEmpty() == true" : "") + ")");
             if (C._Nullable == true)
               Out.println("        setNull" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "();");
             else
@@ -654,7 +654,10 @@ public class TildaData implements CodeGenTildaData
                 case DATETIME:
                 case STRING:
                 case JSON:
-                  Out.println("       if (v == null)");
+                  if (C.getType() == ColumnType.STRING && C._AllowEmpty==false)
+                   Out.println("       if (TextUtil.isNullOrEmpty(v) == true)");
+                  else
+                    Out.println("       if (v == null)");
                   if (C._Nullable == true)
                     {
                       Out.println("        {");
@@ -664,6 +667,8 @@ public class TildaData implements CodeGenTildaData
                         Out.println("          setNull" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "();");
                       Out.println("        }");
                     }
+                  else if (C.getType() == ColumnType.STRING && C._AllowEmpty==false)
+                    Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null or an empty value: it's not nullable and empty values are not allowed.\");");
                   else
                     Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null: it's not nullable.\");");
                   if (C.getType() == ColumnType.STRING && C.isCollection() == false)
@@ -1231,7 +1236,12 @@ public class TildaData implements CodeGenTildaData
             if (C._Nullable == false)
               {
                 if (C.isCollection() == false && C.getType() == ColumnType.STRING)
-                  Out.println("       if (TextUtil.isNullOrEmpty(_" + C.getName() + ") == true)");
+                  {
+                    if (C._AllowEmpty == true)
+                     Out.println("       if (_" + C.getName() + " == null)");
+                    else
+                     Out.println("       if (TextUtil.isNullOrEmpty(_" + C.getName() + ") == true)");
+                  }
                 else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
                   Out.println("       if (TextUtil.isNullOrEmpty(Str_" + C.getName() + ") == true)");
                 else if (C.isCollection() == true)

@@ -116,7 +116,7 @@ public class ColumnMapper
               }
             else
               {
-                Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
+                Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _ParentColumn._AllowEmpty, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
                 false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale, null, _ParentColumn._TzMode);
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_GROUP;
@@ -136,7 +136,7 @@ public class ColumnMapper
               }
             else
               {
-                Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
+                Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _ParentColumn._AllowEmpty, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
                 _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale, null, _ParentColumn._TzMode);
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_NAME;
