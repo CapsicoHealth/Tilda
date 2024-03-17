@@ -32,7 +32,7 @@ public class PaddingUtil
 
     public static final String pad(String S, int Padding)
       {
-        return Padding >= 0 && Padding < _PADS.length ? S+_PADS[Padding-S.length()] : S;
+        return Padding-S.length() >= 0 && Padding < _PADS.length ? S+_PADS[Padding-S.length()] : S;
       }
 
     public static final void pad(StringBuilder Str, String S, int MaxLen)

@@ -21,4 +21,13 @@ public class TildaLayoutDef
             return tld;
         return null;
       }
+
+    public static boolean hasNextLine(TildaLayoutDef[] tildaLayoutDefs)
+      {
+        if (tildaLayoutDefs != null)
+          for (TildaLayoutDef tld : tildaLayoutDefs)
+            if (tld._nextLine == true)
+              return true;
+        return false;
+      }
   }
