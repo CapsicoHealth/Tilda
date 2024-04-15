@@ -16,6 +16,8 @@
 
 package tilda.utils;
 
+import java.util.Arrays;
+
 public class PaddingUtil
   {
     static final String[] _PADS = new String[100];
@@ -45,7 +47,14 @@ public class PaddingUtil
       {
         return  Padding <= 0 ? ""
               : Padding < _PADS.length ? _PADS[Padding]
-              : _PADS[_PADS.length-1];
+              : getPad(Padding, ' ');
+      }
+
+    public static final String getPad(int Padding, char pad)
+      {
+        char[] p = new char[Padding];
+        Arrays.fill(p, pad);
+        return new String(p);
       }
     
     public static final String leftPad(String str, int minLen, char pad)

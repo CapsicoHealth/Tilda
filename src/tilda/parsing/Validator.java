@@ -22,7 +22,6 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -62,6 +61,11 @@ public abstract class Validator
 
         protected String _str;
         protected int    _group;
+
+        public String toString()
+          {
+            return "group: " + _group + "; str: " + _str;
+          }
       }
 
     protected static class Line
@@ -114,46 +118,31 @@ public abstract class Validator
                   return true;
             return false;
           }
+
+        public static boolean contains(List<Line> table, String val)
+          {
+            if (table != null)
+              for (int i = 0; i < table.size(); ++i)
+                if (table.get(i).join("\n").indexOf(val) >= 0)
+                  return true;
+            return false;
+
+          }
       }
 
-    public static void validateCodeModel(List<Line> table, JsonObject tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, int level, boolean parentFlatPrint)
+    public static void validateCodeModel(List<Line> table, JsonObject tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint)
     throws IOException
       {
         if (tildaDef == null)
           return;
         Line line = new Line();
-        line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, level, parentFlatPrint, tildaDef, line, false);
+        line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, parentFlatPrint, tildaDef, line, false);
         // There are cases for flat-printing where no new line is added, and the line is already added in validateCodeModel
         // There are other cases where one line is wrapped, and a new line is created in validateCodeModel in the last loop
         // and so the line needs to be added here.
         // This is definitely hacky.
-        boolean found = false;
-        for (Line l : table)
-          if (l == line)
-            {
-              found = true;
-              break;
-            }
-        if (found == false)
-          table.add(line);
-      }
-
-    public static void validateCodeModel(List<Line> table, JsonArray tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, int level, boolean parentFlatPrint)
-    throws IOException
-      {
-        if (tildaDef == null || tildaDef.size() == 0)
-          return;
-        int tableBaseIndex = 0;
-        for (int i = 0; i < tildaDef.size(); ++i)
+        if (TextUtil.isNullOrEmpty(line.join("")) == false)
           {
-            JsonObject e = tildaDef.get(i).getAsJsonObject();
-            Line line = new Line();
-            line.add(/* (parentFlatPrint == true ? PaddingUtil.getPad(level) : "") + */ (i == 0 ? "  {" : " ,{"), 0);
-            line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, level, parentFlatPrint, e, line, true);
-            // There are cases for flat-printing where no new line is added, and the line is already added in validateCodeModel
-            // There are other cases where one line is wrapped, and a new line is created in validateCodeModel in the last loop
-            // and so the line needs to be added here.
-            // This is definitely hacky.
             boolean found = false;
             for (Line l : table)
               if (l == line)
@@ -163,13 +152,46 @@ public abstract class Validator
                 }
             if (found == false)
               table.add(line);
+          }
+      }
+
+    public static void validateCodeModel(List<Line> table, JsonArray tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint)
+    throws IOException
+      {
+        if (tildaDef == null || tildaDef.size() == 0)
+          return;
+        int tableBaseIndex = 0;
+        for (int i = 0; i < tildaDef.size(); ++i)
+          {
+            if (tildaDef.get(i) == null || tildaDef.get(i).isJsonNull() == true)
+              continue;
+            JsonObject e = tildaDef.get(i).getAsJsonObject();
+            Line line = new Line();
+            line.add(/* (parentFlatPrint == true ? PaddingUtil.getPad(level) : "") + */ (i == 0 ? " {" : ",{"), 0);
+            line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, parentFlatPrint, e, line, true);
+            // There are cases for flat-printing where no new line is added, and the line is already added in validateCodeModel
+            // There are other cases where one line is wrapped, and a new line is created in validateCodeModel in the last loop
+            // and so the line needs to be added here.
+            // This is definitely hacky.
+            if (TextUtil.isNullOrEmpty(line.join("")) == false)
+              {
+                boolean found = false;
+                for (Line l : table)
+                  if (l == line)
+                    {
+                      found = true;
+                      break;
+                    }
+                if (found == false)
+                  table.add(line);
+              }
             // If not flat-printing, need to wrap to a new line.
             if (parentFlatPrint == false || Line.hasSubColumnGroupMulti(table, tableBaseIndex) == true)
               {
                 line = new Line();
                 table.add(line);
               }
-            line.add(parentFlatPrint == false ? "  }" : "  }", 1000);
+            line.add(" }", 1000);
             tableBaseIndex = table.size();
           }
       }
@@ -216,7 +238,7 @@ public abstract class Validator
       }
 
 
-    protected static Line validateCodeModel(List<Line> table, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, int level, boolean parentFlatPrint, JsonObject e, Line line, boolean objectArray)
+    protected static Line validateCodeModel(List<Line> table, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, /* int level, */ boolean parentFlatPrint, JsonObject e, Line line, boolean objectArray)
     throws IOException
       {
         boolean firstElement = true;
@@ -249,14 +271,21 @@ public abstract class Validator
                 if (isNullOrEmpty(ee) == true)
                   continue;
                 boolean tildaPart = t.getName().startsWith("tilda.parsing.parts.");
-                if (tld._prop.equals("values") == true)
+                if (tld._prop.equals("subWhereX") == true)
                   LOG.debug("XXX");
+                Line arrayWrapupLine = null;
                 if (tildaPart == false)
                   {
                     if (multi == true)
-                      printArray(line, level + 1, tld._prop, ee.getAsJsonArray(), tld._flatPrint, firstElement, t, tld._group);
+                      {
+                        // if (parentFlatPrint == false)
+                        // line.add(" ", 0);
+                        arrayWrapupLine = printArray(table, line, tld._prop, ee.getAsJsonArray(), tld._flatPrint, firstElement, t, tld._group);
+                      }
                     else
                       printValue(line, tld._prop, ee.getAsJsonPrimitive(), firstElement, t, parentFlatPrint || tld._flatPrint, tld._group);
+                    // if (parentFlatPrint == false && tld._flatPrint == false && line._subColumnGroupStart == 0)
+                    // line._subColumnGroupStart++;
                   }
                 else if (tld != null)
                   {
@@ -272,21 +301,25 @@ public abstract class Validator
                       line.add((firstElement == true ? " " : ",") + "\"" + tld._prop + "\"", tld._group);
                     line.add(": ", tld._group);
                     line.add(multi == true ? "[" : "{", tld._group);
-                    if (parentFlatPrint == false && tld._flatPrint == false)
-                      {
-                        table.add(line);
-                        line = new Line();
-                      }
                     if (multi == true)
                       {
+                        if (parentFlatPrint == false && tld._flatPrint == false)
+                          {
+                            table.add(line);
+                            line = new Line();
+                          }
                         if (tld._nextLine == true)
                           line._subColumnGroupStart = tld._group;
                         if (tld._flatPrint == true)
                           line._subColumnGroupMulti = true;
-                        validateCodeModel(line._subColumns, ee.getAsJsonArray(), t, tld._subProps, level + 1, tld._flatPrint);
+                        validateCodeModel(line._subColumns, ee.getAsJsonArray(), t, tld._subProps, tld._flatPrint);
                       }
                     else
-                      validateCodeModel(line._subColumns, ee.getAsJsonObject(), t, tld._subProps, level, tld._flatPrint);
+                      {
+                        if (tld._flatPrint == true && parentFlatPrint == true)
+                          line._subColumnGroupMulti = true;
+                        validateCodeModel(line._subColumns, ee.getAsJsonObject(), t, tld._subProps, tld._flatPrint);
+                      }
                     if (parentFlatPrint == false && tld._flatPrint == false || multi == true && objectArray == true || tld._flatPrint == true && multi == true)
                       {
                         table.add(line);
@@ -298,11 +331,13 @@ public abstract class Validator
                       {
                         line.fold();
                       }
-                    line.add(PaddingUtil.getPad(level) + (multi == true ? "]" : " }"), tld._group);
+                    line.add(PaddingUtil.getPad(0/* level */) + (multi == true && parentFlatPrint == true ? "   ]" : multi == true ? "  ]" : "  }"), tld._group);
                   }
                 if (parentFlatPrint == false)
                   {
                     table.add(line);
+                    if (arrayWrapupLine != null)
+                      table.add(arrayWrapupLine);
                     if (multi == true && objectArray == true)
                       line = new Line();
                   }
@@ -390,7 +425,7 @@ public abstract class Validator
           {
             int pad = getCatchUpPad(L, prevGroup, prevColNum, nextGroup);
             if (pad > 0)
-              out.append(PaddingUtil.getPad(pad));
+              out.append(PaddingUtil.getPad(pad, '+'));
           }
       }
 
@@ -416,25 +451,27 @@ public abstract class Validator
           }
         // GroupCol.print(L);
 
-        final boolean testingCol = false;
         final boolean testingLn = false;
+        final boolean testingCol = false;
         for (int i = 0; i < table.size(); ++i)
           {
             Line row = table.get(i);
             String line = row.join("").trim();
-            if (line.indexOf("queries") != -1)
+            if (line.indexOf("dbOnly" /* subWhereX" */) >= 0)
               LOG.debug("XXX");
             int padding = 0;
+            int groupPadding = 0;
             if (TextUtil.isNullOrEmpty(line) == false)
               {
                 if (row._subColumnGroupStart > 0)
-                  padding = GroupCol.getCatchUpPad(L, 0, 0, row._subColumnGroupStart) + 2;
-                padding += level * _INDENT_MULTIPLIER + extraPad;
+                  groupPadding = GroupCol.getCatchUpPad(L, 0, 0, row._subColumnGroupStart) + 1;
+                padding += extraPad + groupPadding + level * _INDENT_MULTIPLIER/* + extraPad */;
                 if (testingLn == true)
-                  out.append(">>column group line: level=" + level + ", extraPad=" + extraPad + ", padding=" + padding + ", row._subColumnGroupStart=" + row._subColumnGroupStart + ", row._subColumnGroupMulti=" + row._subColumnGroupMulti + "\n");
-                out.append(PaddingUtil.getPad(padding));
+                  out.append(">>column group line: level=" + level + ", extraPad=" + /* extraPad + */ ", padding=" + padding + ", row._subColumnGroupStart=" + row._subColumnGroupStart + ", row._subColumnGroupMulti=" + row._subColumnGroupMulti + "\n");
+                out.append(PaddingUtil.getPad(padding, '.'));
                 int prevGroup = -1;
                 int colNum = -1;
+                boolean lineStart = true;
                 for (int j = 0; j < row._columns.size() - 1; ++j)
                   {
                     Column col = row._columns.get(j);
@@ -446,7 +483,15 @@ public abstract class Validator
                       }
                     ++colNum;
                     String testingStr = !testingCol ? "" : "|" + col._group + "-" + colNum;
-                    out.append(testingStr + PaddingUtil.pad(col._str, row._folded > 0 && j >= row._folded ? col._str.length() + 1 : GroupCol.getMaxWidth(L, col._group, colNum)));
+                    int pad = row._folded > 0 && j >= row._folded ? col._str.length() + 1 : GroupCol.getMaxWidth(L, col._group, colNum);
+                    if (col._str.length() == 0)
+                      {
+                        if (lineStart == true)
+                          ; //groupPadding += pad;
+                      }
+                    else
+                      lineStart = false;
+                    out.append(testingStr + PaddingUtil.pad(col._str, pad));
                   }
                 ++colNum;
                 Column col = row._columns.get(row._columns.size() - 1);
@@ -456,21 +501,22 @@ public abstract class Validator
                     colNum = 0;
                     prevGroup = col._group;
                   }
-                out.append((!testingCol ? "" : "|" + col._group + "-" + colNum) + col._str.stripTrailing());
+                String testingStr = !testingCol ? "" : "|" + col._group + "-" + colNum;
+                out.append(testingStr + col._str.stripTrailing());
                 out.append("\n");
+                out.flush();
+                // System.out.print(out);
               }
             if (row._subColumns.isEmpty() == false)
               {
-                int xxx = row._subColumnGroupMulti == true ? (padding - (level - 1) * _INDENT_MULTIPLIER - 1) : level - 1;
                 if (testingLn == true)
-                  out.append(">>new column group: level=" + level + ", extraPad=" + extraPad + ", xxx=" + xxx + ", padding=" + padding + ", row._subColumnGroupStart=" + row._subColumnGroupStart + ", row._subColumnGroupMulti=" + row._subColumnGroupMulti + "\n");
-                // int extraIndent = GroupCol.getCatchUpPad(L, 0, 0, row._subColumnGroupStart);
-                printColAligned(out, row._subColumns, level + 1, xxx);
+                  out.append(">>new column group: level=" + level + ", extraPad=" + /* extraPad + ", xxx=" + xxx + */", padding=" + padding + ", row._subColumnGroupStart=" + row._subColumnGroupStart + ", row._subColumnGroupMulti=" + row._subColumnGroupMulti + "\n");
+                printColAligned(out, row._subColumns, level + (row._subColumnGroupMulti == true ? 2 : 1), groupPadding);
               }
           }
       }
 
-    protected static void printArray(Line out, int level, String name, JsonArray val, boolean flatPrint, boolean firstElement, Class type, int colGroup)
+    protected static Line printArray(List<Line> table, Line out, /* int level, */ String name, JsonArray val, boolean flatPrint, boolean firstElement, Class type, int colGroup)
     throws IOException
       {
         out.add((firstElement == true ? " " : flatPrint == true ? ", " : ",") + "\"" + name + "\"", colGroup);
@@ -482,10 +528,29 @@ public abstract class Validator
         else
           {
             StringBuilderWriter w = new StringBuilderWriter();
-            JSONUtil.print(w, level * _INDENT_MULTIPLIER, name, firstElement, val, type, flatPrint);
+            JSONUtil.print(w, 0/* level * _INDENT_MULTIPLIER */, name, firstElement, val, type, flatPrint);
             String[] parts = w.toString().split("\\\"\\s*\\:\\s*");
-            out.add(parts[1], colGroup);
+            // if flat-print, then the whole aray was printed on a single line.
+            if (flatPrint == true)
+              out.add(parts[1], colGroup);
+            else
+              { // if not flatprint, then the array was printed across multiple lines, and we have to "unroll", i.e.,
+                // first line will be the "[", then the next lines are the array values, and the last line will be "]"
+                parts = parts[1].split("\n");
+                out.add(parts[0], colGroup);
+                for (int i = 1; i < parts.length - 1; ++i)
+                  {
+                    Line ln = new Line();
+                    ln.add(parts[i], 1);
+                    out._subColumns.add(ln);
+                  }
+                Line ln = new Line();
+                ln.add(parts[parts.length - 1], 1);
+                // We can do this here. Because it's not a flatprint, the next piece of code will wrap all up line-wise.
+                return ln;
+              }
           }
+        return null;
       }
 
     protected static void printValue(Line out, String name, JsonPrimitive val, boolean firstElement, Class<?> type, boolean flatPrint, int colGroup)
@@ -516,18 +581,18 @@ public abstract class Validator
         TildaLayoutDef[] TLDL = gson.fromJson(R, TildaLayoutDef[].class);
         R.close();
 
-        final int _INITIAL_INDENT = 1;
+        // final int _INITIAL_INDENT = 1;
         List<Line> table = new ArrayList<Line>();
         try
           {
-            validateCodeModel(table, j, Schema.class, TLDL, _INITIAL_INDENT, false);
+            validateCodeModel(table, j, Schema.class, TLDL/* , _INITIAL_INDENT */, false);
           }
         catch (Throwable T)
           {
             LOG.error("\n", T);
           }
         StringBuilderWriter out = new StringBuilderWriter();
-        printColAligned(out, table, _INITIAL_INDENT, 0);
+        printColAligned(out, table, 1, 0);
         LOG.debug("\n" + out.toString());
 
         LOG.debug("\n\n\n"
@@ -581,8 +646,8 @@ public abstract class Validator
                 LOG.debug(PaddingUtil.getPad(q.size() * 3 - 3) + "Serializable class property '" + printPath(q, a.value()) + "' not found in TLD definition.");
                 // continue;
               }
-            else if (tld._prop.equals("wheres") == true)
-              LOG.debug("XXX");
+            // else if (tld._prop.equals("wheres") == true)
+            // LOG.debug("XXX");
             Type gt = f.getGenericType();
             Class<?> t = f.getType().isArray() == true ? f.getType().arrayType().getComponentType().getComponentType()
             : ParameterizedType.class.isAssignableFrom(gt.getClass()) == true ? (Class<?>) ((ParameterizedType) gt).getActualTypeArguments()[0]

@@ -35,7 +35,7 @@
  ,"subProps":[
      {"prop":"name"        , "label":"XXX" }
     ,{"prop":"description" , "label":"XXX" }
-    ,{"prop":"id"          , "label":"XXX" 
+    ,{"prop":"id"          , "label":"XXX", "flatPrint":true 
      ,"subProps":[
           {"prop":"type"       }
          ,{"prop":"size"       }
@@ -43,7 +43,7 @@
          ,{"prop":"scale"      }
        ]
      }
-    ,{"prop":"value"       , "label":"XXX"
+    ,{"prop":"value"       , "label":"XXX", "flatPrint":true
      ,"subProps":[
           {"prop":"type"       }
          ,{"prop":"size"       }
@@ -57,7 +57,7 @@
  ,"subProps":[
      {"prop":"name"          , "label":"XXX" }
     ,{"prop":"description"   , "label":"XXX" }
-    ,{"prop":"primaryColumns", "label":"XXX" 
+    ,{"prop":"primaryColumns", "label":"XXX" , "flatPrint":true
      ,"subProps":[
           {"prop":"name" }
 //         ,{"prop":"sameas" }
@@ -125,11 +125,15 @@
          ,{"prop":"scale" }
        ]
      }
-    ,{"prop":"extraColumns"  , "label":"XXX"
+    ,{"prop":"extraColumns"  , "label":"XXX", "flatPrint":true
      ,"subProps":[
           {"prop":"name" }
 //         ,{"prop":"sameas" }
          ,{"prop":"sameAs" }
+         ,{"prop":"type" }
+         ,{"prop":"size" }
+         ,{"prop":"precision" }
+         ,{"prop":"scale" }
          ,{"prop":"nullable" }
          ,{"prop":"allowEmpty" }
          ,{"prop":"invariant" }
@@ -187,15 +191,11 @@
               }
             ]
           }
-         ,{"prop":"type" }
-         ,{"prop":"size" }
-         ,{"prop":"precision" }
-         ,{"prop":"scale" }
        ]     
      }
     ,{"prop":"mappingColumns"
      ,"subProps":[
-          {"prop":"id" 
+          {"prop":"id" , "flatPrint":true
           ,"subProps":[
               {"prop":"type" }
              ,{"prop":"size" }
@@ -203,7 +203,7 @@
              ,{"prop":"scale" }
             ]
           }
-         ,{"prop":"name" 
+         ,{"prop":"name" , "flatPrint":true
           ,"subProps":[
               {"prop":"type" }
              ,{"prop":"size" }
@@ -211,7 +211,7 @@
              ,{"prop":"scale" }
             ]
           }
-         ,{"prop":"group" 
+         ,{"prop":"group" , "flatPrint":true
           ,"subProps":[
               {"prop":"type" }
              ,{"prop":"size" }
@@ -221,7 +221,7 @@
           }
         ]
      }
-    ,{"prop":"values"        , "label":"XXX" 
+    ,{"prop":"values"        , "label":"XXX" , "flatPrint":true
      ,"subProps":[
          {"prop":"name", "flatPrint":false, "label":"" }
         ,{"prop":"value", "flatPrint":false, "label":"" }
@@ -240,7 +240,7 @@
     ,{"prop":"mode"        , "label":"Object 'mode' $" }
     ,{"prop":"dbOnly"      }
     ,{"prop":"shortAlias"  }
-    ,{"prop":"tenantInit", "label":""  }
+    ,{"prop":"tenantInit"  , "label":""  }
     ,{"prop":"occ"         , "label":"OCC flag $" }
     ,{"prop":"tzFk"        , "label":"TZ foreign key definition flag $" }
     ,{"prop":"tzMode"      , "label":"TZ mode $"}
@@ -290,22 +290,6 @@
          ,{"prop":"allowEmpty" , "group":5 }
          ,{"prop":"default"    , "group":6 }
          ,{"prop":"description", "group":7 }
-         ,{"prop":"mapper"     , "nextLine":true, "group":2
-          ,"subProps":[
-              {"prop":"srcColumns" }
-             ,{"prop":"destObject" }
-             ,{"prop":"name" }
-             ,{"prop":"group" }
-             ,{"prop":"multi" }
-            ]
-          }
-         ,{"prop":"enum"       , "nextLine":true, "group":2
-          ,"subProps":[
-              {"prop":"destObject" }
-             ,{"prop":"name" }
-             ,{"prop":"multi" }
-            ]
-          }
          ,{"prop":"values"     , "nextLine":true, "group":2, "flatPrint":true
           ,"subProps":[
                {"prop":"name"        }
@@ -314,6 +298,22 @@
               ,{"prop":"description" }
               ,{"prop":"groupings"    , "flatPrint":true }
               ,{"prop":"default"     }
+            ]
+          }
+         ,{"prop":"mapper"     , "nextLine":true, "group":2, "flatPrint":true
+          ,"subProps":[
+              {"prop":"srcColumns", "flatPrint":true }
+             ,{"prop":"destObject" }
+             ,{"prop":"name" }
+             ,{"prop":"group" }
+             ,{"prop":"multi" }
+            ]
+          }
+         ,{"prop":"enum"       , "nextLine":true, "group":2, "flatPrint":true
+          ,"subProps":[
+              {"prop":"destObject" }
+             ,{"prop":"name" }
+             ,{"prop":"multi" }
             ]
           }
          ,{"prop":"jsonSchema"     , "nextLine":true, "group":2
@@ -408,16 +408,16 @@
      ,"subProps":[
          {"prop":"name"        , "label":"" }
         ,{"prop":"columns"     , "flatPrint":true , "label":"" }
-        ,{"prop":"exclude"     , "flatPrint":false, "label":"" }
+        ,{"prop":"exclude"     , "flatPrint":true, "label":"" }
         ,{"prop":"sync"        , "flatPrint":false, "label":"" }
-        ,{"prop":"outTypes"    , "flatPrint":false, "label":"" }
+        ,{"prop":"outTypes"    , "flatPrint":true , "label":"" }
         ,{"prop":"nvpSrc"      , "flatPrint":false, "label":"" }
         ,{"prop":"nvpValueType", "flatPrint":false, "label":"" }
        ]
      }
     ,{"prop":"masks", "flatPrint":true
      ,"subProps":[
-         {"prop":"columns", "flatPrint":false, "label":"" }
+         {"prop":"columns", "flatPrint":true, "label":"" }
         ,{"prop":"mask", "flatPrint":false, "label":"" }
        ]
      }
@@ -440,49 +440,67 @@
      }     
    ]
  }
-,{"prop":"views", "flatPrint":false, "label":""
+,{"prop":"views"
  ,"subProps":[
-    {"prop":"columns", "flatPrint":false, "label":""
+    {"prop":"name"        , "label":"" }
+   ,{"prop":"dbOnly"      , "label":"" }
+   ,{"prop":"mode"        , "label":"" }
+   ,{"prop":"shortAlias"  , "label":"" }
+   ,{"prop":"prefix"      , "label":"" }
+   ,{"prop":"description" , "label":"" }
+   ,{"prop":"descriptionX", "label":"" }
+   ,{"prop":"referenceUrl", "label":"" }
+   ,{"prop":"referenceTag", "label":"" }
+   ,{"prop":"entityClass" , "label":"" }
+   ,{"prop":"countStar"   , "label":"" }
+   ,{"prop":"tenantInit"  , "label":"" }
+   ,{"prop":"columns", "flatPrint":true
     ,"subProps":[
-       {"prop":"name", "flatPrint":false, "label":"" }
-//      ,{"prop":"sameas", "flatPrint":false, "label":"" }
-      ,{"prop":"sameAs", "flatPrint":false, "label":"" }
-      ,{"prop":"as", "flatPrint":false, "label":"" }
-      ,{"prop":"expression", "flatPrint":false, "label":"" }
-      ,{"prop":"type", "flatPrint":false, "label":"" }
-      ,{"prop":"precision", "flatPrint":false, "label":"" }
-      ,{"prop":"scale", "flatPrint":false, "label":"" }
-      ,{"prop":"size", "flatPrint":false, "label":"" }
-      ,{"prop":"prefix", "flatPrint":false, "label":"" }
-      ,{"prop":"postfix", "flatPrint":false, "label":"" }
-      ,{"prop":"exclude", "flatPrint":false, "label":"" }
-      ,{"prop":"block", "flatPrint":false, "label":"" }
-      ,{"prop":"joinType", "flatPrint":false, "label":"" }
-      ,{"prop":"formulaOnly", "flatPrint":false, "label":"" }
-      ,{"prop":"joinOnly", "flatPrint":false, "label":"" }
-      ,{"prop":"aggregate", "flatPrint":false, "label":"" }
-      ,{"prop":"orderBy", "flatPrint":false, "label":"" }
-      ,{"prop":"partitionBy", "flatPrint":false, "label":"" }
-      ,{"prop":"range", "flatPrint":false, "label":"" }
-      ,{"prop":"coalesce", "flatPrint":false, "label":"" }
-      ,{"prop":"distinct", "flatPrint":false, "label":"" }
-      ,{"prop":"filter", "flatPrint":false, "label":"" }
-      ,{"prop":"useMapper", "flatPrint":false, "label":"" }
-      ,{"prop":"useEnum", "flatPrint":false, "label":"" }
-      ,{"prop":"description", "flatPrint":false, "label":"" }
+       {"prop":"sameAs"     , "group":1, "label":"" }
+      ,{"prop":"name"       , "group":1, "label":"" }
+//      ,{"prop":"sameas"     , "label":"" }
+      ,{"prop":"prefix"     , "group":2, "label":"" }
+      ,{"prop":"postfix"    , "group":2, "label":"" }
+      ,{"prop":"exclude"    , "flatPrint":true , "group":2, "label":"" }
+      ,{"prop":"as"         , "flatPrint":false, "group":3, "label":"" }
+      ,{"prop":"formulaOnly", "flatPrint":false, "group":3, "label":"" }
+      ,{"prop":"joinOnly"   , "flatPrint":false, "group":3, "label":"" }
+      ,{"prop":"expression" , "flatPrint":false, "group":4, "label":"" }
+      ,{"prop":"type"       , "flatPrint":false, "group":4, "label":"" }
+      ,{"prop":"precision"  , "flatPrint":false, "group":4, "label":"" }
+      ,{"prop":"scale"      , "flatPrint":false, "group":4, "label":"" }
+      ,{"prop":"size"       , "flatPrint":false, "group":4, "label":"" }
+      ,{"prop":"block"      , "flatPrint":true , "group":7, "label":"" }
+      ,{"prop":"joinType"   , "flatPrint":false, "group":8, "label":"" }
+      ,{"prop":"aggregate"  , "flatPrint":false, "group":9, "label":"" }
+      ,{"prop":"orderBy"    , "flatPrint":true , "group":9, "label":"" }
+      ,{"prop":"partitionBy", "flatPrint":true , "group":9, "label":"" }
+      ,{"prop":"range"      , "flatPrint":true , "group":9, "label":"" }
+      ,{"prop":"coalesce"   , "flatPrint":false, "group":10, "label":"" }
+      ,{"prop":"distinct"   , "flatPrint":false, "group":10, "label":"" }
+      ,{"prop":"filter"     , "flatPrint":false, "group":11, "label":"" }
+      ,{"prop":"useMapper"  , "flatPrint":false, "group":12, "label":"" }
+      ,{"prop":"useEnum"    , "flatPrint":false, "group":12, "label":"" }
+      ,{"prop":"description", "flatPrint":false, "group":13, "label":"" }
       ]
     }
-   ,{"prop":"joins", "flatPrint":false, "label":""
+   ,{"prop":"joins", "flatPrint":true, "label":""
     ,"subProps":[
-       {"prop":"object", "label":"" }
-      ,{"prop":"as", "label":"" }
-      ,{"prop":"joinType", "label":"" }
-      ,{"prop":"on", "flatPrint":true, "label":""
+       {"prop":"object"  , "group":1, "label":"" }
+      ,{"prop":"as"      , "group":1, "label":"" }
+      ,{"prop":"joinType", "group":1, "label":"" }
+      ,{"prop":"on", "nextLine":true, "flatPrint":true, "group":1, "label":""
        ,"subProps":[
           {"prop":"db", "label":"" }
          ,{"prop":"clause", "label":"" }
          ]
        }
+      ]
+    }
+   ,{"prop":"distinctOn", "flatPrint":true, "label":""
+    ,"subProps":[
+       {"prop":"columns", "flatPrint":true, "label":"" }
+      ,{"prop":"orderBy", "flatPrint":true, "label":"" }
       ]
     }
    ,{"prop":"subWhere", "flatPrint":false, "label":"" }
@@ -506,7 +524,6 @@
       ,{"prop":"orderBy", "flatPrint":true, "label":"" }
       ]
     }
-   ,{"prop":"countStar", "flatPrint":false, "label":"" }
    ,{"prop":"pivot", "flatPrint":false, "label":""
     ,"subProps":[
        {"prop":"on", "flatPrint":false, "label":"" }
@@ -540,28 +557,28 @@
    ,{"prop":"pivots", "flatPrint":false, "label":""
     ,"subProps":[
        {"prop":"on", "flatPrint":false, "label":"" }
-      ,{"prop":"aggregates", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"name", "flatPrint":false, "label":"" }
-         ,{"prop":"prefix", "flatPrint":false, "label":"" }
-         ,{"prop":"suffix", "flatPrint":false, "label":"" }
-         ,{"prop":"aggregate", "flatPrint":false, "label":"" }
-         ,{"prop":"orderBy", "flatPrint":false, "label":"" }
-         ,{"prop":"distinct", "flatPrint":false, "label":"" }
-         ,{"prop":"coalesce", "flatPrint":false, "label":"" }
-         ]
-       }
       ,{"prop":"interleave", "flatPrint":false, "label":"" }
       ,{"prop":"globals", "flatPrint":false, "label":"" }
+      ,{"prop":"aggregates", "flatPrint":true, "label":""
+       ,"subProps":[
+          {"prop":"name"     , "flatPrint":false, "label":"" }
+         ,{"prop":"prefix"   , "flatPrint":false, "label":"" }
+         ,{"prop":"suffix"   , "flatPrint":false, "label":"" }
+         ,{"prop":"aggregate", "flatPrint":false, "label":"" }
+         ,{"prop":"orderBy"  , "flatPrint":true, "label":"" }
+         ,{"prop":"distinct" , "flatPrint":false, "label":"" }
+         ,{"prop":"coalesce" , "flatPrint":false, "label":"" }
+         ]
+       }
       ,{"prop":"values", "flatPrint":true, "label":""
        ,"subProps":[
-           {"prop":"expression" , "flatPrint":false, "label":"" }
+           {"prop":"value"      , "flatPrint":false, "label":"" }
+          ,{"prop":"name"       , "flatPrint":false, "label":"" }
+          ,{"prop":"expression" , "flatPrint":false, "label":"" }
           ,{"prop":"type"       , "flatPrint":false, "label":"" }
           ,{"prop":"size"       , "flatPrint":false, "label":"" }
           ,{"prop":"scale"      , "flatPrint":false, "label":"" }
           ,{"prop":"precision"  , "flatPrint":false, "label":"" }
-          ,{"prop":"value"      , "flatPrint":false, "label":"" }
-          ,{"prop":"name"       , "flatPrint":false, "label":"" }
           ,{"prop":"description", "flatPrint":false, "label":"" }
          ]
        }
@@ -581,12 +598,6 @@
        }
       ]
     }
-   ,{"prop":"distinctOn", "flatPrint":false, "label":""
-    ,"subProps":[
-       {"prop":"columns", "flatPrint":false, "label":"" }
-      ,{"prop":"orderBy", "flatPrint":false, "label":"" }
-      ]
-    }
    ,{"prop":"pivotColumns", "flatPrint":false, "label":""
     ,"subProps":[
        {"prop":"source", "flatPrint":false, "label":"" }
@@ -599,96 +610,25 @@
        }
       ]
     }
-   ,{"prop":"realize", "flatPrint":false, "label":""
+   ,{"prop":"importFormulas", "flatPrint":false, "label":"" }
+   ,{"prop":"formulaTemplates", "flatPrint":false, "label":""
     ,"subProps":[
        {"prop":"name", "flatPrint":false, "label":"" }
-      ,{"prop":"targetSchema", "flatPrint":false, "label":"" }
-      ,{"prop":"primary", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"columns", "flatPrint":false, "label":"" }
-         ,{"prop":"autogen", "flatPrint":false, "label":"" }
-         ,{"prop":"keyBatch", "flatPrint":false, "label":"" }
-         ]
-       }
-      ,{"prop":"foreign", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"name", "flatPrint":false, "label":"" }
-         ,{"prop":"srcColumns", "flatPrint":false, "label":"" }
-         ,{"prop":"destObject", "flatPrint":false, "label":"" }
-         ]
-       }
-      ,{"prop":"indices", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"name", "flatPrint":false, "label":"" }
-         ,{"prop":"columns", "flatPrint":false, "label":"" }
-         ,{"prop":"cluster", "flatPrint":false, "label":"" }
-         ,{"prop":"orderBy", "flatPrint":false, "label":"" }
-         ,{"prop":"db", "flatPrint":false, "label":"" }
-         ,{"prop":"subWhere", "flatPrint":false, "label":"" }
-         ,{"prop":"subQuery", "flatPrint":false, "label":""
-          ,"subProps":[
-             {"prop":"name", "flatPrint":false, "label":"" }
-            ,{"prop":"description", "flatPrint":false, "label":"" }
-            ,{"prop":"from", "flatPrint":false, "label":"" }
-            ,{"prop":"wheres", "flatPrint":true, "label":""
-             ,"subProps":[
-                 {"prop":"db"    , "label":"" }
-                ,{"prop":"clause", "label":"" }
-               ]
-             }
-            ,{"prop":"orderBy", "flatPrint":true, "label":"" }
-            ]
-          }
-         ]
-       }
-      ,{"prop":"indexTemplates", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"name", "flatPrint":false, "label":"" }
-         ,{"prop":"columns", "flatPrint":false, "label":"" }
-         ,{"prop":"orderBy", "flatPrint":false, "label":"" }
-         ,{"prop":"subWhere", "flatPrint":false, "label":"" }
-         ,{"prop":"subQuery", "flatPrint":false, "label":""
-          ,"subProps":[
-             {"prop":"name", "flatPrint":false, "label":"" }
-            ,{"prop":"description", "flatPrint":false, "label":"" }
-            ,{"prop":"from", "flatPrint":false, "label":"" }
-            ,{"prop":"wheres", "flatPrint":true, "label":""
-             ,"subProps":[
-                 {"prop":"db"    , "label":"" }
-                ,{"prop":"clause", "label":"" }
-               ]
-             }
-            ,{"prop":"orderBy", "flatPrint":true, "label":"" }
-            ]
-          }
-         ]
-       }
-      ,{"prop":"incremental", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"deleteFirst", "flatPrint":false, "label":"" }
-         ,{"prop":"whereClause", "flatPrint":false, "label":"" }
-         ]
-       }
-      ,{"prop":"subRealized", "flatPrint":false, "label":"" }
-      ,{"prop":"excludes", "flatPrint":false, "label":"" }
-      ,{"prop":"exclude", "flatPrint":false, "label":"" }
-      ,{"prop":"mappings", "flatPrint":false, "label":""
-       ,"subProps":[
-          {"prop":"name", "flatPrint":false, "label":"" }
-         ,{"prop":"mapper", "flatPrint":false, "label":"" }
-         ,{"prop":"description", "flatPrint":false, "label":"" }
-         ]
-       }
+      ,{"prop":"pattern", "flatPrint":false, "label":"" }
+      ,{"prop":"impls", "flatPrint":false, "label":"" }
       ]
     }
-   ,{"prop":"importFormulas", "flatPrint":false, "label":"" }
    ,{"prop":"formulaColumns", "flatPrint":false, "label":""
     ,"subProps":[
        {"prop":"name"       , "flatPrint":false, "label":"" }
-      ,{"prop":"measure"    , "flatPrint":false, "label":"" }
-      ,{"prop":"formula"    , "flatPrint":false, "label":"" }
       ,{"prop":"title"      , "flatPrint":false, "label":"" }
       ,{"prop":"id"         , "flatPrint":false, "label":"" }
+      ,{"prop":"measure"    , "flatPrint":false, "label":"" }
+      ,{"prop":"type"       , "flatPrint":false, "label":"" }
+      ,{"prop":"size"       , "flatPrint":false, "label":"" }
+      ,{"prop":"precision"  , "flatPrint":false, "label":"" }
+      ,{"prop":"scale"      , "flatPrint":false, "label":"" }
+      ,{"prop":"formula"    , "flatPrint":false, "label":"" }
       ,{"prop":"description", "flatPrint":false, "label":"" }
       ,{"prop":"values"     , "flatPrint":true, "label":""
        ,"subProps":[
@@ -698,29 +638,8 @@
          ]
        }
       ,{"prop":"coalesceNumbers", "flatPrint":false, "label":"" }
-      ,{"prop":"type"           , "flatPrint":false, "label":"" }
-      ,{"prop":"size"           , "flatPrint":false, "label":"" }
-      ,{"prop":"precision"      , "flatPrint":false, "label":"" }
-      ,{"prop":"scale"          , "flatPrint":false, "label":"" }
       ]
     }
-   ,{"prop":"formulaTemplates", "flatPrint":false, "label":""
-    ,"subProps":[
-       {"prop":"name", "flatPrint":false, "label":"" }
-      ,{"prop":"pattern", "flatPrint":false, "label":"" }
-      ,{"prop":"impls", "flatPrint":false, "label":"" }
-      ]
-    }
-   ,{"prop":"name", "flatPrint":false, "label":"" }
-   ,{"prop":"dbOnly", "flatPrint":false, "label":"" }
-   ,{"prop":"mode", "flatPrint":false, "label":"" }
-   ,{"prop":"shortAlias", "flatPrint":false, "label":"" }
-   ,{"prop":"prefix", "flatPrint":false, "label":"" }
-   ,{"prop":"description", "flatPrint":false, "label":"" }
-   ,{"prop":"descriptionX", "flatPrint":false, "label":"" }
-   ,{"prop":"referenceUrl", "flatPrint":false, "label":"" }
-   ,{"prop":"referenfeTag", "flatPrint":false, "label":"" }
-   ,{"prop":"entityClass", "flatPrint":false, "label":"" }
    ,{"prop":"queries", "flatPrint":false, "label":""
     ,"subProps":[
        {"prop":"name", "flatPrint":false, "label":"" }
@@ -735,24 +654,24 @@
       ,{"prop":"orderBy", "flatPrint":true, "label":"" }
       ]
     }
-   ,{"prop":"json", "flatPrint":false, "label":""
+   ,{"prop":"json", "flatPrint":true, "label":""
     ,"subProps":[
        {"prop":"name", "flatPrint":false, "label":"" }
-      ,{"prop":"columns", "flatPrint":false, "label":"" }
+      ,{"prop":"columns", "flatPrint":true, "label":"" }
       ,{"prop":"exclude", "flatPrint":false, "label":"" }
       ,{"prop":"sync", "flatPrint":false, "label":"" }
-      ,{"prop":"outTypes", "flatPrint":false, "label":"" }
+      ,{"prop":"outTypes", "flatPrint":true, "label":"" }
       ,{"prop":"nvpSrc", "flatPrint":false, "label":"" }
       ,{"prop":"nvpValueType", "flatPrint":false, "label":"" }
       ]
     }
-   ,{"prop":"outputMaps", "flatPrint":false, "label":""
+   ,{"prop":"outputMaps", "flatPrint":true, "label":""
     ,"subProps":[
        {"prop":"name", "flatPrint":false, "label":"" }
-      ,{"prop":"columns", "flatPrint":false, "label":"" }
+      ,{"prop":"columns", "flatPrint":true, "label":"" }
       ,{"prop":"exclude", "flatPrint":false, "label":"" }
       ,{"prop":"sync", "flatPrint":false, "label":"" }
-      ,{"prop":"outTypes", "flatPrint":false, "label":"" }
+      ,{"prop":"outTypes", "flatPrint":true, "label":"" }
       ,{"prop":"nvpSrc", "flatPrint":false, "label":"" }
       ,{"prop":"nvpValueType", "flatPrint":false, "label":"" }
       ]
@@ -763,17 +682,98 @@
       ,{"prop":"mask", "flatPrint":false, "label":"" }
       ]
     }
-   ,{"prop":"tenantInit", "flatPrint":false, "label":"" }
+   ,{"prop":"realize", "flatPrint":false, "label":""
+    ,"subProps":[
+       {"prop":"name"        , "flatPrint":false, "label":"" }
+      ,{"prop":"targetSchema", "flatPrint":false, "label":"" }
+      ,{"prop":"subRealized" , "flatPrint":false, "label":"" }
+      ,{"prop":"excludes"    , "flatPrint":false, "label":"" }
+      ,{"prop":"exclude"     , "flatPrint":false, "label":"" }
+      ,{"prop":"incremental" , "flatPrint":true, "label":""
+       ,"subProps":[
+          {"prop":"deleteFirst", "flatPrint":false, "label":"" }
+         ,{"prop":"whereClause", "flatPrint":false, "label":"" }
+         ]
+       }
+      ,{"prop":"primary", "flatPrint":true, "label":""
+       ,"subProps":[
+          {"prop":"columns", "flatPrint":true, "label":"" }
+         ,{"prop":"autogen", "flatPrint":false, "label":"" }
+         ,{"prop":"keyBatch", "flatPrint":false, "label":"" }
+         ]
+       }
+      ,{"prop":"foreign", "flatPrint":true, "label":""
+       ,"subProps":[
+          {"prop":"name", "flatPrint":false, "label":"" }
+         ,{"prop":"srcColumns", "flatPrint":true, "label":"" }
+         ,{"prop":"destObject", "flatPrint":false, "label":"" }
+         ]
+       }
+      ,{"prop":"indices", "flatPrint":true, "label":""
+       ,"subProps":[
+          {"prop":"name", "flatPrint":false, "label":"" }
+         ,{"prop":"columns", "flatPrint":true, "label":"" }
+         ,{"prop":"cluster", "flatPrint":false, "label":"" }
+         ,{"prop":"orderBy", "flatPrint":true, "label":"" }
+         ,{"prop":"db", "flatPrint":false, "label":"" }
+         ,{"prop":"subWhere", "flatPrint":false, "label":"" }
+         ,{"prop":"subQuery", "flatPrint":true, "label":""
+          ,"subProps":[
+             {"prop":"name", "flatPrint":false, "label":"" }
+            ,{"prop":"description", "flatPrint":false, "label":"" }
+            ,{"prop":"from", "flatPrint":false, "label":"" }
+            ,{"prop":"wheres", "flatPrint":true, "label":""
+             ,"subProps":[
+                 {"prop":"db"    , "label":"" }
+                ,{"prop":"clause", "label":"" }
+               ]
+             }
+            ,{"prop":"orderBy", "flatPrint":true, "label":"" }
+            ]
+          }
+         ]
+       }
+      ,{"prop":"indexTemplates", "flatPrint":true, "label":""
+       ,"subProps":[
+          {"prop":"name", "flatPrint":false, "label":"" }
+         ,{"prop":"columns", "flatPrint":true, "label":"" }
+         ,{"prop":"orderBy", "flatPrint":true, "label":"" }
+         ,{"prop":"subWhere", "flatPrint":false, "label":"" }
+         ,{"prop":"subQuery", "flatPrint":true, "label":""
+          ,"subProps":[
+             {"prop":"name", "flatPrint":false, "label":"" }
+            ,{"prop":"description", "flatPrint":false, "label":"" }
+            ,{"prop":"from", "flatPrint":false, "label":"" }
+            ,{"prop":"wheres", "flatPrint":true, "label":""
+             ,"subProps":[
+                 {"prop":"db"    , "label":"" }
+                ,{"prop":"clause", "label":"" }
+               ]
+             }
+            ,{"prop":"orderBy", "flatPrint":true, "label":"" }
+            ]
+          }
+         ]
+       }
+      ,{"prop":"mappings", "flatPrint":false, "label":""
+       ,"subProps":[
+          {"prop":"name", "flatPrint":false, "label":"" }
+         ,{"prop":"mapper", "flatPrint":false, "label":"" }
+         ,{"prop":"description", "flatPrint":false, "label":"" }
+         ]
+       }
+      ]
+    }
    ]
  }
 ,{"prop":"migrations", "flatPrint":false, "label":""
  ,"subProps":[
     {"prop":"renames", "flatPrint":true, "label":""
     ,"subProps":[
-       {"prop":"object"  , "flatPrint":true, "label":"" }
-      ,{"prop":"view"    , "flatPrint":true, "label":"" }
-      ,{"prop":"column"  , "flatPrint":true, "label":"" }
-      ,{"prop":"oldNames", "flatPrint":true, "label":"" }
+       {"prop":"object"  , "flatPrint":true, "label":"", "group":1 }
+      ,{"prop":"view"    , "flatPrint":true, "label":"", "group":1 }
+      ,{"prop":"column"  , "flatPrint":true, "label":"", "group":2 }
+      ,{"prop":"oldNames", "flatPrint":true, "label":"", "group":3 }
       ]
     }
    ,{"prop":"moves", "flatPrint":true, "label":""
