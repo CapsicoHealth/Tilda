@@ -603,7 +603,7 @@ public class JSONUtil
         for (String i : a)
           {
             if (flatPrint == false)
-              Out.write("\n"+PaddingUtil.getPad(padding+3));
+              Out.write("\n"+PaddingUtil.getPad(padding));
             if (First == true)
               {
                 First = false;
@@ -755,36 +755,44 @@ public class JSONUtil
             return;
 
           }
-        JsonElement e = val.get(0);
+        JsonElement e = null;
+        for (int i = 0; i < val.size(); ++i)
+          if (val.get(i).isJsonNull() == false)
+            {
+              e = val.get(i);
+              break;
+            }
+        if (e == null)
+          throw new IOException("Element array '" + name + "' only contains NULL values and type cannot be infered.");
         if (e.isJsonPrimitive() == false)
           throw new IOException("Element array '" + name + "' not of primitive types");
         JsonPrimitive p = e.getAsJsonPrimitive();
-        if (p.isBoolean() == true)
+        if (p.isString() == true)
+          {
+            String[] arr = new String[val.size()];
+            for (int i = 0; i < val.size(); ++i)
+              arr[i] = val.get(i).isJsonNull()==true ? null : val.get(i).getAsJsonPrimitive().getAsString();
+            print(out, name, first, arr, padding, flatPrint);
+          }
+        else if (p.isBoolean() == true)
           {
             boolean[] arr = new boolean[val.size()];
             for (int i = 0; i < val.size(); ++i)
               arr[i] = val.get(i).getAsJsonPrimitive().getAsBoolean();
             print(out, name, first, arr);
           }
-        else if (p.isString() == true)
-          {
-            String[] arr = new String[val.size()];
-            for (int i = 0; i < val.size(); ++i)
-              arr[i] = val.get(i).getAsJsonPrimitive().getAsString();
-            print(out, name, first, arr, padding, flatPrint);
-          }
         else if (p.isNumber() == true)
           {
             if (type.isAssignableFrom(Short.class) == true)
               {
-                Long[] arr = new Long[val.size()];
+                long[] arr = new long[val.size()];
                 for (int i = 0; i < val.size(); ++i)
                   arr[i] = val.get(i).getAsJsonPrimitive().getAsLong();
                 print(out, name, first, arr);
               }
             else if (type.isAssignableFrom(Float.class) == true)
               {
-                Double[] arr = new Double[val.size()];
+                double[] arr = new double[val.size()];
                 for (int i = 0; i < val.size(); ++i)
                   arr[i] = val.get(i).getAsJsonPrimitive().getAsDouble();
                 print(out, name, first, arr);
@@ -1179,6 +1187,12 @@ public class JSONUtil
     public static void print(Writer out, Connection C, String elementName, ResultSet RS, int idx, ColumnMeta cm)
     throws Exception
       {
+        print(out, C, elementName, RS, idx, cm, false);
+      }
+
+    public static void print(Writer out, Connection C, String elementName, ResultSet RS, int idx, ColumnMeta cm, boolean trimStrings)
+    throws Exception
+      {
         switch (cm._TildaType)
           {
             case BINARY:
@@ -1214,7 +1228,7 @@ public class JSONUtil
               else
                 {
                   String v_str = RS.getString(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v_str);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : trimStrings == true ? v_str.trim() : v_str);
                 }
               break;
             case DATE:

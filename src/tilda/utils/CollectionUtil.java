@@ -629,7 +629,7 @@ public class CollectionUtil
       {
         return L==null ? null : L.toArray(new String[L.size()]);
       }
-
+    
     public static String[][] toDoubleStringArray(Collection<String[]> L)
       {
         return L==null ? null : L.toArray(new String[L.size()][]);
