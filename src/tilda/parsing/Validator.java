@@ -47,9 +47,12 @@ import tilda.utils.json.JSONUtil;
 
 public abstract class Validator
   {
-    protected static final Logger LOG                = LogManager.getLogger(Validator.class.getName());
+    protected static final Logger  LOG                = LogManager.getLogger(Validator.class.getName());
 
-    protected static int          _INDENT_MULTIPLIER = 3;
+    protected final static int     _INDENT_MULTIPLIER = 3;
+    protected final static boolean _TEST_LNE          = false;
+    protected final static boolean _TEST_COL          = false;
+    protected final static boolean _TEST_PAD          = true;
 
     protected static class Column
       {
@@ -70,11 +73,13 @@ public abstract class Validator
 
     protected static class Line
       {
-        protected List<Column> _columns             = new ArrayList<Column>();
-        int                    _subColumnGroupStart = 0;
-        boolean                _subColumnGroupMulti = false;
-        protected List<Line>   _subColumns          = new ArrayList<Line>();
-        protected int          _folded              = -1;
+        protected List<Column> _columns              = new ArrayList<Column>();
+        int                    _subColumnGroupStart  = 0;
+        boolean                _subColumnGroupMulti  = false;
+        boolean                _subColumnGroupObject = false;
+        boolean                _flatObjectOverhead   = false;
+        protected List<Line>   _subColumns           = new ArrayList<Line>();
+        protected int          _folded               = -1;
 
         protected void add(String columnStr, int columnGroup)
           {
@@ -130,13 +135,13 @@ public abstract class Validator
           }
       }
 
-    public static void validateCodeModel(List<Line> table, JsonObject tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint)
+    public static void validateCodeModel(List<Line> table, JsonObject tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint, boolean top)
     throws IOException
       {
         if (tildaDef == null)
           return;
         Line line = new Line();
-        line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, parentFlatPrint, tildaDef, line, false);
+        line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, parentFlatPrint, tildaDef, line, false, top);
         // There are cases for flat-printing where no new line is added, and the line is already added in validateCodeModel
         // There are other cases where one line is wrapped, and a new line is created in validateCodeModel in the last loop
         // and so the line needs to be added here.
@@ -155,7 +160,7 @@ public abstract class Validator
           }
       }
 
-    public static void validateCodeModel(List<Line> table, JsonArray tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint)
+    public static void validateCodeModel(List<Line> table, JsonArray tildaDef, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint, boolean top)
     throws IOException
       {
         if (tildaDef == null || tildaDef.size() == 0)
@@ -168,7 +173,7 @@ public abstract class Validator
             JsonObject e = tildaDef.get(i).getAsJsonObject();
             Line line = new Line();
             line.add(/* (parentFlatPrint == true ? PaddingUtil.getPad(level) : "") + */ (i == 0 ? " {" : ",{"), 0);
-            line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, parentFlatPrint, e, line, true);
+            line = validateCodeModel(table, tildaPartClass, tildaLayoutDefs, parentFlatPrint, e, line, true, top);
             // There are cases for flat-printing where no new line is added, and the line is already added in validateCodeModel
             // There are other cases where one line is wrapped, and a new line is created in validateCodeModel in the last loop
             // and so the line needs to be added here.
@@ -238,7 +243,7 @@ public abstract class Validator
       }
 
 
-    protected static Line validateCodeModel(List<Line> table, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, /* int level, */ boolean parentFlatPrint, JsonObject e, Line line, boolean objectArray)
+    protected static Line validateCodeModel(List<Line> table, Class<?> tildaPartClass, TildaLayoutDef[] tildaLayoutDefs, boolean parentFlatPrint, JsonObject e, Line line, boolean objectArray, boolean top)
     throws IOException
       {
         boolean firstElement = true;
@@ -255,7 +260,11 @@ public abstract class Validator
                   {
                     line = new Line();
                     if (objectArray == true)
-                      line.add("", 0);
+                      {
+                        line.add("", 0);
+                        if (parentFlatPrint == true)
+                         line._flatObjectOverhead = true;
+                      }
                   }
                 if (t.isArray() == true)
                   {
@@ -276,6 +285,12 @@ public abstract class Validator
                 Line arrayWrapupLine = null;
                 if (tildaPart == false)
                   {
+                    if (tld._nextLine == true)
+                      {
+                        table.add(line);
+                        line = new Line();
+                        // line.add("", tld._group);
+                      }
                     if (multi == true)
                       {
                         // if (parentFlatPrint == false)
@@ -312,26 +327,27 @@ public abstract class Validator
                           line._subColumnGroupStart = tld._group;
                         if (tld._flatPrint == true)
                           line._subColumnGroupMulti = true;
-                        validateCodeModel(line._subColumns, ee.getAsJsonArray(), t, tld._subProps, tld._flatPrint);
+                        validateCodeModel(line._subColumns, ee.getAsJsonArray(), t, tld._subProps, tld._flatPrint, false);
                       }
                     else
                       {
                         if (tld._flatPrint == true && parentFlatPrint == true)
                           line._subColumnGroupMulti = true;
-                        validateCodeModel(line._subColumns, ee.getAsJsonObject(), t, tld._subProps, tld._flatPrint);
+                        line._subColumnGroupObject = true;
+                        validateCodeModel(line._subColumns, ee.getAsJsonObject(), t, tld._subProps, tld._flatPrint, false);
                       }
                     if (parentFlatPrint == false && tld._flatPrint == false || multi == true && objectArray == true || tld._flatPrint == true && multi == true)
                       {
                         table.add(line);
                         line = new Line();
-                        if (multi == true && objectArray == true)
+                        if (multi == true && objectArray == true || top == false && parentFlatPrint == false && tld._flatPrint == false)
                           line.add("", 0);
                       }
                     else if (tld._flatPrint == true && multi == false)
                       {
                         line.fold();
                       }
-                    line.add(PaddingUtil.getPad(0/* level */) + (multi == true && parentFlatPrint == true ? "   ]" : multi == true ? "  ]" : "  }"), tld._group);
+                    line.add(multi == true && parentFlatPrint == true ? "   ]" : multi == true ? "  ]" : "  }", tld._group);
                   }
                 if (parentFlatPrint == false)
                   {
@@ -425,7 +441,7 @@ public abstract class Validator
           {
             int pad = getCatchUpPad(L, prevGroup, prevColNum, nextGroup);
             if (pad > 0)
-              out.append(PaddingUtil.getPad(pad, '+'));
+              out.append(PaddingUtil.getPad(pad, _TEST_PAD ? '+' : ' '));
           }
       }
 
@@ -451,13 +467,11 @@ public abstract class Validator
           }
         // GroupCol.print(L);
 
-        final boolean testingLn = false;
-        final boolean testingCol = false;
         for (int i = 0; i < table.size(); ++i)
           {
             Line row = table.get(i);
             String line = row.join("").trim();
-            if (line.indexOf("dbOnly" /* subWhereX" */) >= 0)
+            if (line.indexOf("tilda.DataMart.postgres.helpers-before.sql") >= 0)
               LOG.debug("XXX");
             int padding = 0;
             int groupPadding = 0;
@@ -466,9 +480,9 @@ public abstract class Validator
                 if (row._subColumnGroupStart > 0)
                   groupPadding = GroupCol.getCatchUpPad(L, 0, 0, row._subColumnGroupStart) + 1;
                 padding += extraPad + groupPadding + level * _INDENT_MULTIPLIER/* + extraPad */;
-                if (testingLn == true)
+                if (_TEST_LNE == true)
                   out.append(">>column group line: level=" + level + ", extraPad=" + /* extraPad + */ ", padding=" + padding + ", row._subColumnGroupStart=" + row._subColumnGroupStart + ", row._subColumnGroupMulti=" + row._subColumnGroupMulti + "\n");
-                out.append(PaddingUtil.getPad(padding, '.'));
+                out.append(PaddingUtil.getPad(padding, _TEST_PAD ? '.' : ' '));
                 int prevGroup = -1;
                 int colNum = -1;
                 boolean lineStart = true;
@@ -482,16 +496,16 @@ public abstract class Validator
                         prevGroup = col._group;
                       }
                     ++colNum;
-                    String testingStr = !testingCol ? "" : "|" + col._group + "-" + colNum;
+                    String testingStr = !_TEST_COL ? "" : "|" + col._group + "-" + colNum;
                     int pad = row._folded > 0 && j >= row._folded ? col._str.length() + 1 : GroupCol.getMaxWidth(L, col._group, colNum);
                     if (col._str.length() == 0)
                       {
                         if (lineStart == true)
-                          ; //groupPadding += pad;
+                          ; // groupPadding += pad;
                       }
                     else
                       lineStart = false;
-                    out.append(testingStr + PaddingUtil.pad(col._str, pad));
+                    out.append(testingStr + PaddingUtil.pad(col._str, pad, _TEST_PAD ? '+' : ' '));
                   }
                 ++colNum;
                 Column col = row._columns.get(row._columns.size() - 1);
@@ -501,7 +515,7 @@ public abstract class Validator
                     colNum = 0;
                     prevGroup = col._group;
                   }
-                String testingStr = !testingCol ? "" : "|" + col._group + "-" + colNum;
+                String testingStr = !_TEST_COL ? "" : "|" + col._group + "-" + colNum;
                 out.append(testingStr + col._str.stripTrailing());
                 out.append("\n");
                 out.flush();
@@ -509,9 +523,9 @@ public abstract class Validator
               }
             if (row._subColumns.isEmpty() == false)
               {
-                if (testingLn == true)
+                if (_TEST_LNE == true)
                   out.append(">>new column group: level=" + level + ", extraPad=" + /* extraPad + ", xxx=" + xxx + */", padding=" + padding + ", row._subColumnGroupStart=" + row._subColumnGroupStart + ", row._subColumnGroupMulti=" + row._subColumnGroupMulti + "\n");
-                printColAligned(out, row._subColumns, level + (row._subColumnGroupMulti == true ? 2 : 1), groupPadding);
+                printColAligned(out, row._subColumns, level + (level > 0 && (row._subColumnGroupMulti == true || row._subColumnGroupMulti == false && row._subColumnGroupObject == true) ? 2 : 1), groupPadding);
               }
           }
       }
@@ -585,7 +599,7 @@ public abstract class Validator
         List<Line> table = new ArrayList<Line>();
         try
           {
-            validateCodeModel(table, j, Schema.class, TLDL/* , _INITIAL_INDENT */, false);
+            validateCodeModel(table, j, Schema.class, TLDL, false, true);
           }
         catch (Throwable T)
           {
@@ -653,16 +667,16 @@ public abstract class Validator
             : ParameterizedType.class.isAssignableFrom(gt.getClass()) == true ? (Class<?>) ((ParameterizedType) gt).getActualTypeArguments()[0]
             : f.getType();
             boolean tildaPart = t.getName().startsWith("tilda.parsing.parts.") == true;
-            str.append(PaddingUtil.getPad(q.size() * 3 - 3) + (first == true ? " " : ",") + "{\"prop\":\"" + a.value() + "\", \"flatPrint\":false, \"label\":\"\"" + (tildaPart == true ? "\n" : " }\n"));
+            str.append(PaddingUtil.getPad(q.size() * 3 - 3, _TEST_PAD ? '#' : ' ') + (first == true ? " " : ",") + "{\"prop\":\"" + a.value() + "\", \"flatPrint\":false, \"label\":\"\"" + (tildaPart == true ? "\n" : " }\n"));
             first = false;
             if (tildaPart == true)
               {
-                str.append(PaddingUtil.getPad(q.size() * 3 - 3) + " ,\"subProps\":[\n");
+                str.append(PaddingUtil.getPad(q.size() * 3 - 3, _TEST_PAD ? '@' : ' ') + " ,\"subProps\":[\n");
                 q.addLast(a.value());
                 checkTildaDefVsClasses(q, str, tld == null ? null : tld._subProps, t);
                 q.pollLast();
-                str.append(PaddingUtil.getPad(q.size() * 3 - 3) + "   ]\n");
-                str.append(PaddingUtil.getPad(q.size() * 3 - 3) + " }\n");
+                str.append(PaddingUtil.getPad(q.size() * 3 - 3, _TEST_PAD ? '@' : ' ') + "   ]\n");
+                str.append(PaddingUtil.getPad(q.size() * 3 - 3, _TEST_PAD ? '@' : ' ') + " }\n");
               }
           }
 
@@ -671,7 +685,7 @@ public abstract class Validator
             {
               Field f = getField(fields, tld._prop);
               if (f == null)
-                LOG.debug(PaddingUtil.getPad(q.size() * 3 - 3) + "TLD Property '" + printPath(q, tld._prop) + "' not found in class '" + tildaPartClass.getCanonicalName() + "'.");
+                LOG.debug(PaddingUtil.getPad(q.size() * 3 - 3, _TEST_PAD ? '$' : ' ') + "TLD Property '" + printPath(q, tld._prop) + "' not found in class '" + tildaPartClass.getCanonicalName() + "'.");
             }
 
       }

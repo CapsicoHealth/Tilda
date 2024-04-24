@@ -37,6 +37,12 @@ public class PaddingUtil
         return Padding-S.length() >= 0 && Padding < _PADS.length ? S+_PADS[Padding-S.length()] : S;
       }
 
+    public static final String pad(String S, int Padding, char pad)
+      {
+        int len = Padding-S.length();
+        return len > 0 ? S+getPad(len, pad) : S;
+      }
+
     public static final void pad(StringBuilder Str, String S, int MaxLen)
       {
         String Pad = getPad(MaxLen - S.length());

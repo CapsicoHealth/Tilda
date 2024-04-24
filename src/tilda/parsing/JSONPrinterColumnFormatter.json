@@ -461,7 +461,6 @@
 //      ,{"prop":"sameas"     , "label":"" }
       ,{"prop":"prefix"     , "group":2, "label":"" }
       ,{"prop":"postfix"    , "group":2, "label":"" }
-      ,{"prop":"exclude"    , "flatPrint":true , "group":2, "label":"" }
       ,{"prop":"as"         , "flatPrint":false, "group":3, "label":"" }
       ,{"prop":"formulaOnly", "flatPrint":false, "group":3, "label":"" }
       ,{"prop":"joinOnly"   , "flatPrint":false, "group":3, "label":"" }
@@ -482,6 +481,7 @@
       ,{"prop":"useMapper"  , "flatPrint":false, "group":12, "label":"" }
       ,{"prop":"useEnum"    , "flatPrint":false, "group":12, "label":"" }
       ,{"prop":"description", "flatPrint":false, "group":13, "label":"" }
+      ,{"prop":"exclude"    , "flatPrint":true , "nextLine":true, "group":2, "label":"" }
       ]
     }
    ,{"prop":"joins", "flatPrint":true, "label":""
