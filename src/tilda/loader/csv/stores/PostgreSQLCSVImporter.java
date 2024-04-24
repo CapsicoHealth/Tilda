@@ -19,6 +19,7 @@ package tilda.loader.csv.stores;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -315,12 +316,12 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                       throw new Exception("Couldn't parse '" + value + "' as a Double for column '" + CI._Name + "'.");
                                     Pst.setDouble(i + x, Double.parseDouble(value));
                                   }
-                                else if (CI._TildaType == ColumnType.DATETIME)
+                                else if (CI._TildaType == ColumnType.DATETIME || CI._TildaType == ColumnType.DATETIME_PLAIN)
                                   {
                                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimePattern);
-                                    LocalDate date = LocalDate.parse(value, formatter);
-                                    ZonedDateTime valueTime = date.atStartOfDay(ZoneId.systemDefault());
-                                    java.sql.Timestamp xt = new java.sql.Timestamp(valueTime.toInstant().toEpochMilli());
+                                    LocalDateTime date = LocalDateTime.parse(value, formatter);
+                                    ZonedDateTime zdt = date.atZone(ZoneId.systemDefault());
+                                    java.sql.Timestamp xt = new java.sql.Timestamp(zdt.toInstant().toEpochMilli());
                                     Pst.setTimestamp(i + x, xt, ZoneInfo_Factory.nowAsCalendar(DateTimeZoneInfoId));
                                   }
                                 else if (CI._TildaType == ColumnType.DATE)

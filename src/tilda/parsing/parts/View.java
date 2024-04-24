@@ -444,7 +444,8 @@ public class View extends Base
                 int offset = 0;
                 for (int i = 0; i < _DistinctOn._Columns.length; ++i)
                   {
-                    if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
+                    Column col = getColumn(_DistinctOn._Columns[i]);
+                    if (col != null && (col._Type == ColumnType.DATETIME || col._Type == ColumnType.DATETIME_PLAIN))
                       ++offset;
                     if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
                       {
@@ -585,7 +586,7 @@ public class View extends Base
                   {
                     F.validate(PS, this);
                     Column C = new Column(F._Name, F._TypeStr, F._Size, true, false, ColumnMode.NORMAL, true, null, "<B>" + F._Title + "</B>: " + String.join(" ", F._Description), F._Precision, F._Scale, null, null);
-                    if (F.getType() == ColumnType.DATETIME)
+                    if (F.getType() == ColumnType.DATETIME || F.getType() == ColumnType.DATETIME_PLAIN)
                       C._FCT = FrameworkColumnType.FORMULA_DT;
                     else
                       C._FCT = FrameworkColumnType.FORMULA;

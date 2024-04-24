@@ -40,11 +40,9 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.types.Type_DatetimePrimitive;
-import tilda.utils.AsciiArt;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
-import tilda.utils.pairs.StringStringPair;
 
 public class BigQuery extends CommonStoreImpl
   {
@@ -294,129 +292,12 @@ public class BigQuery extends CommonStoreImpl
         return null;
       }
 
+    
     @Override
-    public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
+    protected ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
     throws Exception
       {
-        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
-        ColumnType TildaType = null;
-        String TypeSql = null;
-        switch (Type)
-          {
-            /*@formatter:off*/
-            case java.sql.Types.ARRAY        : TypeSql = "ARRAY"        ;
-                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
-                                               break;
-            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ;
-                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
-                                               break;
-            case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
-            case java.sql.Types.BINARY       : TypeSql = "BINARY"       ; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.BIT          : TypeSql = "BIT"          ; TildaType = ColumnType.BOOLEAN; break;
-            case java.sql.Types.BLOB         : TypeSql = "BLOB"         ; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.BOOLEAN      : TypeSql = "BOOLEAN"      ; TildaType = ColumnType.BOOLEAN; break;
-            case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
-            case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
-            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = ColumnType.DATE; break;
-            case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
-            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
-            case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
-            case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
-            case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.LONGVARCHAR  : TypeSql = "LONGVARCHAR"  ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
-            case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
-            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.NUMERIC; break;
-            case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.OTHER        :
-              if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
-                {
-                  TypeSql = "JSONB";
-                  TildaType = ColumnType.JSON;
-                }
-              else if (TypeName != null && TypeName.equalsIgnoreCase("uuid") == true)
-                {
-                  TypeSql = "UUID";
-                  TildaType = ColumnType.UUID;
-                }
-              else
-                {
-                  TypeSql = "OTHER";
-                  TildaType = null;
-                }
-              break;
-            case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
-            case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
-            case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
-            case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
-            case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
-            case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
-            case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
-            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
-            case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
-            default:
-              TildaType = null;
-              LOG.warn("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+"). Has been set to UNMAPPED column type.");
-            /*@formatter:on*/
-          }
-        return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
-      }
-
-
-    private static ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
-    throws Exception
-      {
-        switch (TypeName)
-          {
-            case "_int2":
-              TildaType = ColumnType.SHORT;
-              break;
-            case "_int4":
-              TildaType = ColumnType.INTEGER;
-              break;
-            case "_int8":
-              TildaType = ColumnType.LONG;
-              break;
-            case "_float4":
-              TildaType = ColumnType.FLOAT;
-              break;
-            case "_float8":
-              TildaType = ColumnType.DOUBLE;
-              break;
-            case "_numeric":
-              TildaType = ColumnType.NUMERIC;
-              break;
-            case "_uuid":
-              TildaType = ColumnType.UUID;
-              break;
-            case "_bpchar":
-              TildaType = ColumnType.CHAR;
-              break;
-            case "_text":
-            case "_varchar":
-            case "character_data":
-              TildaType = ColumnType.STRING;
-              break;
-            case "_bool":
-              TildaType = ColumnType.BOOLEAN;
-              break;
-            case "_date":
-              TildaType = ColumnType.DATE;
-              break;
-            case "_timestamptz":
-              TildaType = ColumnType.DATETIME;
-              break;
-            default:
-              TildaType = null;
-              LOG.warn("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'. Set to UNMAPPED column type.");
-          }
-        return TildaType;
+        throw new UnsupportedOperationException();
       }
 
     @Override

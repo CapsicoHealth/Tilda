@@ -1075,8 +1075,8 @@ public class Migrator
                   defaultValueDB = defaultValueDB.substring(0, defaultValueDB.length() - 1);
               }
           }
-        // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 9 characters so we get '1111-11-1'
-        if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME)
+        // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 10 characters so we get '1111-11-11'
+        if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN)
           if (Col._DefaultCreateValue != null && Col._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true && defaultValueDB != null && defaultValueDB.length() > 9)
             {
               defaultValue = defaultValue.substring(0, 10);

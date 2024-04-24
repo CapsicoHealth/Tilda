@@ -379,7 +379,7 @@ public class BQHelper
       }
 
 
-    public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
+    public static Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {
         return bq.getTable(datasetName, tableName).getDefinition().getSchema();
       }
@@ -622,5 +622,15 @@ public class BQHelper
         return DateTimeUtil.parseDate(f.getStringValue());
       }
 
+
+    /**
+     * Creates a table in a JDBC destination (based on the Connection) from a BQ Schema definition
+     * @param schema
+     * @param C
+     */
+    public static void createTable(Schema schema, Connection C)
+      {
+        //schema.getFields()
+      }
 
   }

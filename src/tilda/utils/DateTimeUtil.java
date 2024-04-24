@@ -18,6 +18,7 @@ package tilda.utils;
 
 import java.time.Instant;
 import java.time.LocalDate;
+//import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Period;
 import java.time.ZoneId;
@@ -322,6 +323,11 @@ public class DateTimeUtil
         // //ISO_ZONED_DATE_TIME);
       }
 
+//    public static String printDateTimeForJSON(LocalDateTime LDT)
+//      {
+//        return LDT == null ? null : LDT.format(DateTimeFormatter.ISO_DATE_TIME);
+//      }
+
     public static String printDate(LocalDate D)
       {
         return D == null ? null : D.format(DateTimeFormatter.ISO_DATE);
@@ -385,6 +391,23 @@ public class DateTimeUtil
         return ZDT;
       }
 
+//    public static LocalDateTime parsefromJSONWithoutTZ(String DateTimeStr)
+//      {
+//        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+//          return null;
+//        LocalDateTime LDT = parseWithoutZone(DateTimeStr).toLocalDateTime();
+//        if (LDT == null)
+//          try
+//            {
+//              return LocalDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_DATE_TIME);
+//            }
+//          catch (Exception E)
+//            {
+//              LOG.catching(E);
+//            }
+//        return LDT;
+//      }
+    
     public static List<ZonedDateTime> parsefromJSON(List<String> DateTimeStr)
       {
         if (TextUtil.isNullOrEmpty(DateTimeStr) == true)

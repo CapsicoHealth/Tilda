@@ -59,6 +59,7 @@ class TypeWrapper
             {
               case BOOLEAN:
               case DATETIME:
+              case DATETIME_PLAIN:
                 if (_Type != Type)
                   {
                     _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
@@ -145,6 +146,7 @@ class TypeWrapper
             {
               case BOOLEAN:
               case DATETIME:
+              case DATETIME_PLAIN:
               case DOUBLE:
               case STRING:
                 if (_Type != Type)

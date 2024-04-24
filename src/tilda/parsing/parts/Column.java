@@ -268,12 +268,7 @@ public class Column extends TypeDef
         if (super.validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
           return;
 
-        if (_Type != ColumnType.DATETIME)
-          {
-            if (TextUtil.isNullOrEmpty(_TzModeStr) == false)
-              PS.AddError("Column '" + getFullName() + "' defined tzMode value '" + _TzModeStr + "' when the column is not a DATETIME.");
-          }
-        else
+        if (_Type == ColumnType.DATETIME || _Type == ColumnType.DATETIME_PLAIN)
           {
             if (TextUtil.isNullOrEmpty(_TzModeStr) == true)
               _TzModeStr = ParentObject._TzModeStr;
@@ -282,6 +277,15 @@ public class Column extends TypeDef
             if (isCollection() == true && _TzMode == TZMode.ROW)
               PS.AddError("Column '" + getFullName() + "' is a datetime collection with tzMode='" + _TzModeStr + "': datetime collections cannot have row-level tzMode.");
           }
+        else
+          {
+            if (TextUtil.isNullOrEmpty(_TzModeStr) == false)
+              PS.AddError("Column '" + getFullName() + "' defined tzMode value '" + _TzModeStr + "' when the column is not a DATETIME.");
+          }
+
+        // Convert from DATETIME ("with timezone") to DATETIME_PLAIN ("without timezone") if _TzMode says so.
+        if (_Type == ColumnType.DATETIME && isTZPlain() == true)
+         _Type = ColumnType.DATETIME_PLAIN;
         
         if (_AllowEmpty == true)
           {
@@ -714,20 +718,31 @@ public class Column extends TypeDef
       }
 
     /**
-     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...)
+     * A column needs an extra timezone support column if it is of type DATETIME/DATETIME_PLAIN and was not framework-generated (e.g., created, lastUpdated...)
      * 
      * @return
      */
     public boolean needsTZ()
       {
-        return getType() == ColumnType.DATETIME && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
+        return (getType() == ColumnType.DATETIME || getType() == ColumnType.DATETIME_PLAIN) && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
       }
 
+    /**
+     * A column is in "plain" TZ mode if its tzMode is COLUMN_NO_TZ or ROW_NO_TZ (going to a DATETIME or plain TIMESTAMP)
+     * 
+     * @return
+     */
+    public boolean isTZPlain()
+      {
+        // 
+        return /*needsTZ() == true &&*/ (_TzMode == TZMode.COLUMN_NO_TZ || _TzMode == TZMode.ROW_NO_TZ);
+      }
+    
     public String getTZName()
       {
         if (needsTZ() == false)
           return null;
-        return _TzMode == TZMode.COLUMN ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
+        return _TzMode == TZMode.COLUMN || _TzMode == TZMode.COLUMN_NO_TZ ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
       }
 
     protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)

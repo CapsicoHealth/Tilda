@@ -23,6 +23,7 @@ public enum BigQueryType
     /*@formatter:off*/
     STRING  ("STRING"          , "STRING"     , ColumnType.STRING    ),
     JSON    ("JSON"            , null         , ColumnType.JSON      ),
+    VECTOR  ("VECTOR"          , null         , ColumnType.VECTOR    ),
     CHAR    ("STRING"          , "STRING"     , ColumnType.CHAR      ),
     SHORT   ("INT64"           , "INT64"      , ColumnType.SHORT     ),
     INTEGER ("INT64"           , "INT64"      , ColumnType.INTEGER   ),
@@ -33,6 +34,7 @@ public enum BigQueryType
     BOOLEAN ("BOOLEAN"         , "BOOLEAN"    , ColumnType.BOOLEAN   ),
     DATE    ("DATE"            , "DATE"       , ColumnType.DATE      ),
     DATETIME("TIMESTAMP"       , "TIMESTAMP"  , ColumnType.DATETIME  ),
+    DATETIME_PLAIN("DATETIME"  , "DATETIME"   , ColumnType.DATETIME_PLAIN  ),
     BINARY  ("BYTES"           , null         , ColumnType.BINARY    ),
     BITFIELD("INT64"           , "INT64"      , ColumnType.BITFIELD  ),
     UUID    ("STRING"          , "STRING"     , ColumnType.UUID      );
@@ -40,7 +42,7 @@ public enum BigQueryType
 
     static
       {
-        ColumnType.validate(BigQueryType.values());
+        ColumnType.validate(BigQueryType.values(), "BigQueryType");
       }
 
     private BigQueryType(String SQLType, String SQLArrayType, ColumnType T)

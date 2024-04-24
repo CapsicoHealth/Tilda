@@ -116,7 +116,7 @@ public class TypeDef
             BaseType = "STRING";
           }
 
-        if ((_Type = ColumnType.parse(BaseType)) == null)
+        if ((_Type = ColumnType.parse(BaseType)) == null || _Type._InternalOnly == true)
           {
             PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "'.");
             return;
@@ -215,6 +215,7 @@ public class TypeDef
               PS.AddError(What + " is a '" + _Type + "' which is not allowed.");
               return false;
             case DATETIME:
+            case DATETIME_PLAIN:
               if (DateTimeAllowed == false)
                 return PS.AddError(What + " is a '" + _Type + "' which is not allowed.");
               if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false)

@@ -263,7 +263,7 @@ public class Helper
         for (Column C : DefaultUpdateColumns)
           {
             String MethodName = Padder.pad(TextUtil.capitalizeFirstCharacter(C.getName()) + TextUtil.capitalizeFirstCharacter(C._DefaultCreateValue._Name));
-            if (C.getType() == ColumnType.DATETIME)
+            if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN)
               {
                 if (C._DefaultCreateValue._Value.equalsIgnoreCase("NOW") == true)
                   Out.println(Prefix + "set" + Padder.pad(TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "Now") + "();");
@@ -524,6 +524,8 @@ public class Helper
                             Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi==true?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
                           if (C.getType() == ColumnType.DATETIME)
                             Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                          else if (C.getType() == ColumnType.DATETIME_PLAIN)
+                            Out.println("PS.setObject(++i, P._" + V + ");");
                           else if (C.getType() == ColumnType.DATE)
                             Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
                           else if (A._Multi == false)
@@ -573,6 +575,8 @@ public class Helper
                         Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi==true?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
                       if (C.getType() == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                      else if (C.getType() == ColumnType.DATETIME_PLAIN)
+                        Out.println("PS.setObject(++i, P._" + V + ");");
                       else if (C.getType() == ColumnType.DATE)
                         Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
                       else if (A._Multi == false)
@@ -604,6 +608,8 @@ public class Helper
               Out.print("if (" + Pred + "isNull" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + (C.isCollection()==true || arrayOverride == true ?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + ");  else ");
             if (C.getType() == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(" + Pred + "_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+            else if (C.getType() == ColumnType.DATETIME_PLAIN)
+              Out.println("PS.setObject(++i, " + Pred + "_" + C.getName() + ");");
             else if (C.getType() == ColumnType.DATE)
               Out.println("PS.setDate(++i, new java.sql.Date(" + Pred + "_" + C.getName() + ".getYear()-1900, " + Pred + "_" + C.getName() + ".getMonthValue()-1, " + Pred + "_" + C.getName() + ".getDayOfMonth()));");
             else if (C.isCollection() == false)
@@ -728,6 +734,8 @@ public class Helper
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(" + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ", \",\"));");
         else if (C.getType() == ColumnType.DATETIME)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL("+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
+        else if (C.getType() == ColumnType.DATETIME_PLAIN)
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.parsefromJSONWithoutTZ("+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
         else if (C.getType() == ColumnType.DATE)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate("+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
         else
@@ -805,7 +813,7 @@ public class Helper
       {
         return maskDef == null
         ? prefix+getterStr
-        : collection == true && type!=ColumnType.DATE && type!=ColumnType.DATETIME
+        : collection == true && type!=ColumnType.DATETIME && type!=ColumnType.DATETIME_PLAIN
         ? "("+prefix+"__MaskMode==true ? TextUtil.mask(" + prefix+getterStr+", "+ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + ") : "+prefix+getterStr+")"
         : "("+prefix+"__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + " : "+prefix+getterStr+")"
         ;

@@ -400,7 +400,8 @@ public class MSSQL implements DBType
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
             case microsoft.sql.Types.DATETIMEOFFSET:             
-            case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
+            case java.sql.Types.TIMESTAMP              : TypeSql = "TIMESTAMP"              ; TildaType = ColumnType.DATETIME_PLAIN; break;
+            case java.sql.Types.TIMESTAMP_WITH_TIMEZONE: TypeSql = "TIMESTAMP_WITH_TIMEZONE"; TildaType = ColumnType.DATETIME      ; break;
             case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;

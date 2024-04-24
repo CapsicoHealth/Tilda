@@ -1246,6 +1246,7 @@ public class JSONUtil
                 }
               break;
             case DATETIME:
+            case DATETIME_PLAIN:
               // most Tilda tables have a 'TZ' column accompanying a datetime column, but not all. Also,
               // if this is used for a plain table, we have to assume that the Tz info is not there and
               // use UTC as a default.
@@ -1263,7 +1264,6 @@ public class JSONUtil
                   List<Timestamp> v_ts = (List<Timestamp>) C.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_ts = null;
-
 
                   List<ZonedDateTime> v_zdt = new ArrayList<ZonedDateTime>();
                   if (v_ts != null)

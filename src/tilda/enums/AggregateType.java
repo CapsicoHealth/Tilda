@@ -200,7 +200,7 @@ public enum AggregateType
               return ColumnType.LONG;
             case MIN:
             case MAX:
-              if (T != ColumnType.DATETIME || needsTZ == false)
+              if (T != ColumnType.DATETIME && T != ColumnType.DATETIME_PLAIN || needsTZ == false)
                 return T;
               break;
             case FIRST:
@@ -234,7 +234,7 @@ public enum AggregateType
           return null;
 
         StringBuilder Str = new StringBuilder("View Column '" + VC.getFullName() + "' declares a nonsensical aggregate " + VC._Aggregate.name() + " over type " + VC._SameAsObj.getType().name() + ".");
-        if (VC.getType() == ColumnType.DATETIME && (this == AggregateType.MIN || this == AggregateType.MAX))
+        if ((VC.getType() == ColumnType.DATETIME || VC.getType() == ColumnType.DATETIME_PLAIN) && (this == AggregateType.MIN || this == AggregateType.MAX))
           Str.append(" Because of the way ZonedDateTimes are represented in the database as two columns, Min/Max are not supported as aggregates but you can use First/Last with orderBy instead to the same effect.");
         return Str.toString();
       }

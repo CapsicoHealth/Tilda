@@ -19,14 +19,25 @@ package tilda.enums;
 public enum TZMode
   {
     /**
-     * A TZ column generated per DATETIME column
+     * A TZ column generated per DATETIMEZ (date-time with timezone) column (default)
      */
     COLUMN,
     
     /**
-     * A TZ column generated per Row for all DATETIME columns
+     * A TZ column generated per DATETIME (plain, no timezone) column (default)
      */
-    ROW;
+    COLUMN_NO_TZ,
+
+    /**
+     * A TZ column generated per Row for all DATETIMEZ (date-time with timezone) columns
+     */
+    ROW,
+
+    /**
+     * A TZ column generated per Row for all DATETIME (plain, no timezone) columns
+     */
+    ROW_NO_TZ
+    ;
     
     public static TZMode parse(String Str)
       {

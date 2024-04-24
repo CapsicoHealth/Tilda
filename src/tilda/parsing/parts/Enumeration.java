@@ -77,7 +77,7 @@ public class Enumeration
         C = new Column("label", ColumnType.STRING.toString(), 254, false, false, ColumnMode.NORMAL, false, ProtectionType.ABSOLUTE, "The label for this enumeration.", null, null, null, null);
         O._Columns.add(C);
         
-        C = new Column("deactivated", ColumnType.DATETIME.toString(), null, true, false, ColumnMode.NORMAL, false, null, "The label for this enumeration.", null, null, null, null);
+        C = new Column("deactivated", ColumnType.DATETIME.toString(), null, true, false, ColumnMode.NORMAL, false, null, "The datetime when this enumeration was deactivated.", null, null, null, null);
 //        C._FrameworkManaged = true;
         O._Columns.add(C);
         

@@ -448,8 +448,18 @@ public class ViewColumn
       {
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
-        && (TextUtil.isNullOrEmpty(_Expression) == true || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME)
+        && (TextUtil.isNullOrEmpty(_Expression) == true || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME_PLAIN)
         && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
+      }
+    
+    /**
+     * A column is in "plain" TZ mode if its tzMode is COLUMN_NO_TZ or ROW_NO_TZ (going to a DATETIME or plain TIMESTAMP)
+     * 
+     * @return
+     */
+    public boolean isTZPlain()
+      {
+        return _SameAsObj != null && _SameAsObj.isTZPlain() == true;
       }
 
     public boolean isList()

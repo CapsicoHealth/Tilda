@@ -34,36 +34,53 @@ public enum ColumnType
   {
 
     /*@formatter:off*/
-    STRING     (true , true , false, "STR"),
-    JSON       (true , false, false, "JSN"),
-    CHAR       (true , true , true , "CHR"),
-    SHORT      (true , true , true , "SHT"),
-    INTEGER    (true , true , true , "INT"),
-    LONG       (true , true , true , "LNG"),
-    FLOAT      (true , true , true , "FLT"),
-    DOUBLE     (true , true , true , "DBL"),
-    NUMERIC    (true , true , false, "NUM"),
-    BOOLEAN    (true , true , true , "BOL"),
-    DATE       (true , true , false, "DT" ),
-    DATETIME   (true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
-    BINARY     (false, false, false, "BIN"),
-    BITFIELD   (false, true , true , "BF" ),
-    UUID       (true , true , false, "UI" );
+    STRING         (true , true , false, "STR"  , false),
+    JSON           (true , false, false, "JSN"  , false),
+    VECTOR         (false, false, false, "VCTR" , false),
+    CHAR           (true , true , true , "CHR"  , false),
+    SHORT          (true , true , true , "SHT"  , false),
+    INTEGER        (true , true , true , "INT"  , false),
+    LONG           (true , true , true , "LNG"  , false),
+    FLOAT          (true , true , true , "FLT"  , false),
+    DOUBLE         (true , true , true , "DBL"  , false),
+    NUMERIC        (true , true , false, "NUM"  , false),
+    BOOLEAN        (true , true , true , "BOL"  , false),
+    DATE           (true , true , false, "DT"   , false),
+    /**
+     *  All Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.<BR>
+     *  Datetimes with timezones are stored as TIMESTAMPTZ in UTC and readjusted to ZonedDateTime in the app, and the TZ field
+     *  is updated as appropriate during a set.
+     */
+    DATETIME       (true , false, false, "DTMTZ", false),
+    /**
+     *  All Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.<BR>
+     *  Datetimes without timezones (plain) are stored as DATETIME and readjusted to ZonedDateTime in the app based on the stored TZ field which
+     *  is then managed explicitly in the app.<BR>
+     *  DATETIME_PLAIN is an internal type and is not available in the markup so that datetimes are enforced as being handled uniformly and always
+     *  with a timezone. The difference is whether the timezone is baked in the timestamptz or managed manually along with a datetime. The internal
+     *  implementation differences are driven by tzMode.
+     */
+    DATETIME_PLAIN (true , false, false, "DTM"  , true ),
+    BINARY         (false, false, false, "BIN"  , false),
+    BITFIELD       (false, true , true , "BF"   , false),
+    UUID           (true , true , false, "UI"   , false);
     /*@formatter:on*/
 
-    private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName)
+    private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName, boolean internalOnly)
       {
         _ArrayCompatible = ArrayCompatible;
         _SetCompatible = SetCompatible;
         _Primitive = Primitive;
         _SimpleName = TextUtil.capitalizeFirstCharacter(name().toLowerCase());
         _ShortName = shortName;
+        _InternalOnly = internalOnly;
       }
 
     public static PaddingTracker       _PadderTypeNames = new PaddingTracker();
     public final boolean               _ArrayCompatible;
     public final boolean               _SetCompatible;
     public final boolean               _Primitive;
+    public final boolean               _InternalOnly;
     public final String                _SimpleName;
     public final String                _ShortName;
     public final static ColumnType[][] _CompatibleTypes;
@@ -77,10 +94,12 @@ public enum ColumnType
           _PadderTypeNames.track(T.name());
 
         _CompatibleTypes = new ColumnType[][] {
-            { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, UUID, NUMERIC
+            { STRING, JSON, VECTOR, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, DATETIME_PLAIN, BITFIELD, SHORT, UUID, NUMERIC
             } // STRING
             , { JSON, STRING
             } // JSON
+            , { VECTOR, STRING
+            } // VECTOR
             , { CHAR, STRING
             } // CHAR
             , { SHORT
@@ -101,6 +120,8 @@ public enum ColumnType
             } // DATE
             , { DATETIME, DATE
             } // DATETIME
+            , { DATETIME_PLAIN, DATE
+            } // DATETIME
             , { BINARY
             } // BINARY
             , { BITFIELD
@@ -111,9 +132,11 @@ public enum ColumnType
 
         // Whether the first element of each row can be converted to any of the elements following
         _CompatibleDBTypes = new ColumnType[][] {
-            { STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT, NUMERIC, UUID
+            { STRING, JSON, VECTOR, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, DATETIME_PLAIN, BITFIELD, SHORT, NUMERIC, UUID
             } // STRING
             , { JSON, STRING
+            } // JSON
+            , { VECTOR, STRING
             } // JSON
             , { CHAR, STRING, BOOLEAN
             } // CHAR
@@ -131,9 +154,11 @@ public enum ColumnType
             } // NUMERIC TODO:CHECK
             , { BOOLEAN, STRING, DOUBLE, SHORT, INTEGER, LONG, CHAR, FLOAT, DOUBLE
             } // BOOLEAN
-            , { DATE, DATETIME, STRING
+            , { DATE, DATETIME, DATETIME_PLAIN, STRING
             } // DATE
             , { DATETIME, STRING
+            } // DATETIME
+            , { DATETIME_PLAIN, STRING
             } // DATETIME
             , { BINARY
             } // BINARY
@@ -148,26 +173,29 @@ public enum ColumnType
           {
             colsToValidate[i] = _CompatibleTypes[i][0];
           }
-        ColumnType.validate(colsToValidate);
+        ColumnType.validate(colsToValidate, "CompatibleTypes");
 
         ColumnType[] dbColsToValidate = new ColumnType[_CompatibleDBTypes.length];
         for (int i = 0; i < _CompatibleDBTypes.length; i++)
           {
             dbColsToValidate[i] = _CompatibleDBTypes[i][0];
           }
-        ColumnType.validate(dbColsToValidate);
+        ColumnType.validate(dbColsToValidate, "CompatibleDBTypes");
 
       }
 
 //@formatter:off
-    protected static String[][] _ALIASES = {{"BIGINT"   , "LONG"    }
-                                           ,{"SMALLINT" , "SHORT"   }
-                                           ,{"VARCHAR"  , "STRING"  }
-                                           ,{"TEXT"     , "STRING"  }
-                                           ,{"TIMESTAMP", "DATETIME"}
+    protected static String[][] _ALIASES = {{"BIGINT"     , "LONG"    }
+                                           ,{"SMALLINT"   , "SHORT"   }
+                                           ,{"VARCHAR"    , "STRING"  }
+                                           ,{"TEXT"       , "STRING"  }
+// Because we want to automate the way date-times are handled uniformly, these aliases break the 
+//encapsulation and shouldn't be used. modeTZ is the way.
+//                                           ,{"TIMESTAMPTZ", "DATETIME"}
+//                                           ,{"DATETIMETZ" , "DATETIME"}
                                            };
 //@formatter:on
-    
+
     public static ColumnType parse(String str)
       {
         if (str == null)
@@ -252,13 +280,12 @@ public enum ColumnType
         return compatibleTypes;
       }
 
-    public static <T> void validate(T[] Enums)
+    public static <T> void validate(T[] Enums, String typeName)
       {
         ColumnType[] Vals = ColumnType.values();
 
         if (Vals.length != Enums.length)
-          throw new Error("Error! The matching between " + ColumnType.class.getName() + " (" + Vals.length + ") and "
-          + Enums[0].getClass().getName() + " (" + Enums.length + ") failed: the counts didn't match.");
+          throw new Error("Error! The matching between " + ColumnType.class.getName() + " (" + Vals.length + ") and " + typeName + " (" + Enums.length + ") failed: the counts didn't match.");
         for (int i = 0; i < Vals.length; ++i)
           if (Vals[i].toString().equals(Enums[i].toString()) == false)
             throw new Error("Error! The enum " + ColumnType.class.getName() + "." + Vals[i].toString() + " did not match on position " + i + " against "
@@ -291,6 +318,7 @@ public enum ColumnType
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
             case DATETIME:
+            case DATETIME_PLAIN:
               {
                 ZonedDateTime[] val = ParseUtil.parseZonedDateTime("SQLZonedDateTimeArray", true, parts, Errors);
                 if (Errors.isEmpty() == false)
@@ -431,6 +459,8 @@ public enum ColumnType
               return "DATE";
             case DATETIME:
               return "TIMESTAMP";
+            case DATETIME_PLAIN:
+              return "DATETIME";
             case JSON:
               return "STRING";
             case BINARY:
@@ -467,6 +497,8 @@ public enum ColumnType
             case DATE:
               return java.sql.Types.DATE;
             case DATETIME:
+              return java.sql.Types.TIMESTAMP_WITH_TIMEZONE;
+            case DATETIME_PLAIN:
               return java.sql.Types.TIMESTAMP;
             case BINARY:
               return java.sql.Types.VARBINARY;
@@ -475,6 +507,11 @@ public enum ColumnType
             default:
               throw new Error("Incomplete switch in getSQLType() on ColumnType " + this.name());
           }
+      }
+
+    public String getMappedName()
+      {
+        return this == ColumnType.DATETIME_PLAIN ? ColumnType.DATETIME.name() : name();
       }
 
   }

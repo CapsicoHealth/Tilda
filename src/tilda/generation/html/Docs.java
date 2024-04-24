@@ -437,7 +437,7 @@ public class Docs
                 Out.println("<BR>This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".<BR>");
                 // Out.println("</TD></TR>");
               }
-            if (C._Values != null && C.getType().equals(ColumnType.DATE) == false && C.getType().equals(ColumnType.DATETIME) == false)
+            if (C._Values != null && C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN)
               {
                 // Out.println(" <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
                 Out.println("<BR>This column has defined a number of constant values:");

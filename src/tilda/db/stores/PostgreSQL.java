@@ -51,17 +51,19 @@ public class PostgreSQL extends CommonStoreImpl
         return "PostgreSQL";
       }
 
-    
+
     protected static final String[] _NODATA_SQL_STATES = { "23505"
-    };    
+    };
+
     @Override
     public String[] getConnectionNoDataStates()
       {
         return _NODATA_SQL_STATES;
       }
-    
+
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
     };
+
     @Override
     public String[] getConnectionLockMsgs()
       {
@@ -82,6 +84,7 @@ public class PostgreSQL extends CommonStoreImpl
      */
     protected static final String[] _CANCEL_SQL_STATES = { "57000", "57014", "57P01", "57P02", "57P03", "57P04"
     };
+
     @Override
     public String[] getConnectionCancelStates()
       {
@@ -165,7 +168,7 @@ public class PostgreSQL extends CommonStoreImpl
       {
         return true;
       }
-    
+
     @Override
     public boolean supportsArrays()
       {
@@ -274,9 +277,9 @@ public class PostgreSQL extends CommonStoreImpl
         + (T == ColumnType.NUMERIC && Precision != null ? "(" + Precision + (Scale != null ? "," + Scale : "") + ")" : "")
         + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
-    
- // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
-    
+
+    // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
+
     @Override
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride)
       {
@@ -292,7 +295,7 @@ public class PostgreSQL extends CommonStoreImpl
           return "jsonb";
         return isCollection == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
       }
-    
+
 
     @Override
     public String getHelperFunctionsScript(Connection Con, boolean Start)
@@ -341,128 +344,35 @@ public class PostgreSQL extends CommonStoreImpl
         return Str.toString();
       }
 
+
     @Override
-    public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
+    protected ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
     throws Exception
       {
-        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
-        ColumnType TildaType = null;
-        String TypeSql = null;
-        switch (Type)
-          {
-            /*@formatter:off*/
-            case java.sql.Types.ARRAY        : TypeSql = "ARRAY"        ;
-                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
-                                               break;
-            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ;
-                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
-                                               break;
-            case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
-            case java.sql.Types.BINARY       : TypeSql = "BINARY"       ; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.BIT          : TypeSql = "BIT"          ; TildaType = ColumnType.BOOLEAN; break;
-            case java.sql.Types.BLOB         : TypeSql = "BLOB"         ; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.BOOLEAN      : TypeSql = "BOOLEAN"      ; TildaType = ColumnType.BOOLEAN; break;
-            case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
-            case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
-            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = ColumnType.DATE; break;
-            case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
-            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
-            case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
-            case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
-            case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.LONGVARCHAR  : TypeSql = "LONGVARCHAR"  ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
-            case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
-            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.NUMERIC; break;
-            case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
-            case java.sql.Types.OTHER        :
-              if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
-                {
-                  TypeSql = "JSONB";
-                  TildaType = ColumnType.JSON;
-                }
-              else if (TypeName != null && TypeName.equalsIgnoreCase("uuid") == true)
-                {
-                  TypeSql = "UUID";
-                  TildaType = ColumnType.UUID;
-                }
-              else
-                {
-                  TypeSql = "OTHER";
-                  TildaType = null;
-                }
-              break;
-            case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
-            case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
-            case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
-            case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
-            case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
-            case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
-            case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
-            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = ColumnType.SHORT; break;
-            case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
-            default:
-              TildaType = null;
-              LOG.warn("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+"). Has been set to UNMAPPED column type.");
-            /*@formatter:on*/
-          }
-        return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
-      }
-
-
-    private static ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
-    throws Exception
-      {
+        if (TypeName.startsWith("_") == true)
+          TypeName = TypeName.substring(1);
+        /*@formatter:off*/
         switch (TypeName)
           {
-            case "_int2":
-              TildaType = ColumnType.SHORT;
-              break;
-            case "_int4":
-              TildaType = ColumnType.INTEGER;
-              break;
-            case "_int8":
-              TildaType = ColumnType.LONG;
-              break;
-            case "_float4":
-              TildaType = ColumnType.FLOAT;
-              break;
-            case "_float8":
-              TildaType = ColumnType.DOUBLE;
-              break;
-            case "_numeric":
-              TildaType = ColumnType.NUMERIC;
-              break;
-            case "_uuid":
-              TildaType = ColumnType.UUID;
-              break;
-            case "_bpchar":
-              TildaType = ColumnType.CHAR;
-              break;
-            case "_text":
-            case "_varchar":
-            case "character_data":
-              TildaType = ColumnType.STRING;
-              break;
-            case "_bool":
-              TildaType = ColumnType.BOOLEAN;
-              break;
-            case "_date":
-              TildaType = ColumnType.DATE;
-              break;
-            case "_timestamptz":
-              TildaType = ColumnType.DATETIME;
-              break;
-            default:
-              TildaType = null;
-              LOG.warn("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'. Set to UNMAPPED column type.");
+            case "int2"          : TildaType = ColumnType.SHORT         ; break;
+            case "int4"          : TildaType = ColumnType.INTEGER       ; break;
+            case "int8"          : TildaType = ColumnType.LONG          ; break;
+            case "float4"        : TildaType = ColumnType.FLOAT         ; break;
+            case "float8"        : TildaType = ColumnType.DOUBLE        ; break;
+            case "numeric"       : TildaType = ColumnType.NUMERIC       ; break;
+            case "uuid"          : TildaType = ColumnType.UUID          ; break;
+            case "bpchar"        : TildaType = ColumnType.CHAR          ; break;
+            case "text"          :
+            case "varchar"       :
+            case "character_data": TildaType = ColumnType.STRING        ; break;
+            case "bool"          : TildaType = ColumnType.BOOLEAN       ; break;
+            case "date"          : TildaType = ColumnType.DATE          ; break;
+            case "timestamptz"   : TildaType = ColumnType.DATETIME      ; break;
+            case "timestamp"     : TildaType = ColumnType.DATETIME_PLAIN; break;
+            default: TildaType = null;
+                     LOG.warn("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'. Set to UNMAPPED column type.");
           }
+        /*@formatter:on*/
         return TildaType;
       }
 
@@ -499,7 +409,7 @@ public class PostgreSQL extends CommonStoreImpl
         String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.escapeSingleQuoteForSQL(Col._Description) + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
-    
+
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {
@@ -539,19 +449,18 @@ public class PostgreSQL extends CommonStoreImpl
         // First, let's check if the user has a "superuser" role
         // We make the assumption here that any role with "superuser" in the name has enough access rights to perform migration actions.
         String Q = "WITH RECURSIVE cte AS (\n"
-                  +"  SELECT oid FROM pg_roles WHERE rolname = (SELECT current_role)\n"
-                  +"  UNION ALL\n"
-                  +"  SELECT m.roleid\n"
-                  +"    FROM cte\n"
-                  +"       JOIN pg_auth_members m ON m.member = cte.oid\n"
-                  +")\n"
-                  +"SELECT count(*) FROM cte WHERE oid::regrole::TEXT ILIKE '%superuser%'"
-                  ;
+        + "  SELECT oid FROM pg_roles WHERE rolname = (SELECT current_role)\n"
+        + "  UNION ALL\n"
+        + "  SELECT m.roleid\n"
+        + "    FROM cte\n"
+        + "       JOIN pg_auth_members m ON m.member = cte.oid\n"
+        + ")\n"
+        + "SELECT count(*) FROM cte WHERE oid::regrole::TEXT ILIKE '%superuser%'";
         ScalarRP SRP = new ScalarRP();
         C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, SRP);
         if (SRP.getResult() > 0)
-         return true;
-        
+          return true;
+
         Q = "select current_setting('is_superuser');";
         StringRP RP = new StringRP();
         C.executeSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
@@ -596,9 +505,8 @@ public class PostgreSQL extends CommonStoreImpl
     throws Exception
       {
         String Q = TextUtil.isNullOrEmpty(clusterIndexName) == true
-                 ? "VACUUM "+(full?" FULL":"")+(verbose?" VERBOSE":"")+" ANALYZE " + schemaName + ".\"" + tableName + "\";"
-                 : "CLUSTER" + (verbose?" VERBOSE":"") + " " +schemaName + ".\"" + tableName + "\" USING "+clusterIndexName+";"
-                 ;
+        ? "VACUUM " + (full ? " FULL" : "") + (verbose ? " VERBOSE" : "") + " ANALYZE " + schemaName + ".\"" + tableName + "\";"
+        : "CLUSTER" + (verbose ? " VERBOSE" : "") + " " + schemaName + ".\"" + tableName + "\" USING " + clusterIndexName + ";";
         return con.executeDDL(schemaName, tableName, Q);
       }
 

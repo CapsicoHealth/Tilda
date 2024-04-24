@@ -100,6 +100,7 @@ public class ValueHelper
                 PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' larger than the defined size=" + ColSize + ".");
               break;
             case DATETIME:
+            case DATETIME_PLAIN:
               if (   Value.equalsIgnoreCase("NOW") == false
                   && Value.equalsIgnoreCase("UNDEFINED") == false
                   && (Default == DefaultType.MASK && Value.equals("Y") == false 
@@ -168,6 +169,7 @@ public class ValueHelper
               return TextUtil.escapeSingleQuoteForSQL(val);
             case DATE:
             case DATETIME:
+            case DATETIME_PLAIN:
               if (val.equalsIgnoreCase("now") == true)
                 return sqlGen.getCurrentTimestampStr();
               else if (val.equalsIgnoreCase("undefined") == true)
@@ -204,6 +206,7 @@ public class ValueHelper
             case CHAR:
               return TextUtil.escapeSingleQuoteForSQL(val);
             case DATETIME:
+            case DATETIME_PLAIN:
               String truncateToFuncName = isCollection == true ? "truncateToZDT" : "truncateTo";
               if (val.equalsIgnoreCase("NOW") == true)
                 return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
@@ -262,6 +265,7 @@ public class ValueHelper
             case STRING:
             case DATE:
             case DATETIME:
+            case DATETIME_PLAIN:
               return true;
             default:
               throw new Error("Unhandled switch case for type '" + colType + "'.");

@@ -65,6 +65,7 @@ import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.ColMetaColPair;
+import tilda.utils.pairs.StringStringPair;
 
 public abstract class CommonStoreImpl implements DBType
   {
@@ -86,6 +87,90 @@ public abstract class CommonStoreImpl implements DBType
 
         return Str.toString();
       }
+    
+    
+    
+    protected abstract ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
+    throws Exception;
+    
+    @Override
+    public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
+    throws Exception
+      {
+        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
+        ColumnType TildaType = null;
+        String TypeSql = null;
+        switch (Type)
+          {
+            /*@formatter:off*/
+            case java.sql.Types.ARRAY        : TypeSql = "ARRAY"        ;
+                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                               break;
+            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ;
+                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                               break;
+            case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
+            case java.sql.Types.BINARY       : TypeSql = "BINARY"       ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.BIT          : TypeSql = "BIT"          ; TildaType = ColumnType.BOOLEAN; break;
+            case java.sql.Types.BLOB         : TypeSql = "BLOB"         ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.BOOLEAN      : TypeSql = "BOOLEAN"      ; TildaType = ColumnType.BOOLEAN; break;
+            case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
+            case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
+            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = ColumnType.DATE; break;
+            case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
+            case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
+            case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
+            case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.LONGVARCHAR  : TypeSql = "LONGVARCHAR"  ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
+            case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
+            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.NUMERIC; break;
+            case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.OTHER        :
+              if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
+                {
+                  TypeSql = "JSONB";
+                  TildaType = ColumnType.JSON;
+                }
+              else if (TypeName != null && TypeName.equalsIgnoreCase("uuid") == true)
+                {
+                  TypeSql = "UUID";
+                  TildaType = ColumnType.UUID;
+                }
+              else
+                {
+                  TypeSql = "OTHER";
+                  TildaType = null;
+                }
+              break;
+            case java.sql.Types.REAL                   : TypeSql = "REAL"                   ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.REF                    : TypeSql = "REF"                    ; TildaType = null; break;
+            case java.sql.Types.ROWID                  : TypeSql = "ROWID"                  ; TildaType = null; break;
+            case java.sql.Types.SQLXML                 : TypeSql = "SQLXML"                 ; TildaType = null; break;
+            case java.sql.Types.STRUCT                 : TypeSql = "STRUCT"                 ; TildaType = null; break;
+            case java.sql.Types.TIME                   : TypeSql = "TIME"                   ; TildaType = null; break;
+            case java.sql.Types.TIMESTAMP              : 
+            case java.sql.Types.TIMESTAMP_WITH_TIMEZONE: TypeSql = "TIMESTAMP"              ;
+                                                         TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                                         break;
+            case java.sql.Types.TINYINT                : TypeSql = "TINYINT"                ; TildaType = null; break;
+            case java.sql.Types.VARBINARY              : TypeSql = "VARBINARY"              ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.VARCHAR                : TypeSql = "VARCHAR"                ; TildaType = ColumnType.STRING; break;
+            default:
+              TildaType = null;
+              LOG.warn("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+"). Has been set to UNMAPPED column type.");
+            /*@formatter:on*/
+          }
+        return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
+      }
+
+  
 
     @Override
     public boolean createSchema(Connection Con, Schema S)
@@ -349,7 +434,7 @@ public abstract class CommonStoreImpl implements DBType
 
         if (ColMeta._TildaType == ColumnType.STRING)
           {
-            if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
+            if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN || Col.getType() == ColumnType.DATE
             || Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE
             || Col.getType() == ColumnType.BOOLEAN || Col.getType() == ColumnType.UUID)
               {
@@ -428,7 +513,7 @@ public abstract class CommonStoreImpl implements DBType
             if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
                 //@formatter:off
-                if (   CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE 
+                if (   CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATETIME_PLAIN || CMP._Col.getType() == ColumnType.DATE 
                     || CMP._Col.getType() == ColumnType.UUID
                     || CMP._Col.getType() == ColumnType.SHORT || CMP._Col.getType() == ColumnType.INTEGER  || CMP._Col.getType() == ColumnType.LONG 
                     || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE

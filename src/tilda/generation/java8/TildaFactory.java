@@ -122,7 +122,7 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarFull = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
               // String ColVarShort = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
+              String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().getMappedName()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               Out.println();
               Out.println();
               G.getGenDocs().docField(Out, G, C, "column definition");
@@ -143,7 +143,7 @@ public class TildaFactory implements CodeGenTildaFactory
                 + (C.isCollection() == false && C.getType() == ColumnType.STRING ? ""+C._Size+", " : "")
                 + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
 
-              if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
+              if ((C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN) && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
                   Out.print(", " + C.getName().toUpperCase() + "TZ");
                 }
@@ -153,7 +153,7 @@ public class TildaFactory implements CodeGenTildaFactory
 //                  Out.print(", " + C.getTZName().toUpperCase());
 //                }
               // Although DATE and DATETIME do support values, we don't want them here because they are always markers and default values, not enumerations per se.
-              if (C.isCollection() == false && C.getType() != ColumnType.DATE && C.getType() != ColumnType.DATETIME && ValueHelper.isSuported(C.getType()) == true)
+              if (C.isCollection() == false && C.getType() != ColumnType.DATE && (C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN) && ValueHelper.isSuported(C.getType()) == true)
                 Out.print(", " + ColumnValue.toJavaStringDoubleArray(C._Values));
               Out.println(");");
             }
