@@ -190,7 +190,7 @@ public class Export
               throw E;
             LOG.debug("Destination BQ table: " + dstPath._project + "." + dstPath._schema + "." + dstPath._tableView + ".");
             E = dstPath.getColumns(C, bq);
-            if (E != null)
+            if (E != null) // destination schema/table doesn't exist in BQ, so let's create it on the fly.
               dstPath._BQSchema = BQHelper.getBQSchemaFromMeta(srcPath._PGSchema);
 
             LOG.debug("Columns: " + TextUtil.print(srcPath._columns));
@@ -213,9 +213,15 @@ public class Export
           {
             BigQuery bq = BQHelper.getBigQuery(srcPath._project);
             LOG.debug("Source BQ table: " + srcPath._project + "." + srcPath._schema + "." + srcPath._tableView + ".");
-            srcPath.getColumns(C, bq);
+            Exception E = srcPath.getColumns(C, bq);
+            if (E != null)
+              throw E;
             LOG.debug("Destination PG for " + dstPath._schema + "." + dstPath._tableView + ".");
-            dstPath.getColumns(C, bq);
+            E = dstPath.getColumns(C, bq);
+            if (E != null) // destination schema/table doesn't exist in PG
+              {
+                
+              }
             LOG.debug("Columns: " + TextUtil.print(srcPath._columns));
             if (dstPath._tableViewType == 2)
               throw new Exception("The destination '" + dst + "' is a view. Cannot write to a view.");
