@@ -44,13 +44,13 @@ The Table TILDATEST.Testing_Cloned :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>, name asc
+<LI>Has the following indices:<UL><LI>name asc
  <B><I>(Application-side Only)</I></B></LI>
-<LI>, name asc
+<LI>name asc
 </LI>
-<LI>, name desc
+<LI>name desc
 </LI>
-<LI>, name asc, description desc
+<LI>name asc, description desc
 </LI>
 </UL></LI>
 </UL>
@@ -940,8 +940,8 @@ This is the setter for:<BR>
    public void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing_Cloned.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing_Cloned.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 10)
         throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing_Cloned.name: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -1069,7 +1069,7 @@ This is the setter for:<BR>
    public void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDescription();
         }
@@ -1230,7 +1230,7 @@ This is the setter for:<BR>
    public void setDesc2(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc2();
         }
@@ -1391,7 +1391,7 @@ This is the setter for:<BR>
    public void setDesc3(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc3();
         }
@@ -1552,7 +1552,7 @@ This is the setter for:<BR>
    public void setDesc4(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc4();
         }
@@ -1713,7 +1713,7 @@ This is the setter for:<BR>
    public void setDesc5(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc5();
         }
@@ -1962,7 +1962,7 @@ This is the setter for:<BR>
    public void setDesc6(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc6();
         }
@@ -2198,7 +2198,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_tops == null)
         _tops = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTops();
         }
@@ -2403,7 +2403,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_tops2 == null)
         _tops2 = new TreeSet<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTops2();
         }
@@ -4809,7 +4809,7 @@ This is the setter for:<BR>
     void setA6dTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA6dTZ();
         }
@@ -5544,7 +5544,7 @@ This is the setter for:<BR>
     void setA8bTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA8bTZ();
         }
@@ -5935,7 +5935,7 @@ This is the setter for:<BR>
     void setA9TZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9TZ();
         }
@@ -6389,7 +6389,7 @@ This is the setter for:<BR>
     void setA9a1TZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9a1TZ();
         }
@@ -6873,7 +6873,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a9bTZ == null)
         _a9bTZ = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9bTZ();
         }
@@ -7770,7 +7770,7 @@ This is the setter for:<BR>
    public void setA10b(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA10b();
         }
@@ -10445,9 +10445,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a6d' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a6d.getZone().getId());
+          String zoneId = _a6d.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a6d' because the timezone value '"+_a6d.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a6d' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA6dTZ(ZI.getId());
         }
 
@@ -10470,9 +10471,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a8b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a8b.getZone().getId());
+          String zoneId = _a8b.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a8b' because the timezone value '"+_a8b.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a8b' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA8bTZ(ZI.getId());
         }
 
@@ -10483,9 +10485,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a9.getZone().getId());
+          String zoneId = _a9.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9' because the timezone value '"+_a9.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA9TZ(ZI.getId());
         }
 
@@ -10496,9 +10499,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a9a1' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a9a1.getZone().getId());
+          String zoneId = _a9a1.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9a1' because the timezone value '"+_a9a1.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9a1' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA9a1TZ(ZI.getId());
         }
 
@@ -10511,9 +10515,10 @@ This is the hasChanged for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask);
           for (int pos = 0; pos < _a9b.size(); ++pos)
             {
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a9b.get(pos).getZone().getId());
+          String zoneId = _a9b.get(pos).getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9b' because the timezone value '"+_a9b.get(pos).getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9b' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           addToA9bTZ(pos, ZI.getId());
             }
         }

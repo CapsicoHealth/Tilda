@@ -1014,7 +1014,7 @@ var MasterIndex = {
 
 </HEAD>
 <BODY>
-<TABLE width="100%"><TR><TD><H1>Schema TILDATEST</H1></TD><TD align="right"><I>This documentation was generated on Mar 13 2023, 17:51:38 EDT</I></TD></TR></TABLE>
+<TABLE width="100%"><TR><TD><H1>Schema TILDATEST</H1></TD><TD align="right"><I>This documentation was generated on May 8 2024, 08:53:42 EDT</I></TD></TR></TABLE>
 This schema blah blah blah.<BR>
 <B>Copyright (c) 2017, CapsicoHealth Inc., All rights reserved.</B>
 <BR><BR>
@@ -1029,10 +1029,12 @@ This schema blah blah blah.<BR>
 </TD></TR></TABLE></DIV>
 <BR>
 <BR>
-Total Number of entities defined: 12<BR><BR><DIV style="position: relative; overflow: auto; resize: vertical; width: 98%; left: 1%; height: 300px;"><DIV style="columns: 5;"><B>Objects</B> (3):<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Test_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test</A><BR>
+Total Number of entities defined: 14<BR><BR><DIV style="position: relative; overflow: auto; resize: vertical; width: 98%; left: 1%; height: 300px;"><DIV style="columns: 5;"><B>Objects</B> (4):<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Test_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test</A><BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Test2_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test2</A><BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing</A><BR>
-<BR><B>Derived</B> (1):<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing_Cloned_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing_Cloned</A> <SUP>CLONE</SUP><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#TestingTimestamps_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps</A><BR>
+<BR><B>Derived</B> (2):<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#TestingTimestamps_Cloned_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps_Cloned</A> <SUP>CLONE</SUP><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing_Cloned_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing_Cloned</A> <SUP>CLONE</SUP><BR>
 <BR><B>Views</B> (5):<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#TestView_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestView</A><BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing2View_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View</A><BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="TILDA___Docs.TILDATEST.html#Testing3View_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing3View</A><BR>
@@ -1249,13 +1251,13 @@ The Table TILDATEST.Testing :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>, name asc
+<LI>Has the following indices:<UL><LI>name asc
  <B><I>(Application-side Only)</I></B></LI>
-<LI>, name asc
+<LI>name asc
 </LI>
-<LI>, name desc
+<LI>name desc
 </LI>
-<LI>, name asc, description desc
+<LI>name asc, description desc
 </LI>
 </UL></LI>
 </UL>
@@ -1801,6 +1803,351 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
+<BR><BR><BR><BR><BR><BR>
+<TABLE id="TestingTimestamps_DIV" class="tables">
+<SCRIPT>registerStickyHeader("TestingTimestamps_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>TestingTimestamps&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#TestingTimestamps_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="TestingTimestamps_CNT" class="content">
+The Table TILDATEST.TestingTimestamps :<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TestingTimestamps_Factory</B>, <B>TestingTimestamps_Data</B> in the package <B>tilda.data_test</B>.
+<LI>Is cloned as:<UL>
+<LI><A href="TILDA___Docs.TILDATEST.html#TestingTimestamps_Cloned_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps_Cloned</A></LI>
+</UL></LI>
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Defines 7 foreign key(s):<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>dt1TZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
+</UL></LI>
+<LI>Has the following index:<UL><LI>id asc
+ <B><I>(Application-side Only)</I></B></LI>
+</UL></LI>
+</UL>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">blah blah</BLOCKQUOTE>
+<BR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="TestingTimestamps_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The primary key for this record</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(20)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Medical system unique enterprise id</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1TZ_DIV' class='columns'>dt1TZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1_DIV' class='columns'>dt1</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1nTZ_DIV' class='columns'>dt1nTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1n'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1n_DIV' class='columns'>dt1n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1uTZ_DIV' class='columns'>dt1uTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1u'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1u_DIV' class='columns'>dt1u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1aTZ_DIV' class='columns'>dt1aTZ</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1a'.</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt1a_DIV' class='columns'>dt1a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-rowTZ_DIV' class='columns'>rowTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt2_DIV' class='columns'>dt2</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt2n_DIV' class='columns'>dt2n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt2u_DIV' class='columns'>dt2u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt2a_DIV' class='columns'>dt2a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>16&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3TZ_DIV' class='columns'>dt3TZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>17&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3_DIV' class='columns'>dt3</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>18&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3nTZ_DIV' class='columns'>dt3nTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3n'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>19&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3n_DIV' class='columns'>dt3n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>20&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3uTZ_DIV' class='columns'>dt3uTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3u'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>21&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3u_DIV' class='columns'>dt3u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>22&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3aTZ_DIV' class='columns'>dt3aTZ</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3a'.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>23&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt3a_DIV' class='columns'>dt3a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamp[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>24&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt4_DIV' class='columns'>dt4</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>25&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt4n_DIV' class='columns'>dt4n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>26&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt4u_DIV' class='columns'>dt4u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>27&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-dt4a_DIV' class='columns'>dt4a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamp[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>28&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created. (TILDATEST.TestingTimestamps)</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>29&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>30&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+</DIV>
 </BLOCKQUOTE>
 <BR><BR><BR><BR><BR><HR><H1>Cloned Tables</H1><BLOCKQUOTE>
 <TABLE id="Testing_Cloned_DIV" class="tables">
@@ -1820,13 +2167,13 @@ The Table TILDATEST.Testing_Cloned :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>, name asc
+<LI>Has the following indices:<UL><LI>name asc
  <B><I>(Application-side Only)</I></B></LI>
-<LI>, name asc
+<LI>name asc
 </LI>
-<LI>, name desc
+<LI>name desc
 </LI>
-<LI>, name asc, description desc
+<LI>name asc, description desc
 </LI>
 </UL></LI>
 </UL>
@@ -2369,6 +2716,349 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+</DIV>
+<BR><BR><BR><BR><BR><BR>
+<TABLE id="TestingTimestamps_Cloned_DIV" class="tables">
+<SCRIPT>registerStickyHeader("TestingTimestamps_Cloned_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>TestingTimestamps_Cloned&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#TestingTimestamps_Cloned_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="TestingTimestamps_Cloned_CNT" class="content">
+The Table TILDATEST.TestingTimestamps_Cloned :<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TestingTimestamps_Cloned_Factory</B>, <B>TestingTimestamps_Cloned_Data</B> in the package <B>tilda.data_test</B>.
+<LI>Is Cloned from <B><A href="TILDA___Docs.TILDATEST.html#TestingTimestamps_CNT">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps</A></B>.</LI>
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Defines 7 foreign key(s):<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>dt1TZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
+</UL></LI>
+<LI>Has the following index:<UL><LI>id asc
+ <B><I>(Application-side Only)</I></B></LI>
+</UL></LI>
+</UL>
+<B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">blah blah - Ready for publishing (cloned from TILDATEST.TestingTimestamps)</BLOCKQUOTE>
+<BR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="TestingTimestamps_Cloned_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The primary key for this record</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(20)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Medical system unique enterprise id</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1TZ_DIV' class='columns'>dt1TZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1_DIV' class='columns'>dt1</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1nTZ_DIV' class='columns'>dt1nTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1n'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1n_DIV' class='columns'>dt1n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1uTZ_DIV' class='columns'>dt1uTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1u'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1u_DIV' class='columns'>dt1u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1aTZ_DIV' class='columns'>dt1aTZ</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1a'.</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt1a_DIV' class='columns'>dt1a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-rowTZ_DIV' class='columns'>rowTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt2_DIV' class='columns'>dt2</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt2n_DIV' class='columns'>dt2n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt2u_DIV' class='columns'>dt2u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt2a_DIV' class='columns'>dt2a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>16&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3TZ_DIV' class='columns'>dt3TZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>17&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3_DIV' class='columns'>dt3</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>18&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3nTZ_DIV' class='columns'>dt3nTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3n'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>19&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3n_DIV' class='columns'>dt3n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>20&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3uTZ_DIV' class='columns'>dt3uTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3u'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>21&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3u_DIV' class='columns'>dt3u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>22&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3aTZ_DIV' class='columns'>dt3aTZ</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3a'.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>23&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt3a_DIV' class='columns'>dt3a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamp[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>24&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt4_DIV' class='columns'>dt4</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>25&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt4n_DIV' class='columns'>dt4n</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>26&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt4u_DIV' class='columns'>dt4u</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>27&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-dt4a_DIV' class='columns'>dt4a</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamp[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>28&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>29&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)</TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>30&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 </DIV>
@@ -3250,7 +3940,7 @@ The Table TILDATEST.Testing2Realized :<UL>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, lastUpdated desc
+<LI>Has the following index:<UL><LI>lastUpdated desc
 </LI>
 </UL></LI>
 </UL>
@@ -3484,7 +4174,7 @@ The Table TILDATEST.Testing3Realized :<UL>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, lastUpdated desc
+<LI>Has the following index:<UL><LI>lastUpdated desc
 </LI>
 </UL></LI>
 </UL>
@@ -3548,7 +4238,7 @@ The Table TILDATEST.Testing4Realized :<UL>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, lastUpdated desc
+<LI>Has the following index:<UL><LI>lastUpdated desc
 </LI>
 </UL></LI>
 </UL>

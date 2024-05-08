@@ -171,7 +171,7 @@ public class ValueHelper
             case DATETIME:
             case DATETIME_PLAIN:
               if (val.equalsIgnoreCase("now") == true)
-                return sqlGen.getCurrentTimestampStr();
+                return colType==ColumnType.DATETIME ? sqlGen.getCurrentTimestampStr() : sqlGen.getCurrentDateTimeStr();
               else if (val.equalsIgnoreCase("undefined") == true)
                 return "'" + DateTimeUtil.printDateTimeForSQL(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT) + "'";
               else

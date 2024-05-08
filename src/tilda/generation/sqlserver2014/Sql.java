@@ -171,6 +171,19 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         return ", current_timestamp";
       }
+    
+    @Override
+    public String getEqualCurentDateTime()
+      {
+        return "= current_datetime";
+      }
+
+    @Override
+    public String getCommaCurentDateTime()
+      {
+        return ", current_datetime";
+      }
+    
 
     @Override
     public void genFileStart(PrintWriter Out, Schema S)

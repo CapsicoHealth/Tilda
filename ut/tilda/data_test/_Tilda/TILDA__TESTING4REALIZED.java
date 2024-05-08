@@ -39,7 +39,7 @@ The Table TILDATEST.Testing4Realized :<UL>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, lastUpdated desc
+<LI>Has the following index:<UL><LI>lastUpdated desc
 </LI>
 </UL></LI>
 </UL>
@@ -527,7 +527,7 @@ This is the setter for:<BR>
    public void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullName();
         }
@@ -688,7 +688,7 @@ This is the setter for:<BR>
    public void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDescription();
         }
@@ -849,7 +849,7 @@ This is the setter for:<BR>
    public void setDesc2(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc2();
         }
@@ -1010,7 +1010,7 @@ This is the setter for:<BR>
    public void setDesc3(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc3();
         }
@@ -1171,7 +1171,7 @@ This is the setter for:<BR>
    public void setDesc4(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc4();
         }
@@ -1332,7 +1332,7 @@ This is the setter for:<BR>
    public void setDesc5(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc5();
         }
@@ -1493,7 +1493,7 @@ This is the setter for:<BR>
    public void setDesc6(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc6();
         }

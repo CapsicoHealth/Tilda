@@ -90,6 +90,36 @@ public class MSSQL implements DBType
       {
         return "current_timestamp";
       }
+    
+    @Override
+    public String getCurrentDateTimeStr()
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public ZonedDateTime getCurrentDateTime(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public ZonedDateTime getCurrentTimestamp(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public LocalDate getCurrentDate(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = {
         "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed", "connection has been closed"
@@ -704,21 +734,6 @@ public class MSSQL implements DBType
 
 
     @Override
-    public ZonedDateTime getCurrentTimestamp(Connection con)
-    throws Exception
-      {
-        throw new UnsupportedOperationException();
-      }
-
-
-    @Override
-    public LocalDate getCurrentDate(Connection con)
-    throws Exception
-      {
-        throw new UnsupportedOperationException();
-      }
-
-    @Override
     public boolean moveTableView(Connection con, Base base, String oldSchemaName)
     throws Exception
       {
@@ -857,5 +872,6 @@ public class MSSQL implements DBType
       {
         return false;
       }
+
     
   }

@@ -61,6 +61,12 @@ public class BigQuery extends CommonStoreImpl
       }
 
     @Override
+    public String getCurrentDateTimeStr()
+      {
+        return "CURRENT_DATETIME()";
+      }
+
+    @Override
     public String getCurrentDateStr()
       {
         return "CURRENT_DATE()";
@@ -297,7 +303,7 @@ public class BigQuery extends CommonStoreImpl
     protected ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
     throws Exception
       {
-        throw new UnsupportedOperationException();
+        return TildaType;
       }
 
     @Override
@@ -426,15 +432,6 @@ public class BigQuery extends CommonStoreImpl
       {
         String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " RENAME COLUMN \"" + oldName + "\" TO \"" + col.getName() + "\"";
         return con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
-      }
-
-    @Override
-    public ZonedDateTime getCurrentTimestamp(Connection Con)
-    throws Exception
-      {
-        ZonedDateTimeRP RP = new ZonedDateTimeRP();
-        Con.executeSelect("TILDA", "CURRENT_TIMESTAMP", "select " + getCurrentTimestampStr(), RP);
-        return RP.getResult();
       }
 
     @Override

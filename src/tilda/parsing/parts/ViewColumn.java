@@ -452,16 +452,6 @@ public class ViewColumn
         && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
       }
     
-    /**
-     * A column is in "plain" TZ mode if its tzMode is COLUMN_NO_TZ or ROW_NO_TZ (going to a DATETIME or plain TIMESTAMP)
-     * 
-     * @return
-     */
-    public boolean isTZPlain()
-      {
-        return _SameAsObj != null && _SameAsObj.isTZPlain() == true;
-      }
-
     public boolean isList()
       {
         return _SameAsObj != null && _SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true;
@@ -488,7 +478,7 @@ public class ViewColumn
         if (name == null)
           return null;
         
-        return _SameAsObj._TzMode == TZMode.COLUMN
+        return _SameAsObj._TzMode.isColumn()
              ? name + _SameAsObj._ParentObject._ParentSchema.getConventionTzColPostfix()
              : sameAs == false ? _SameAsObj._ParentObject._Name+"_"+_SameAsObj._ParentObject._ParentSchema.getConventionTzRowName()
                                : _SameAsObj.getTZName()

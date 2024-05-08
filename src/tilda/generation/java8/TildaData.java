@@ -273,6 +273,8 @@ public class TildaData implements CodeGenTildaData
                 Out.println("      for (String[] a : _" + C.getName() + "_Values)");
                 if (C.getType() == ColumnType.CHAR)
                   Out.println("       if (a[0].charAt(0) == v)");
+                else if (C.getType().isNumber())
+                  Out.println("       if (a[0].equals(String.valueOf(v)) == true)");
                 else
                   Out.println("       if (a[0].equals(v) == true)");
                 Out.println("        return true;");
@@ -316,7 +318,10 @@ public class TildaData implements CodeGenTildaData
                   }
                 else
                   {
-                    Out.println("       if (a[0].equals(v) == true)");
+                    if (C.getType().isNumber())
+                      Out.println("       if (a[0].equals(String.valueOf(v)) == true)");
+                    else
+                      Out.println("       if (a[0].equals(v) == true)");
                     Out.println("        return a[2];");
                   }
                 Out.println("      return null;");
@@ -514,13 +519,13 @@ public class TildaData implements CodeGenTildaData
                 Out.println("          if (_" + C.getName() + " == null)");
                 Out.println("           {");
                 Out.println("             _" + C.getName() + " = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
-                if (C.needsTZ() == true)
+                if (C.needsTZ() == true && C._TzMode.isColumn() == true)
                   Out.println("             _" + C.getTZName() + " = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<String>();");
                 Out.println("           }");
                 Out.println("          else");
                 Out.println("           {");
                 Out.println("             _" + C.getName() + ".clear();");
-                if (C.needsTZ() == true)
+                if (C.needsTZ() == true && C._TzMode.isColumn() == true)
                   Out.println("             _" + C.getTZName() + ".clear();");
                 Out.println("           }");
                 if (C._Mapper != null)
@@ -544,6 +549,8 @@ public class TildaData implements CodeGenTildaData
                   {
                     if (C.isList() == false)
                       throw new Error("ERROR: Cannot have Sets of DateTimes!");
+                    if (C._TzMode.isRow() == true)
+                      Out.println("          tilda.data.ZoneInfo_Data ZIPrev = null;");
                     Out.println("          for (int k = 0; k < v.size(); ++k)");
                     Out.println("           {");
                     Out.println("             " + JavaJDBCType.getFieldTypeBase(C) + " i = v.get(k);");
@@ -569,7 +576,15 @@ public class TildaData implements CodeGenTildaData
                     Out.println("             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());");
                     Out.println("             if (ZI == null)");
                     Out.println("              throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+i.getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
-                    Out.println("             addTo" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(k, ZI.getId());");
+                    if (C._TzMode.isRow() == true)
+                     {
+                       Out.println("             if (ZIPrev == null)");
+                       Out.println("              ZIPrev = ZI;");
+                       Out.println("             else if (ZIPrev.getId().equals(ZI.getId()) == false)");
+                       Out.println("              throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+i.getZone().getId()+\"' is inconsistent with previous value '\"+ZIPrev.getId()+\"' and the tzMode is row-based. Timestamps covered by a row-based timezone must all be set within the same exact timezone.\");");
+                     }
+                    else
+                     Out.println("             addTo" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(k, ZI.getId());");
                   }
                 if (C._Mapper != null)
                   {
@@ -588,6 +603,10 @@ public class TildaData implements CodeGenTildaData
                       Out.println("             _" + C.getName() + "MappedGroup.add(" + ClassName + ".getMappedGroup(" + Str + ", i));");
                   }
                 Out.println("           }");
+                if (C.needsTZ() == true && C._TzMode.isRow() == true)
+                  {
+                    Out.println("        set" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(ZIPrev.getId());");
+                  }
               }
             else
               {
@@ -737,7 +756,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());");
                 Out.println("          if (ZI == null)");
                 Out.println("           throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+v.getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
-                if (C.isCollection() == true)
+                if (C.isCollection() == true && C._TzMode.isColumn() == true)
                   Out.println("          addTo" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(pos, ZI.getId());");
                 else
                   Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(ZI.getId());");
@@ -760,7 +779,8 @@ public class TildaData implements CodeGenTildaData
                         Out.println("       if (1 != -1)");
                         Out.println("        {");
                         Out.println("          _" + C.getName() + ".remove(i);");
-                        Out.println("          removeFrom" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(i);");
+                        if (C._TzMode.isColumn() == true)
+                         Out.println("          removeFrom" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(i);");
                         Out.println("          __Changes.or(" + Mask + ");");
                         Out.println("        }");
                       }
@@ -785,7 +805,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("       if (_" + C.getName() + ".remove(pos) != null)");
                     Out.println("        {");
                     Out.println("          __Changes.or(" + Mask + ");");
-                    if (C.needsTZ() == true)
+                    if (C.needsTZ() == true && C._TzMode.isColumn() == true)
                       Out.println("          removeFrom" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(pos);");
                     Out.println("        }");
                   }
@@ -935,7 +955,7 @@ public class TildaData implements CodeGenTildaData
         // else
         // Out.println(" _" + C.getName() + "=" + C.getType().getDefaultNullValue() + ";");
         if (C.needsTZ() == true)
-          if (C._TzMode == TZMode.COLUMN)
+          if (C._TzMode.isColumn() == true)
             Out.println("       setNull" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "();");
           else
             Out.println("    // setNull" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(); // row TZs are shared, so can't just null it!");
@@ -1290,14 +1310,14 @@ public class TildaData implements CodeGenTildaData
                         Out.println(ExtraPad + "         {");
                       }
                     if (C.getType() == ColumnType.DATETIME)
-                      Out.println(ExtraPad + "       String zoneId = _" + C.getName() + (C.isCollection() == true == true ? ".get(pos)" : "") + ".getZone().getId();");
+                      Out.println(ExtraPad + "       String zoneId = _" + C.getName() + (C.isCollection() == true ? ".get(pos)" : "") + ".getZone().getId();");
                     else
-                      Out.println(ExtraPad + "       String zoneId = _" + C.getTZName() + (C.isCollection() == true == true ? ".get(pos)" : "") + ";");
+                      Out.println(ExtraPad + "       String zoneId = _" + C.getTZName() + (C.isCollection() == true && C._TzMode.isColumn() == true ? ".get(pos)" : "") + ";");
                     
                     Out.println(ExtraPad + "       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);");
                     Out.println(ExtraPad + "       if (ZI == null)");
                     Out.println(ExtraPad + "        throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+zoneId+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
-                    if (C.isCollection() == true)
+                    if (C.isCollection() == true && C._TzMode.isColumn() == true)
                       Out.println("          addTo" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(pos, ZI.getId());");
                     else
                       Out.println("          set" + TextUtil.capitalizeFirstCharacter(C.getTZName()) + "(ZI.getId());");
@@ -2057,7 +2077,7 @@ public class TildaData implements CodeGenTildaData
               break;
             }
         for (Column C : O._Columns)
-          if (C != null && C.needsTZ() == true && C.isCollection() == true)
+          if (C != null && C.needsTZ() == true && C.isCollection() == true && C._TzMode.isColumn() == true)
             {
               Out.println("  private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
               Out.println("  throws Exception");
@@ -2082,6 +2102,38 @@ public class TildaData implements CodeGenTildaData
               Out.println("         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);");
               Out.println("         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)");
               Out.println("          throw new Exception(\"Cannot set field '\"+DTFieldName+\"' because the timezone Id '\" + TimezoneId + \"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+              Out.println("         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? \"null\" : ZI.getValue());");
+              Out.println("         ZDTs.add(ZDT);");
+              Out.println("       }");
+              Out.println("     return ZDTs;");
+              Out.println("   }");
+              break;
+            }
+        for (Column C : O._Columns)
+          if (C != null && C.needsTZ() == true && C.isCollection() == true && C._TzMode.isRow() == true)
+            {
+              Out.println("  private final List<ZonedDateTime> processZDTs(Connection C, String rowTimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
+              Out.println("  throws Exception");
+              Out.println("   {");
+              Out.println("     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);");
+              Out.println("     boolean DTNull = false;");
+              Out.println("     if (RS.wasNull() == true)");
+              Out.println("      {");
+              Out.println("         __Nulls.or(DTField._Mask);");
+              Out.println("         DTNull = true;");
+              Out.println("      }");
+              Out.println("     boolean TZNull = __Nulls.intersects(TZField._Mask);");
+              Out.println("     if (DTNull == false && TZNull == true)");
+              Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+TZField.getName()+\"' is null. A TZ is mandatory for not null timestamps.\");");
+              Out.println("     if (DTNull == true)");
+              Out.println("      return null;");
+              Out.println();
+              Out.println("     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(rowTimezoneId);");
+              Out.println("     if (ZI == null && TextUtil.isNullOrEmpty(rowTimezoneId) == false)");
+              Out.println("      throw new Exception(\"Cannot set field '\"+DTFieldName+\"' because the timezone Id '\" + rowTimezoneId + \"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+              Out.println("     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();");
+              Out.println("     for (int i = 0; i < L.size(); ++i)");
+              Out.println("       {");
               Out.println("         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? \"null\" : ZI.getValue());");
               Out.println("         ZDTs.add(ZDT);");
               Out.println("       }");

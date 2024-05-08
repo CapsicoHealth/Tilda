@@ -176,6 +176,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
+    public String getEqualCurentDateTime()
+      {
+        return "= statement_timestamp()::timestamp";
+      }
+
+    @Override
+    public String getCommaCurentDateTime()
+      {
+        return ", statement_timestamp()::timestamp";
+      }
+    
+    @Override
     public String getFullTableVar(Object O)
       {
         StringBuilder Str = new StringBuilder();
@@ -1816,4 +1828,5 @@ public class Sql extends PostgreSQL implements CodeGenSql
     throws Exception
       {
       }
+
   }

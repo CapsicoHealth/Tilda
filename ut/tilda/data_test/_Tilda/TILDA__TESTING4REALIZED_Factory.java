@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull      REFNUM     = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitiveNull            REFNUM     = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    NAME       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, 10, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitiveNull          NAME       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1/*1*/, 10, "Medical system unique enterprise id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DESCRIPTION= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "description", 2/*2*/, 250, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull          DESCRIPTION= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "description", 2/*2*/, 250, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DESC2      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 3/*3*/, 3000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull          DESC2      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 3/*3*/, 3000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DESC3      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 4/*4*/, 5000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull          DESC3      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 4/*4*/, 5000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DESC4      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 5/*5*/, 9000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull          DESC4      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 5/*5*/, 9000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,7 +192,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DESC5      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 6/*6*/, 17000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull          DESC5      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 6/*6*/, 17000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +214,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DESC6      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 7/*7*/, 33000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
+     public final Type_StringPrimitiveNull          DESC6      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 7/*7*/, 33000, "The title for a person, i.e., Mr, Miss, Mrs...", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,7 +235,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  BASTILLE   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "bastille"   , 8/*8*/, "<B>Bastille Day</B>: Blah...", new String[] {}, new String[] {});
+     public final Type_DatetimePrimitiveNull        BASTILLE   = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "bastille"   , 8/*8*/, "<B>Bastille Day</B>: Blah...", new String[] {}, new String[] {});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -256,7 +256,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  TOTO       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "toto"       , 9/*9*/, "<B>Last Updated</B>: Blah...", new String[] {}, new String[] {});
+     public final Type_DatetimePrimitiveNull        TOTO       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "toto"       , 9/*9*/, "<B>Last Updated</B>: Blah...", new String[] {}, new String[] {});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,7 +277,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoublePrimitiveNull    DESC2_CAT1 = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat1" , 10/*10*/, "<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.", new String[] {}, new String[] {}, null);
+     public final Type_DoublePrimitiveNull          DESC2_CAT1 = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat1" , 10/*10*/, "<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,7 +298,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoublePrimitiveNull    DESC2_CAT2 = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat2" , 11/*11*/, "<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {}, new String[] {}, null);
+     public final Type_DoublePrimitiveNull          DESC2_CAT2 = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat2" , 11/*11*/, "<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,7 +319,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoublePrimitiveNull    DESC2_CAT3 = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat3" , 12/*12*/, "<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {}, new String[] {}, null);
+     public final Type_DoublePrimitiveNull          DESC2_CAT3 = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "desc2_Cat3" , 12/*12*/, "<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -340,7 +340,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoublePrimitiveNull    A7_CAT4    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"    , 13/*13*/, "<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.", new String[] {}, new String[] {}, null);
+     public final Type_DoublePrimitiveNull          A7_CAT4    = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"    , 13/*13*/, "<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -361,7 +361,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoublePrimitiveNull    A7_CAT5    = new Type_DoublePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"    , 14/*14*/, "<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.", new String[] {}, new String[] {}, null);
+     public final Type_DoublePrimitiveNull          A7_CAT5    = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"    , 14/*14*/, "<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -382,7 +382,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   A5_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"    , 15/*15*/, "<B>Null a5</B>: Whether a5 is null or not", new String[] {}, new String[] {}, null);
+     public final Type_IntegerPrimitiveNull         A5_NULL    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"    , 15/*15*/, "<B>Null a5</B>: Whether a5 is null or not", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -403,7 +403,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   A6_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"    , 16/*16*/, "<B>Null a6</B>: Whether a6 is null or not", new String[] {}, new String[] {}, null);
+     public final Type_IntegerPrimitiveNull         A6_NULL    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"    , 16/*16*/, "<B>Null a6</B>: Whether a6 is null or not", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -424,7 +424,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   A7_NULL    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"    , 17/*17*/, "<B>Null a7</B>: Whether a7 is null or not", new String[] {}, new String[] {}, null);
+     public final Type_IntegerPrimitiveNull         A7_NULL    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"    , 17/*17*/, "<B>Null a7</B>: Whether a7 is null or not", new String[] {}, new String[] {}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +450,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   A3         = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 18/*18*/, "<B>Always True</B>: Blah...", new String[] {"NOT a3 OR A3"}, new String[] {"a3"}, null);
+     public final Type_BooleanPrimitiveNull         A3         = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 18/*18*/, "<B>Always True</B>: Blah...", new String[] {"NOT a3 OR A3"}, new String[] {"a3"}, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -476,7 +476,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  LASTUPDATED= new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 19/*19*/, "<B>Always True</B>: Blah...", new String[] {"GREATEST(lastUpdated, xxxLastUpdated)"}, new String[] {"lastUpdated", "xxxLastUpdated"});
+     public final Type_DatetimePrimitiveNull        LASTUPDATED= new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 19/*19*/, "<B>Always True</B>: Blah...", new String[] {"GREATEST(lastUpdated, xxxLastUpdated)"}, new String[] {"lastUpdated", "xxxLastUpdated"});
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -847,22 +847,22 @@ Lookup one record by the unique index 'Refnum': refnum.
 /**
 Lookup records by the index 'LastUpdated' over  .<BR>The results are ordered by: lastUpdated desc
 */
-   static public ListResults<tilda.data_test.Testing4Realized_Data> lookupWhereLastUpdated(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.data_test.Testing4Realized_Data> lookupWhereLastUpdated(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING4REALIZED Obj = new tilda.data_test.Testing4Realized_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'LastUpdated' over  .<BR>The results are ordered by: lastUpdated desc
 */
-   static public void lookupWhereLastUpdated(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing4Realized_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereLastUpdated(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing4Realized_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING4REALIZED Obj = new tilda.data_test.Testing4Realized_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -870,7 +870,7 @@ Lookup records by the index 'LastUpdated' over  .<BR>The results are ordered by:
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -912,13 +912,19 @@ The results are ordered by: refnum asc
    public static ListResults<tilda.data_test.Testing4Realized_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing4Realized_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

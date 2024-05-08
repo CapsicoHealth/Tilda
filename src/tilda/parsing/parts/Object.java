@@ -359,13 +359,13 @@ public class Object extends Base
 
     private String getTzColumnNames(Column col)
       {
-        if (col._TzMode == TZMode.COLUMN)
+        if (col._TzMode.isColumn())
           return "'" + col._Name + "'";
 
         StringBuilder str = new StringBuilder("1 or more columns at the " + col._ParentObject.getShortName() + " row level: ");
         boolean first = true;
         for (Column c : _Columns)
-          if (c.needsTZ() == true && c._TzMode == TZMode.ROW)
+          if (c.needsTZ() == true && c._TzMode.isRow() == true)
             {
               if (first == true)
                 first = false;

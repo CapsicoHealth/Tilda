@@ -104,11 +104,21 @@ public class Sql extends BigQuery implements CodeGenSql
       {
         return "= "+getCurrentTimestampStr();
       }
+    @Override
+    public String getEqualCurentDateTime()
+      {
+        return "= "+getCurrentDateTimeStr();
+      }
 
     @Override
     public String getCommaCurentTimestamp()
       {
         return ", "+getCurrentTimestampStr();
+      }
+    @Override
+    public String getCommaCurentDateTime()
+      {
+        return ", "+getCurrentDateTimeStr();
       }
 
     @Override

@@ -592,8 +592,8 @@ This is the setter for:<BR>
     void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing2View.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing2View.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 10)
         throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing2View.name: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -905,7 +905,7 @@ This is the setter for:<BR>
     void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDescription();
         }
@@ -1046,7 +1046,7 @@ This is the setter for:<BR>
     void setDesc2(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc2();
         }
@@ -1187,7 +1187,7 @@ This is the setter for:<BR>
     void setDesc3(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc3();
         }
@@ -1328,7 +1328,7 @@ This is the setter for:<BR>
     void setDesc4(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc4();
         }
@@ -1469,7 +1469,7 @@ This is the setter for:<BR>
     void setDesc5(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc5();
         }
@@ -1698,7 +1698,7 @@ This is the setter for:<BR>
     void setDesc6(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc6();
         }

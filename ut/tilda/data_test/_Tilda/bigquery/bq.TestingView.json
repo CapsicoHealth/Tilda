@@ -1,12 +1,12 @@
 [
-    { "name":"name", "type":"STRING", "mode":"REQUIRED", "description":"Medical system unique enterprise id" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
-   ,{ "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
-   ,{ "name":"a2", "type":"STRING", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a2", "type":"STRING", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a9TZ", "type":"STRING", "mode":"NULLABLE", "description":"Generated helper column to hold the time zone ID for 'a9'." }
-   ,{ "name":"a9", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a9c", "type":"DATE", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a6", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
-   ,{ "name":"a6", "type":"INT64", "mode":"NULLABLE", "description":"The blah" }
+    { "name":"name","type":"STRING","mode":"REQUIRED","description":"Medical system unique enterprise id" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
+   ,{ "name":"refnum","type":"INT64","mode":"REQUIRED","description":"The primary key for this record" }
+   ,{ "name":"a2","type":"STRING","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"a2","type":"STRING","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"a9TZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'a9'." }
+   ,{ "name":"a9","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"a9c","type":"DATE","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"a6","type":"INT64","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"a6","type":"INT64","mode":"NULLABLE","description":"The blah" }
 ]

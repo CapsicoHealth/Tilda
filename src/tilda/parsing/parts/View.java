@@ -269,7 +269,7 @@ public class View extends Base
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
             if (VC.needsTZ() == true)
               {
-                if (VC._SameAsObj._TzMode == TZMode.ROW && getColumn(VC.getTzName(false)) != null)
+                if (VC._SameAsObj._TzMode.isRow() == true && getColumn(VC.getTzName(false)) != null)
                  continue;
                 ViewColumn TZCol = createTZ(PS, VC);
                 _ViewColumns.add(i, TZCol);

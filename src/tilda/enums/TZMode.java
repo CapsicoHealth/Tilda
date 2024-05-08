@@ -18,27 +18,26 @@ package tilda.enums;
 
 public enum TZMode
   {
-    /**
-     * A TZ column generated per DATETIMEZ (date-time with timezone) column (default)
-     */
-    COLUMN,
-    
-    /**
-     * A TZ column generated per DATETIME (plain, no timezone) column (default)
-     */
-    COLUMN_NO_TZ,
+  /**
+   * A TZ column generated per DATETIMEZ (date-time with timezone) column (default)
+   */
+  COLUMN,
 
-    /**
-     * A TZ column generated per Row for all DATETIMEZ (date-time with timezone) columns
-     */
-    ROW,
+  /**
+   * A TZ column generated per DATETIME (plain, no timezone) column (default)
+   */
+  COLUMN_NO_TZ,
 
-    /**
-     * A TZ column generated per Row for all DATETIME (plain, no timezone) columns
-     */
-    ROW_NO_TZ
-    ;
-    
+  /**
+   * A TZ column generated per Row for all DATETIMEZ (date-time with timezone) columns
+   */
+  ROW,
+
+  /**
+   * A TZ column generated per Row for all DATETIME (plain, no timezone) columns
+   */
+  ROW_NO_TZ;
+
     public static TZMode parse(String Str)
       {
         for (TZMode e : TZMode.values())
@@ -46,5 +45,25 @@ public enum TZMode
             return e;
         return null;
       }
-    
+
+    public boolean isRow()
+      {
+        return this == ROW || this == ROW_NO_TZ;
+      }
+
+    public boolean isColumn()
+      {
+        return this == COLUMN || this == COLUMN_NO_TZ;
+      }
+
+    public boolean isTZ()
+      {
+        return this == COLUMN || this == ROW;
+      }
+
+    public boolean isNoTZ()
+      {
+        return this == COLUMN_NO_TZ || this == ROW_NO_TZ;
+      }
+
   }

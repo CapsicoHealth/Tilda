@@ -274,8 +274,11 @@ public class Column extends TypeDef
               _TzModeStr = ParentObject._TzModeStr;
             if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
               PS.AddError("Column '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
-            if (isCollection() == true && _TzMode == TZMode.ROW)
-              PS.AddError("Column '" + getFullName() + "' is a datetime collection with tzMode='" + _TzModeStr + "': datetime collections cannot have row-level tzMode.");
+            // LDH-NOTE: Not sure why we had this in the first place. Arrays and sets are fine with the row mode.
+            // if (isCollection() == true && _TzMode == TZMode.ROW)
+            // PS.AddError("Column '" + getFullName() + "' is a datetime collection with tzMode='" + _TzModeStr + "': datetime collections cannot have row-level tzMode.");
+            if (isSet() == true && _TzMode.isColumn() == true)
+              PS.AddError("Column '" + getFullName() + "' is a datetime unordered set with tzMode='" + _TzModeStr + "': datetime unordered sets cannot have column-level tzMode as there wouldn't be a way to match thee timestamp with the timezone.");
           }
         else
           {
@@ -284,14 +287,14 @@ public class Column extends TypeDef
           }
 
         // Convert from DATETIME ("with timezone") to DATETIME_PLAIN ("without timezone") if _TzMode says so.
-        if (_Type == ColumnType.DATETIME && isTZPlain() == true)
-         _Type = ColumnType.DATETIME_PLAIN;
-        
+        if (_Type == ColumnType.DATETIME && _TzMode.isNoTZ() == true)
+          _Type = ColumnType.DATETIME_PLAIN;
+
         if (_AllowEmpty == true)
           {
-            if (_Type != ColumnType.STRING) 
+            if (_Type != ColumnType.STRING)
               PS.AddError("Column '" + getFullName() + "' is not a String: 'allowEmpty' only makes sense for Strings.");
-            if (_Nullable == true) 
+            if (_Nullable == true)
               PS.AddError("Column '" + getFullName() + "' is nullable: 'allowEmpty' is set to true, which doesn't make sense for nullables.");
           }
 
@@ -480,7 +483,7 @@ public class Column extends TypeDef
         if (_Nullable == null)
           _Nullable = Boolean.TRUE;
         if (_AllowEmpty == null)
-          _AllowEmpty = Boolean.FALSE;        
+          _AllowEmpty = Boolean.FALSE;
         if (_Mode == null)
           _Mode = ColumnMode.NORMAL;
         if (_Invariant == null)
@@ -727,22 +730,11 @@ public class Column extends TypeDef
         return (getType() == ColumnType.DATETIME || getType() == ColumnType.DATETIME_PLAIN) && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
       }
 
-    /**
-     * A column is in "plain" TZ mode if its tzMode is COLUMN_NO_TZ or ROW_NO_TZ (going to a DATETIME or plain TIMESTAMP)
-     * 
-     * @return
-     */
-    public boolean isTZPlain()
-      {
-        // 
-        return /*needsTZ() == true &&*/ (_TzMode == TZMode.COLUMN_NO_TZ || _TzMode == TZMode.ROW_NO_TZ);
-      }
-    
     public String getTZName()
       {
         if (needsTZ() == false)
           return null;
-        return _TzMode == TZMode.COLUMN || _TzMode == TZMode.COLUMN_NO_TZ ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
+        return _TzMode.isColumn() == true ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
       }
 
     protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)

@@ -971,6 +971,15 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     @Override
+    public ZonedDateTime getCurrentDateTime(Connection Con)
+    throws Exception
+      {
+        ZonedDateTimeRP RP = new ZonedDateTimeRP();
+        Con.executeSelect("TILDA", "CURRENT_DATETIME", "select " + getCurrentDateTimeStr(), RP);
+        return RP.getResult();
+      }
+
+    @Override
     public LocalDate getCurrentDate(Connection Con)
     throws Exception
       {

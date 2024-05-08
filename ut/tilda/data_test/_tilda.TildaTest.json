@@ -131,7 +131,46 @@
         { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
     }
-      
+
+
+   ,{ "name": "TestingTimestamps"
+     ,"description": "blah blah"
+     ,"cloneAs":[
+          { "name":"Cloned", "description":"?{} - Ready for publishing" }
+       ]
+     ,"columns":[
+         { "name": "id"           , "type": "STRING(20)" , "nullable": false                             , "description": "Medical system unique enterprise id" }
+
+        ,{ "name": "dt1"          , "type": "DATETIME"                          , "tzMode":"COLUMN"/*default*/, "description": "The blah" }
+        ,{ "name": "dt1n"         , "type": "DATETIME"   , "default":"NOW"      , "tzMode":"COLUMN"/*default*/, "description": "The blah" }
+        ,{ "name": "dt1u"         , "type": "DATETIME"   , "default":"UNDEFINED", "tzMode":"COLUMN"/*default*/, "description": "The blah" }
+        ,{ "name": "dt1a"         , "type": "DATETIME[]"                        , "tzMode":"COLUMN"/*default*/, "description": "The blah" }
+
+        ,{ "name": "dt2"          , "type": "DATETIME"                          , "tzMode":"ROW"         , "description": "The blah" }
+        ,{ "name": "dt2n"         , "type": "DATETIME"   , "default":"NOW"      , "tzMode":"ROW"         , "description": "The blah" }
+        ,{ "name": "dt2u"         , "type": "DATETIME"   , "default":"UNDEFINED", "tzMode":"ROW"         , "description": "The blah" }
+        ,{ "name": "dt2a"         , "type": "DATETIME[]"                        , "tzMode":"ROW"         , "description": "The blah" }
+
+        ,{ "name": "dt3"          , "type": "DATETIME"                          , "tzMode":"COLUMN_NO_TZ", "description": "The blah" }
+        ,{ "name": "dt3n"         , "type": "DATETIME"   , "default":"NOW"      , "tzMode":"COLUMN_NO_TZ", "description": "The blah" }
+        ,{ "name": "dt3u"         , "type": "DATETIME"   , "default":"UNDEFINED", "tzMode":"COLUMN_NO_TZ", "description": "The blah" }
+        ,{ "name": "dt3a"         , "type": "DATETIME[]"                        , "tzMode":"COLUMN_NO_TZ", "description": "The blah" }
+
+        ,{ "name": "dt4"          , "type": "DATETIME"                          , "tzMode":"ROW_NO_TZ"   , "description": "The blah" }
+        ,{ "name": "dt4n"         , "type": "DATETIME"   , "default":"NOW"      , "tzMode":"ROW_NO_TZ"   , "description": "The blah" }
+        ,{ "name": "dt4u"         , "type": "DATETIME"   , "default":"UNDEFINED", "tzMode":"ROW_NO_TZ"   , "description": "The blah" }
+        ,{ "name": "dt4a"         , "type": "DATETIME[]"                        , "tzMode":"ROW_NO_TZ"   , "description": "The blah" }
+      ],
+      "primary": { "autogen": true, "keyBatch": 25000 },
+      "indices":[ 
+        { "name": "AllByName" , "orderBy": ["id asc"], "db": false       },
+      ],
+      "outputMaps":[
+        { "name": "AAA", "columns": ["*"] }
+      ]
+    }
+
+
 ]
    
    

@@ -75,6 +75,7 @@ public interface DBType
     public String[] getConnectionLockMsgs();
     public String[] getConnectionCancelStates();
     public String   getCurrentTimestampStr();
+    public String   getCurrentDateTimeStr();
     public String   getCurrentDateStr();
     public boolean  isCaseSentitiveSchemaTableViewNames();
     
@@ -153,6 +154,7 @@ public interface DBType
     public boolean renameTableView(Connection con, Base base, String oldName) throws Exception;
     public boolean renameTableColumn(Connection con, Column col, String oldName) throws Exception;
     public ZonedDateTime getCurrentTimestamp(Connection con) throws Exception;
+    public ZonedDateTime getCurrentDateTime(Connection con) throws Exception;
     public LocalDate getCurrentDate(Connection con) throws Exception;
     public boolean supportsReorg();
     public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full) throws Exception;
