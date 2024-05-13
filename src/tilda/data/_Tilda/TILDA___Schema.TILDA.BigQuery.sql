@@ -8,7 +8,7 @@ create table if not exists TILDA.ZoneInfo -- blah blah
   , `value`          STRING     not null  OPTIONS(description="The value for this enumeration.")
   , `label`          STRING     not null  OPTIONS(description="The label for this enumeration.")
   , `deactivatedTZ`  STRING               OPTIONS(description="Generated helper column to hold the time zone ID for 'deactivated'.")
-  , `deactivated`    TIMESTAMP            OPTIONS(description="The label for this enumeration.")
+  , `deactivated`    TIMESTAMP            OPTIONS(description="The datetime when this enumeration was deactivated.")
   , `created`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.ZoneInfo)")
   , `lastUpdated`    TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.ZoneInfo)")
   , `deleted`        TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.ZoneInfo)")
@@ -387,9 +387,9 @@ OPTIONS (description="The Date dimension, capturing pre-calculated metrics on da
 
 
 create table if not exists TILDA.DateLimitDim -- A single row for min, max and invalid dates for the Date_Dim
- (  `invalidDate`  DATE  not null  OPTIONS(description="The invalid date")
-  , `minDate`      DATE  not null  OPTIONS(description="The min date")
-  , `maxDate`      DATE  not null  OPTIONS(description="The max date")
+ (  `invalidDate`  DATE  not null  OPTIONS(description="The invalid date, e.g., '1111-11-11'.")
+  , `minDate`      DATE  not null  OPTIONS(description="The min date included in the DIM")
+  , `maxDate`      DATE  not null  OPTIONS(description="The max date included in the DIM")
   -- FK not supported in BQ
   -- , CONSTRAINT fk_DateLimitDim_InvalidDt FOREIGN KEY (`invalidDate`) REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
   -- FK not supported in BQ
@@ -415,11 +415,11 @@ select TILDA.CatalogFormulaResult.`formulaRefnum` as `formulaRefnum` -- The pare
      , TILDA.Catalog.`columnName` as `columnName` -- The name of the column.
   from TILDA.CatalogFormulaResult
      inner join TILDA.Catalog on TILDA.CatalogFormulaResult.`formulaRefnum` = TILDA.Catalog.`refnum`
- where (TILDA.Catalog.`deleted` is null and TILDA.CatalogFormulaResult.`deleted` is null)
+ where (TILDA.Catalog.`deleted`is null and TILDA.CatalogFormulaResult.`deleted`is null)
 ;
 
 
-ALTER VIEW TILDA.FormulaResultView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDA.FormulaResultView as \n-- ''A view of formulas and their values.''\nselect TILDA.CatalogFormulaResult.`formulaRefnum` as `formulaRefnum` -- The parent formula.\n     , TILDA.CatalogFormulaResult.`value` as `value` -- The result value.\n     , TILDA.CatalogFormulaResult.`description` as `description` -- The description of the result value.\n     , TILDA.Catalog.`schemaName` as `schemaName` -- The name of the schema this column is defined in.\n     , TILDA.Catalog.`tableViewName` as `tableViewName` -- The name of the primary table/view this column is defined in.\n     , TILDA.Catalog.`columnName` as `columnName` -- The name of the column.\n  from TILDA.CatalogFormulaResult\n     inner join TILDA.Catalog on TILDA.CatalogFormulaResult.`formulaRefnum` = TILDA.Catalog.`refnum`\n where (TILDA.Catalog.`deleted` is null and TILDA.CatalogFormulaResult.`deleted` is null)\n;\n\n');
+ALTER VIEW TILDA.FormulaResultView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDA.FormulaResultView as \n-- ''A view of formulas and their values.''\nselect TILDA.CatalogFormulaResult.`formulaRefnum` as `formulaRefnum` -- The parent formula.\n     , TILDA.CatalogFormulaResult.`value` as `value` -- The result value.\n     , TILDA.CatalogFormulaResult.`description` as `description` -- The description of the result value.\n     , TILDA.Catalog.`schemaName` as `schemaName` -- The name of the schema this column is defined in.\n     , TILDA.Catalog.`tableViewName` as `tableViewName` -- The name of the primary table/view this column is defined in.\n     , TILDA.Catalog.`columnName` as `columnName` -- The name of the column.\n  from TILDA.CatalogFormulaResult\n     inner join TILDA.Catalog on TILDA.CatalogFormulaResult.`formulaRefnum` = TILDA.Catalog.`refnum`\n where (TILDA.Catalog.`deleted`is null and TILDA.CatalogFormulaResult.`deleted`is null)\n;\n\n');
 
 
 

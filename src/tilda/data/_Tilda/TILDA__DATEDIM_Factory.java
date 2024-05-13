@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitive          DT            = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dt"            , 0/*0*/, "The Date date", null, null);
+     public final Type_DatePrimitive                DT            = new Type_DatePrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "dt"            , 0/*0*/, "The Date date", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          EPOCH         = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "epoch"         , 1/*1*/, "The epoch date", null, null, null);
+     public final Type_LongPrimitive                EPOCH         = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "epoch"         , 1/*1*/, "The epoch date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DAYNAME       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dayName"       , 2/*2*/, 255, "Day name (i.e., Monday, Tuesday...) of the date", null, null, null);
+     public final Type_StringPrimitiveNull          DAYNAME       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dayName"       , 2/*2*/, 255, "Day name (i.e., Monday, Tuesday...) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   DAYOFWEEK     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfWeek"     , 3/*3*/, "ISO 8601 day of the week (Monday=1 to Sunday=7) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         DAYOFWEEK     = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfWeek"     , 3/*3*/, "ISO 8601 day of the week (Monday=1 to Sunday=7) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +145,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   DAYOFMONTH    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfMonth"    , 4/*4*/, "ISO 8601 day of the month (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         DAYOFMONTH    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfMonth"    , 4/*4*/, "ISO 8601 day of the month (starting with 1) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   DAYOFQUARTER  = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfQuarter"  , 5/*5*/, "ISO 8601 day of the quarter (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         DAYOFQUARTER  = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfQuarter"  , 5/*5*/, "ISO 8601 day of the quarter (starting with 1) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +187,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   DAYOFYEAR     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfYear"     , 6/*6*/, "ISO 8601 day of the year (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         DAYOFYEAR     = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dayOfYear"     , 6/*6*/, "ISO 8601 day of the year (starting with 1) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   WEEKOFMONTH   = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfMonth"   , 7/*7*/, "ISO 8601 week of the month (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         WEEKOFMONTH   = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfMonth"   , 7/*7*/, "ISO 8601 week of the month (starting with 1) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -229,7 +229,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   WEEKOFYEAR    = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfYear"    , 8/*8*/, "ISO 8601 week of the year (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         WEEKOFYEAR    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "weekOfYear"    , 8/*8*/, "ISO 8601 week of the year (starting with 1) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -250,7 +250,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitiveNull      MONTH         = new Type_DatePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "month"         , 9/*9*/, "Month-truncated date.", null, null);
+     public final Type_DatePrimitiveNull            MONTH         = new Type_DatePrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "month"         , 9/*9*/, "Month-truncated date.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   MONTHOFYEAR   = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "monthOfYear"   , 10/*10*/, "ISO 8601 month of the year (starting with 1) of the date", null, null, null);
+     public final Type_IntegerPrimitiveNull         MONTHOFYEAR   = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "monthOfYear"   , 10/*10*/, "ISO 8601 month of the year (starting with 1) of the date", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,7 +293,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MONTHNAME     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthName"     , 11/*11*/, 255, "Month name (i.e., January, February...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull          MONTHNAME     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "monthName"     , 11/*11*/, 255, "Month name (i.e., January, February...) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -315,7 +315,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MONTHNAMESHORT= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "monthNameShort", 12/*12*/, 255, "Monday short name (i.e., Jan, Feb...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull          MONTHNAMESHORT= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "monthNameShort", 12/*12*/, 255, "Monday short name (i.e., Jan, Feb...) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +336,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   QUARTEROFYEAR = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "quarterOfYear" , 13/*13*/, "ISO 8601 quarter of the year (starting with 1) of the date.", null, null, null);
+     public final Type_IntegerPrimitiveNull         QUARTEROFYEAR = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "quarterOfYear" , 13/*13*/, "ISO 8601 quarter of the year (starting with 1) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,7 +358,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    QUARTERNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "quarterName"   , 14/*14*/, 255, "Quarter name (i.e., Q1, Q2...) of the date.", null, null, null);
+     public final Type_StringPrimitiveNull          QUARTERNAME   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "quarterName"   , 14/*14*/, 255, "Quarter name (i.e., Q1, Q2...) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,7 +379,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   YEAR          = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "year"          , 15/*15*/, "ISO 8601 year (1.e., 2018) of the date.", null, null, null);
+     public final Type_IntegerPrimitiveNull         YEAR          = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "year"          , 15/*15*/, "ISO 8601 year (1.e., 2018) of the date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -401,7 +401,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MMYYYY        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmyyyy"        , 16/*16*/, 6, "The mmyyyy printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull          MMYYYY        = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "mmyyyy"        , 16/*16*/, 6, "The mmyyyy printable version of a date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    MMDDYYYY      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "mmddyyyy"      , 17/*17*/, 8, "The mmddyyyy printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull          MMDDYYYY      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "mmddyyyy"      , 17/*17*/, 8, "The mmddyyyy printable version of a date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -445,7 +445,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    YYYYMMDD      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "yyyymmdd"      , 18/*18*/, 8, "The yyyymmdd sortable printable version of a date.", null, null, null);
+     public final Type_StringPrimitiveNull          YYYYMMDD      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "yyyymmdd"      , 18/*18*/, 8, "The yyyymmdd sortable printable version of a date.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -466,7 +466,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   ISWEEKEND     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isWeekend"     , 19/*19*/, "1 if this is a weekend day, 0 otherwise.", null, null, null);
+     public final Type_IntegerPrimitiveNull         ISWEEKEND     = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "isWeekend"     , 19/*19*/, "1 if this is a weekend day, 0 otherwise.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,7 +487,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   ISBUSINESSDAY = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isBusinessDay" , 20/*20*/, "1 if this is a business day, 0 otherwise.", null, null, null);
+     public final Type_IntegerPrimitiveNull         ISBUSINESSDAY = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "isBusinessDay" , 20/*20*/, "1 if this is a business day, 0 otherwise.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -508,7 +508,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   ISHOLIDAY     = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isHoliday"     , 21/*21*/, "1 if this is a holiday, 0 otherwise.", null, null, null);
+     public final Type_IntegerPrimitiveNull         ISHOLIDAY     = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "isHoliday"     , 21/*21*/, "1 if this is a holiday, 0 otherwise.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -530,7 +530,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    HOLIDAYNAME   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "holidayName"   , 22/*22*/, 255, "The name of the holiday if applicable.", null, null, null);
+     public final Type_StringPrimitiveNull          HOLIDAYNAME   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "holidayName"   , 22/*22*/, 255, "The name of the holiday if applicable.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -558,7 +558,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 23/*23*/, "The timestamp for when the record was created. (TILDA.DateDim)", null, null);
+     public final Type_DatetimePrimitive            CREATED       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 23/*23*/, "The timestamp for when the record was created. (TILDA.DateDim)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -586,7 +586,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 24/*24*/, "The timestamp for when the record was last updated. (TILDA.DateDim)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED   = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 24/*24*/, "The timestamp for when the record was last updated. (TILDA.DateDim)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -607,7 +607,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 25/*25*/, "The timestamp for when the record was deleted. (TILDA.DateDim)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 25/*25*/, "The timestamp for when the record was deleted. (TILDA.DateDim)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -735,7 +735,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -1063,7 +1063,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__DATEDIM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -1119,13 +1119,19 @@ The results are ordered by: dt asc
    public static ListResults<tilda.data.DateDim_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.DateDim_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

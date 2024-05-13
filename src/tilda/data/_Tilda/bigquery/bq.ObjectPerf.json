@@ -1,23 +1,23 @@
 [
-    { "name":"schemaName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the schema tracked" }
-   ,{ "name":"objectName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the table/object tracked" }
-   ,{ "name":"startPeriodTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'startPeriod'." }
-   ,{ "name":"startPeriod", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created." }
-   ,{ "name":"endPeriodTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'endPeriod'." }
-   ,{ "name":"endPeriod", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created." }
-   ,{ "name":"selectNano", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"selectCount", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"selectRecords", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"insertNano", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"insertCount", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"insertRecords", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"updateNano", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"updateCount", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"updateRecords", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"deleteNano", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"deleteCount", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"deleteRecords", "type":"INT64", "mode":"REQUIRED", "description":"Blah..." }
-   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDA.ObjectPerf)" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDA.ObjectPerf)" }
-   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDA.ObjectPerf)" }
+    { "name":"schemaName","type":"STRING","mode":"REQUIRED","description":"The name of the schema tracked" }
+   ,{ "name":"objectName","type":"STRING","mode":"REQUIRED","description":"The name of the table/object tracked" }
+   ,{ "name":"startPeriodTZ","type":"STRING","mode":"REQUIRED","description":"Generated helper column to hold the time zone ID for 'startPeriod'." }
+   ,{ "name":"startPeriod","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created." }
+   ,{ "name":"endPeriodTZ","type":"STRING","mode":"REQUIRED","description":"Generated helper column to hold the time zone ID for 'endPeriod'." }
+   ,{ "name":"endPeriod","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created." }
+   ,{ "name":"selectNano","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"selectCount","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"selectRecords","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"insertNano","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"insertCount","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"insertRecords","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"updateNano","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"updateCount","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"updateRecords","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"deleteNano","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"deleteCount","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"deleteRecords","type":"INT64","mode":"REQUIRED","description":"Blah..." }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.ObjectPerf)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.ObjectPerf)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.ObjectPerf)" }
 ]

@@ -32,7 +32,6 @@ import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
 import tilda.enums.ProtectionType;
-import tilda.enums.TZMode;
 import tilda.enums.VisibilityType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaData;

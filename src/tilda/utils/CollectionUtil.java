@@ -18,8 +18,8 @@ package tilda.utils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -190,8 +190,8 @@ public class CollectionUtil
 
         if (L == null)
           return (T[]) EMPTY_OBJECT_O;
-//        return L.toArray(new Object[L.size()]);
-        return  L.toArray((T[]) Array.newInstance(c, L.size()));
+        // return L.toArray(new Object[L.size()]);
+        return L.toArray((T[]) Array.newInstance(c, L.size()));
 
       }
 
@@ -627,14 +627,14 @@ public class CollectionUtil
 
     public static String[] toStringArray(Collection<String> L)
       {
-        return L==null ? null : L.toArray(new String[L.size()]);
+        return L == null ? null : L.toArray(new String[L.size()]);
       }
-    
+
     public static String[][] toDoubleStringArray(Collection<String[]> L)
       {
-        return L==null ? null : L.toArray(new String[L.size()][]);
+        return L == null ? null : L.toArray(new String[L.size()][]);
       }
-    
+
     public static void append(List<String> L, Iterator<String> I)
       {
         if (I == null)
@@ -684,7 +684,7 @@ public class CollectionUtil
         if (Val != null && A != null)
           for (int i = 0; i < A.length; ++i)
             if (Val.startsWith(A[i]) == true)
-             return true;
+              return true;
         return false;
       }
 
@@ -693,7 +693,7 @@ public class CollectionUtil
         if (Val != null && A != null)
           for (int i = 0; i < A.length; ++i)
             if (Val.endsWith(A[i]) == true)
-             return true;
+              return true;
         return false;
       }
 
@@ -702,7 +702,7 @@ public class CollectionUtil
         if (Val != null && A != null)
           for (int i = 0; i < A.length; ++i)
             if (Val.indexOf(A[i]) != -1)
-             return true;
+              return true;
         return false;
       }
   }

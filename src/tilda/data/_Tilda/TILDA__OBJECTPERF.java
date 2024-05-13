@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -43,9 +43,9 @@ The Table TILDA.ObjectPerf :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startPeriod</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>schemaNameobjectName asc, startPeriod desc
+<LI>Has the following indices:<UL><LI>schemaName, objectName asc, startPeriod desc
 </LI>
-<LI>schemaName, objectNamestartPeriod desc
+<LI>schemaName, objectName, startPeriod desc
  <B><I>(Application-side Only)</I></B></LI>
 </UL></LI>
 </UL>
@@ -448,8 +448,8 @@ This is the setter for:<BR>
    protected void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 64)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
@@ -546,8 +546,8 @@ This is the setter for:<BR>
    protected void setObjectName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 64)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_objectName) == false)
@@ -642,8 +642,8 @@ This is the setter for:<BR>
     void setStartPeriodTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_startPeriodTZ) == false)
@@ -851,8 +851,8 @@ This is the setter for:<BR>
     void setEndPeriodTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_endPeriodTZ) == false)
@@ -1110,14 +1110,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectNano, whic
    public static final boolean checkSelectNano(long v)
     {
       for (String[] a : _selectNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSelectNano(long v)
     {
       for (String[] a : _selectNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1290,14 +1290,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectCount, whi
    public static final boolean checkSelectCount(int v)
     {
       for (String[] a : _selectCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSelectCount(int v)
     {
       for (String[] a : _selectCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1470,14 +1470,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectRecords, w
    public static final boolean checkSelectRecords(int v)
     {
       for (String[] a : _selectRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSelectRecords(int v)
     {
       for (String[] a : _selectRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1650,14 +1650,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertNano, whic
    public static final boolean checkInsertNano(long v)
     {
       for (String[] a : _insertNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapInsertNano(long v)
     {
       for (String[] a : _insertNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1830,14 +1830,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertCount, whi
    public static final boolean checkInsertCount(int v)
     {
       for (String[] a : _insertCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapInsertCount(int v)
     {
       for (String[] a : _insertCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2010,14 +2010,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertRecords, w
    public static final boolean checkInsertRecords(int v)
     {
       for (String[] a : _insertRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapInsertRecords(int v)
     {
       for (String[] a : _insertRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2190,14 +2190,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateNano, whic
    public static final boolean checkUpdateNano(long v)
     {
       for (String[] a : _updateNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapUpdateNano(long v)
     {
       for (String[] a : _updateNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2370,14 +2370,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateCount, whi
    public static final boolean checkUpdateCount(int v)
     {
       for (String[] a : _updateCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapUpdateCount(int v)
     {
       for (String[] a : _updateCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2550,14 +2550,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateRecords, w
    public static final boolean checkUpdateRecords(int v)
     {
       for (String[] a : _updateRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapUpdateRecords(int v)
     {
       for (String[] a : _updateRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2730,14 +2730,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteNano, whic
    public static final boolean checkDeleteNano(long v)
     {
       for (String[] a : _deleteNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapDeleteNano(long v)
     {
       for (String[] a : _deleteNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2910,14 +2910,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteCount, whi
    public static final boolean checkDeleteCount(int v)
     {
       for (String[] a : _deleteCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapDeleteCount(int v)
     {
       for (String[] a : _deleteCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3090,14 +3090,14 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteRecords, w
    public static final boolean checkDeleteRecords(int v)
     {
       for (String[] a : _deleteRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapDeleteRecords(int v)
     {
       for (String[] a : _deleteRecords_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -4022,7 +4022,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -4055,9 +4055,10 @@ This is the hasChanged for:<BR>
         throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
        __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startPeriod.getZone().getId());
+       String zoneId = _startPeriod.getZone().getId();
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriod' because the timezone value '"+_startPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+        throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriod' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setStartPeriodTZ(ZI.getId());
         }
 
@@ -4071,9 +4072,10 @@ This is the hasChanged for:<BR>
         throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
        __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_endPeriod.getZone().getId());
+       String zoneId = _endPeriod.getZone().getId();
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.endPeriod' because the timezone value '"+_endPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+        throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.endPeriod' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setEndPeriodTZ(ZI.getId());
         }
 
@@ -4156,41 +4158,41 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -4547,7 +4549,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

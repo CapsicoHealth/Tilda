@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -298,8 +298,8 @@ This is the setter for:<BR>
     void setValue(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.value to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.value to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.value: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_value) == false)
@@ -395,8 +395,8 @@ This is the setter for:<BR>
     void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.description to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.description to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.description: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_description) == false)
@@ -482,8 +482,8 @@ This is the setter for:<BR>
     void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.schemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.schemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.schemaName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
@@ -579,8 +579,8 @@ This is the setter for:<BR>
     void setTableViewName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.tableViewName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.tableViewName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.tableViewName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_tableViewName) == false)
@@ -676,8 +676,8 @@ This is the setter for:<BR>
     void setColumnName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.columnName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.columnName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.columnName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_columnName) == false)
@@ -781,7 +781,7 @@ This is the setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

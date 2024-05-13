@@ -93,7 +93,7 @@ public class Loader
         if (TildaList.get(0)._ResourceName.equals(Schema._BASE_TILDATMP_SCHEMA_RESOURCE) == false)
          Str.append("Could not find find the base TildaTmp schema resource " + Schema._BASE_TILDATMP_SCHEMA_RESOURCE+"\n");
         // The second schema should be Tilda since it's a dependency to everything.
-        if (TildaList.get(0)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false && TildaList.get(1)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false)
+        if (TildaList.get(0)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false && (TildaList.size() < 2 || TildaList.get(1)._ResourceName.equals(Schema._BASE_TILDA_SCHEMA_RESOURCE) == false))
          Str.append("Could not find find the base Tilda schema resource " + Schema._BASE_TILDA_SCHEMA_RESOURCE+"\n");
 
         if (Str.length() != 0)

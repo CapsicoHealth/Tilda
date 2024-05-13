@@ -1,14 +1,14 @@
 [
-    { "name":"active", "type":"BOOL", "mode":"NULLABLE", "description":"Status Flag" }
-   ,{ "name":"id", "type":"STRING", "mode":"REQUIRED", "description":"Connection ID" }
-   ,{ "name":"driver", "type":"STRING", "mode":"REQUIRED", "description":"DB Driver" }
-   ,{ "name":"db", "type":"STRING", "mode":"REQUIRED", "description":"DB Url" }
-   ,{ "name":"user", "type":"STRING", "mode":"REQUIRED", "description":"DB User" }
-   ,{ "name":"pswd", "type":"STRING", "mode":"REQUIRED", "description":"DB Password" }
-   ,{ "name":"initial", "type":"INT64", "mode":"REQUIRED", "description":"Minimum Connections" }
-   ,{ "name":"max", "type":"INT64", "mode":"REQUIRED", "description":"Maximum Connections" }
-   ,{ "name":"schemas", "type":"STRING", "mode":"REPEATED", "description":"Schemas" }
-   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDA.Connection)" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDA.Connection)" }
-   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDA.Connection)" }
+    { "name":"active","type":"BOOL","mode":"NULLABLE","description":"Status Flag" }
+   ,{ "name":"id","type":"STRING","mode":"REQUIRED","description":"Connection ID" }
+   ,{ "name":"driver","type":"STRING","mode":"REQUIRED","description":"DB Driver" }
+   ,{ "name":"db","type":"STRING","mode":"REQUIRED","description":"DB Url" }
+   ,{ "name":"user","type":"STRING","mode":"REQUIRED","description":"DB User" }
+   ,{ "name":"pswd","type":"STRING","mode":"REQUIRED","description":"DB Password" }
+   ,{ "name":"initial","type":"INT64","mode":"REQUIRED","description":"Minimum Connections" }
+   ,{ "name":"max","type":"INT64","mode":"REQUIRED","description":"Maximum Connections" }
+   ,{ "name":"schemas","type":"STRING","mode":"REPEATED","description":"Schemas" }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.Connection)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.Connection)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.Connection)" }
 ]

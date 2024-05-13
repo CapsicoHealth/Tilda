@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -525,8 +525,8 @@ This is the setter for:<BR>
     void setJobName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobName: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobName) == false)
@@ -634,7 +634,7 @@ This is the setter for:<BR>
     void setJobType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobType();
         }
@@ -775,7 +775,7 @@ This is the setter for:<BR>
     void setJobUserId(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobUserId();
         }
@@ -915,7 +915,7 @@ This is the setter for:<BR>
     void setJobDataStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobDataStartTZ();
         }
@@ -1198,7 +1198,7 @@ This is the setter for:<BR>
     void setJobDataEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobDataEndTZ();
         }
@@ -1459,8 +1459,8 @@ This is the setter for:<BR>
     void setJobStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobStartTZ) == false)
@@ -1657,7 +1657,7 @@ This is the setter for:<BR>
     void setJobEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobEndTZ();
         }
@@ -2071,7 +2071,7 @@ This is the setter for:<BR>
     void setJobMsg(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobMsg();
         }
@@ -2190,8 +2190,8 @@ This is the setter for:<BR>
     void setJobPartName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartName: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartName) == false)
@@ -2299,7 +2299,7 @@ This is the setter for:<BR>
     void setJobPartType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobPartType();
         }
@@ -2439,7 +2439,7 @@ This is the setter for:<BR>
     void setJobPartDataStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobPartDataStartTZ();
         }
@@ -2722,7 +2722,7 @@ This is the setter for:<BR>
     void setJobPartDataEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobPartDataEndTZ();
         }
@@ -2983,8 +2983,8 @@ This is the setter for:<BR>
     void setJobPartStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartStartTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartStartTZ) == false)
@@ -3181,7 +3181,7 @@ This is the setter for:<BR>
     void setJobPartEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullJobPartEndTZ();
         }
@@ -3783,8 +3783,8 @@ This is the setter for:<BR>
     void setJobPartMessage(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 8192)
         throw new Exception("Cannot set tilda.data.TILDA.JobView.jobPartMessage: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_jobPartMessage) == false)
@@ -3878,7 +3878,7 @@ This is the setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

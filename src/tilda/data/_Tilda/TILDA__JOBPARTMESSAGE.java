@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -44,9 +44,9 @@ The Table TILDA.JobPartMessage :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>jobRefnumcreated desc
+<LI>Has the following indices:<UL><LI>jobRefnum, created desc
 </LI>
-<LI>jobPartRefnumcreated desc
+<LI>jobPartRefnum, created desc
 </LI>
 </UL></LI>
 </UL>
@@ -673,8 +673,8 @@ This is the setter for:<BR>
    public void setMsg(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 8192)
         throw new Exception("Cannot set tilda.data.TILDA.JobPartMessage.msg: the size "+v.length()+" is larger than the max allowed of 8192: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_msg) == false)
@@ -1485,7 +1485,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1536,22 +1536,22 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "JobPartMessage");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.MSG.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.MSG.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) { TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1758,7 +1758,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

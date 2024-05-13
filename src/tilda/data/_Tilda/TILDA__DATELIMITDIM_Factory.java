@@ -50,7 +50,7 @@ public class TILDA__DATELIMITDIM_Factory
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>invalidDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date, e.g., '1111-11-11'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.invalidDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.invalidDate</TD></TR>
 
@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitive          INVALIDDATE= new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "invalidDate", 0/*0*/, "The invalid date", null, null);
+     public final Type_DatePrimitive                INVALIDDATE= new Type_DatePrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "invalidDate", 0/*0*/, "The invalid date, e.g., '1111-11-11'.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>minDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.minDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.minDate</TD></TR>
 
@@ -81,7 +81,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitive          MINDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "minDate"    , 1/*1*/, "The min date", null, null);
+     public final Type_DatePrimitive                MINDATE    = new Type_DatePrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "minDate"    , 1/*1*/, "The min date included in the DIM", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>maxDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.maxDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.maxDate</TD></TR>
 
@@ -102,7 +102,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitive          MAXDATE    = new Type_DatePrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "maxDate"    , 2/*2*/, "The max date", null, null);
+     public final Type_DatePrimitive                MAXDATE    = new Type_DatePrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "maxDate"    , 2/*2*/, "The max date included in the DIM", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -231,7 +231,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -278,9 +278,9 @@ object. The generic init method defaults to this general data structure as a gen
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
- @param invalidDate The invalid date
- @param minDate     The min date
- @param maxDate     The max date
+ @param invalidDate The invalid date, e.g., '1111-11-11'.
+ @param minDate     The min date included in the DIM
+ @param maxDate     The max date included in the DIM
 */
    static public tilda.data.DateLimitDim_Data create(LocalDate invalidDate, LocalDate minDate, LocalDate maxDate) throws Exception
      {
@@ -413,7 +413,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -472,13 +472,19 @@ The results are ordered by: invalidDate asc
    public static ListResults<tilda.data.DateLimitDim_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.DateLimitDim_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

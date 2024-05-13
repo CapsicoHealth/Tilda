@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -242,8 +242,8 @@ This is the setter for:<BR>
    public void setSrcSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.srcSchemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.srcSchemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.srcSchemaName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_srcSchemaName) == false)
@@ -350,8 +350,8 @@ This is the setter for:<BR>
    public void setSrcTVName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.srcTVName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.srcTVName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.srcTVName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_srcTVName) == false)
@@ -557,8 +557,8 @@ This is the setter for:<BR>
    public void setDepSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.depSchemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.depSchemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.depSchemaName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_depSchemaName) == false)
@@ -664,8 +664,8 @@ This is the setter for:<BR>
    public void setDepViewName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.depViewName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.depViewName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.depViewName: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_depViewName) == false)
@@ -771,8 +771,8 @@ This is the setter for:<BR>
    public void setRestoreScript(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.restoreScript to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.restoreScript to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 500000)
         throw new Exception("Cannot set tilda.data.TILDA.FailedDependencyDDLScripts.restoreScript: the size "+v.length()+" is larger than the max allowed of 500000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_restoreScript) == false)
@@ -1587,7 +1587,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1647,23 +1647,23 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "FailedDependencyDDLScripts");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true) { TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1948,7 +1948,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

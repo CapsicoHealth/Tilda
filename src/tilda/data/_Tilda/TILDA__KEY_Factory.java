@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM        = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM        = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, 128, "The name of the table/object tracked", null, null, null);
+     public final Type_StringPrimitive              NAME          = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, 128, "The name of the table/object tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          MAX           = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "max"           , 2/*2*/, "The pre-allocated max RefNum for this table/object.", null, null, null);
+     public final Type_LongPrimitive                MAX           = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "max"           , 2/*2*/, "The pre-allocated max RefNum for this table/object.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitive       COUNT         = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "count"         , 3/*3*/, "The size of the pre-allocation required by this table/object.", null, null, null);
+     public final Type_IntegerPrimitive             COUNT         = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "count"         , 3/*3*/, "The size of the pre-allocation required by this table/object.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 4/*4*/, "The timestamp for when the record was created.", null, null);
+     public final Type_DatetimePrimitive            CREATED       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 4/*4*/, "The timestamp for when the record was created.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,7 +180,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 5/*5*/, "The timestamp for when the record was last updated.", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED   = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 5/*5*/, "The timestamp for when the record was last updated.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 6/*6*/, "The timestamp for when the record was deleted.", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 6/*6*/, "The timestamp for when the record was deleted.", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -337,7 +337,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -532,7 +532,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -567,22 +567,22 @@ Lookup one record by the unique index 'Name': name.
 /**
 Lookup records by the index 'AllByName' over  .<BR>The results are ordered by: name asc
 */
-   static public ListResults<tilda.data.Key_Data> lookupWhereAllByName(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.data.Key_Data> lookupWhereAllByName(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'AllByName' over  .<BR>The results are ordered by: name asc
 */
-   static public void lookupWhereAllByName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereAllByName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -590,7 +590,7 @@ Lookup records by the index 'AllByName' over  .<BR>The results are ordered by: n
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -632,13 +632,19 @@ The results are ordered by: refnum asc
    public static ListResults<tilda.data.Key_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Key_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

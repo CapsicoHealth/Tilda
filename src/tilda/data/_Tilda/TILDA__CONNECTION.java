@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -38,7 +38,7 @@ The Table TILDA.Connection :<UL>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Primary Key: id</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, id asc
+<LI>Has the following index:<UL><LI>id asc
 </LI>
 </UL></LI>
 </UL>
@@ -424,8 +424,8 @@ This is the setter for:<BR>
    protected void setId(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.id to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.id to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 15)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.id: the size "+v.length()+" is larger than the max allowed of 15: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_id) == false)
@@ -521,8 +521,8 @@ This is the setter for:<BR>
    public void setDriver(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.driver to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.driver to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.driver: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_driver) == false)
@@ -628,8 +628,8 @@ This is the setter for:<BR>
    public void setDb(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.db to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.db to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 200)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.db: the size "+v.length()+" is larger than the max allowed of 200: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_db) == false)
@@ -735,8 +735,8 @@ This is the setter for:<BR>
    public void setUser(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.user to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.user to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 30)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.user: the size "+v.length()+" is larger than the max allowed of 30: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_user) == false)
@@ -842,8 +842,8 @@ This is the setter for:<BR>
    public void setPswd(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 40)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd: the size "+v.length()+" is larger than the max allowed of 40: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_pswd) == false)
@@ -1177,8 +1177,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_schemas == null)
         _schemas = new ArrayList<String>();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Connection.schemas to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Connection.schemas to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (pos >= _schemas.size() || _schemas.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
@@ -2009,7 +2009,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -2086,26 +2086,26 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "Connection");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) { TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) { TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) { TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) { TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) { TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) { TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) { TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) { TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) { TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) { TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) { TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) { TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) { TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) { TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -2400,7 +2400,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }

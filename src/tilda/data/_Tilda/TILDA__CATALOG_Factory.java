@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM            = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"            , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM            = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"            , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SCHEMANAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"        , 1/*1*/, 128, "The name of the schema this column is defined in.", null, null, null);
+     public final Type_StringPrimitive              SCHEMANAME        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"        , 1/*1*/, 128, "The name of the schema this column is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        TABLEVIEWNAME     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName"     , 2/*2*/, 128, "The name of the primary table/view this column is defined in.", null, null, null);
+     public final Type_StringPrimitive              TABLEVIEWNAME     = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName"     , 2/*2*/, 128, "The name of the primary table/view this column is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        COLUMNNAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "columnName"        , 3/*3*/, 128, "The name of the column.", null, null, null);
+     public final Type_StringPrimitive              COLUMNNAME        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "columnName"        , 3/*3*/, 128, "The name of the column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        TYPE              = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"              , 4/*4*/, 128, "The type of the column.", null, null, null);
+     public final Type_StringPrimitive              TYPE              = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "type"              , 4/*4*/, 128, "The type of the column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +169,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   NULLABLE          = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "nullable"          , 5/*5*/, "Whether the collumn is a nullable or not null.", null, null, null);
+     public final Type_BooleanPrimitiveNull         NULLABLE          = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "nullable"          , 5/*5*/, "Whether the collumn is a nullable or not null.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   COLLECTION        = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "collection"        , 6/*6*/, "Whether the collumn is a collection/array.", null, null, null);
+     public final Type_BooleanPrimitiveNull         COLLECTION        = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "collection"        , 6/*6*/, "Whether the collumn is a collection/array.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +212,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DESCRIPTION       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"       , 7/*7*/, 32000, "The description of the column.", null, null, null);
+     public final Type_StringPrimitive              DESCRIPTION       = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "description"       , 7/*7*/, 32000, "The description of the column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +234,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    TABLEVIEWNAME2    = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName2"    , 8/*8*/, 128, "The name of the secondary table/view (a derived view, a realized table), if applicable.", null, null, null);
+     public final Type_StringPrimitiveNull          TABLEVIEWNAME2    = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName2"    , 8/*8*/, 128, "The name of the secondary table/view (a derived view, a realized table), if applicable.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -256,7 +256,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    AGGREGATE         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "aggregate"         , 9/*9*/, 128, "The aggregate type of the column, if any.", null, null, null);
+     public final Type_StringPrimitiveNull          AGGREGATE         = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "aggregate"         , 9/*9*/, 128, "The aggregate type of the column, if any.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,7 +278,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    TITLE             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "title"             , 10/*10*/, 128, "The title of the formula/expression that may be associated with this column.", null, null, null);
+     public final Type_StringPrimitiveNull          TITLE             = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "title"             , 10/*10*/, 128, "The title of the formula/expression that may be associated with this column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,7 +300,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    FORMULA           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "formula"           , 11/*11*/, 32000, "The expression/formula that may be associated with this column.", null, null, null);
+     public final Type_StringPrimitiveNull          FORMULA           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "formula"           , 11/*11*/, 32000, "The expression/formula that may be associated with this column.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,7 +321,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   MEASURE           = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "measure"           , 12/*12*/, "Whether this column is a formula defined as a measure or not.", null, null, null);
+     public final Type_BooleanPrimitiveNull         MEASURE           = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "measure"           , 12/*12*/, "Whether this column is a formula defined as a measure or not.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -343,7 +343,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    HTMLDOC           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "htmlDoc"           , 13/*13*/, 32000, "Pre-rendered html fragment with the full documentation for this formula.", null, null, null);
+     public final Type_StringPrimitiveNull          HTMLDOC           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "htmlDoc"           , 13/*13*/, 32000, "Pre-rendered html fragment with the full documentation for this formula.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -365,7 +365,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull   REFERENCEDCOLUMNS = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns" , 14/*14*/, "The list of columns this formula depends on.", null, null);
+     public final Type_StringCollectionNull         REFERENCEDCOLUMNS = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "referencedColumns" , 14/*14*/, "The list of columns this formula depends on.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -387,7 +387,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull   REFERENCEDFORMULAS= new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "referencedFormulas", 15/*15*/, "The list of columns this formula depends on.", null, null);
+     public final Type_StringCollectionNull         REFERENCEDFORMULAS= new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "referencedFormulas", 15/*15*/, "The list of columns this formula depends on.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -415,7 +415,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"           , 16/*16*/, "The timestamp for when the record was created. (TILDA.Catalog)", null, null);
+     public final Type_DatetimePrimitive            CREATED           = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"           , 16/*16*/, "The timestamp for when the record was created. (TILDA.Catalog)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -443,7 +443,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"       , 17/*17*/, "The timestamp for when the record was last updated. (TILDA.Catalog)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"       , 17/*17*/, "The timestamp for when the record was last updated. (TILDA.Catalog)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -464,7 +464,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED           = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"           , 18/*18*/, "The timestamp for when the record was deleted. (TILDA.Catalog)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED           = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"           , 18/*18*/, "The timestamp for when the record was deleted. (TILDA.Catalog)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -606,7 +606,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -889,7 +889,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -926,22 +926,22 @@ Lookup one record by the unique index 'Column': schemaName, tableViewName, colum
 /**
 Lookup records by the index 'RefColumns' over  .<BR>The results are ordered by: referencedColumns asc
 */
-   static public ListResults<tilda.data.Catalog_Data> lookupWhereRefColumns(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.data.Catalog_Data> lookupWhereRefColumns(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__CATALOG Obj = new tilda.data.Catalog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'RefColumns' over  .<BR>The results are ordered by: referencedColumns asc
 */
-   static public void lookupWhereRefColumns(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Catalog_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereRefColumns(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Catalog_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__CATALOG Obj = new tilda.data.Catalog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -949,7 +949,7 @@ Lookup records by the index 'RefColumns' over  .<BR>The results are ordered by: 
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -957,22 +957,22 @@ Lookup records by the index 'RefColumns' over  .<BR>The results are ordered by: 
 /**
 Lookup records by the index 'RefFormulas' over  .<BR>The results are ordered by: referencedFormulas asc
 */
-   static public ListResults<tilda.data.Catalog_Data> lookupWhereRefFormulas(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.data.Catalog_Data> lookupWhereRefFormulas(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__CATALOG Obj = new tilda.data.Catalog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 3, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'RefFormulas' over  .<BR>The results are ordered by: referencedFormulas asc
 */
-   static public void lookupWhereRefFormulas(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Catalog_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereRefFormulas(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Catalog_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__CATALOG Obj = new tilda.data.Catalog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -980,7 +980,7 @@ Lookup records by the index 'RefFormulas' over  .<BR>The results are ordered by:
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       readMany(C, 3, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -1022,13 +1022,19 @@ The results are ordered by: schemaName asc, tableViewName asc, columnName asc
    public static ListResults<tilda.data.Catalog_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Catalog_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

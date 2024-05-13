@@ -61,7 +61,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SCHEMANAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 0/*0*/, 64, "The name of the schema tracked", null, null, null);
+     public final Type_StringPrimitive              SCHEMANAME   = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 0/*0*/, 64, "The name of the schema tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        OBJECTNAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 1/*1*/, 64, "The name of the table/object tracked", null, null, null);
+     public final Type_StringPrimitive              OBJECTNAME   = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 1/*1*/, 64, "The name of the table/object tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        STARTPERIODTZ= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ", 2/*2*/, 5, "Generated helper column to hold the time zone ID for 'startPeriod'.", null, null, null);
+     public final Type_StringPrimitive              STARTPERIODTZ= new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ", 2/*2*/, 5, "Generated helper column to hold the time zone ID for 'startPeriod'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitive      STARTPERIOD  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"  , 3/*3*/, "The timestamp for when the record was created.", null, null, STARTPERIODTZ);
+     public final Type_DatetimePrimitive            STARTPERIOD  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"  , 3/*3*/, "The timestamp for when the record was created.", null, null, STARTPERIODTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        ENDPERIODTZ  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriodTZ"  , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'endPeriod'.", null, null, null);
+     public final Type_StringPrimitive              ENDPERIODTZ  = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriodTZ"  , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'endPeriod'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +169,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitive      ENDPERIOD    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"    , 5/*5*/, "The timestamp for when the record was created.", null, null, ENDPERIODTZ);
+     public final Type_DatetimePrimitive            ENDPERIOD    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"    , 5/*5*/, "The timestamp for when the record was created.", null, null, ENDPERIODTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_LongPrimitive          SELECTNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectNano"   , 6/*6*/, "Blah...", null, null, new String[][] {{"0","selectNano_CreateDefault"}});
+     public final Type_LongPrimitive                SELECTNANO   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "selectNano"   , 6/*6*/, "Blah...", null, null, new String[][] {{"0","selectNano_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +225,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       SELECTCOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "selectCount"  , 7/*7*/, "Blah...", null, null, new String[][] {{"0","selectCount_CreateDefault"}});
+     public final Type_IntegerPrimitive             SELECTCOUNT  = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "selectCount"  , 7/*7*/, "Blah...", null, null, new String[][] {{"0","selectCount_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       SELECTRECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "selectRecords", 8/*8*/, "Blah...", null, null, new String[][] {{"0","selectRecords_CreateDefault"}});
+     public final Type_IntegerPrimitive             SELECTRECORDS= new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "selectRecords", 8/*8*/, "Blah...", null, null, new String[][] {{"0","selectRecords_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +281,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_LongPrimitive          INSERTNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertNano"   , 9/*9*/, "Blah...", null, null, new String[][] {{"0","insertNano_CreateDefault"}});
+     public final Type_LongPrimitive                INSERTNANO   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "insertNano"   , 9/*9*/, "Blah...", null, null, new String[][] {{"0","insertNano_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -309,7 +309,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       INSERTCOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 10/*10*/, "Blah...", null, null, new String[][] {{"0","insertCount_CreateDefault"}});
+     public final Type_IntegerPrimitive             INSERTCOUNT  = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 10/*10*/, "Blah...", null, null, new String[][] {{"0","insertCount_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,7 +337,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       INSERTRECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "insertRecords", 11/*11*/, "Blah...", null, null, new String[][] {{"0","insertRecords_CreateDefault"}});
+     public final Type_IntegerPrimitive             INSERTRECORDS= new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "insertRecords", 11/*11*/, "Blah...", null, null, new String[][] {{"0","insertRecords_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -365,7 +365,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_LongPrimitive          UPDATENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateNano"   , 12/*12*/, "Blah...", null, null, new String[][] {{"0","updateNano_CreateDefault"}});
+     public final Type_LongPrimitive                UPDATENANO   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "updateNano"   , 12/*12*/, "Blah...", null, null, new String[][] {{"0","updateNano_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -393,7 +393,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       UPDATECOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "updateCount"  , 13/*13*/, "Blah...", null, null, new String[][] {{"0","updateCount_CreateDefault"}});
+     public final Type_IntegerPrimitive             UPDATECOUNT  = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "updateCount"  , 13/*13*/, "Blah...", null, null, new String[][] {{"0","updateCount_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,7 +421,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       UPDATERECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "updateRecords", 14/*14*/, "Blah...", null, null, new String[][] {{"0","updateRecords_CreateDefault"}});
+     public final Type_IntegerPrimitive             UPDATERECORDS= new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "updateRecords", 14/*14*/, "Blah...", null, null, new String[][] {{"0","updateRecords_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -449,7 +449,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_LongPrimitive          DELETENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteNano"   , 15/*15*/, "Blah...", null, null, new String[][] {{"0","deleteNano_CreateDefault"}});
+     public final Type_LongPrimitive                DELETENANO   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "deleteNano"   , 15/*15*/, "Blah...", null, null, new String[][] {{"0","deleteNano_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -477,7 +477,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       DELETECOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 16/*16*/, "Blah...", null, null, new String[][] {{"0","deleteCount_CreateDefault"}});
+     public final Type_IntegerPrimitive             DELETECOUNT  = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 16/*16*/, "Blah...", null, null, new String[][] {{"0","deleteCount_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -505,7 +505,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_IntegerPrimitive       DELETERECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "deleteRecords", 17/*17*/, "Blah...", null, null, new String[][] {{"0","deleteRecords_CreateDefault"}});
+     public final Type_IntegerPrimitive             DELETERECORDS= new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "deleteRecords", 17/*17*/, "Blah...", null, null, new String[][] {{"0","deleteRecords_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -533,7 +533,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 18/*18*/, "The timestamp for when the record was created. (TILDA.ObjectPerf)", null, null);
+     public final Type_DatetimePrimitive            CREATED      = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 18/*18*/, "The timestamp for when the record was created. (TILDA.ObjectPerf)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -561,7 +561,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 19/*19*/, "The timestamp for when the record was last updated. (TILDA.ObjectPerf)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 19/*19*/, "The timestamp for when the record was last updated. (TILDA.ObjectPerf)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -582,7 +582,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 20/*20*/, "The timestamp for when the record was deleted. (TILDA.ObjectPerf)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 20/*20*/, "The timestamp for when the record was deleted. (TILDA.ObjectPerf)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -728,7 +728,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -1007,7 +1007,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -1031,7 +1031,7 @@ Lookup one record by the primary key: schemaName, objectName, startPeriod.
 /**
 Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The results are ordered by: objectName asc, startPeriod desc
 */
-   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaByObjectStart(Connection C, String schemaName, int start, int size) throws Exception
+   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaByObjectStart(Connection C, String schemaName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1039,15 +1039,15 @@ Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The resul
        Obj.setSchemaName   (schemaName   );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The results are ordered by: objectName asc, startPeriod desc
 */
-   static public void lookupWhereSchemaByObjectStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, int start, int size) throws Exception
+   static public void lookupWhereSchemaByObjectStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1056,7 +1056,7 @@ Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The resul
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -1064,7 +1064,7 @@ Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The resul
 /**
 Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<BR>The results are ordered by: startPeriod desc
 */
-   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaObjectByStart(Connection C, String schemaName, String objectName, int start, int size) throws Exception
+   static public ListResults<tilda.data.ObjectPerf_Data> lookupWhereSchemaObjectByStart(Connection C, String schemaName, String objectName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1073,15 +1073,15 @@ Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<
        Obj.setObjectName   (objectName   );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<BR>The results are ordered by: startPeriod desc
 */
-   static public void lookupWhereSchemaObjectByStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, String objectName, int start, int size) throws Exception
+   static public void lookupWhereSchemaObjectByStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, String schemaName, String objectName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -1091,7 +1091,7 @@ Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -1135,13 +1135,19 @@ The results are ordered by: schemaName asc, objectName asc, startPeriod asc
    public static ListResults<tilda.data.ObjectPerf_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.ObjectPerf_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

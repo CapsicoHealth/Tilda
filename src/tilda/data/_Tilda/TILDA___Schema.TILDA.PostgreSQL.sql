@@ -8,7 +8,7 @@ create table if not exists TILDA.ZoneInfo -- blah blah
   , "value"          varchar(50)   not null   -- The value for this enumeration.
   , "label"          varchar(254)  not null   -- The label for this enumeration.
   , "deactivatedTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'deactivated'.
-  , "deactivated"    timestamptz              -- The label for this enumeration.
+  , "deactivated"    timestamptz              -- The datetime when this enumeration was deactivated.
   , "created"        timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.ZoneInfo)
   , "lastUpdated"    timestamptz   not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.ZoneInfo)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ZoneInfo)
@@ -20,7 +20,7 @@ COMMENT ON COLUMN TILDA.ZoneInfo."id" IS E'The id for this enumeration.';
 COMMENT ON COLUMN TILDA.ZoneInfo."value" IS E'The value for this enumeration.';
 COMMENT ON COLUMN TILDA.ZoneInfo."label" IS E'The label for this enumeration.';
 COMMENT ON COLUMN TILDA.ZoneInfo."deactivatedTZ" IS E'Generated helper column to hold the time zone ID for ''deactivated''.';
-COMMENT ON COLUMN TILDA.ZoneInfo."deactivated" IS E'The label for this enumeration.';
+COMMENT ON COLUMN TILDA.ZoneInfo."deactivated" IS E'The datetime when this enumeration was deactivated.';
 COMMENT ON COLUMN TILDA.ZoneInfo."created" IS E'The timestamp for when the record was created. (TILDA.ZoneInfo)';
 COMMENT ON COLUMN TILDA.ZoneInfo."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ZoneInfo)';
 COMMENT ON COLUMN TILDA.ZoneInfo."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ZoneInfo)';
@@ -590,17 +590,17 @@ COMMENT ON COLUMN TILDA.DateDim."deleted" IS E'The timestamp for when the record
 
 
 create table if not exists TILDA.DateLimitDim -- A single row for min, max and invalid dates for the Date_Dim
- (  "invalidDate"  date  not null   -- The invalid date
-  , "minDate"      date  not null   -- The min date
-  , "maxDate"      date  not null   -- The max date
+ (  "invalidDate"  date  not null   -- The invalid date, e.g., '1111-11-11'.
+  , "minDate"      date  not null   -- The min date included in the DIM
+  , "maxDate"      date  not null   -- The max date included in the DIM
   , CONSTRAINT fk_DateLimitDim_InvalidDt FOREIGN KEY ("invalidDate") REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_DateLimitDim_MinDt FOREIGN KEY ("minDate") REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_DateLimitDim_MaxDt FOREIGN KEY ("maxDate") REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.DateLimitDim IS E'A single row for min, max and invalid dates for the Date_Dim';
-COMMENT ON COLUMN TILDA.DateLimitDim."invalidDate" IS E'The invalid date';
-COMMENT ON COLUMN TILDA.DateLimitDim."minDate" IS E'The min date';
-COMMENT ON COLUMN TILDA.DateLimitDim."maxDate" IS E'The max date';
+COMMENT ON COLUMN TILDA.DateLimitDim."invalidDate" IS E'The invalid date, e.g., ''1111-11-11''.';
+COMMENT ON COLUMN TILDA.DateLimitDim."minDate" IS E'The min date included in the DIM';
+COMMENT ON COLUMN TILDA.DateLimitDim."maxDate" IS E'The max date included in the DIM';
 CREATE UNIQUE INDEX IF NOT EXISTS DateLimitDim_InvalidDate ON TILDA.DateLimitDim ("invalidDate");
 
 
@@ -617,11 +617,11 @@ select TILDA.CatalogFormulaResult."formulaRefnum" as "formulaRefnum" -- The pare
      , TILDA.Catalog."columnName" as "columnName" -- The name of the column.
   from TILDA.CatalogFormulaResult
      inner join TILDA.Catalog on TILDA.CatalogFormulaResult."formulaRefnum" = TILDA.Catalog."refnum"
- where (TILDA.Catalog."deleted" is null and TILDA.CatalogFormulaResult."deleted" is null)
+ where (TILDA.Catalog."deleted"is null and TILDA.CatalogFormulaResult."deleted"is null)
 ;
 
 
-COMMENT ON VIEW TILDA.FormulaResultView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDA.FormulaResultView as \n-- ''A view of formulas and their values.''\nselect TILDA.CatalogFormulaResult."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.CatalogFormulaResult."value" as "value" -- The result value.\n     , TILDA.CatalogFormulaResult."description" as "description" -- The description of the result value.\n     , TILDA.Catalog."schemaName" as "schemaName" -- The name of the schema this column is defined in.\n     , TILDA.Catalog."tableViewName" as "tableViewName" -- The name of the primary table/view this column is defined in.\n     , TILDA.Catalog."columnName" as "columnName" -- The name of the column.\n  from TILDA.CatalogFormulaResult\n     inner join TILDA.Catalog on TILDA.CatalogFormulaResult."formulaRefnum" = TILDA.Catalog."refnum"\n where (TILDA.Catalog."deleted" is null and TILDA.CatalogFormulaResult."deleted" is null)\n;\n\n';
+COMMENT ON VIEW TILDA.FormulaResultView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDA.FormulaResultView as \n-- ''A view of formulas and their values.''\nselect TILDA.CatalogFormulaResult."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.CatalogFormulaResult."value" as "value" -- The result value.\n     , TILDA.CatalogFormulaResult."description" as "description" -- The description of the result value.\n     , TILDA.Catalog."schemaName" as "schemaName" -- The name of the schema this column is defined in.\n     , TILDA.Catalog."tableViewName" as "tableViewName" -- The name of the primary table/view this column is defined in.\n     , TILDA.Catalog."columnName" as "columnName" -- The name of the column.\n  from TILDA.CatalogFormulaResult\n     inner join TILDA.Catalog on TILDA.CatalogFormulaResult."formulaRefnum" = TILDA.Catalog."refnum"\n where (TILDA.Catalog."deleted"is null and TILDA.CatalogFormulaResult."deleted"is null)\n;\n\n';
 
 COMMENT ON COLUMN TILDA.FormulaResultView."formulaRefnum" IS E'The parent formula.';
 COMMENT ON COLUMN TILDA.FormulaResultView."value" IS E'The result value.';

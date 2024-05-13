@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -39,9 +39,9 @@ The Table TILDA.Catalog :<UL>
 <LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
 <LI>Unique Index: schemaName, tableViewName, columnName</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>, referencedColumns asc
+<LI>Has the following indices:<UL><LI>referencedColumns asc
 </LI>
-<LI>, referencedFormulas asc
+<LI>referencedFormulas asc
 </LI>
 </UL></LI>
 </UL>
@@ -428,8 +428,8 @@ This is the setter for:<BR>
    protected void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.schemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.schemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.schemaName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
@@ -548,8 +548,8 @@ This is the setter for:<BR>
    protected void setTableViewName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_tableViewName) == false)
@@ -668,8 +668,8 @@ This is the setter for:<BR>
    protected void setColumnName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.columnName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.columnName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.columnName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_columnName) == false)
@@ -787,8 +787,8 @@ This is the setter for:<BR>
    public void setType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.type to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.type to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.type: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_type) == false)
@@ -1192,8 +1192,8 @@ This is the setter for:<BR>
    public void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.description to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.description to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.description: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_description) == false)
@@ -1321,7 +1321,7 @@ This is the setter for:<BR>
    public void setTableViewName2(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTableViewName2();
         }
@@ -1482,7 +1482,7 @@ This is the setter for:<BR>
    public void setAggregate(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullAggregate();
         }
@@ -1643,7 +1643,7 @@ This is the setter for:<BR>
    public void setTitle(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTitle();
         }
@@ -1804,7 +1804,7 @@ This is the setter for:<BR>
    public void setFormula(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullFormula();
         }
@@ -2114,7 +2114,7 @@ This is the setter for:<BR>
    public void setHtmlDoc(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullHtmlDoc();
         }
@@ -2305,7 +2305,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_referencedColumns == null)
         _referencedColumns = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullReferencedColumns();
         }
@@ -2510,7 +2510,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_referencedFormulas == null)
         _referencedFormulas = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullReferencedFormulas();
         }
@@ -3413,7 +3413,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -3529,33 +3529,33 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "Catalog");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFNUM._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLUMNNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.NULLABLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) { TILDA__CATALOG_Factory.COLS.AGGREGATE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TITLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true) { TILDA__CATALOG_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true) { TILDA__CATALOG_Factory.COLS.MEASURE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask) == true) { TILDA__CATALOG_Factory.COLS.HTMLDOC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFNUM._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLUMNNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.NULLABLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) { TILDA__CATALOG_Factory.COLS.AGGREGATE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TITLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true) { TILDA__CATALOG_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true) { TILDA__CATALOG_Factory.COLS.MEASURE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask) == true) { TILDA__CATALOG_Factory.COLS.HTMLDOC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.CREATED._Mask) == true) { TILDA__CATALOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__CATALOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__CATALOG_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__CATALOG_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == true) { TILDA__CATALOG_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -3911,7 +3911,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }

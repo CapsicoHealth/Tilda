@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM      = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"      , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM      = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"      , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          JOBREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"   , 1/*1*/, "Parent Job Refnum", null, null, null);
+     public final Type_LongPrimitive                JOBREFNUM   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"   , 1/*1*/, "Parent Job Refnum", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"        , 2/*2*/, 250, "Job part name", null, null, null);
+     public final Type_StringPrimitive              NAME        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "name"        , 2/*2*/, 250, "Job part name", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    TYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "type"        , 3/*3*/, 250, "Job part type", null, null, null);
+     public final Type_StringPrimitiveNull          TYPE        = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "type"        , 3/*3*/, 250, "Job part type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataStartTZ" , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'dataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull          DATASTARTTZ = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dataStartTZ" , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'dataStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DATASTART   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataStart"   , 5/*5*/, "Job part data start", null, null, DATASTARTTZ);
+     public final Type_DatetimePrimitiveNull        DATASTART   = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dataStart"   , 5/*5*/, "Job part data start", null, null, DATASTARTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "dataEndTZ"   , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'dataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull          DATAENDTZ   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dataEndTZ"   , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'dataEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DATAEND     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dataEnd"     , 7/*7*/, "Job part data end", null, null, DATAENDTZ);
+     public final Type_DatetimePrimitiveNull        DATAEND     = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dataEnd"     , 7/*7*/, "Job part data end", null, null, DATAENDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +233,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        STARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTZ"     , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'start'.", null, null, null);
+     public final Type_StringPrimitive              STARTTZ     = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "startTZ"     , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'start'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +254,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitive      START       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "start"       , 9/*9*/, "Job part execution start", null, null, STARTTZ);
+     public final Type_DatetimePrimitive            START       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "start"       , 9/*9*/, "Job part execution start", null, null, STARTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -276,7 +276,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    ENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "endTZ"       , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 'end'.", null, null, null);
+     public final Type_StringPrimitiveNull          ENDTZ       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "endTZ"       , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 'end'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,7 +297,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  END         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "end"         , 11/*11*/, "Job part execution end", null, null, ENDTZ);
+     public final Type_DatetimePrimitiveNull        END         = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "end"         , 11/*11*/, "Job part execution end", null, null, ENDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,7 +318,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   RECORDSCOUNT= new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "recordsCount", 12/*12*/, "count of database or file or ... records.", null, null, null);
+     public final Type_IntegerPrimitiveNull         RECORDSCOUNT= new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "recordsCount", 12/*12*/, "count of database or file or ... records.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -339,7 +339,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   STATUS      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "status"      , 13/*13*/, "Status flag, i.e., success=true and failure-false", null, null, null);
+     public final Type_BooleanPrimitiveNull         STATUS      = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "status"      , 13/*13*/, "Status flag, i.e., success=true and failure-false", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,7 +367,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"     , 14/*14*/, "The timestamp for when the record was created. (TILDA.JobPart)", null, null);
+     public final Type_DatetimePrimitive            CREATED     = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"     , 14/*14*/, "The timestamp for when the record was created. (TILDA.JobPart)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,7 +395,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated" , 15/*15*/, "The timestamp for when the record was last updated. (TILDA.JobPart)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated" , 15/*15*/, "The timestamp for when the record was last updated. (TILDA.JobPart)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -416,7 +416,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"     , 16/*16*/, "The timestamp for when the record was deleted. (TILDA.JobPart)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED     = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"     , 16/*16*/, "The timestamp for when the record was deleted. (TILDA.JobPart)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -569,7 +569,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -811,7 +811,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -833,7 +833,7 @@ Lookup one record by the primary key: refnum.
 /**
 Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by: start desc
 */
-   static public ListResults<tilda.data.JobPart_Data> lookupWhereJob(Connection C, long jobRefnum, int start, int size) throws Exception
+   static public ListResults<tilda.data.JobPart_Data> lookupWhereJob(Connection C, long jobRefnum, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -841,15 +841,15 @@ Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by
        Obj.setJobRefnum   (jobRefnum   );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by: start desc
 */
-   static public void lookupWhereJob(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, long jobRefnum, int start, int size) throws Exception
+   static public void lookupWhereJob(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, long jobRefnum, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -858,7 +858,7 @@ Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -866,7 +866,7 @@ Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by
 /**
 Lookup records by the index 'JobPartName' over  name.<BR>The results are ordered by: start desc
 */
-   static public ListResults<tilda.data.JobPart_Data> lookupWhereJobPartName(Connection C, String name, int start, int size) throws Exception
+   static public ListResults<tilda.data.JobPart_Data> lookupWhereJobPartName(Connection C, String name, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -874,15 +874,15 @@ Lookup records by the index 'JobPartName' over  name.<BR>The results are ordered
        Obj.setName        (name        );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'JobPartName' over  name.<BR>The results are ordered by: start desc
 */
-   static public void lookupWhereJobPartName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, String name, int start, int size) throws Exception
+   static public void lookupWhereJobPartName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, String name, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -891,7 +891,7 @@ Lookup records by the index 'JobPartName' over  name.<BR>The results are ordered
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -899,7 +899,7 @@ Lookup records by the index 'JobPartName' over  name.<BR>The results are ordered
 /**
 Lookup records by the index 'JobPartType' over  type.<BR>The results are ordered by: start desc
 */
-   static public ListResults<tilda.data.JobPart_Data> lookupWhereJobPartType(Connection C, String type, int start, int size) throws Exception
+   static public ListResults<tilda.data.JobPart_Data> lookupWhereJobPartType(Connection C, String type, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -907,15 +907,15 @@ Lookup records by the index 'JobPartType' over  type.<BR>The results are ordered
        Obj.setType        (type        );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 3, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'JobPartType' over  type.<BR>The results are ordered by: start desc
 */
-   static public void lookupWhereJobPartType(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, String type, int start, int size) throws Exception
+   static public void lookupWhereJobPartType(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, String type, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPART Obj = new tilda.data.JobPart_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -924,7 +924,7 @@ Lookup records by the index 'JobPartType' over  type.<BR>The results are ordered
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       readMany(C, 3, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -967,13 +967,19 @@ The results are ordered by: refnum asc
    public static ListResults<tilda.data.JobPart_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.JobPart_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
