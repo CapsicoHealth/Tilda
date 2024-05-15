@@ -147,7 +147,7 @@ public class Object extends Base
           return true;
 
         int Errs = PS.getErrorCount();
-
+        
         if (_CloneFrom != null)
           {
             // Handle cloneFrom logic to find columns from source obj and copy them to this object's columns.
@@ -210,7 +210,7 @@ public class Object extends Base
           _TzModeStr = parentSchema._Conventions._DefaultTzModeStr;
         if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
-
+        
         if (_Columns == null || _Columns.isEmpty() == true)
           PS.AddError("Object '" + getFullName() + "' doesn't define any columns!");
         else
@@ -542,31 +542,39 @@ public class Object extends Base
             throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
           }
 
-        Column C = new Column(_ParentSchema.getConventionCreatedName(), null, 0, false, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description + " (" + getShortName() + ")", null, null, null, null);
+        Column occCol = PS.getColumn("tilda.data", "TILDA", "Key", "created");
+        Column C = new Column(_ParentSchema.getConventionCreatedName(), null, 0, false, false, ColumnMode.AUTO, true, null, occCol._Description + " (" + getShortName() + ")", null, null, null, null);
+        // At this point in time, the referenced column is not fully validated, so using this method fails. Need to code in the actual name.
+        // C._SameAs = occCol.getFullName();
         C._SameAs = "tilda.data.TILDA.Key.created";
-        C._FCT = FrameworkColumnType.OCC_CREATED;
+        C._FCT = occCol._FCT;
         _Columns.add(C);
+        
 
-        C = new Column(_ParentSchema.getConventionLastUpdatedName(), null, 0, false, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")._Description + " (" + getShortName() + ")", null, null, null, null);
+        occCol = PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated");
+        C = new Column(_ParentSchema.getConventionLastUpdatedName(), null, 0, false, false, ColumnMode.AUTO, false, null, occCol._Description + " (" + getShortName() + ")", null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.lastUpdated";
-        C._FCT = FrameworkColumnType.OCC_LASTUPDATED;
+        C._FCT = occCol._FCT;
         _Columns.add(C);
 
-        C = new Column(_ParentSchema.getConventionDeletedName(), null, 0, true, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")._Description + " (" + getShortName() + ")", null, null, null, null);
+        occCol = PS.getColumn("tilda.data", "TILDA", "Key", "deleted");
+        C = new Column(_ParentSchema.getConventionDeletedName(), null, 0, true, false, ColumnMode.AUTO, false, null, occCol._Description + " (" + getShortName() + ")", null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.deleted";
-        C._FCT = FrameworkColumnType.OCC_DELETED;
+        C._FCT = occCol._FCT;
         _Columns.add(C);
 
         if (addETLLastUpdated == true)
           {
-            C = new Column(_ParentSchema.getConventionCreatedName() + "ETL", null, 0, true, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")._Description + " (" + getShortName() + ")", null, null, null, null);
+            occCol = PS.getColumn("tilda.data", "TILDA", "Key", "createdETL");
+            C = new Column(_ParentSchema.getConventionCreatedName() + "ETL", null, 0, true, false, ColumnMode.AUTO, false, null, occCol._Description + " (" + getShortName() + ")", null, null, null, null);
             C._SameAs = "tilda.data.TILDA.Key.createdETL";
-            C._FCT = FrameworkColumnType.OCC_CREATED;
+            C._FCT = occCol._FCT;
             _Columns.add(C);
 
-            C = new Column(_ParentSchema.getConventionLastUpdatedName() + "ETL", null, 0, true, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")._Description + " (" + getShortName() + ")", null, null, null, null);
+            occCol = PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL");
+            C = new Column(_ParentSchema.getConventionLastUpdatedName() + "ETL", null, 0, true, false, ColumnMode.AUTO, false, null, occCol._Description + " (" + getShortName() + ")", null, null, null, null);
             C._SameAs = "tilda.data.TILDA.Key.lastUpdatedETL";
-            C._FCT = FrameworkColumnType.OCC_LASTUPDATED;
+            C._FCT = occCol._FCT;
             _Columns.add(C);
           }
 

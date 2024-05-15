@@ -134,6 +134,7 @@
 
 
    ,{ "name": "TestingTimestamps"
+     ,"tzMode":"ROW_NO_TZ"
      ,"description": "blah blah"
      ,"cloneAs":[
           { "name":"Cloned", "description":"?{} - Ready for publishing" }

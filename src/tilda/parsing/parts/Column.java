@@ -462,6 +462,9 @@ public class Column extends TypeDef
         if (_ModeStr == null)
           _ModeStr = _SameAsObj._ModeStr;
 
+        if (_TzModeStr == null)
+          _TzModeStr = _SameAsObj._TzModeStr;
+
         if (_Nullable == null)
           _Nullable = _SameAsObj._Nullable;
 

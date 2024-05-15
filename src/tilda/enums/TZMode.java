@@ -38,10 +38,10 @@ public enum TZMode
    */
   ROW_NO_TZ;
 
-    public static TZMode parse(String Str)
+    public static TZMode parse(String str)
       {
         for (TZMode e : TZMode.values())
-          if (Str.equalsIgnoreCase(e.name()) == true)
+          if (e.name().equalsIgnoreCase(str) == true)
             return e;
         return null;
       }

@@ -67,7 +67,7 @@ public class Convention
         LOG.info("Validating Tilda Schema '" + _ParentSchema.getFullName() + "' convention info.");
 
         int Errs = PS.getErrorCount();
-
+        
         if (TextUtil.isNullOrEmpty(_SameAs) == false)
           {
             if (_PrimaryKeyName != null)
@@ -132,7 +132,7 @@ public class Convention
         + (TextUtil.isNullOrEmpty(_LastUpdatedName) == true ? 0 : 1)
         + (TextUtil.isNullOrEmpty(_DeletedName) == true ? 0 : 1);
         if (count != 0 && count != 3)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined at least one value for created/lastUpdated/created, bu not all three. To enforce consistency, either define all 3, or none.");
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined at least one value for created/lastUpdated/created, but not all three. To enforce consistency, either define all 3, or none.");
 
         if (TextUtil.isNullOrEmpty(_PrimaryKeyName) == true)
           _PrimaryKeyName = _DEFAULT_PK;
@@ -175,14 +175,21 @@ public class Convention
         else if (_DefaultLCStr != null && (_DefaultLC = ObjectLifecycle.parse(_DefaultLCStr)) == null)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid convention 'defaultLC' '" + _DefaultLCStr + "'.");
 
-        if (_DefaultTzModeStr != null && (_DefaultTzMode = TZMode.parse(_DefaultTzModeStr)) == null)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid convention 'defaultTzMode' '" + _DefaultTzModeStr + "'.");
+        if (_DefaultTzModeStr != null)
+          {
+            _DefaultTzMode = TZMode.parse(_DefaultTzModeStr);
+            if (_DefaultTzMode == null)
+             PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid convention 'defaultTzMode' '" + _DefaultTzModeStr + "'.");
+          }
         else
-          _DefaultTzModeStr = TZMode.COLUMN.name();
+          {
+            _DefaultTzMode = TZMode.COLUMN;
+            _DefaultTzModeStr = _DefaultTzMode.name();
+          }
         
         if (_CaseSensitiveColumns == null)
           _CaseSensitiveColumns = Boolean.TRUE;
-
+        
         return _Validated = Errs == PS.getErrorCount();
       }
 
@@ -198,14 +205,17 @@ public class Convention
         _ColumnNamingConventionStr = conventions._ColumnNamingConventionStr;
         // _DBColumnNameTranslation = conventions._DBColumnNameTranslation;
 
+        _CaseSensitiveColumns = conventions._CaseSensitiveColumns;
+
         // Defaults are optional and can be overridden.
         if (TextUtil.isNullOrEmpty(_DefaultModeStr) == true)
           _DefaultModeStr = conventions._DefaultModeStr;
         if (TextUtil.isNullOrEmpty(_DefaultLCStr) == true)
           _DefaultLCStr = conventions._DefaultLCStr;
+        if (TextUtil.isNullOrEmpty(_DefaultTzModeStr) == true)
+          _DefaultTzModeStr = conventions._DefaultTzModeStr;
 
-        _CaseSensitiveColumns = conventions._CaseSensitiveColumns;
-
+        _TzRowName = conventions._TzRowName;
       }
 
     public static String getDefaultTzColPostfix()

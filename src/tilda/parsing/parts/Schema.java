@@ -681,7 +681,7 @@ public class Schema
       }
     public String getConventionTzColPostfix()
       {
-        return _Conventions.getDefaultTzColPostfix();
+        return Convention.getDefaultTzColPostfix();
       }
     public String getConventionTzRowName()
       {
