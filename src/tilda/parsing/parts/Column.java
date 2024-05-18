@@ -87,6 +87,7 @@ public class Column extends TypeDef
     public transient ColumnValue         _DefaultCreateValue;
     public transient ColumnValue         _DefaultUpdateValue;
     public transient String              _MaskDef;
+    public transient boolean             _TzCol;
 
     protected transient int              _SequenceOrder     = -1;
 

@@ -511,7 +511,7 @@ public enum ColumnType
 
     public String getMappedName()
       {
-        return this == ColumnType.DATETIME_PLAIN ? ColumnType.DATETIME.name() : name();
+        return name();
       }
 
   }

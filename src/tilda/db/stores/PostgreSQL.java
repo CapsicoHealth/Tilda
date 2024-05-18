@@ -39,7 +39,6 @@ import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
-import tilda.utils.pairs.StringStringPair;
 
 public class PostgreSQL extends CommonStoreImpl
   {

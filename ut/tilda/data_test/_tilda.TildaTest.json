@@ -1,6 +1,6 @@
 {
   "package": "tilda.data_test"
- ,"dependencies": ["com/capsico/organizations/data/_tilda.Organizations.json"
+ ,"dependencies": [
                   ]
  ,"documentation": {
      "description": [
@@ -68,7 +68,7 @@
         },
         { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
         { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
-        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
+//        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
         { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
         { "name": "a2b"          , "type": "CHAR[]"     ,                                                       "description": "The blah"},
         { "name": "a2c"          , "type": "CHAR{}"     ,                                                       "description": "The blah"},
@@ -119,7 +119,7 @@
         }
       ],
       "json":[
-        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
+        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
        ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"], "outTypes":["CSV"]}
       ],
       "outputMaps":[
@@ -164,7 +164,8 @@
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 
-        { "name": "AllByName" , "orderBy": ["id asc"], "db": false       },
+        { "name": "Id" , "columns": ["id"]       }
+       ,{ "name": "AllByName" , "orderBy": ["id asc"], "db": false       }
       ],
       "outputMaps":[
         { "name": "AAA", "columns": ["*"] }
@@ -266,6 +267,7 @@
                }
              ]
           }
+/*
          ,{ "name":"Descritpion Bins"
            ,"pattern":"BINNING"
            ,"impls":[
@@ -278,46 +280,10 @@
                }
              ]
           }
-         ,{ "name":"Nulls"
-           ,"pattern":"TEMPLATE"
-           ,"impls":[
-               { "name":"?_null"
-                ,"type":"INTEGER"
-                ,"formula":[ 
-                    "case when ? is null then 1"
-                   ,"     when ? is not null then 0"
-                   ,"end"
-                  ]
-                ,"values":[
-                    { "value":"1"  , "description":"The value is null" }
-                   ,{ "value":"0"  , "description":"The value is nmot null" }
-                  ]
-                ,"title":"Null ?"
-                ,"description":[
-                    "Whether ? is null or not"
-                  ]
-                ,"expansions":[
-                    { "name":"a5", "title":"a5", "expr":"a5", "description":"a5" }
-                   ,{ "name":"a6", "title":"a6", "expr":"a6" }
-                   ,{ "name":"a7", "title":"a7" }
-//                   ,{ "name":"a8" }
-                  ]
-               }
-             ]
-          }
+*/
         ]          
       ,"formulaColumns":[
-          { "name": "a3"
-           ,"type": "BOOLEAN"
-           ,"formula":[ 
-               "NOT a3"
-             ]
-           ,"title": "Not A3"
-           ,"description":[
-               "Blah..."
-             ]
-          }
-         ,{ "name": "bastille"
+          { "name": "bastille"
            ,"type": "DATETIME"
            ,"formula":[ 
                "'1789-07-14'"
@@ -370,17 +336,7 @@
           }
         ]
       ,"formulaColumns":[
-          { "name": "a3"
-           ,"type": "BOOLEAN"
-           ,"formula":[ 
-               "NOT a3 OR A3"
-             ]
-           ,"title": "Always True"
-           ,"description":[
-               "Blah..."
-             ]
-          }
-         ,{ "name": "lastUpdated"
+          { "name": "lastUpdated"
            ,"type": "DATETIME"
            ,"formula":[ 
                "GREATEST(lastUpdated, xxxLastUpdated)"

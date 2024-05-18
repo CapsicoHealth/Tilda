@@ -47,7 +47,7 @@ public class DateTimeUtil
   {
     protected static final Logger     LOG                 = LogManager.getLogger(JDBCHelper.class.getName());
 
-    protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
+    public static final ZoneId        _UTC                = ZoneId.of("Etc/UTC");
 
     public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = newUTC(999, 12, 31, 23, 59, 0, 0);
     public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
@@ -270,9 +270,10 @@ public class DateTimeUtil
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
+
     public static String printDateTimeForSQLQuoted(ZonedDateTime ZDT)
       {
-        return ZDT == null ? null : "'"+ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)+"'";
+        return ZDT == null ? null : "'" + ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME) + "'";
       }
 
     public static void printDateForSQL(StringBuilder str, LocalDate DT, boolean printNull)
@@ -296,9 +297,10 @@ public class DateTimeUtil
       {
         return DT == null ? null : DT.format(DateTimeFormatter.ISO_DATE);
       }
+
     public static String printDateForSQLQuoted(LocalDate DT)
       {
-        return DT == null ? null : "'"+DT.format(DateTimeFormatter.ISO_DATE)+"'";
+        return DT == null ? null : "'" + DT.format(DateTimeFormatter.ISO_DATE) + "'";
       }
 
     public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
@@ -323,10 +325,10 @@ public class DateTimeUtil
         // //ISO_ZONED_DATE_TIME);
       }
 
-//    public static String printDateTimeForJSON(LocalDateTime LDT)
-//      {
-//        return LDT == null ? null : LDT.format(DateTimeFormatter.ISO_DATE_TIME);
-//      }
+    // public static String printDateTimeForJSON(LocalDateTime LDT)
+    // {
+    // return LDT == null ? null : LDT.format(DateTimeFormatter.ISO_DATE_TIME);
+    // }
 
     public static String printDate(LocalDate D)
       {
@@ -391,23 +393,23 @@ public class DateTimeUtil
         return ZDT;
       }
 
-//    public static LocalDateTime parsefromJSONWithoutTZ(String DateTimeStr)
-//      {
-//        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
-//          return null;
-//        LocalDateTime LDT = parseWithoutZone(DateTimeStr).toLocalDateTime();
-//        if (LDT == null)
-//          try
-//            {
-//              return LocalDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_DATE_TIME);
-//            }
-//          catch (Exception E)
-//            {
-//              LOG.catching(E);
-//            }
-//        return LDT;
-//      }
-    
+    // public static LocalDateTime parsefromJSONWithoutTZ(String DateTimeStr)
+    // {
+    // if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+    // return null;
+    // LocalDateTime LDT = parseWithoutZone(DateTimeStr).toLocalDateTime();
+    // if (LDT == null)
+    // try
+    // {
+    // return LocalDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_DATE_TIME);
+    // }
+    // catch (Exception E)
+    // {
+    // LOG.catching(E);
+    // }
+    // return LDT;
+    // }
+
     public static List<ZonedDateTime> parsefromJSON(List<String> DateTimeStr)
       {
         if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
@@ -561,19 +563,8 @@ public class DateTimeUtil
      */
     public static ZonedDateTime toZonedDateTime(java.sql.Timestamp T, String ZoneStr)
       {
-        if (T == null)
-          return null;
-
-        ZonedDateTime ZDT = ZonedDateTime.of(T.toLocalDateTime(), ZoneId.systemDefault());
-        try
-          {
-            return ZDT.withZoneSameInstant(ZoneStr == null ? _UTC : ZoneId.of(ZoneStr));
-          }
-        catch (Exception E)
-          {
-            LOG.warn("Invalid zone id '" + ZoneStr + "'. Used zone offset instead");
-          }
-        return ZDT.withZoneSameInstant(_UTC);
+        ZoneId ZI = ZoneStr == null || ZoneStr.equals("null") == true ? _UTC : ZoneId.of(ZoneStr);
+        return T == null ? null : T.toLocalDateTime().atZone(ZI);
       }
 
     public static ZonedDateTime toZonedDateTime(LocalDate dt, String zoneStr)
@@ -592,24 +583,12 @@ public class DateTimeUtil
           }
         return ZDT.withZoneSameInstant(_UTC);
       }
-    
+
     public static List<ZonedDateTime> toZonedDateTimes(List<java.sql.Timestamp> D, String zoneStr)
       {
         List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
         for (int i = 0; i < D.size(); ++i)
-          {
-            ZonedDateTime ZDT = ZonedDateTime.of(D.get(i).toLocalDateTime(), ZoneId.systemDefault());
-            try
-              {
-                ZDT = ZDT.withZoneSameInstant(zoneStr == null ? _UTC : ZoneId.of(zoneStr));
-              }
-            catch (Exception E)
-              {
-                LOG.warn("Invalid zone id '" + zoneStr + "'. Used zone offset instead");
-                ZDT = ZDT.withZoneSameInstant(_UTC);
-              }
-            L.add(ZDT);
-          }
+          L.add(toZonedDateTime(D.get(i), zoneStr));
         return L;
       }
 
@@ -987,6 +966,7 @@ public class DateTimeUtil
           L.add(truncateTo(I.next(), tst));
         return L.iterator();
       }
+
     public static ZonedDateTime[] truncateToZDT(ZonedDateTime[] A, TimeSeriesType tst)
       {
         ZonedDateTime[] arr = new ZonedDateTime[A.length];
@@ -994,7 +974,7 @@ public class DateTimeUtil
           arr[i] = truncateTo(A[i], tst);
         return arr;
       }
-    
+
     public static Iterator<LocalDate> truncateToLD(Iterator<LocalDate> I, TimeSeriesType tst)
       {
         List<LocalDate> L = new ArrayList<LocalDate>();
@@ -1002,6 +982,7 @@ public class DateTimeUtil
           L.add(truncateTo(I.next(), tst));
         return L.iterator();
       }
+
     public static LocalDate[] truncateToZDT(LocalDate[] A, TimeSeriesType tst)
       {
         LocalDate[] arr = new LocalDate[A.length];
@@ -1009,5 +990,5 @@ public class DateTimeUtil
           arr[i] = truncateTo(A[i], tst);
         return arr;
       }
-    
+
   }
