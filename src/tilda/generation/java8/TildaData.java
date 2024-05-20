@@ -1192,7 +1192,7 @@ public class TildaData implements CodeGenTildaData
                   case DATETIME:
                     Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()), DateTimeUtil._UTC_CALENDAR);");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) { LOG.debug(\""+ C.getName()+": \"+_" + C.getName()+"+\" - \"+java.sql.Timestamp.from(_" + C.getName() + ".toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()), DateTimeUtil._UTC_CALENDAR); }");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
                     break;
@@ -1924,7 +1924,7 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case UUID:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + ");");
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) JDBCHelper.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + ");");
                     else
                       Out.print("_" + C.getName() + Pad + " =                              (java.util.UUID) RS.getObject(++i); ");
                     break;
@@ -1940,7 +1940,7 @@ public class TildaData implements CodeGenTildaData
                   case CHAR:
                   case STRING:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + ");");
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) JDBCHelper.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + ");");
                     else if (C.getType() == ColumnType.CHAR)
                       Out.print("_" + C.getName() + Pad + " = ParseUtil.parseCharacter    (RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i)); ");
                     else if (C.getType() == ColumnType.STRING)
@@ -1950,7 +1950,7 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case DATE:
                     if (C.isCollection() == true)
-                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDates((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Date>) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "));");
+                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDates((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Date>) JDBCHelper.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "));");
                     else
                       Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
                     break;
@@ -1961,14 +1961,14 @@ public class TildaData implements CodeGenTildaData
                         String ColName = C.getTZName();
                         String COLSName = ColName.toUpperCase();
                         if (C.isCollection() == true)
-                          Out.print("_" + C.getName() + Pad + " = processZDTs(C, _" + ColName + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + COLSName + Pad + ");");
+                          Out.print("_" + C.getName() + Pad + " = JDBCHelper.processZDTs(_" + ColName + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + COLSName + Pad + ", __Nulls);");
                         else
-                          Out.print("_" + C.getName() + Pad + " = processZDT(_" + ColName + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + COLSName + Pad + ");");
+                          Out.print("_" + C.getName() + Pad + " = JDBCHelper.processZDT(_" + ColName + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + COLSName + Pad + ", __Nulls);");
                       }
                     else
                       {
                         if (C.isCollection() == true)
-                          Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTimes((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Timestamp>) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "), null);");
+                          Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTimes((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Timestamp>) JDBCHelper.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "), null);");
                         else
                           Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), " + (C._FCT.isManaged() == true ? "null" : "_" + C.getName()) + ");");
                       }
@@ -2061,6 +2061,8 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("     return afterRead(C);");
         Out.println("   }");
+        
+        /*
         for (Column C : O._Columns)
           if (C != null && C.needsTZ() == true)
             {
@@ -2153,10 +2155,10 @@ public class TildaData implements CodeGenTildaData
               Out.println("   }");
               break;
             }
+*/
         Out.println();
         Out.println("   protected abstract boolean afterRead(Connection C) throws Exception;");
       }
-
     @Override
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)
       {

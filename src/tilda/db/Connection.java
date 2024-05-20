@@ -805,19 +805,6 @@ public final class Connection
         _DB.setArray(this, PS, i, Type, allocatedArrays, val);
       }
 
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        return _DB.getArray(RS, i, Type, isSet);
-      }
-
-    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        return _DB.getArray(RS, colName, Type, isSet);
-      }
-
-
     public String getJsonParametrizedQueryPlaceHolder()
       {
         return _DB.getJsonParametrizedQueryPlaceHolder();

@@ -1184,13 +1184,13 @@ public class JSONUtil
         return gson.toJson(e);
       }
 
-    public static void print(Writer out, Connection C, String elementName, ResultSet RS, int idx, ColumnMeta cm)
+    public static void print(Writer out, String elementName, ResultSet RS, int idx, ColumnMeta cm)
     throws Exception
       {
-        print(out, C, elementName, RS, idx, cm, false);
+        print(out, elementName, RS, idx, cm, false);
       }
 
-    public static void print(Writer out, Connection C, String elementName, ResultSet RS, int idx, ColumnMeta cm, boolean trimStrings)
+    public static void print(Writer out, String elementName, ResultSet RS, int idx, ColumnMeta cm, boolean trimStrings)
     throws Exception
       {
         switch (cm._TildaType)
@@ -1201,7 +1201,7 @@ public class JSONUtil
             case BOOLEAN:
               if (cm.isArray() == true)
                 {
-                  List<Boolean> v_bool = (List<Boolean>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Boolean> v_bool = (List<Boolean>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_bool = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Boolean.class, v_bool));
@@ -1220,7 +1220,7 @@ public class JSONUtil
             case JSON:
               if (cm.isArray() == true)
                 {
-                  List<String> v_str = (List<String>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<String> v_str = (List<String>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_str = null;
                   print(out, elementName, idx == 1, CollectionUtil.toStringArray(v_str));
@@ -1234,7 +1234,7 @@ public class JSONUtil
             case DATE:
               if (cm.isArray() == true)
                 {
-                  List<LocalDate> v_ld = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, idx, cm._TildaType, false));
+                  List<LocalDate> v_ld = DateTimeUtil.toLocalDates((List<java.sql.Date>) JDBCHelper.getArray(RS, idx, cm._TildaType, false));
                   if (RS.wasNull() == true)
                     v_ld = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(LocalDate.class, v_ld));
@@ -1256,12 +1256,12 @@ public class JSONUtil
                   List<String> v_tz = null;
                   if (tzCol != null)
                     {
-                      v_tz = (List<String>) C.getArray(RS, tzCol._NameOriginal, tzCol._TildaType, false);
+                      v_tz = (List<String>) JDBCHelper.getArray(RS, tzCol._NameOriginal, tzCol._TildaType, false);
                       if (RS.wasNull() == true)
                         v_tz = null;
                     }
 
-                  List<Timestamp> v_ts = (List<Timestamp>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Timestamp> v_ts = (List<Timestamp>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_ts = null;
 
@@ -1299,7 +1299,7 @@ public class JSONUtil
             case DOUBLE:
               if (cm.isArray() == true)
                 {
-                  List<Double> v = (List<Double>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Double> v = (List<Double>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Double.class, v));
@@ -1316,7 +1316,7 @@ public class JSONUtil
             case FLOAT:
               if (cm.isArray() == true)
                 {
-                  List<Float> v = (List<Float>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Float> v = (List<Float>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Float.class, v));
@@ -1333,7 +1333,7 @@ public class JSONUtil
             case INTEGER:
               if (cm.isArray() == true)
                 {
-                  List<Integer> v = (List<Integer>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Integer> v = (List<Integer>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Integer.class, v));
@@ -1350,7 +1350,7 @@ public class JSONUtil
             case LONG:
               if (cm.isArray() == true)
                 {
-                  List<Long> v = (List<Long>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Long> v = (List<Long>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Long.class, v));
@@ -1367,7 +1367,7 @@ public class JSONUtil
             case SHORT:
               if (cm.isArray() == true)
                 {
-                  List<Short> v = (List<Short>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Short> v = (List<Short>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Short.class, v));
@@ -1385,7 +1385,7 @@ public class JSONUtil
             case NUMERIC:
               if (cm.isArray() == true)
                 {
-                  List<BigDecimal> v = (List<BigDecimal>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<BigDecimal> v = (List<BigDecimal>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(BigDecimal.class, v));
@@ -1399,7 +1399,7 @@ public class JSONUtil
             case UUID:
               if (cm.isArray() == true)
                 {
-                  List<UUID> v = (List<UUID>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<UUID> v = (List<UUID>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
                   print(out, elementName, idx == 1, CollectionUtil.toObjectArray(UUID.class, v));

@@ -17,12 +17,17 @@
 package tilda.db;
 
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,9 +35,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.processors.RecordProcessor;
+import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
 import tilda.performance.PerfTracker;
+import tilda.utils.CollectionUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -295,4 +303,109 @@ public class JDBCHelper
 
         return -1;
       }
+    
+    public static Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        Array A = RS.getArray(i);
+        if (A == null)
+          return null;
+        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
+        : CollectionUtil.toList(A.getArray());
+        A.free();
+        return val;
+      }
+
+    public static Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        Array A = RS.getArray(colName);
+        if (A == null)
+          return null;
+        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
+        : CollectionUtil.toList(A.getArray());
+        A.free();
+        return val;
+      }
+
+    
+    public static final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField, BitSet nulls)
+    throws Exception
+     {
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+       if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
+        throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+       ZonedDateTime ZDT = DTField.getType() == ColumnType.DATETIME_PLAIN
+            ? DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos), ZI == null ? null : ZI.getValue())
+            : DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? null : ZI.getValue())
+            ;
+       boolean DTNull = false;
+       if (RS.wasNull() == true)
+        {
+           nulls.or(DTField._Mask);
+           DTNull = true;
+        }
+       boolean TZNull = nulls.intersects(TZField._Mask);
+       if (DTNull == false && TZNull == true)
+        throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
+       return ZDT;
+     }
+    
+    public static final List<ZonedDateTime> processZDTs(List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField, BitSet nulls)
+    throws Exception
+     {
+       List<Timestamp> L = (List<Timestamp>) getArray(RS, ColumnPos, DTField.getType(), false);
+       boolean DTNull = false;
+       if (RS.wasNull() == true)
+        {
+           nulls.or(DTField._Mask);
+           DTNull = true;
+        }
+       boolean TZNull = nulls.intersects(TZField._Mask);
+       if (DTNull == false && TZNull == true)
+        throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
+       if (DTNull == true)
+        return null;
+
+       List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+       for (int i = 0; i < TimezoneIds.size(); ++i)
+         {
+           String TimezoneId = TimezoneIds.get(i);
+           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+           if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
+            throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
+           ZDTs.add(ZDT);
+         }
+       return ZDTs;
+     }
+    
+    public final static List<ZonedDateTime> processZDTs(String rowTimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField, BitSet nulls)
+    throws Exception
+     {
+       List<Timestamp> L = (List<Timestamp>) getArray(RS, ColumnPos, DTField.getType(), false);
+       boolean DTNull = false;
+       if (RS.wasNull() == true)
+        {
+           nulls.or(DTField._Mask);
+           DTNull = true;
+        }
+       boolean TZNull = nulls.intersects(TZField._Mask);
+       if (DTNull == false && TZNull == true)
+        throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+TZField.getName()+"' is null. A TZ is mandatory for not null timestamps.");
+       if (DTNull == true)
+        return null;
+
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(rowTimezoneId);
+       if (ZI == null && TextUtil.isNullOrEmpty(rowTimezoneId) == false)
+        throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + rowTimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+       List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+       for (int i = 0; i < L.size(); ++i)
+         {
+           ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
+           ZDTs.add(ZDT);
+         }
+       return ZDTs;
+     }
+    
   }

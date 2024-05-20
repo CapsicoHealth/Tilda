@@ -48,6 +48,7 @@ public class DateTimeUtil
     protected static final Logger     LOG                 = LogManager.getLogger(JDBCHelper.class.getName());
 
     public static final ZoneId        _UTC                = ZoneId.of("Etc/UTC");
+    public static final ZoneId        _LOCAL              = ZoneId.systemDefault();
 
     public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = newUTC(999, 12, 31, 23, 59, 0, 0);
     public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
@@ -78,6 +79,7 @@ public class DateTimeUtil
 
 
     public static final Calendar _UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
+    public static final Calendar _LOCAL_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_LOCAL.getId()));
 
     /**
      * Returns a new ZonedDateTime object in the UTC timezone, based on the information provided using

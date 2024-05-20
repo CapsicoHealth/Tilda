@@ -142,8 +142,6 @@ public interface DBType
     public String           getColumnTypeRaw(Column C, boolean MultiOverride);
     public String           getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
     public void             setArray(Connection Con, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
-    public Collection<?>    getArray(                ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
-    public Collection<?>    getArray(                ResultSet         RS, String colName, ColumnType Type, boolean isSet) throws Exception;
     public String           getJsonParametrizedQueryPlaceHolder();
     public void             setOrderByWithNullsOrdering(Connection Con, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
     public void             age(Connection Con, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);

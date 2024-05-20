@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Array;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -62,7 +61,6 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
-import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
@@ -711,31 +709,6 @@ public abstract class CommonStoreImpl implements DBType
       }
 
 
-    @Override
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        Array A = RS.getArray(i);
-        if (A == null)
-          return null;
-        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-        : CollectionUtil.toList(A.getArray());
-        A.free();
-        return val;
-      }
-
-    @Override
-    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        Array A = RS.getArray(colName);
-        if (A == null)
-          return null;
-        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-        : CollectionUtil.toList(A.getArray());
-        A.free();
-        return val;
-      }
 
     @Override
     public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
@@ -744,7 +717,6 @@ public abstract class CommonStoreImpl implements DBType
         Str.append(Asc == true ? " ASC" : " DESC");
         Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");
       }
-
 
     @Override
     public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)

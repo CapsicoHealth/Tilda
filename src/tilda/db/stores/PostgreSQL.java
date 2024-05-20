@@ -93,13 +93,13 @@ public class PostgreSQL extends CommonStoreImpl
     @Override
     public String getCurrentTimestampStr()
       {
-        return "statement_timestamp()";
+        return "(statement_timestamp() at time zone 'utc')";
       }
     
     @Override
     public String getCurrentDateTimeStr()
       {
-        return "statement_timestamp()::timestamp";
+        return "(statement_timestamp() at time zone 'utc')::timestamp";
       }
     
 
