@@ -324,137 +324,6 @@ This is the column definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing4Realized.a7_Cat4 -> TILDATEST.Testing4Realized."a7_Cat4"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a7_Cat4 of type double</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing4Realized.a7_Cat4 of type double precision</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing4Realized.a7_Cat4</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_DoublePrimitiveNull          A7_CAT4    = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat4"    , 13/*13*/, "<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.", new String[] {}, new String[] {}, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing4Realized.a7_Cat5 -> TILDATEST.Testing4Realized."a7_Cat5"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a7_Cat5 of type double</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing4Realized.a7_Cat5 of type double precision</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing4Realized.a7_Cat5</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_DoublePrimitiveNull          A7_CAT5    = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a7_Cat5"    , 14/*14*/, "<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.", new String[] {}, new String[] {}, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing4Realized.a5_null -> TILDATEST.Testing4Realized."a5_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a5_null of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a5</B>: Whether a5 is null or not</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing4Realized.a5_null of type integer</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing4Realized.a5_null</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_IntegerPrimitiveNull         A5_NULL    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a5_null"    , 15/*15*/, "<B>Null a5</B>: Whether a5 is null or not", new String[] {}, new String[] {}, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing4Realized.a6_null -> TILDATEST.Testing4Realized."a6_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a6_null of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a6</B>: Whether a6 is null or not</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing4Realized.a6_null of type integer</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing4Realized.a6_null</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_IntegerPrimitiveNull         A6_NULL    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a6_null"    , 16/*16*/, "<B>Null a6</B>: Whether a6 is null or not", new String[] {}, new String[] {}, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing4Realized.a7_null -> TILDATEST.Testing4Realized."a7_null"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a7_null of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Null a7</B>: Whether a7 is null or not</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing4Realized.a7_null of type integer</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing4Realized.a7_null</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_IntegerPrimitiveNull         A7_NULL    = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a7_null"    , 17/*17*/, "<B>Null a7</B>: Whether a7 is null or not", new String[] {}, new String[] {}, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing4Realized.a3 -> TILDATEST.Testing4Realized."a3"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a3 of type boolean</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD><B>Always True</B>: Blah...</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing4Realized.a3 of type boolean</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing4Realized.a3</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Formula</B></TD><TD>
-
-<PRE>NOT a3 OR A3</PRE>
-</TD></TR>
-
-</TABLE>
-*/
-     public final Type_BooleanPrimitiveNull         A3         = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 18/*18*/, "<B>Always True</B>: Blah...", new String[] {"NOT a3 OR A3"}, new String[] {"a3"}, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing4Realized.lastUpdated -> TILDATEST.Testing4Realized."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -476,11 +345,11 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        LASTUPDATED= new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 19/*19*/, "<B>Always True</B>: Blah...", new String[] {"GREATEST(lastUpdated, xxxLastUpdated)"}, new String[] {"lastUpdated", "xxxLastUpdated"});
+     public final Type_DatetimePrimitiveNull        LASTUPDATED= new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 13/*13*/, "<B>Always True</B>: Blah...", new String[] {"GREATEST(lastUpdated, xxxLastUpdated)"}, new String[] {"lastUpdated", "xxxLastUpdated"});
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.A7_CAT4,COLS.A7_CAT5,COLS.A5_NULL,COLS.A6_NULL,COLS.A7_NULL,COLS.A3,COLS.LASTUPDATED };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.LASTUPDATED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
@@ -932,7 +801,7 @@ The results are ordered by: refnum asc
 
    public static String getCSVHeader()
     {
-      return "\"refnum\",\"name\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"bastille\",\"toto\",\"desc2_Cat1\",\"desc2_Cat2\",\"desc2_Cat3\",\"a7_Cat4\",\"a7_Cat5\",\"a5_null\",\"a6_null\",\"a7_null\",\"a3\",\"lastUpdated\"";
+      return "\"refnum\",\"name\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"bastille\",\"toto\",\"desc2_Cat1\",\"desc2_Cat2\",\"desc2_Cat3\",\"lastUpdated\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data_test.Testing4Realized_Data> L, boolean includeHeader) throws java.io.IOException
@@ -980,18 +849,6 @@ The results are ordered by: refnum asc
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getDesc2_Cat2());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getDesc2_Cat3());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA7_Cat4());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA7_Cat5());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA5_null());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA6_null());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA7_null());
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA3());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getLastUpdated()));
       out.write(Str.toString());
@@ -1092,24 +949,6 @@ The results are ordered by: refnum asc
 
       if (Obj.isNullDesc2_Cat3() == false)
         JSONUtil.print(out, "desc2_Cat3", ++i==0, Obj.getDesc2_Cat3());
-
-      if (Obj.isNullA7_Cat4() == false)
-        JSONUtil.print(out, "a7_Cat4", ++i==0, Obj.getA7_Cat4());
-
-      if (Obj.isNullA7_Cat5() == false)
-        JSONUtil.print(out, "a7_Cat5", ++i==0, Obj.getA7_Cat5());
-
-      if (Obj.isNullA5_null() == false)
-        JSONUtil.print(out, "a5_null", ++i==0, Obj.getA5_null());
-
-      if (Obj.isNullA6_null() == false)
-        JSONUtil.print(out, "a6_null", ++i==0, Obj.getA6_null());
-
-      if (Obj.isNullA7_null() == false)
-        JSONUtil.print(out, "a7_null", ++i==0, Obj.getA7_null());
-
-      if (Obj.isNullA3() == false)
-        JSONUtil.print(out, "a3", ++i==0, Obj.getA3());
 
       if (Obj.isNullLastUpdated() == false && Obj.getLastUpdated() != null)
         JSONUtil.print(out, "lastUpdated", ++i==0, Obj.getLastUpdated());

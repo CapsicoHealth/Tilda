@@ -10,7 +10,6 @@
    ,{ "name":"desc6","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
    ,{ "name":"tops","type":"STRING","mode":"REPEATED","description":"The blah" }
    ,{ "name":"tops2","type":"STRING","mode":"REPEATED","description":"The blah" }
-   ,{ "name":"a1","type":"BYTES","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"a2","type":"STRING","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"a2b","type":"STRING","mode":"REPEATED","description":"The blah" }
    ,{ "name":"a2c","type":"STRING","mode":"REPEATED","description":"The blah" }

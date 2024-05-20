@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM     = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          FORMREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum" , 1/*1*/, "The form's refnum", null, null, null);
+     public final Type_LongPrimitive                FORMREFNUM = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "formRefnum" , 1/*1*/, "The form's refnum", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        QUESTIONID = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "questionId" , 2/*2*/, 60, "Question id", null, null, null);
+     public final Type_StringPrimitive              QUESTIONID = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "questionId" , 2/*2*/, 60, "Question id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    ANSWERID   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "answerId"   , 3/*3*/, 60, "Answer value", null, null, null);
+     public final Type_StringPrimitiveNull          ANSWERID   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "answerId"   , 3/*3*/, 60, "Answer value", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +146,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitive       TIMEMILLIS = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillis" , 4/*4*/, "Time in milliseconds for the time spent answering the question", null, null, null);
+     public final Type_IntegerPrimitive             TIMEMILLIS = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "timeMillis" , 4/*4*/, "Time in milliseconds for the time spent answering the question", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,9 +156,9 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>correct of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>correct of type short</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether the answer is correct or not</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.TestAnswer.correct of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATUTORIAL.TestAnswer.correct of type smallint</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.tutorial.data.TILDATUTORIAL.TestAnswer.correct</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -167,7 +167,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitive       CORRECT    = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "correct"    , 5/*5*/, "Whether the answer is correct or not", null, null, null);
+     public final Type_ShortPrimitive               CORRECT    = new Type_ShortPrimitive              (SCHEMA_LABEL, TABLENAME_LABEL, "correct"    , 5/*5*/, "Whether the answer is correct or not", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,7 +195,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 6/*6*/, "The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)", null, null);
+     public final Type_DatetimePrimitive            CREATED    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 6/*6*/, "The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +223,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 7/*7*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED= new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 7/*7*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,7 +244,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 8/*8*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 8/*8*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -382,7 +382,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTANSWER_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTANSWER_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -439,7 +439,7 @@ object. The generic init method defaults to this general data structure as a gen
        vals = Values.get("correct");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("correct", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Boolean _correct = ParseUtil.parseBoolean("correct", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       Short _correct = ParseUtil.parseShort("correct", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
        if (_correct != null) Obj.setCorrect(_correct);
 
 
@@ -454,7 +454,7 @@ object. The generic init method defaults to this general data structure as a gen
  @param timeMillis  Time in milliseconds for the time spent answering the question
  @param correct     Whether the answer is correct or not
 */
-   static public tilda.tutorial.data.TestAnswer_Data create(long formRefnum, String questionId, int timeMillis, boolean correct) throws Exception
+   static public tilda.tutorial.data.TestAnswer_Data create(long formRefnum, String questionId, int timeMillis, short correct) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__TESTANSWER Obj = new tilda.tutorial.data.TestAnswer_Data();
        Obj.initForCreate();
@@ -597,7 +597,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__TESTANSWER_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__TESTANSWER_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -633,7 +633,7 @@ Lookup one record by the unique index 'FormAnswer': formRefnum, questionId.
 /**
 Lookup records by the index 'Form' over  formRefnum.<BR>The results are ordered by: questionId asc
 */
-   static public ListResults<tilda.tutorial.data.TestAnswer_Data> lookupWhereForm(Connection C, long formRefnum, int start, int size) throws Exception
+   static public ListResults<tilda.tutorial.data.TestAnswer_Data> lookupWhereForm(Connection C, long formRefnum, int __start__, int __size__) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__TESTANSWER Obj = new tilda.tutorial.data.TestAnswer_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -641,15 +641,15 @@ Lookup records by the index 'Form' over  formRefnum.<BR>The results are ordered 
        Obj.setFormRefnum (formRefnum );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'Form' over  formRefnum.<BR>The results are ordered by: questionId asc
 */
-   static public void lookupWhereForm(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.TestAnswer_Data> OP, long formRefnum, int start, int size) throws Exception
+   static public void lookupWhereForm(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.TestAnswer_Data> OP, long formRefnum, int __start__, int __size__) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__TESTANSWER Obj = new tilda.tutorial.data.TestAnswer_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -658,7 +658,7 @@ Lookup records by the index 'Form' over  formRefnum.<BR>The results are ordered 
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -701,13 +701,19 @@ The results are ordered by: formRefnum asc, questionId asc
    public static ListResults<tilda.tutorial.data.TestAnswer_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.TestAnswer_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

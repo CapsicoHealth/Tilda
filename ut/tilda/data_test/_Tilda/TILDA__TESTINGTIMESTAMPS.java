@@ -44,7 +44,8 @@ The Table TILDATEST.TestingTimestamps :<UL>
 <TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
 <TR ><TD>1</TD><TD>dt1TZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
 </TABLE></LI>
-<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
+<LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
+<LI>Unique Index: id</LI>
 </UL></LI>
 <LI>Has the following index:<UL><LI>id asc
  <B><I>(Application-side Only)</I></B></LI>
@@ -54,7 +55,7 @@ The Table TILDATEST.TestingTimestamps :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="TestingTimestamps_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestamps-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -62,6 +63,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -73,6 +75,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Medical system unique enterprise id</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -80,8 +83,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt1TZ_DIV' class='columns'>dt1TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt1'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -95,6 +99,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -102,8 +107,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt1nTZ_DIV' class='columns'>dt1nTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt1n'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -117,6 +123,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -124,8 +131,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt1uTZ_DIV' class='columns'>dt1uTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt1u'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -139,6 +147,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -146,8 +155,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt1aTZ_DIV' class='columns'>dt1aTZ</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt1a'.</TD>
 </TR>
@@ -159,6 +169,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -166,8 +177,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-rowTZ_DIV' class='columns'>rowTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -181,6 +193,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -191,6 +204,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -201,6 +215,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -211,6 +226,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -218,8 +234,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt3TZ_DIV' class='columns'>dt3TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt3'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -233,6 +250,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -240,8 +258,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt3nTZ_DIV' class='columns'>dt3nTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt3n'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -255,6 +274,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -262,8 +282,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt3uTZ_DIV' class='columns'>dt3uTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt3u'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -277,6 +298,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -284,8 +306,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-dt3aTZ_DIV' class='columns'>dt3aTZ</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dt3a'.</TD>
 </TR>
@@ -297,6 +320,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -307,6 +331,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -317,6 +342,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -327,6 +353,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -337,6 +364,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -344,8 +372,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDATEST.TestingTimestamps)</TD>
 </TR>
@@ -354,8 +383,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)</TD>
 </TR>
@@ -364,8 +394,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingTimestamps-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)</TD>
 </TR>
@@ -511,6 +542,7 @@ This is the definition for:<BR>
 */
    @SerializedName("id")
    String _id=null;
+   protected String __Saved_id;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -773,6 +805,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt1")
@@ -798,6 +835,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getDt1()
@@ -819,6 +861,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt1()
@@ -840,6 +887,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt1(ZonedDateTime v) throws Exception
@@ -878,6 +930,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt1()
@@ -908,6 +965,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt1Now() throws Exception
@@ -931,6 +993,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt1Undefined() throws Exception
@@ -954,6 +1021,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt1(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -977,6 +1049,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt1()
@@ -1164,6 +1241,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1196,6 +1278,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1224,6 +1311,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1252,6 +1344,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1297,6 +1394,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1334,6 +1436,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1364,6 +1471,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1394,6 +1506,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1424,6 +1541,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1618,6 +1740,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1650,6 +1777,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1678,6 +1810,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1706,6 +1843,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1751,6 +1893,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1788,6 +1935,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1818,6 +1970,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1848,6 +2005,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1878,6 +2040,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1995,6 +2162,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask);
           if (_dt1aTZ == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt1aTZ = new ArrayList<String>();
            }
           else
@@ -2116,6 +2284,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt1a")
@@ -2141,6 +2314,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime[] getDt1aAsArray()
@@ -2166,6 +2344,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt1a()
@@ -2187,6 +2370,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt1a(List<ZonedDateTime> v) throws Exception
@@ -2200,6 +2388,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask);
           if (_dt1a == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt1a = new ArrayList<ZonedDateTime>();
              _dt1aTZ = new ArrayList<String>();
            }
@@ -2280,6 +2469,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt1a()
@@ -2310,6 +2504,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt1a()
@@ -2407,6 +2606,7 @@ This is the setter for:<BR>
 */
     void setRowTZ(String v) throws Exception
      {
+       // DOING RowTz setter. Need additional logic
        long T0 = System.nanoTime();
        if (TextUtil.isNullOrEmpty(v) == true)
         {
@@ -2497,6 +2697,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt2")
@@ -2522,6 +2727,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getDt2()
@@ -2543,6 +2753,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt2()
@@ -2564,6 +2779,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt2(ZonedDateTime v) throws Exception
@@ -2602,6 +2822,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt2()
@@ -2632,6 +2857,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt2Now() throws Exception
@@ -2655,6 +2885,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt2Undefined() throws Exception
@@ -2678,6 +2913,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt2(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -2701,6 +2941,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt2()
@@ -2728,6 +2973,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2760,6 +3010,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2788,6 +3043,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2816,6 +3076,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2861,6 +3126,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2898,6 +3168,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2928,6 +3203,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2958,6 +3238,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -2988,6 +3273,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3022,6 +3312,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3054,6 +3349,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3082,6 +3382,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3110,6 +3415,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3155,6 +3465,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3192,6 +3507,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3222,6 +3542,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3252,6 +3577,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3282,6 +3612,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -3316,6 +3651,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt2a")
@@ -3341,6 +3681,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime[] getDt2aAsArray()
@@ -3366,6 +3711,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt2a()
@@ -3387,6 +3737,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt2a(List<ZonedDateTime> v) throws Exception
@@ -3400,6 +3755,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask);
           if (_dt2a == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt2a = new ArrayList<ZonedDateTime>();
            }
           else
@@ -3481,6 +3837,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt2a()
@@ -3511,6 +3872,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt2a()
@@ -3698,6 +4064,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt3")
@@ -3723,6 +4094,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getDt3()
@@ -3744,6 +4120,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt3()
@@ -3765,6 +4146,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt3(ZonedDateTime v) throws Exception
@@ -3803,6 +4189,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt3()
@@ -3833,6 +4224,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt3Now() throws Exception
@@ -3856,6 +4252,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt3Undefined() throws Exception
@@ -3879,6 +4280,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt3(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -3902,6 +4308,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3TZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt3()
@@ -4089,6 +4500,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4121,6 +4537,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4149,6 +4570,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4177,6 +4603,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4222,6 +4653,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4259,6 +4695,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4289,6 +4730,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4319,6 +4765,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4349,6 +4800,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3nTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4543,6 +4999,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4575,6 +5036,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4603,6 +5069,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4631,6 +5102,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4676,6 +5152,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4713,6 +5194,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4743,6 +5229,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4773,6 +5264,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4803,6 +5299,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3uTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -4920,6 +5421,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask);
           if (_dt3aTZ == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt3aTZ = new ArrayList<String>();
            }
           else
@@ -5041,6 +5543,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt3a")
@@ -5066,6 +5573,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime[] getDt3aAsArray()
@@ -5091,6 +5603,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt3a()
@@ -5112,6 +5629,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt3a(List<ZonedDateTime> v) throws Exception
@@ -5125,6 +5647,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask);
           if (_dt3a == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt3a = new ArrayList<ZonedDateTime>();
              _dt3aTZ = new ArrayList<String>();
            }
@@ -5205,6 +5728,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt3a()
@@ -5235,6 +5763,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3aTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt3a()
@@ -5262,6 +5795,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt4")
@@ -5287,6 +5825,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getDt4()
@@ -5308,6 +5851,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt4()
@@ -5329,6 +5877,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt4(ZonedDateTime v) throws Exception
@@ -5367,6 +5920,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt4()
@@ -5397,6 +5955,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt4Now() throws Exception
@@ -5420,6 +5983,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt4Undefined() throws Exception
@@ -5443,6 +6011,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDt4(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -5466,6 +6039,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt4()
@@ -5493,6 +6071,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5525,6 +6108,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5553,6 +6141,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5581,6 +6174,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5626,6 +6224,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5663,6 +6266,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5693,6 +6301,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5723,6 +6336,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5753,6 +6371,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5787,6 +6410,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5819,6 +6447,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5847,6 +6480,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5875,6 +6513,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5920,6 +6563,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5957,6 +6605,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -5987,6 +6640,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6017,6 +6675,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6047,6 +6710,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6081,6 +6749,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dt4a")
@@ -6106,6 +6779,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime[] getDt4aAsArray()
@@ -6131,6 +6809,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDt4a()
@@ -6152,6 +6835,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDt4a(List<ZonedDateTime> v) throws Exception
@@ -6165,6 +6853,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask);
           if (_dt4a == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt4a = new ArrayList<ZonedDateTime>();
            }
           else
@@ -6246,6 +6935,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDt4a()
@@ -6276,6 +6970,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDt4a()
@@ -7149,6 +7848,9 @@ This is the hasChanged for:<BR>
              case 0: // PK
                PS.setLong      (++i, _refnum     );
                break;
+             case 1: // Unique Index 'Id'
+               PS.setString    (++i, _id         );
+               break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
@@ -7710,6 +8412,9 @@ This is the hasChanged for:<BR>
              case 0: // PK
                 S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "TestingTimestamps", "refnum"); S.append("=?");  S.append(")");
                 break;
+             case 1: // Unique Index 'Id'
+                S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "TestingTimestamps", "id"); S.append("=?");  S.append(")");
+                break;
              case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -7742,7 +8447,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt1) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt1.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt1) == false) { LOG.debug("dt1: "+_dt1+" - "+java.sql.Timestamp.from(_dt1.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_dt1.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask) == true) 
         { 
@@ -7750,7 +8455,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt1n) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt1n.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt1n) == false) { LOG.debug("dt1n: "+_dt1n+" - "+java.sql.Timestamp.from(_dt1n.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_dt1n.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask) == true) 
         { 
@@ -7758,7 +8463,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt1u) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt1u.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt1u) == false) { LOG.debug("dt1u: "+_dt1u+" - "+java.sql.Timestamp.from(_dt1u.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_dt1u.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask) == true) 
         { 
@@ -7774,15 +8479,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt2) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt2.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt2) == false) { LOG.debug("dt2: "+_dt2+" - "+java.sql.Timestamp.from(_dt2.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_dt2.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt2n) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt2n.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt2n) == false) { LOG.debug("dt2n: "+_dt2n+" - "+java.sql.Timestamp.from(_dt2n.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_dt2n.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt2u) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt2u.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_dt2u) == false) { LOG.debug("dt2u: "+_dt2u+" - "+java.sql.Timestamp.from(_dt2u.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_dt2u.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask) == true) 
         { 
@@ -7794,7 +8499,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt3) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt3.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt3) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt3.toInstant()));
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask) == true) 
         { 
@@ -7802,7 +8507,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt3n) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt3n.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt3n) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt3n.toInstant()));
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask) == true) 
         { 
@@ -7810,7 +8515,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt3u) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt3u.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt3u) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt3u.toInstant()));
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask) == true) 
         { 
@@ -7822,15 +8527,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt4) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt4.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt4) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt4.toInstant()));
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt4n) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt4n.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt4n) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt4n.toInstant()));
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt4u) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt4u.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP ); else if (DateTimeUtil.isNowPlaceholder(_dt4u) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_dt4u.toInstant()));
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask) == true) 
         { 
@@ -7838,15 +8543,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) { LOG.debug("created: "+_created+" - "+java.sql.Timestamp.from(_created.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) { LOG.debug("lastUpdated: "+_lastUpdated+" - "+java.sql.Timestamp.from(_lastUpdated.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) { LOG.debug("deleted: "+_deleted+" - "+java.sql.Timestamp.from(_deleted.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR); }
         } 
        return i;
      }
@@ -7867,12 +8572,92 @@ This is the hasChanged for:<BR>
           case 0:
              __Saved_refnum      = _refnum     ;
              break;
+          case 1:
+             __Saved_id          = _id         ;
+             break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
        __Changes.clear();
      }
+/**
+ Writes the object to the data store using an upsert approach and assumes the object is either
+ in create or deserialized mode. 
+ The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
+ an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
+ without a robust upsert SQL syntax where separate insert/update statements must be issued.
+ The method will figure out based on the fields set which natural identity (a unique index) is applicable for
+ the lookup operation.
+ Note that when you use upsert() (right after a create or deserialization initialization), only the template
+ fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
+ refresh() to force a select and retrieve all the fields for that record.
+*/
+   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
+     {
+       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
+                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
+               ;
+       if (OK == false)
+        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
+
+       if (__Init == null && __LookupId==0)  // object deserialized
+        validateDeserialization();
+
+       int lookupId = getFirstValidLookupBy();
+       if (lookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+
+       if (updateFirst == true)
+        {
+          initForLookup(lookupId);
+          if (write(C) == false)
+           {
+             initForCreate();
+             // Auto PK
+             setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
+             return write(C);
+           }
+        }
+       else
+        {
+          initForCreate();
+          // Auto PK
+          setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
+          if (write(C) == false)
+           {
+             initForLookup(lookupId);
+              // Undo auto PK
+              __Changes.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.REFNUM._Mask);
+             return write(C);
+           }
+        }
+
+       return true;
+     }
+
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
+   protected int getFirstValidLookupBy() throws Exception
+     {
+
+       // Testing if cols for unique index Id were set - Id: 1
+       if (TextUtil.isNullOrEmpty(_id) == false)
+        return 1;
+
+       // Testing if primary key has been set - Id: 0
+       if (_refnum != null)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7909,6 +8694,9 @@ This is the hasChanged for:<BR>
           case 0: // PK
              S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "TestingTimestamps", "refnum"); S.append("=?");  S.append(")");
              break;
+          case 1: // Unique Index 'Id'
+             S.append(" where ("); C.getFullColumnVar(S, "TILDATEST", "TestingTimestamps", "id"); S.append("=?");  S.append(")");
+             break;
           case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -7932,6 +8720,9 @@ This is the hasChanged for:<BR>
            {
              case 0: // PK
                PS.setLong      (++i, _refnum     );
+               break;
+             case 1: // Unique Index 'Id'
+               PS.setString    (++i, _id         );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -7965,14 +8756,14 @@ This is the hasChanged for:<BR>
       int i = 0;
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
-                            _id          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID._Mask         ); _id = null; }
+      __Saved_id          = _id          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID._Mask         ); _id = null; }
                             _dt1TZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask      ); _dt1TZ = null; } else _dt1TZ       = _dt1TZ      .trim();
-                            _dt1         = processZDT(_dt1TZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt1"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask        ); _dt1 = null; }
+                            _dt1         = JDBCHelper.processZDT(_dt1TZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt1"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask        ); _dt1 = null; }
                             _dt1nTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask     ); _dt1nTZ = null; } else _dt1nTZ      = _dt1nTZ     .trim();
-                            _dt1n        = processZDT(_dt1nTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt1n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask       ); _dt1n = null; }
+                            _dt1n        = JDBCHelper.processZDT(_dt1nTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt1n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask       ); _dt1n = null; }
                             _dt1uTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask     ); _dt1uTZ = null; } else _dt1uTZ      = _dt1uTZ     .trim();
-                            _dt1u        = processZDT(_dt1uTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt1u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask       ); _dt1u = null; }
-                            _dt1aTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask     ); _dt1aTZ = null; }
+                            _dt1u        = JDBCHelper.processZDT(_dt1uTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt1u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask       ); _dt1u = null; }
+                            _dt1aTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask     ); _dt1aTZ = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_dt1aTZ != null && _dt1aTZ.size() == 1 && _dt1aTZ.get(0) == null)
@@ -7980,19 +8771,19 @@ This is the hasChanged for:<BR>
                                  _dt1aTZ = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask);
                                }
-                            _dt1a        = processZDTs(C, _dt1aTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt1a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask       ); _dt1a = null; }
+                            _dt1a        = JDBCHelper.processZDTs(_dt1aTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt1a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask       ); _dt1a = null; }
                             _rowTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ._Mask      ); _rowTZ = null; } else _rowTZ       = _rowTZ      .trim();
-                            _dt2         = processZDT(_rowTZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt2"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask        ); _dt2 = null; }
-                            _dt2n        = processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt2n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask       ); _dt2n = null; }
-                            _dt2u        = processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt2u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask       ); _dt2u = null; }
-                            _dt2a        = processZDTs(C, _rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt2a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask       ); _dt2a = null; }
+                            _dt2         = JDBCHelper.processZDT(_rowTZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt2"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask        ); _dt2 = null; }
+                            _dt2n        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt2n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask       ); _dt2n = null; }
+                            _dt2u        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt2u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask       ); _dt2u = null; }
+                            _dt2a        = JDBCHelper.processZDTs(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt2a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask       ); _dt2a = null; }
                             _dt3TZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ._Mask      ); _dt3TZ = null; } else _dt3TZ       = _dt3TZ      .trim();
-                            _dt3         = processZDT(_dt3TZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt3"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask        ); _dt3 = null; }
+                            _dt3         = JDBCHelper.processZDT(_dt3TZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt3"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask        ); _dt3 = null; }
                             _dt3nTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask     ); _dt3nTZ = null; } else _dt3nTZ      = _dt3nTZ     .trim();
-                            _dt3n        = processZDT(_dt3nTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt3n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask       ); _dt3n = null; }
+                            _dt3n        = JDBCHelper.processZDT(_dt3nTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt3n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask       ); _dt3n = null; }
                             _dt3uTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask     ); _dt3uTZ = null; } else _dt3uTZ      = _dt3uTZ     .trim();
-                            _dt3u        = processZDT(_dt3uTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt3u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask       ); _dt3u = null; }
-                            _dt3aTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask     ); _dt3aTZ = null; }
+                            _dt3u        = JDBCHelper.processZDT(_dt3uTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt3u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask       ); _dt3u = null; }
+                            _dt3aTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask     ); _dt3aTZ = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_dt3aTZ != null && _dt3aTZ.size() == 1 && _dt3aTZ.get(0) == null)
@@ -8000,93 +8791,19 @@ This is the hasChanged for:<BR>
                                  _dt3aTZ = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask);
                                }
-                            _dt3a        = processZDTs(C, _dt3aTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt3a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask       ); _dt3a = null; }
-                            _dt4         = processZDT(_rowTZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt4"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask        ); _dt4 = null; }
-                            _dt4n        = processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt4n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask       ); _dt4n = null; }
-                            _dt4u        = processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt4u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask       ); _dt4u = null; }
-                            _dt4a        = processZDTs(C, _rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt4a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask       ); _dt4a = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask    ); _deleted = null; }
+                            _dt3a        = JDBCHelper.processZDTs(_dt3aTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt3a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask       ); _dt3a = null; }
+                            _dt4         = JDBCHelper.processZDT(_rowTZ        , "tilda.data_test.TILDATEST.TestingTimestamps.dt4"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4        , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask        ); _dt4 = null; }
+                            _dt4n        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt4n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask       ); _dt4n = null; }
+                            _dt4u        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt4u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask       ); _dt4u = null; }
+                            _dt4a        = JDBCHelper.processZDTs(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps.dt4a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A       , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask       ); _dt4a = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
-   }
-  private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     if (DTNull == true)
-      return null;
-
-     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
-     for (int i = 0; i < TimezoneIds.size(); ++i)
-       {
-         String TimezoneId = TimezoneIds.get(i);
-         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
-         ZDTs.add(ZDT);
-       }
-     return ZDTs;
-   }
-  private final List<ZonedDateTime> processZDTs(Connection C, String rowTimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+TZField.getName()+"' is null. A TZ is mandatory for not null timestamps.");
-     if (DTNull == true)
-      return null;
-
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(rowTimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(rowTimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + rowTimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
-     for (int i = 0; i < L.size(); ++i)
-       {
-         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
-         ZDTs.add(ZDT);
-       }
-     return ZDTs;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

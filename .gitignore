@@ -10,3 +10,4 @@
 /tilda-*.jar
 /tilda-*-dependencies.zip
 .tildaWorkbench
+/tilda.migration.*

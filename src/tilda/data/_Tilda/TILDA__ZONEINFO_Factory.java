@@ -146,6 +146,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'deactivatedTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
      public final Type_DatetimePrimitiveNull        DEACTIVATED  = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deactivated"  , 4/*4*/, "The datetime when this enumeration was deactivated.", null, null, DEACTIVATEDTZ);

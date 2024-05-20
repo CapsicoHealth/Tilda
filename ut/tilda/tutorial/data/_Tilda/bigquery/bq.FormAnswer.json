@@ -1,9 +1,9 @@
 [
-    { "name":"refnum", "type":"INT64", "mode":"REQUIRED", "description":"The primary key for this record" }
-   ,{ "name":"formRefnum", "type":"INT64", "mode":"REQUIRED", "description":"The form's refnum" }
-   ,{ "name":"field", "type":"STRING", "mode":"REQUIRED", "description":"question/field id" }
-   ,{ "name":"value", "type":"STRING", "mode":"NULLABLE", "description":"answer value" }
-   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)" }
-   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)" }
+    { "name":"refnum","type":"INT64","mode":"REQUIRED","description":"The primary key for this record" }
+   ,{ "name":"formRefnum","type":"INT64","mode":"REQUIRED","description":"The form's refnum" }
+   ,{ "name":"field","type":"STRING","mode":"REQUIRED","description":"question/field id" }
+   ,{ "name":"value","type":"STRING","mode":"NULLABLE","description":"answer value" }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)" }
 ]

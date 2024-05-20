@@ -47,7 +47,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="JobView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobView-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
@@ -55,6 +55,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-refnum_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
@@ -66,6 +67,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Name<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-name_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -75,6 +77,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Job type<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-type_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>type</A></DIV></TD>
 </TR>
@@ -86,6 +89,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Job user Id<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-userId_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>userId</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -93,8 +97,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobDataStartTZ_DIV' class='columns'>jobDataStartTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobDataStart'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-dataStartTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>dataStartTZ</A></DIV></TD>
 </TR>
@@ -106,6 +111,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>StartTime<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-dataStart_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>dataStart</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -113,8 +119,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobDataEndTZ_DIV' class='columns'>jobDataEndTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobDataEnd'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-dataEndTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>dataEndTZ</A></DIV></TD>
 </TR>
@@ -126,6 +133,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>StartTime<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-dataEnd_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>dataEnd</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -133,8 +141,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobStartTZ_DIV' class='columns'>jobStartTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobStart'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-startTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>startTZ</A></DIV></TD>
 </TR>
@@ -146,6 +155,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>StartTime<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-start_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>start</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -153,8 +163,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobEndTZ_DIV' class='columns'>jobEndTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobEnd'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-endTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>endTZ</A></DIV></TD>
 </TR>
@@ -166,6 +177,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>EndTime<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-end_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>end</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -175,6 +187,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Status<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-status_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>status</A></DIV></TD>
 </TR>
@@ -186,6 +199,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Message details<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Job-msg_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job<B>&nbsp;&#8226;&nbsp;</B>msg</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -195,6 +209,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Job part name<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-name_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
@@ -206,6 +221,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Job part type<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-type_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>type</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -213,8 +229,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobPartDataStartTZ_DIV' class='columns'>jobPartDataStartTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobPartDataStart'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-dataStartTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>dataStartTZ</A></DIV></TD>
 </TR>
@@ -226,6 +243,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part data start<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-dataStart_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>dataStart</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -233,8 +251,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobPartDataEndTZ_DIV' class='columns'>jobPartDataEndTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobPartDataEnd'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-dataEndTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>dataEndTZ</A></DIV></TD>
 </TR>
@@ -246,6 +265,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part data end<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-dataEnd_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>dataEnd</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -253,8 +273,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobPartStartTZ_DIV' class='columns'>jobPartStartTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobPartStart'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-startTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>startTZ</A></DIV></TD>
 </TR>
@@ -266,6 +287,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part execution start<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-start_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>start</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -273,8 +295,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobView-jobPartEndTZ_DIV' class='columns'>jobPartEndTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'jobPartEnd'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-endTZ_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>endTZ</A></DIV></TD>
 </TR>
@@ -286,6 +309,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part execution end<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-end_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>end</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -295,6 +319,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>count of database or file or ... records.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-recordsCount_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>recordsCount</A></DIV></TD>
 </TR>
@@ -306,6 +331,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Status flag, i.e., success=true and failure-false<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPart-status_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPart<B>&nbsp;&#8226;&nbsp;</B>status</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -316,6 +342,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Notification flag<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPartMessage-notify_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPartMessage<B>&nbsp;&#8226;&nbsp;</B>notify</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -325,6 +352,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Message details<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('JobPartMessage-msg_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>JobPartMessage<B>&nbsp;&#8226;&nbsp;</B>msg</A></DIV></TD>
 </TR>
@@ -984,6 +1012,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobDataStart")
@@ -1009,6 +1042,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobDataStart()
@@ -1030,6 +1068,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullJobDataStart()
@@ -1051,6 +1094,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobDataStart(ZonedDateTime v) throws Exception
@@ -1091,6 +1139,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullJobDataStart()
@@ -1267,6 +1320,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobDataEnd")
@@ -1292,6 +1350,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobDataEnd()
@@ -1313,6 +1376,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullJobDataEnd()
@@ -1334,6 +1402,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobDataEnd(ZonedDateTime v) throws Exception
@@ -1374,6 +1447,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullJobDataEnd()
@@ -1496,6 +1574,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobStart")
@@ -1521,6 +1604,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobStart()
@@ -1542,6 +1630,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobStart(ZonedDateTime v) throws Exception
@@ -1726,6 +1819,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobEnd")
@@ -1751,6 +1849,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobEnd()
@@ -1772,6 +1875,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullJobEnd()
@@ -1793,6 +1901,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobEnd(ZonedDateTime v) throws Exception
@@ -1833,6 +1946,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullJobEnd()
@@ -2508,6 +2626,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobPartDataStart")
@@ -2533,6 +2656,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobPartDataStart()
@@ -2554,6 +2682,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullJobPartDataStart()
@@ -2575,6 +2708,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobPartDataStart(ZonedDateTime v) throws Exception
@@ -2615,6 +2753,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullJobPartDataStart()
@@ -2791,6 +2934,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobPartDataEnd")
@@ -2816,6 +2964,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobPartDataEnd()
@@ -2837,6 +2990,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullJobPartDataEnd()
@@ -2858,6 +3016,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobPartDataEnd(ZonedDateTime v) throws Exception
@@ -2898,6 +3061,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullJobPartDataEnd()
@@ -3020,6 +3188,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobPartStart")
@@ -3045,6 +3218,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobPartStart()
@@ -3066,6 +3244,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobPartStart(ZonedDateTime v) throws Exception
@@ -3250,6 +3433,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("jobPartEnd")
@@ -3275,6 +3463,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getJobPartEnd()
@@ -3296,6 +3489,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullJobPartEnd()
@@ -3317,6 +3515,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setJobPartEnd(ZonedDateTime v) throws Exception
@@ -3357,6 +3560,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullJobPartEnd()
@@ -3892,25 +4100,25 @@ This is the setter for:<BR>
                                     _jobType             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask            ); _jobType = null; }
                                     _jobUserId           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask          ); _jobUserId = null; }
                                     _jobDataStartTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask     ); _jobDataStartTZ = null; } else _jobDataStartTZ      = _jobDataStartTZ     .trim();
-                                    _jobDataStart        = processZDT(_jobDataStartTZ       , "tilda.data.TILDA.JobView.jobDataStart"       , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBDATASTART       , TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask       ); _jobDataStart = null; }
+                                    _jobDataStart        = JDBCHelper.processZDT(_jobDataStartTZ       , "tilda.data.TILDA.JobView.jobDataStart"       , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBDATASTART       , TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask       ); _jobDataStart = null; }
                                     _jobDataEndTZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask       ); _jobDataEndTZ = null; } else _jobDataEndTZ        = _jobDataEndTZ       .trim();
-                                    _jobDataEnd          = processZDT(_jobDataEndTZ         , "tilda.data.TILDA.JobView.jobDataEnd"         , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBDATAEND         , TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ         ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask         ); _jobDataEnd = null; }
+                                    _jobDataEnd          = JDBCHelper.processZDT(_jobDataEndTZ         , "tilda.data.TILDA.JobView.jobDataEnd"         , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBDATAEND         , TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ         , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask         ); _jobDataEnd = null; }
                                     _jobStartTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBSTARTTZ._Mask         ); _jobStartTZ = null; } else _jobStartTZ          = _jobStartTZ         .trim();
-                                    _jobStart            = processZDT(_jobStartTZ           , "tilda.data.TILDA.JobView.jobStart"           , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBSTART           , TILDA__JOBVIEW_Factory.COLS.JOBSTARTTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBSTART._Mask           ); _jobStart = null; }
+                                    _jobStart            = JDBCHelper.processZDT(_jobStartTZ           , "tilda.data.TILDA.JobView.jobStart"           , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBSTART           , TILDA__JOBVIEW_Factory.COLS.JOBSTARTTZ           , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBSTART._Mask           ); _jobStart = null; }
                                     _jobEndTZ            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask           ); _jobEndTZ = null; } else _jobEndTZ            = _jobEndTZ           .trim();
-                                    _jobEnd              = processZDT(_jobEndTZ             , "tilda.data.TILDA.JobView.jobEnd"             , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBEND             , TILDA__JOBVIEW_Factory.COLS.JOBENDTZ             ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask             ); _jobEnd = null; }
+                                    _jobEnd              = JDBCHelper.processZDT(_jobEndTZ             , "tilda.data.TILDA.JobView.jobEnd"             , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBEND             , TILDA__JOBVIEW_Factory.COLS.JOBENDTZ             , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask             ); _jobEnd = null; }
                                     _jobStatus           =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask          ); _jobStatus = null; }
                                     _jobMsg              = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask             ); _jobMsg = null; }
                                     _jobPartName         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTNAME._Mask        ); _jobPartName = null; }
                                     _jobPartType         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask        ); _jobPartType = null; }
                                     _jobPartDataStartTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask ); _jobPartDataStartTZ = null; } else _jobPartDataStartTZ  = _jobPartDataStartTZ .trim();
-                                    _jobPartDataStart    = processZDT(_jobPartDataStartTZ   , "tilda.data.TILDA.JobView.jobPartDataStart"   , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART   , TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ   ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask   ); _jobPartDataStart = null; }
+                                    _jobPartDataStart    = JDBCHelper.processZDT(_jobPartDataStartTZ   , "tilda.data.TILDA.JobView.jobPartDataStart"   , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART   , TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ   , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask   ); _jobPartDataStart = null; }
                                     _jobPartDataEndTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask   ); _jobPartDataEndTZ = null; } else _jobPartDataEndTZ    = _jobPartDataEndTZ   .trim();
-                                    _jobPartDataEnd      = processZDT(_jobPartDataEndTZ     , "tilda.data.TILDA.JobView.jobPartDataEnd"     , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND     , TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask     ); _jobPartDataEnd = null; }
+                                    _jobPartDataEnd      = JDBCHelper.processZDT(_jobPartDataEndTZ     , "tilda.data.TILDA.JobView.jobPartDataEnd"     , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND     , TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask     ); _jobPartDataEnd = null; }
                                     _jobPartStartTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTARTTZ._Mask     ); _jobPartStartTZ = null; } else _jobPartStartTZ      = _jobPartStartTZ     .trim();
-                                    _jobPartStart        = processZDT(_jobPartStartTZ       , "tilda.data.TILDA.JobView.jobPartStart"       , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTSTART       , TILDA__JOBVIEW_Factory.COLS.JOBPARTSTARTTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTART._Mask       ); _jobPartStart = null; }
+                                    _jobPartStart        = JDBCHelper.processZDT(_jobPartStartTZ       , "tilda.data.TILDA.JobView.jobPartStart"       , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTSTART       , TILDA__JOBVIEW_Factory.COLS.JOBPARTSTARTTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTART._Mask       ); _jobPartStart = null; }
                                     _jobPartEndTZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask       ); _jobPartEndTZ = null; } else _jobPartEndTZ        = _jobPartEndTZ       .trim();
-                                    _jobPartEnd          = processZDT(_jobPartEndTZ         , "tilda.data.TILDA.JobView.jobPartEnd"         , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTEND         , TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ         ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask         ); _jobPartEnd = null; }
+                                    _jobPartEnd          = JDBCHelper.processZDT(_jobPartEndTZ         , "tilda.data.TILDA.JobView.jobPartEnd"         , RS, ++i, TILDA__JOBVIEW_Factory.COLS.JOBPARTEND         , TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ         , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask         ); _jobPartEnd = null; }
                                     _jobPartRecordsCount =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask); _jobPartRecordsCount = null; }
                                     _jobPartStatus       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask      ); _jobPartStatus = null; }
                                     _jobPartNotify       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTNOTIFY._Mask      ); _jobPartNotify = null; }
@@ -3920,25 +4128,6 @@ This is the setter for:<BR>
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

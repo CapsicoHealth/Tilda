@@ -292,27 +292,6 @@ This is the column definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public final Type_BitfieldPrimitiveNull        A1         = new Type_BitfieldPrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a1"         , 11/*11*/, "The blah", null, null);
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data_test.TILDATEST.Testing_Cloned.a2 -> TILDATEST.Testing_Cloned."a2"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -329,7 +308,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_CharPrimitiveNull            A2         = new Type_CharPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a2"         , 12/*12*/, "The blah", null, null, null);
+     public final Type_CharPrimitiveNull            A2         = new Type_CharPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a2"         , 11/*11*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,7 +329,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_CharCollectionNull           A2B        = new Type_CharCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a2b"        , 13/*13*/, "The blah", null, null);
+     public final Type_CharCollectionNull           A2B        = new Type_CharCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a2b"        , 12/*12*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -371,7 +350,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_CharCollectionNull           A2C        = new Type_CharCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a2c"        , 14/*14*/, "The blah", null, null);
+     public final Type_CharCollectionNull           A2C        = new Type_CharCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a2c"        , 13/*13*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -392,7 +371,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull         A3         = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 15/*15*/, "The blah", null, null, null);
+     public final Type_BooleanPrimitiveNull         A3         = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 14/*14*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -413,7 +392,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanCollectionNull        A3B        = new Type_BooleanCollectionNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 16/*16*/, "The blah", null, null);
+     public final Type_BooleanCollectionNull        A3B        = new Type_BooleanCollectionNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 15/*15*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -434,7 +413,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoublePrimitiveNull          A4         = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 17/*17*/, "The blah", null, null, null);
+     public final Type_DoublePrimitiveNull          A4         = new Type_DoublePrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 16/*16*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -455,7 +434,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DoubleCollectionNull         A4B        = new Type_DoubleCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 18/*18*/, "The blah", null, null);
+     public final Type_DoubleCollectionNull         A4B        = new Type_DoubleCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 17/*17*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -476,7 +455,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_FloatPrimitiveNull           A5         = new Type_FloatPrimitiveNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 19/*19*/, "The blah", null, null, null);
+     public final Type_FloatPrimitiveNull           A5         = new Type_FloatPrimitiveNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 18/*18*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -497,7 +476,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_FloatCollectionNull          A5B        = new Type_FloatCollectionNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 20/*20*/, "The blah", null, null);
+     public final Type_FloatCollectionNull          A5B        = new Type_FloatCollectionNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 19/*19*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -518,7 +497,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull            A6         = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a6"         , 21/*21*/, "The blah", null, null, null);
+     public final Type_LongPrimitiveNull            A6         = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a6"         , 20/*20*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -539,7 +518,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongCollectionNull           A6B        = new Type_LongCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a6b"        , 22/*22*/, "The blah", null, null);
+     public final Type_LongCollectionNull           A6B        = new Type_LongCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a6b"        , 21/*21*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -560,7 +539,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongCollectionNull           A6C        = new Type_LongCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a6c"        , 23/*23*/, "The blah", null, null);
+     public final Type_LongCollectionNull           A6C        = new Type_LongCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a6c"        , 22/*22*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -582,7 +561,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          A6DTZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a6dTZ"      , 24/*24*/, 5, "Generated helper column to hold the time zone ID for 'a6d'.", null, null, null);
+     public final Type_StringPrimitiveNull          A6DTZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a6dTZ"      , 23/*23*/, 5, "Generated helper column to hold the time zone ID for 'a6d'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -601,9 +580,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        A6D        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a6d"        , 25/*25*/, "The blah", null, null, A6DTZ);
+     public final Type_DatetimePrimitiveNull        A6D        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a6d"        , 24/*24*/, "The blah", null, null, A6DTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -624,7 +608,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull         A7         = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 26/*26*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitiveNull         A7         = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 25/*25*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -645,7 +629,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerCollectionNull        A7B        = new Type_IntegerCollectionNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 27/*27*/, "The blah", null, null);
+     public final Type_IntegerCollectionNull        A7B        = new Type_IntegerCollectionNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 26/*26*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -667,7 +651,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          A8BTZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"      , 28/*28*/, 5, "Generated helper column to hold the time zone ID for 'a8b'.", null, null, null);
+     public final Type_StringPrimitiveNull          A8BTZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a8bTZ"      , 27/*27*/, 5, "Generated helper column to hold the time zone ID for 'a8b'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -686,9 +670,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        A8B        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"        , 29/*29*/, "The blah", null, null, A8BTZ);
+     public final Type_DatetimePrimitiveNull        A8B        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a8b"        , 28/*28*/, "The blah", null, null, A8BTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -710,7 +699,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          A9TZ       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"       , 30/*30*/, 5, "Generated helper column to hold the time zone ID for 'a9'.", null, null, null);
+     public final Type_StringPrimitiveNull          A9TZ       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"       , 29/*29*/, 5, "Generated helper column to hold the time zone ID for 'a9'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -729,6 +718,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -738,7 +732,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        A9         = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a9"         , 31/*31*/, "The blah", null, null, A9TZ);
+     public final Type_DatetimePrimitiveNull        A9         = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a9"         , 30/*30*/, "The blah", null, null, A9TZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -760,7 +754,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          A9A1TZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1TZ"     , 32/*32*/, 5, "Generated helper column to hold the time zone ID for 'a9a1'.", null, null, null);
+     public final Type_StringPrimitiveNull          A9A1TZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1TZ"     , 31/*31*/, 5, "Generated helper column to hold the time zone ID for 'a9a1'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -779,6 +773,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -788,7 +787,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        A9A1       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1"       , 33/*33*/, "The blah", null, null, A9A1TZ);
+     public final Type_DatetimePrimitiveNull        A9A1       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a9a1"       , 32/*32*/, "The blah", null, null, A9A1TZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -810,7 +809,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         A9BTZ      = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a9bTZ"      , 34/*34*/, "Generated helper column to hold the time zone ID for 'a9b'.", null, null);
+     public final Type_StringCollectionNull         A9BTZ      = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a9bTZ"      , 33/*33*/, "Generated helper column to hold the time zone ID for 'a9b'.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -829,9 +828,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimeCollectionNull       A9B        = new Type_DatetimeCollectionNull      (SCHEMA_LABEL, TABLENAME_LABEL, "a9b"        , 35/*35*/, "The blah", null, null, A9BTZ);
+     public final Type_DatetimeCollectionNull       A9B        = new Type_DatetimeCollectionNull      (SCHEMA_LABEL, TABLENAME_LABEL, "a9b"        , 34/*34*/, "The blah", null, null, A9BTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -852,7 +856,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitiveNull            A9C        = new Type_DatePrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"        , 36/*36*/, "The blah", null, null);
+     public final Type_DatePrimitiveNull            A9C        = new Type_DatePrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"        , 35/*35*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -873,7 +877,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DateCollectionNull           A9D        = new Type_DateCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a9d"        , 37/*37*/, "The blah", null, null);
+     public final Type_DateCollectionNull           A9D        = new Type_DateCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a9d"        , 36/*36*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -894,7 +898,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull         A10A       = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"       , 38/*38*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitiveNull         A10A       = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"       , 37/*37*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -916,7 +920,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          A10B       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 39/*39*/, 10, "The blah", null, null, null);
+     public final Type_StringPrimitiveNull          A10B       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 38/*38*/, 10, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -937,7 +941,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull         A10C       = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 40/*40*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitiveNull         A10C       = new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 39/*39*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -958,7 +962,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_NumericPrimitiveNull         A11        = new Type_NumericPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a11"        , 41/*41*/, "The blah", null, null, null);
+     public final Type_NumericPrimitiveNull         A11        = new Type_NumericPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a11"        , 40/*40*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -979,7 +983,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_NumericCollectionNull        A11B       = new Type_NumericCollectionNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a11b"       , 42/*42*/, "The blah", null, null);
+     public final Type_NumericCollectionNull        A11B       = new Type_NumericCollectionNull       (SCHEMA_LABEL, TABLENAME_LABEL, "a11b"       , 41/*41*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1000,7 +1004,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_NumericPrimitiveNull         A11C       = new Type_NumericPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"       , 43/*43*/, "The blah", null, null, null);
+     public final Type_NumericPrimitiveNull         A11C       = new Type_NumericPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "a11c"       , 42/*42*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1021,7 +1025,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_ShortPrimitiveNull           A12        = new Type_ShortPrimitiveNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a12"        , 44/*44*/, "The blah", null, null, null);
+     public final Type_ShortPrimitiveNull           A12        = new Type_ShortPrimitiveNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a12"        , 43/*43*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1042,7 +1046,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_ShortCollectionNull          A12B       = new Type_ShortCollectionNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a12b"       , 45/*45*/, "The blah", null, null);
+     public final Type_ShortCollectionNull          A12B       = new Type_ShortCollectionNull         (SCHEMA_LABEL, TABLENAME_LABEL, "a12b"       , 44/*44*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1063,7 +1067,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_UuidPrimitiveNull            A13        = new Type_UuidPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a13"        , 46/*46*/, "The blah", null, null);
+     public final Type_UuidPrimitiveNull            A13        = new Type_UuidPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a13"        , 45/*45*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1084,7 +1088,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_UuidCollectionNull           A13B       = new Type_UuidCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a13b"       , 47/*47*/, "The blah", null, null);
+     public final Type_UuidCollectionNull           A13B       = new Type_UuidCollectionNull          (SCHEMA_LABEL, TABLENAME_LABEL, "a13b"       , 46/*46*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1105,7 +1109,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_JsonPrimitiveNull            A14        = new Type_JsonPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a14"        , 48/*48*/, "The blah", null, null, null);
+     public final Type_JsonPrimitiveNull            A14        = new Type_JsonPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a14"        , 47/*47*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1133,7 +1137,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            CREATED    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 49/*49*/, "The timestamp for when the record was created. (TILDATEST.Testing_Cloned)", null, null);
+     public final Type_DatetimePrimitive            CREATED    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 48/*48*/, "The timestamp for when the record was created. (TILDATEST.Testing_Cloned)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1161,7 +1165,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            LASTUPDATED= new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 50/*50*/, "The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED= new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 49/*49*/, "The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1182,11 +1186,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DELETED    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 51/*51*/, "The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 50/*50*/, "The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.REFNUM2,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.TOPS,COLS.TOPS2,COLS.A1,COLS.A2,COLS.A2B,COLS.A2C,COLS.A3,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A6,COLS.A6B,COLS.A6C,COLS.A6DTZ,COLS.A6D,COLS.A7,COLS.A7B,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9A1TZ,COLS.A9A1,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.A10A,COLS.A10B,COLS.A10C,COLS.A11,COLS.A11B,COLS.A11C,COLS.A12,COLS.A12B,COLS.A13,COLS.A13B,COLS.A14,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.REFNUM2,COLS.NAME,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.TOPS,COLS.TOPS2,COLS.A2,COLS.A2B,COLS.A2C,COLS.A3,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A6,COLS.A6B,COLS.A6C,COLS.A6DTZ,COLS.A6D,COLS.A7,COLS.A7B,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9A1TZ,COLS.A9A1,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.A10A,COLS.A10B,COLS.A10C,COLS.A11,COLS.A11B,COLS.A11C,COLS.A12,COLS.A12B,COLS.A13,COLS.A13B,COLS.A14,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
@@ -1421,12 +1425,6 @@ object. The generic init method defaults to this general data structure as a gen
        Set <String> _tops2 = CollectionUtil.toSet (ParseUtil.parseString("tops2", false, vals, Errors));
        if (_tops2 != null) Obj.setTops2(_tops2);
 
-       vals = Values.get("a1");
-       if (vals!=null && vals.length > 1)
-        Errors.add(new StringStringPair("a1", "Parameter is not a list or a set and yet received "+vals.length+" values"));
-       Integer _a1 = ParseUtil.parseInteger("a1", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a1 != null) Obj.setA1(_a1);
-
        vals = Values.get("a2");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a2", "Parameter is not a list or a set and yet received "+vals.length+" values"));
@@ -1631,7 +1629,6 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask);
        Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask);
        Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask);
-       Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
        Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask);
        Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask);
        Obj.__Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask);
@@ -2216,9 +2213,6 @@ The results are ordered by: refnum asc
           out.write("[]");
         }
 
-      if (Obj.isNullA1() == false)
-        JSONUtil.print(out, "a1", ++i==0, Obj.getA1());
-
       if (Obj.isNullA2() == false)
         JSONUtil.print(out, "a2", ++i==0, Obj.getA2());
 
@@ -2359,7 +2353,7 @@ The results are ordered by: refnum asc
 
    public static String getCSVHeader()
     {
-      return "\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"tops\",\"tops2\",\"a1\",\"a2\",\"a2b\",\"a2c\",\"a3\",\"a3b\",\"a4\",\"a4b\",\"a5\",\"a5b\",\"a6\",\"a6b\",\"a6c\",\"a6dTZ\",\"a6d\",\"a7\",\"a7b\",\"a8bTZ\",\"a8b\",\"a9TZ\",\"a9\",\"a9a1TZ\",\"a9a1\",\"a9bTZ\",\"a9b\",\"a9c\",\"a9d\",\"a10a\",\"a10b\",\"a10c\",\"a11\",\"a11b\",\"a11c\",\"a12\",\"a12b\",\"a13\",\"a13b\",\"a14\",\"created\",\"lastUpdated\",\"deleted\"";
+      return "\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\",\"desc4\",\"desc5\",\"desc6\",\"tops\",\"tops2\",\"a2\",\"a2b\",\"a2c\",\"a3\",\"a3b\",\"a4\",\"a4b\",\"a5\",\"a5b\",\"a6\",\"a6b\",\"a6c\",\"a6dTZ\",\"a6d\",\"a7\",\"a7b\",\"a8bTZ\",\"a8b\",\"a9TZ\",\"a9\",\"a9a1TZ\",\"a9a1\",\"a9bTZ\",\"a9b\",\"a9c\",\"a9d\",\"a10a\",\"a10b\",\"a10c\",\"a11\",\"a11b\",\"a11c\",\"a12\",\"a12b\",\"a13\",\"a13b\",\"a14\",\"created\",\"lastUpdated\",\"deleted\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data_test.Testing_Cloned_Data> L, boolean includeHeader) throws java.io.IOException
@@ -2403,8 +2397,6 @@ The results are ordered by: refnum asc
       TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getTops(), ","));
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getTops2(), ","));
-      Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA1());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA2());
       Str.append(",");
@@ -2584,9 +2576,6 @@ The results are ordered by: refnum asc
           JSONUtil.print(out, "tops2", ++i==0);
           out.write("[]");
         }
-
-      if (Obj.isNullA1() == false)
-        JSONUtil.print(out, "a1", ++i==0, Obj.getA1());
 
       if (Obj.isNullA2() == false)
         JSONUtil.print(out, "a2", ++i==0, Obj.getA2());

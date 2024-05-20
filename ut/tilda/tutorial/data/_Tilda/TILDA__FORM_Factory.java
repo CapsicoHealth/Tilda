@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM     = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          USERREFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "userRefnum" , 1/*1*/, "The user who created the form", null, null, null);
+     public final Type_LongPrimitive                USERREFNUM = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "userRefnum" , 1/*1*/, "The user who created the form", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        TYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 2/*2*/, 40, "Form template type", null, null, null);
+     public final Type_StringPrimitive              TYPE       = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 2/*2*/, 40, "Form template type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    FILLDATETZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "fillDateTZ" , 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'fillDate'.", null, null, null);
+     public final Type_StringPrimitiveNull          FILLDATETZ = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "fillDateTZ" , 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'fillDate'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,9 +144,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'fillDateTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  FILLDATE   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "fillDate"   , 4/*4*/, "The date the form was filled", null, null, FILLDATETZ);
+     public final Type_DatetimePrimitiveNull        FILLDATE   = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "fillDate"   , 4/*4*/, "The date the form was filled", null, null, FILLDATETZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +179,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 5/*5*/, "The timestamp for when the record was created. (TILDATUTORIAL.Form)", null, null);
+     public final Type_DatetimePrimitive            CREATED    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 5/*5*/, "The timestamp for when the record was created. (TILDATUTORIAL.Form)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,7 +207,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 6/*6*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.Form)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED= new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 6/*6*/, "The timestamp for when the record was last updated. (TILDATUTORIAL.Form)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +228,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 7/*7*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.Form)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 7/*7*/, "The timestamp for when the record was deleted. (TILDATUTORIAL.Form)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -359,7 +364,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FORM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FORM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -558,7 +563,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__FORM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__FORM_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -580,7 +585,7 @@ Lookup one record by the primary key: refnum.
 /**
 Lookup records by the index 'Type' over  type.<BR>The results are ordered by: fillDate asc
 */
-   static public ListResults<tilda.tutorial.data.Form_Data> lookupWhereType(Connection C, String type, int start, int size) throws Exception
+   static public ListResults<tilda.tutorial.data.Form_Data> lookupWhereType(Connection C, String type, int __start__, int __size__) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORM Obj = new tilda.tutorial.data.Form_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -588,15 +593,15 @@ Lookup records by the index 'Type' over  type.<BR>The results are ordered by: fi
        Obj.setType       (type       );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'Type' over  type.<BR>The results are ordered by: fillDate asc
 */
-   static public void lookupWhereType(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Form_Data> OP, String type, int start, int size) throws Exception
+   static public void lookupWhereType(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Form_Data> OP, String type, int __start__, int __size__) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORM Obj = new tilda.tutorial.data.Form_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -605,7 +610,7 @@ Lookup records by the index 'Type' over  type.<BR>The results are ordered by: fi
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -613,22 +618,22 @@ Lookup records by the index 'Type' over  type.<BR>The results are ordered by: fi
 /**
 Lookup records by the index 'All' over  .<BR>The results are ordered by: lastUpdated asc
 */
-   static public ListResults<tilda.tutorial.data.Form_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.tutorial.data.Form_Data> lookupWhereAll(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORM Obj = new tilda.tutorial.data.Form_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'All' over  .<BR>The results are ordered by: lastUpdated asc
 */
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Form_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Form_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.tutorial.data._Tilda.TILDA__FORM Obj = new tilda.tutorial.data.Form_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -636,7 +641,7 @@ Lookup records by the index 'All' over  .<BR>The results are ordered by: lastUpd
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -648,13 +653,19 @@ Lookup records by the index 'All' over  .<BR>The results are ordered by: lastUpd
    public static ListResults<tilda.tutorial.data.Form_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.tutorial.data.Form_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

@@ -18,9 +18,15 @@ package tilda;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,6 +58,7 @@ public class DBTimeZoneTesting extends Key_Factory
           {
             C = ConnectionPool.get("MAIN");
 
+//            listTimeZones();
             TildaTesting(C);
             //JDBCTesting(C);
 
@@ -75,6 +82,35 @@ public class DBTimeZoneTesting extends Key_Factory
         LOG.debug("END");
       }
 
+    private static void listTimeZones()
+      {
+       Set<String> ZIs = ZoneId.getAvailableZoneIds();
+       List<String> sortedList = new ArrayList<String>();
+       for (String ziStr : ZIs)
+         {
+           ZoneId zi = ZoneId.of(ziStr);
+           sortedList.add(zi.getDisplayName(TextStyle.SHORT, Locale.US)+" - "+zi.getId());
+//           LOG.debug("id: "+zi.getId()
+//           +";   displayF: "+zi.getDisplayName(TextStyle.FULL, Locale.US)
+//           +";   displayS: "+zi.getDisplayName(TextStyle.SHORT, Locale.US)
+//           );
+           // Id and Narrow are the same
+           if (zi.getId().equals(zi.getDisplayName(TextStyle.NARROW, Locale.US)) == false)
+             LOG.debug("        ---> DIFF");
+         }
+       Collections.sort(sortedList);
+       for (String str : sortedList)
+         LOG.debug(str);
+        
+      }
+
+    protected static void testTimestamp(ZonedDateTime ZDT)
+     {
+       Instant inst = ZDT.toInstant();
+       java.sql.Timestamp ts1 = java.sql.Timestamp.from(ZDT.toInstant());
+       LOG.debug("dt1: "+ZDT+" - "+ts1); 
+     }
+    
     protected static class DateTimeVariations
       {
         public DateTimeVariations(ResultSet RS, int baseColNum)
@@ -178,13 +214,19 @@ public class DBTimeZoneTesting extends Key_Factory
     protected static void TildaTesting(Connection C)
     throws Exception
       {
-        TestZDTValues(C, "bleh", DateTimeUtil.NOW_PLACEHOLDER_ZDT);
-        TestZDTValues(C, "bleh", DateTimeUtil.getTodayTimestamp(true));
-        TestZDTValues(C, "blih", ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/New_York")));
-        
+        TestZDTValues(C, "blah", "CurrentTimestamp", DateTimeUtil.NOW_PLACEHOLDER_ZDT);
+        TestZDTValues(C, "bleh", "Today's 00:00:00", DateTimeUtil.getTodayTimestamp(true));
+        TestZDTValues(C, "blih1", "New York"   , ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/New_York")));
+        TestZDTValues(C, "blih2", "US Eastern" , ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Eastern")));
+        TestZDTValues(C, "bloh1", "Chicago"    , ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/Chicago")));        
+        TestZDTValues(C, "bloh2", "US Central" , ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Central")));        
+        TestZDTValues(C, "bluh1", "Denver"     , ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/Denver")));        
+        TestZDTValues(C, "bluh2", "US Mountain", ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Mountain")));        
+        TestZDTValues(C, "blyh1", "Los Angeles", ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/Los_Angeles")));
+        TestZDTValues(C, "blyh2", "US Pacific" , ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Pacific")));
       }
 
-    protected static void TestZDTValues(Connection C, String dataName, ZonedDateTime ZDT)
+    protected static void TestZDTValues(Connection C, String dataName, String dataDescription, ZonedDateTime ZDT)
     throws Exception
       {
         TestingTimestamps_Data TT;
@@ -210,7 +252,7 @@ public class DBTimeZoneTesting extends Key_Factory
 
         LOG.debug("");
         LOG.debug("**************************************************************************************************");
-        LOG.debug("Dataset '"+dataName+"'");
+        LOG.debug("Dataset '"+dataName+"': "+dataDescription);
         LOG.debug("dt1: " + DateTimeUtil.printDateTime(TT.getDt1()));
         LOG.debug("dt2: " + DateTimeUtil.printDateTime(TT.getDt2()));
         LOG.debug("dt3: " + DateTimeUtil.printDateTime(TT.getDt3()));

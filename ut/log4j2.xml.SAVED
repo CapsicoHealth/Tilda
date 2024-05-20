@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<Properties>
+		<Property name="log-path">C:\Projects\capsico-logs\</Property>
+		<Property name="now">${date:yyyy-MM-dd}</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="FILES" fileName="${log-path}/capsico.log" filePattern="${log-path}/capsico.${now}.%i.log.gz">
+			<PatternLayout>
+                <pattern>%d{MMdd.HHmmss.SSS}#%-3t %level{length=1} %15.15c{1}| %m %ex{50}%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="99999" compressionLevel="6"/>
+		</RollingFile>
+		<Async name="ASYNC">
+			<AppenderRef ref="FILES" />
+		</Async>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout>
+                 <pattern>%d{MMdd.HHmmss.SSS}#%-3t %level{length=1} %15.15c{1}| %m %ex{50}%n</pattern>
+			</PatternLayout>
+        </Console>
+	</Appenders>
+	<Loggers>
+		<Root level="debug">
+            <AppenderRef ref="Console" />
+<!--
+            <AppenderRef ref="ASYNC" />
+            <AppenderRef ref="Console" />
+ -->
+		</Root>
+	</Loggers>
+</Configuration>
