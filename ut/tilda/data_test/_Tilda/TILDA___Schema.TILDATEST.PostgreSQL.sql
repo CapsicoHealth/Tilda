@@ -8,8 +8,8 @@ create table if not exists TILDATEST.Test -- The table to keep track tests amd o
   , "id"           varchar(128)  not null   -- The name of the test
   , "name"         varchar(128)  not null   -- The name of the test
   , "test_fk"      bigint        not null   -- The name of the test
-  , "created"      timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATEST.Test)
-  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATEST.Test)
+  , "created"      timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.Test)
+  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATEST.Test)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATEST.Test)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Test_Test FOREIGN KEY ("test_fk") REFERENCES TILDATEST.Test ON DELETE restrict ON UPDATE cascade
@@ -32,8 +32,8 @@ create table if not exists TILDATEST.Test2 -- The table to keep track tests amd 
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "name"         varchar(128)  not null   -- The name of the test
   , "test_fk"      bigint        not null   -- The name of the test
-  , "created"      timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATEST.Test2)
-  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATEST.Test2)
+  , "created"      timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.Test2)
+  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATEST.Test2)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATEST.Test2)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Test2_Test FOREIGN KEY ("test_fk") REFERENCES TILDATEST.Test ON DELETE restrict ON UPDATE cascade
@@ -82,7 +82,7 @@ create table if not exists TILDATEST.Testing -- blah blah
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                  DEFAULT (statement_timestamp() at time zone 'utc')   -- The blah
+  , "a9"           timestamptz                  DEFAULT (statement_timestamp())   -- The blah
   , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
   , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
@@ -100,8 +100,8 @@ create table if not exists TILDATEST.Testing -- blah blah
   , "a13"          UUID                           -- The blah
   , "a13b"         UUID[]                         -- The blah
   , "a14"          jsonb                          -- The blah
-  , "created"      timestamptz         not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATEST.Testing)
-  , "lastUpdated"  timestamptz         not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATEST.Testing)
+  , "created"      timestamptz         not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.Testing)
+  , "lastUpdated"  timestamptz         not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATEST.Testing)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDATEST.Testing)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_a6d FOREIGN KEY ("a6dTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -176,30 +176,30 @@ create table if not exists TILDATEST.TestingTimestamps -- blah blah
   , "dt1TZ"        character(5)              -- Generated helper column to hold the time zone ID for 'dt1'.
   , "dt1"          timestamptz               -- The blah
   , "dt1nTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt1n'.
-  , "dt1n"         timestamptz             DEFAULT (statement_timestamp() at time zone 'utc')   -- The blah
+  , "dt1n"         timestamptz             DEFAULT (statement_timestamp())   -- The blah
   , "dt1uTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt1u'.
   , "dt1u"         timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt1aTZ"       text[]                    -- Generated helper column to hold the time zone ID for 'dt1a'.
   , "dt1a"         timestamptz[]             -- The blah
   , "rowTZ"        character(5)              -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.
   , "dt2"          timestamptz               -- The blah
-  , "dt2n"         timestamptz             DEFAULT (statement_timestamp() at time zone 'utc')   -- The blah
+  , "dt2n"         timestamptz             DEFAULT (statement_timestamp())   -- The blah
   , "dt2u"         timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt2a"         timestamptz[]             -- The blah
   , "dt3TZ"        character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
   , "dt3"          timestamp                 -- The blah
   , "dt3nTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
-  , "dt3n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt3n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
   , "dt3uTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
   , "dt3u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt3aTZ"       text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
   , "dt3a"         timestamp[]               -- The blah
   , "dt4"          timestamp                 -- The blah
-  , "dt4n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt4n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
   , "dt4u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt4a"         timestamp[]               -- The blah
-  , "created"      timestamptz    not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps)
-  , "lastUpdated"  timestamptz    not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)
+  , "created"      timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps)
+  , "lastUpdated"  timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_TestingTimestamps_dt1 FOREIGN KEY ("dt1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -279,7 +279,7 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                  DEFAULT (statement_timestamp() at time zone 'utc')   -- The blah
+  , "a9"           timestamptz                  DEFAULT (statement_timestamp())   -- The blah
   , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
   , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
@@ -297,8 +297,8 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , "a13"          UUID                           -- The blah
   , "a13b"         UUID[]                         -- The blah
   , "a14"          jsonb                          -- The blah
-  , "created"      timestamptz         not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATEST.Testing_Cloned)
-  , "lastUpdated"  timestamptz         not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)
+  , "created"      timestamptz         not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.Testing_Cloned)
+  , "lastUpdated"  timestamptz         not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_Cloned_a6d FOREIGN KEY ("a6dTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -373,30 +373,30 @@ create table if not exists TILDATEST.TestingTimestamps_Cloned -- blah blah - Rea
   , "dt1TZ"        character(5)              -- Generated helper column to hold the time zone ID for 'dt1'.
   , "dt1"          timestamptz               -- The blah
   , "dt1nTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt1n'.
-  , "dt1n"         timestamptz             DEFAULT (statement_timestamp() at time zone 'utc')   -- The blah
+  , "dt1n"         timestamptz             DEFAULT (statement_timestamp())   -- The blah
   , "dt1uTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt1u'.
   , "dt1u"         timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt1aTZ"       text[]                    -- Generated helper column to hold the time zone ID for 'dt1a'.
   , "dt1a"         timestamptz[]             -- The blah
   , "rowTZ"        character(5)              -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.
   , "dt2"          timestamptz               -- The blah
-  , "dt2n"         timestamptz             DEFAULT (statement_timestamp() at time zone 'utc')   -- The blah
+  , "dt2n"         timestamptz             DEFAULT (statement_timestamp())   -- The blah
   , "dt2u"         timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt2a"         timestamptz[]             -- The blah
   , "dt3TZ"        character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
   , "dt3"          timestamp                 -- The blah
   , "dt3nTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
-  , "dt3n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt3n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
   , "dt3uTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
   , "dt3u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt3aTZ"       text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
   , "dt3a"         timestamp[]               -- The blah
   , "dt4"          timestamp                 -- The blah
-  , "dt4n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt4n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
   , "dt4u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt4a"         timestamp[]               -- The blah
-  , "created"      timestamptz    not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)
-  , "lastUpdated"  timestamptz    not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)
+  , "created"      timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)
+  , "lastUpdated"  timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_TestingTimestamps_Cloned_dt1 FOREIGN KEY ("dt1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade

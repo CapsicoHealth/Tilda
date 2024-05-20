@@ -7,8 +7,8 @@ create table if not exists TILDATUTORIAL.User -- Users
  (  "refnum"       bigint        not null   -- The primary key for this record
   , "id"           varchar(40)   not null   -- The user's id
   , "email"        varchar(255)  not null   -- The user's email
-  , "created"      timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATUTORIAL.User)
-  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATUTORIAL.User)
+  , "created"      timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATUTORIAL.User)
+  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATUTORIAL.User)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATUTORIAL.User)
   , PRIMARY KEY("refnum")
  );
@@ -33,8 +33,8 @@ create table if not exists TILDATUTORIAL.Form -- User-entered forms
   , "type"         varchar(40)   not null   -- Form template type
   , "fillDateTZ"   character(5)             -- Generated helper column to hold the time zone ID for 'fillDate'.
   , "fillDate"     timestamptz              -- The date the form was filled
-  , "created"      timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATUTORIAL.Form)
-  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATUTORIAL.Form)
+  , "created"      timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATUTORIAL.Form)
+  , "lastUpdated"  timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATUTORIAL.Form)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDATUTORIAL.Form)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Form_User FOREIGN KEY ("userRefnum") REFERENCES TILDATUTORIAL.User ON DELETE restrict ON UPDATE cascade
@@ -61,8 +61,8 @@ create table if not exists TILDATUTORIAL.FormAnswer -- Form answers
   , "formRefnum"   bigint         not null   -- The form's refnum
   , "field"        varchar(60)    not null   -- question/field id
   , "value"        varchar(4000)             -- answer value
-  , "created"      timestamptz    not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)
-  , "lastUpdated"  timestamptz    not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)
+  , "created"      timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)
+  , "lastUpdated"  timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_FormAnswer_Form FOREIGN KEY ("formRefnum") REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade
@@ -92,8 +92,8 @@ create table if not exists TILDATUTORIAL.TestQuestionAnswer -- Questions and ans
   , "answerId"       varchar(60)   not null   -- Answer id
   , "answerLabel"    varchar(256)  not null   -- Answer label
   , "correct"        smallint      not null   -- Whether the answer is a correct one or not for that question (technically, there could be more than one)
-  , "created"        timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)
-  , "lastUpdated"    timestamptz   not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)
+  , "created"        timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)
+  , "lastUpdated"    timestamptz   not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDATUTORIAL.TestQuestionAnswer)
   , PRIMARY KEY("refnum")
  );
@@ -124,8 +124,8 @@ create table if not exists TILDATUTORIAL.TestAnswer -- Test answers
   , "answerId"     varchar(60)             -- Answer value
   , "timeMillis"   integer      not null   -- Time in milliseconds for the time spent answering the question
   , "correct"      smallint     not null   -- Whether the answer is correct or not
-  , "created"      timestamptz  not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)
-  , "lastUpdated"  timestamptz  not null DEFAULT (statement_timestamp() at time zone 'utc')   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)
+  , "created"      timestamptz  not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)
+  , "lastUpdated"  timestamptz  not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)
   , "deleted"      timestamptz             -- The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_TestAnswer_Form FOREIGN KEY ("formRefnum") REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade

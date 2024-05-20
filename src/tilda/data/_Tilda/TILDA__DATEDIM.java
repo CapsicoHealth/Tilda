@@ -4804,7 +4804,7 @@ This is the hasChanged for:<BR>
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "DateDim");
           int Pos = S.length();
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == true) { TILDA__DATEDIM_Factory.COLS.DT.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == false && DateTimeUtil.isNowPlaceholder(_dt) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == false && DateTimeUtil.isNowPlaceholder(_dt) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.EPOCH._Mask) == true) { TILDA__DATEDIM_Factory.COLS.EPOCH.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DAYNAME._Mask) == true) { TILDA__DATEDIM_Factory.COLS.DAYNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
@@ -4815,7 +4815,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH._Mask) == true) { TILDA__DATEDIM_Factory.COLS.WEEKOFMONTH.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR._Mask) == true) { TILDA__DATEDIM_Factory.COLS.WEEKOFYEAR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == false && DateTimeUtil.isNowPlaceholder(_month) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == false && DateTimeUtil.isNowPlaceholder(_month) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTHOFYEAR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTHNAME._Mask) == true) { TILDA__DATEDIM_Factory.COLS.MONTHNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
@@ -4856,7 +4856,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DT._Mask) == false && DateTimeUtil.isNowPlaceholder(_dt) == true)
-              { TILDA__DATEDIM_Factory.COLS.DT.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATEDIM_Factory.COLS.DT.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATEDIM_Factory.COLS.DT.getFullColumnVarForUpdate(C, S);
            }
@@ -4871,7 +4871,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.MONTH._Mask) == false && DateTimeUtil.isNowPlaceholder(_month) == true)
-              { TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATEDIM_Factory.COLS.MONTH.getFullColumnVarForUpdate(C, S);
            }
@@ -5035,15 +5035,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) { LOG.debug("created: "+_created+" - "+java.sql.Timestamp.from(_created.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) { LOG.debug("lastUpdated: "+_lastUpdated+" - "+java.sql.Timestamp.from(_lastUpdated.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) { LOG.debug("deleted: "+_deleted+" - "+java.sql.Timestamp.from(_deleted.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__DATEDIM_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        return i;
      }

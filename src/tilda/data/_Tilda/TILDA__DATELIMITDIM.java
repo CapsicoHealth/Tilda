@@ -569,13 +569,13 @@ This is the hasChanged for:<BR>
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "DateLimitDim");
           int Pos = S.length();
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -591,21 +591,21 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true)
-              { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForUpdate(C, S);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true)
-              { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForUpdate(C, S);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true)
-              { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForUpdate(C, S);
            }

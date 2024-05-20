@@ -10782,7 +10782,7 @@ This is the hasChanged for:<BR>
              V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true ? C.getCommaCurrentDateTime() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9D.getFullColumnVarForInsert(C, S);
              V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
@@ -10891,7 +10891,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true)
-              { TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForUpdate(C, S);
            }
@@ -11061,7 +11061,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a6d) == false) { LOG.debug("a6d: "+_a6d+" - "+java.sql.Timestamp.from(_a6d.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_a6d.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a6d) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_a6d.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7._Mask) == true) 
         { 
@@ -11077,7 +11077,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a8b) == false) { LOG.debug("a8b: "+_a8b+" - "+java.sql.Timestamp.from(_a8b.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_a8b.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a8b) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_a8b.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask) == true) 
         { 
@@ -11085,7 +11085,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) { LOG.debug("a9: "+_a9+" - "+java.sql.Timestamp.from(_a9.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_a9.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_a9.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask) == true) 
         { 
@@ -11093,7 +11093,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9a1) == false) { LOG.debug("a9a1: "+_a9a1+" - "+java.sql.Timestamp.from(_a9a1.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_a9a1.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9a1) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_a9a1.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask) == true) 
         { 
@@ -11157,15 +11157,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) { LOG.debug("created: "+_created+" - "+java.sql.Timestamp.from(_created.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_created.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) { LOG.debug("lastUpdated: "+_lastUpdated+" - "+java.sql.Timestamp.from(_lastUpdated.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_lastUpdated.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) { LOG.debug("deleted: "+_deleted+" - "+java.sql.Timestamp.from(_deleted.toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR); }
+          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_deleted.toInstant()), DateTimeUtil._UTC_CALENDAR);
         } 
        return i;
      }
