@@ -473,7 +473,7 @@ public class MSSQL implements DBType
         TextUtil.escapeSingleQuoteForSQL(Str, val, true);
         PS.setString(i, Str.toString());
       }
-
+/*
     @Override
     public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
     throws Exception
@@ -525,7 +525,8 @@ public class MSSQL implements DBType
         // Convert String[] to proper type and collection.
         return Type.parse(isSet, parts);
       }
-    
+*/
+
 /*
     @Override
     public void setJson(PreparedStatement PS, int i, String jsonValue)

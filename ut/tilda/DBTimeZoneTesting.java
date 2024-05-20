@@ -18,8 +18,10 @@ package tilda;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class DBTimeZoneTesting extends Key_Factory
           {
             C = ConnectionPool.get("MAIN");
 
+//            testTimestamps();
 //            listTimeZones();
             TildaTesting(C);
             //JDBCTesting(C);
@@ -104,11 +107,33 @@ public class DBTimeZoneTesting extends Key_Factory
         
       }
 
-    protected static void testTimestamp(ZonedDateTime ZDT)
+    
+    protected static void printTimestamp(ZonedDateTime ZDT)
+      {
+        Instant inst = ZDT.toInstant();
+        java.sql.Timestamp ts1 = java.sql.Timestamp.from(ZDT.toInstant());
+        java.sql.Timestamp ts2 = java.sql.Timestamp.from(ZDT.withZoneSameLocal(ZoneOffset.UTC).toInstant());
+        java.sql.Timestamp ts3 = java.sql.Timestamp.from(ZDT.withZoneSameLocal(ZoneOffset.systemDefault()).toInstant());
+        java.sql.Timestamp ts4 = java.sql.Timestamp.from(ZDT.withZoneSameLocal(DateTimeUtil._LOCAL).toInstant());
+        LOG.debug("dt1: "+ZDT); 
+        LOG.debug("    - toInstant: "+ts1); 
+        LOG.debug("    - withZoneSameLocal.UTC.toInstant: "+ts2); 
+        LOG.debug("    - withZoneSameLocal.LOCAL.toInstant: "+ts3); 
+      }
+    
+    
+    protected static void testTimestamps()
      {
-       Instant inst = ZDT.toInstant();
-       java.sql.Timestamp ts1 = java.sql.Timestamp.from(ZDT.toInstant());
-       LOG.debug("dt1: "+ZDT+" - "+ts1); 
+       printTimestamp(DateTimeUtil.getTodayTimestamp(true));
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/New_York")));
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Eastern")));
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/Chicago")));        
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Central")));        
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/Denver")));        
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Mountain")));        
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("America/Los_Angeles")));
+       printTimestamp(ZonedDateTime.of(2024, 5, 18, 16, 55, 30, 123456, ZoneId.of("US/Pacific")));
+       
      }
     
     protected static class DateTimeVariations

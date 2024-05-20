@@ -74,7 +74,13 @@ public interface DBType
     public String[] getConnectionNoDataStates();
     public String[] getConnectionLockMsgs();
     public String[] getConnectionCancelStates();
+    /**
+     * @return The string denoting the current timestamp with timezone statement, e.g., "statement_timestamp()" for Postgres, or "CURRENT_TIMESTAMP" for bigquery.
+     */
     public String   getCurrentTimestampStr();
+    /**
+     * @return The string denoting the current timestamp without timezone statement, "statement_timestamp()::timestamp" for Postgres, or "CURRENT_DATETIME" for bigquery.
+     */
     public String   getCurrentDateTimeStr();
     public String   getCurrentDateStr();
     public boolean  isCaseSentitiveSchemaTableViewNames();

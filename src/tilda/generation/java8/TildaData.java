@@ -17,6 +17,7 @@
 package tilda.generation.java8;
 
 import java.io.PrintWriter;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +46,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.AnsiUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
@@ -1049,7 +1051,7 @@ public class TildaData implements CodeGenTildaData
                   case DATETIME:
                   case DATETIME_PLAIN:
                     Out.println();
-                    Out.println("             V.append(" + (C.isCollection() == false ? "__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : " : "") + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
+                    Out.println("             V.append(" + (C.isCollection() == false ? "__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrent"+(C.getType() == ColumnType.DATETIME?"Timestamp":"DateTime")+"() : " : "") + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
                     Out.println("           }");
                     if (C._DefaultCreateValue != null)
                       {
@@ -1105,7 +1107,7 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       {
                         Out.println("             if (__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
-                        Out.println("              { " + Helper.getRuntimeInsertStr(C) + "; S.append(C.getEqualCurrentTimestamp()); }");
+                        Out.println("              { " + Helper.getRuntimeInsertStr(C) + "; S.append(C.getEqualCurrent"+(C.getType() == ColumnType.DATETIME?"Timestamp":"DateTime")+"()); }");
                         Out.println("             else");
                       }
                     Out.println("              " + Helper.getRuntimeUpdateStr(C) + ";");
@@ -1137,6 +1139,7 @@ public class TildaData implements CodeGenTildaData
                   case LONG:
                   case STRING:
                   case UUID:
+                  case VECTOR:
                     if (C._DefaultUpdateValue == null)
                       Out.println("          if (__Changes.intersects(" + Mask + ") == true) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
@@ -1192,14 +1195,14 @@ public class TildaData implements CodeGenTildaData
                   case DATETIME:
                     Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) { LOG.debug(\""+ C.getName()+": \"+_" + C.getName()+"+\" - \"+java.sql.Timestamp.from(_" + C.getName() + ".toInstant())); PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()), DateTimeUtil._UTC_CALENDAR); }");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()), DateTimeUtil._UTC_CALENDAR);");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
                     break;
                   case DATETIME_PLAIN:
                     Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".toInstant()));");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, java.sql.Timestamp.from(_" + C.getName() + ".withZoneSameLocal(DateTimeUtil._LOCAL).toInstant()));");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
                     break;

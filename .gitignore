@@ -11,3 +11,5 @@
 /tilda-*-dependencies.zip
 .tildaWorkbench
 /tilda.migration.*
+/ut/log4j2.xml
+/ut/tilda.config.json

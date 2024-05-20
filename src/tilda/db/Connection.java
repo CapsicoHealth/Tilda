@@ -749,6 +749,16 @@ public final class Connection
         return ", " + _DB.getCurrentTimestampStr();
       }
 
+    public java.lang.Object getEqualCurrentDateTime()
+      {
+        return "=" + _DB.getCurrentDateTimeStr();
+      }
+
+    public java.lang.Object getCommaCurrentDateTime()
+      {
+        return ", " + _DB.getCurrentTimestampStr();
+      }
+    
     public String getShortColumnVar(String ColumnName)
       {
         return _DB.getShortColumnVar(ColumnName);
