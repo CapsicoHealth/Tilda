@@ -567,6 +567,7 @@ public class DateTimeUtil
       {
         ZoneId ZI = ZoneStr == null || ZoneStr.equals("null") == true ? _UTC : ZoneId.of(ZoneStr);
         return T == null ? null : T.toLocalDateTime().atZone(ZI);
+//        return T == null ? null : ZonedDateTime.ofInstant(T.toInstant(), _UTC).withZoneSameLocal(ZI);
       }
 
     public static ZonedDateTime toZonedDateTime(LocalDate dt, String zoneStr)
