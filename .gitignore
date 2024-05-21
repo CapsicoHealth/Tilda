@@ -12,4 +12,6 @@
 .tildaWorkbench
 /tilda.migration.*
 /ut/log4j2.xml
+/ut/log4j2.xml.SAVED
 /ut/tilda.config.json
+/ut/tilda.config.json.SAVED
