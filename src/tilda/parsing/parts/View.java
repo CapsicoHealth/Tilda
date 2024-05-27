@@ -174,7 +174,7 @@ public class View extends Base
           return false;
 
         int Errs = PS.getErrorCount();
-
+        
         if (_PivotSingle != null && _Pivots.isEmpty() == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the pivot view '" + getFullName() + "' with both a 'pivot' and 'pivots' element. Only one is allowed.");
 
@@ -267,7 +267,7 @@ public class View extends Base
 
             // For DATETIME columns, we add an extra column to maintain the timezone.
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
-            if (VC.needsTZ() == true)
+            if ((VC.getType() == ColumnType.DATETIME || VC.getType() == ColumnType.DATETIME_PLAIN) && VC.needsTZ() == true)
               {
                 if (VC._SameAsObj._TzMode.isRow() == true && getColumn(VC.getTzName(false)) != null)
                  continue;
@@ -590,6 +590,7 @@ public class View extends Base
                       C._FCT = FrameworkColumnType.FORMULA_DT;
                     else
                       C._FCT = FrameworkColumnType.FORMULA;
+                    C._TzModeStr = TZMode.COLUMN.name();
                     O._Columns.add(C);
                     F._ProxyCol = C;
                   }

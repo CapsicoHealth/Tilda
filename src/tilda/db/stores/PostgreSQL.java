@@ -93,7 +93,7 @@ public class PostgreSQL extends CommonStoreImpl
     @Override
     public String getCurrentTimestampStr()
       {
-        return "(statement_timestamp())";
+        return "statement_timestamp()";
       }
     
     @Override

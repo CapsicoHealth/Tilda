@@ -87,6 +87,9 @@ public class ViewColumnWrapper extends Column
             _Scale = VCol._SameAsObj._Scale;
             _Precision = VCol._SameAsObj._Precision;
           }
+        
+        if (_TypeStr.startsWith(ColumnType.DATETIME.name()) == true)
+         _TzModeStr = VCol._SameAsObj._TzModeStr;
       }
 
     protected ViewColumn _VCol;

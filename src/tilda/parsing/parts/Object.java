@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -145,9 +146,9 @@ public class Object extends Base
       {
         if (_Validated == true)
           return true;
-        
+
         int Errs = PS.getErrorCount();
-        
+
         if (_CloneFrom != null)
           {
             // Handle cloneFrom logic to find columns from source obj and copy them to this object's columns.
@@ -205,12 +206,15 @@ public class Object extends Base
               }
           }
 
-        // Pick up TZMode from Schema conventions if present and local value is empty.
-        if (TextUtil.isNullOrEmpty(_TzModeStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultTzModeStr != null)
-          _TzModeStr = parentSchema._Conventions._DefaultTzModeStr;
-        if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
-          return PS.AddError("Object '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
-        
+        // Pick up TZMode from Schema conventions if present and local value is empty, unless it's an Object proxy for a view.
+        if (_FST != FrameworkSourcedType.VIEW)
+          {
+            if (TextUtil.isNullOrEmpty(_TzModeStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultTzModeStr != null)
+              _TzModeStr = parentSchema._Conventions._DefaultTzModeStr;
+            if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
+              return PS.AddError("Object '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
+          }
+
         if (_Columns == null || _Columns.isEmpty() == true)
           PS.AddError("Object '" + getFullName() + "' doesn't define any columns!");
         else
@@ -241,7 +245,7 @@ public class Object extends Base
                   {
                     String ColZName = C.getTZName();
                     Column TZCol = null;
-                    if (C._TzMode.isColumn() == true|| getColumn(ColZName) == null)
+                    if (C._TzMode.isColumn() == true || getColumn(ColZName) == null)
                       {
                         TZCol = new Column(ColZName, null, 0, C._Nullable, C._AllowEmpty, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for " + getTzColumnNames(C) + ".", null, null, null, C._TzMode);
                         TZCol._TzCol = true;
@@ -545,7 +549,7 @@ public class Object extends Base
             throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
           }
 
-        // LDH-NOTE: At this point in time, the referenced columns are not fully validated, so do not 
+        // LDH-NOTE: At this point in time, the referenced columns are not fully validated, so do not
         // try to clone the "sameAs" column or any of the attributes, such as _FCT. Things have to be
         // spelled out directly here in order to support the Tilda master schema and entities.
         Column C = new Column(_ParentSchema.getConventionCreatedName(), null, 0, false, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description + " (" + getShortName() + ")", null, null, null, null);

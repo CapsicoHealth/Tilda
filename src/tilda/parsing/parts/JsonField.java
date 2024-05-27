@@ -55,7 +55,7 @@ public class JsonField extends TypeDef
         if (TextUtil.isNullOrEmpty(_Description) == true)
           PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with field '" + _Name + "' without a description.");
 
-        if (super.validate(PS, "JsonSchema field", true, true) == false)
+        if (super.validate(PS, "JsonSchema field", true, true, C._ParentObject._FST) == false)
           return false;
 
         return true;

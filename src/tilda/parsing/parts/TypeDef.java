@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -72,19 +73,19 @@ public class TypeDef
       }
 
 
-    public boolean validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+    public boolean validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional, FrameworkSourcedType FST)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        validateBase(PS, What, AllowArrays, StringSizeOptional);
+        validateBase(PS, What, AllowArrays, StringSizeOptional, FST);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
     protected static Pattern _P = Pattern.compile("STRING\\s*\\(\\s*(\\d+)\\s*\\)");
     
-    private void validateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+    private void validateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional, FrameworkSourcedType FST)
       {
         if (_TypeStr == null)
           {
@@ -116,7 +117,7 @@ public class TypeDef
             BaseType = "STRING";
           }
 
-        if ((_Type = ColumnType.parse(BaseType)) == null || _Type._InternalOnly == true)
+        if ((_Type = ColumnType.parse(BaseType)) == null || (FST == FrameworkSourcedType.NONE && _Type._InternalOnly == true))
           {
             PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "'.");
             return;

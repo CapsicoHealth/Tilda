@@ -19,6 +19,7 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 
 import com.google.gson.annotations.SerializedName;
@@ -43,14 +44,14 @@ public class MappingColumn
       
       if (_Id == null)
         return PS.AddError("Mapper "+ ParentMapper._Name + " did not define an Id column. It's mandatory.");
-      _Id   .validate(PS, "Mapper "+ParentMapper._Name+"'s 'id'"   , false, true);
+      _Id   .validate(PS, "Mapper "+ParentMapper._Name+"'s 'id'"   , false, true, FrameworkSourcedType.MAPPER);
 
       if (_Name == null)
         return PS.AddError("Mapper "+ ParentMapper._Name + " did not define a Name column. It's mandatory.");
-      _Name .validate(PS, "Mapper "+ParentMapper._Name+"'s 'name'" , false, true);
+      _Name .validate(PS, "Mapper "+ParentMapper._Name+"'s 'name'" , false, true, FrameworkSourcedType.MAPPER);
       
       if (_Group != null)
-       _Group.validate(PS, "Mapper "+ParentMapper._Name+"'s 'group'", false, true);
+       _Group.validate(PS, "Mapper "+ParentMapper._Name+"'s 'group'", false, true, FrameworkSourcedType.MAPPER);
       
       _IdColumn    = new Column("id"   , _Id   ._TypeStr, _Id   ._Size, false, false, null, true , null, "The original id of this type",_Id   ._Precision, _Id   ._Scale, null, null);
       _NameColumn  = new Column("name" , _Name ._TypeStr, _Name ._Size, false, false, null, false, null, "The mapped name for this type", _Name._Precision, _Name._Scale, null, null);

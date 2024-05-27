@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -66,7 +67,7 @@ public class Field extends TypeDef
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           return PS.AddError("Field '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
 
-        if (super.validate(PS, "Column '" + getFullName() + "'", true, false) == false)
+        if (super.validate(PS, "Column '" + getFullName() + "'", true, false, FrameworkSourcedType.VIEW) == false)
           return false;
 
         if (_Nullable == null)

@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.PivotHelper;
 import tilda.utils.TextUtil;
@@ -55,7 +56,7 @@ public class ViewPivotValue extends Value
         if (_TypeStr != null)
           {
             _Type = new TypeDef(_TypeStr, _Size, _Scale, _Precision);
-            _Type.validate(PS, what, true, false);
+            _Type.validate(PS, what, true, false, FrameworkSourcedType.VIEW);
           }
 
         if (TextUtil.isNullOrEmpty(_Expression) == true)

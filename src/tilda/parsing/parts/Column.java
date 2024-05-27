@@ -31,6 +31,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.enums.FrameworkColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
@@ -266,9 +267,9 @@ public class Column extends TypeDef
 
         setDefaults();
 
-        if (super.validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
+        if (super.validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED, ParentObject._FST) == false)
           return;
-
+        
         if (_Type == ColumnType.DATETIME || _Type == ColumnType.DATETIME_PLAIN)
           {
             if (TextUtil.isNullOrEmpty(_TzModeStr) == true)
@@ -283,12 +284,14 @@ public class Column extends TypeDef
           }
         else
           {
-            if (TextUtil.isNullOrEmpty(_TzModeStr) == false)
-              PS.AddError("Column '" + getFullName() + "' defined tzMode value '" + _TzModeStr + "' when the column is not a DATETIME.");
+            if (_ParentObject._FST == FrameworkSourcedType.VIEW)
+              _TzModeStr = null;
+            else if (TextUtil.isNullOrEmpty(_TzModeStr) == false)
+              PS.AddError("Column '" + getFullName() + "' defined tzMode value '" + _TzModeStr + "' when the column is not a DATETIME but a "+_Type+".");
           }
 
         // Convert from DATETIME ("with timezone") to DATETIME_PLAIN ("without timezone") if _TzMode says so.
-        if (_Type == ColumnType.DATETIME && _TzMode.isNoTZ() == true)
+        if (_Type == ColumnType.DATETIME && _TzMode != null && _TzMode.isNoTZ() == true)
           _Type = ColumnType.DATETIME_PLAIN;
 
         if (_AllowEmpty == true)

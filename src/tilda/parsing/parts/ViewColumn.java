@@ -33,7 +33,6 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
-import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -328,7 +327,7 @@ public class ViewColumn
         if (_TypeStr != null)
           {
             _Type = new TypeDef(_TypeStr, _Size, _Precision, _Scale);
-            _Type.validate(PS, "View Column '" + getFullName() + "'", true, false);
+            _Type.validate(PS, "View Column '" + getFullName() + "'", true, false, FrameworkSourcedType.VIEW);
           }
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)

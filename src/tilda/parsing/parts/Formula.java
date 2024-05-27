@@ -28,6 +28,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
+import tilda.enums.TZMode;
 import tilda.parsing.ParserSession;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
@@ -114,7 +117,7 @@ public class Formula extends TypeDef
           for (Value VPV : _Values)
             VPV.validate(PS, ParentView, "value for formula '" + _Name + "'");
 
-        super.validate(PS, "Formula '" + _Name + "' in View " + ParentView.getShortName() + "", true, false);
+        super.validate(PS, "Formula '" + _Name + "' in View " + ParentView.getShortName() + "", true, false, FrameworkSourcedType.VIEW);
 
         return PS.getErrorCount() == Errs;
       }
