@@ -390,6 +390,33 @@ ALTER VIEW TILDATEST.TestingView set OPTIONS(description='-- DDL META DATA VERSI
 
 
 -- DDL META DATA VERSION 2021-09-02
+create or replace view TILDATEST.TestingTimestampsView as 
+-- 'A test view to test aggregates.'
+select TILDATEST.TestingTimestamps.`id` as `id` -- Medical system unique enterprise id
+     , max(TILDATEST.TestingTimestamps.`dt1`) as `dt1_max` -- The blah
+     , max(TILDATEST.TestingTimestamps.`dt2`) as `dt2_max` -- The blah
+     , max(TILDATEST.TestingTimestamps.`dt3`) as `dt3_max` -- The blah
+     , max(TILDATEST.TestingTimestamps.`dt4`) as `dt4_max` -- The blah
+     , count(TILDATEST.TestingTimestamps.`dt1`) as `dt1_cnt` -- The blah
+     , count(TILDATEST.TestingTimestamps.`dt2`) as `dt2_cnt` -- The blah
+     , count(TILDATEST.TestingTimestamps.`dt3`) as `dt3_cnt` -- The blah
+     , count(TILDATEST.TestingTimestamps.`dt4`) as `dt4_cnt` -- The blah
+     , array_agg(TILDATEST.TestingTimestamps.`dt1`::VARCHAR) as `dt1_arr` -- The blah
+     , array_agg(TILDATEST.TestingTimestamps.`dt2`::VARCHAR) as `dt2_arr` -- The blah
+     , array_agg(TILDATEST.TestingTimestamps.`dt3`::VARCHAR) as `dt3_arr` -- The blah
+     , array_agg(TILDATEST.TestingTimestamps.`dt4`::VARCHAR) as `dt4_arr` -- The blah
+  from TILDATEST.TestingTimestamps
+     group by 1
+;
+
+
+ALTER VIEW TILDATEST.TestingTimestampsView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingTimestampsView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.TestingTimestamps.`id` as `id` -- Medical system unique enterprise id\n     , max(TILDATEST.TestingTimestamps.`dt1`) as `dt1_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt2`) as `dt2_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt3`) as `dt3_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt4`) as `dt4_max` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt1`) as `dt1_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt2`) as `dt2_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt3`) as `dt3_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt4`) as `dt4_cnt` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt1`::VARCHAR) as `dt1_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt2`::VARCHAR) as `dt2_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt3`::VARCHAR) as `dt3_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt4`::VARCHAR) as `dt4_arr` -- The blah\n  from TILDATEST.TestingTimestamps\n     group by 1\n;\n\n');
+
+
+
+
+
+-- DDL META DATA VERSION 2021-09-02
 create or replace view TILDATEST.Testing2View as 
 select /*DoFormulasSuperView*/
 `refnum` -- COLUMN

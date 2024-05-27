@@ -189,13 +189,13 @@ create table if not exists TILDATEST.TestingTimestamps -- blah blah
   , "dt3TZ"        character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
   , "dt3"          timestamp                 -- The blah
   , "dt3nTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
-  , "dt3n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
+  , "dt3n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
   , "dt3uTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
   , "dt3u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt3aTZ"       text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
   , "dt3a"         timestamp[]               -- The blah
   , "dt4"          timestamp                 -- The blah
-  , "dt4n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
+  , "dt4n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
   , "dt4u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt4a"         timestamp[]               -- The blah
   , "created"      timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps)
@@ -386,13 +386,13 @@ create table if not exists TILDATEST.TestingTimestamps_Cloned -- blah blah - Rea
   , "dt3TZ"        character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
   , "dt3"          timestamp                 -- The blah
   , "dt3nTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
-  , "dt3n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
+  , "dt3n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
   , "dt3uTZ"       character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
   , "dt3u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt3aTZ"       text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
   , "dt3a"         timestamp[]               -- The blah
   , "dt4"          timestamp                 -- The blah
-  , "dt4n"         timestamp               DEFAULT (statement_timestamp())::timestamp   -- The blah
+  , "dt4n"         timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
   , "dt4u"         timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "dt4a"         timestamp[]               -- The blah
   , "created"      timestamptz    not null DEFAULT (statement_timestamp())   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)
@@ -583,6 +583,46 @@ COMMENT ON COLUMN TILDATEST.TestingView."a9" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a9c" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a6First" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a6Last" IS E'The blah';
+
+
+
+
+-- DDL META DATA VERSION 2021-09-02
+create or replace view TILDATEST.TestingTimestampsView as 
+-- 'A test view to test aggregates.'
+select TILDATEST.TestingTimestamps."id" as "id" -- Medical system unique enterprise id
+     , max(TILDATEST.TestingTimestamps."dt1") as "dt1_max" -- The blah
+     , max(TILDATEST.TestingTimestamps."dt2") as "dt2_max" -- The blah
+     , max(TILDATEST.TestingTimestamps."dt3") as "dt3_max" -- The blah
+     , max(TILDATEST.TestingTimestamps."dt4") as "dt4_max" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt1") as "dt1_cnt" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt2") as "dt2_cnt" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt3") as "dt3_cnt" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt4") as "dt4_cnt" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt1"::VARCHAR) as "dt1_arr" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt2"::VARCHAR) as "dt2_arr" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt3"::VARCHAR) as "dt3_arr" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt4"::VARCHAR) as "dt4_arr" -- The blah
+  from TILDATEST.TestingTimestamps
+     group by 1
+;
+
+
+COMMENT ON VIEW TILDATEST.TestingTimestampsView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingTimestampsView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.TestingTimestamps."id" as "id" -- Medical system unique enterprise id\n     , max(TILDATEST.TestingTimestamps."dt1") as "dt1_max" -- The blah\n     , max(TILDATEST.TestingTimestamps."dt2") as "dt2_max" -- The blah\n     , max(TILDATEST.TestingTimestamps."dt3") as "dt3_max" -- The blah\n     , max(TILDATEST.TestingTimestamps."dt4") as "dt4_max" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt1") as "dt1_cnt" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt2") as "dt2_cnt" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt3") as "dt3_cnt" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt4") as "dt4_cnt" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt1"::VARCHAR) as "dt1_arr" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt2"::VARCHAR) as "dt2_arr" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt3"::VARCHAR) as "dt3_arr" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt4"::VARCHAR) as "dt4_arr" -- The blah\n  from TILDATEST.TestingTimestamps\n     group by 1\n;\n\n';
+
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."id" IS E'Medical system unique enterprise id';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_max" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_max" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_max" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt4_max" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt4_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_arr" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_arr" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_arr" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt4_arr" IS E'The blah';
 
 
 

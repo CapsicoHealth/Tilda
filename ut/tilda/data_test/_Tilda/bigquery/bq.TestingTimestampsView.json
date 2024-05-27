@@ -1,0 +1,15 @@
+[
+    { "name":"id","type":"STRING","mode":"REQUIRED","description":"Medical system unique enterprise id" }
+   ,{ "name":"dt1","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt3","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt4","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt1","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt3","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt4","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt1","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt3","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt4","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+]

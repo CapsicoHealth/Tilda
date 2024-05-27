@@ -44,6 +44,7 @@ public final class TILDA__2_5
       tilda.data_test._Tilda.TILDA__TESTINGTIMESTAMPS_CLONED_Factory.initObject(C);
       tilda.data_test._Tilda.TILDA__TESTVIEW_Factory.initObject(C);
       tilda.data_test._Tilda.TILDA__TESTINGVIEW_Factory.initObject(C);
+      tilda.data_test._Tilda.TILDA__TESTINGTIMESTAMPSVIEW_Factory.initObject(C);
       tilda.data_test._Tilda.TILDA__TESTING2VIEW_Factory.initObject(C);
       tilda.data_test._Tilda.TILDA__TESTING2REALIZED_Factory.initObject(C);
       tilda.data_test._Tilda.TILDA__TESTING3VIEW_Factory.initObject(C);

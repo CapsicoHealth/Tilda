@@ -233,6 +233,26 @@
         }
      }
      
+    ,{ "name": "TestingTimestampsView"
+      ,"description": "A test view to test aggregates."
+      ,"columns":[
+          { "sameas": "TestingTimestamps.id"   }
+         ,{ "sameas": "TestingTimestamps.dt1", "name":"dt1_max", "aggregate":"MAX"  }
+         ,{ "sameas": "TestingTimestamps.dt2", "name":"dt2_max", "aggregate":"MAX"  }
+         ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_max", "aggregate":"MAX"  }
+         ,{ "sameas": "TestingTimestamps.dt4", "name":"dt4_max", "aggregate":"MAX"  }
+         ,{ "sameas": "TestingTimestamps.dt1", "name":"dt1_cnt", "aggregate":"COUNT"  }
+         ,{ "sameas": "TestingTimestamps.dt2", "name":"dt2_cnt", "aggregate":"COUNT"  }
+         ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_cnt", "aggregate":"COUNT"  }
+         ,{ "sameas": "TestingTimestamps.dt4", "name":"dt4_cnt", "aggregate":"COUNT"  }
+         ,{ "sameas": "TestingTimestamps.dt1", "name":"dt1_arr", "aggregate":"ARRAY", "expression":"?::VARCHAR", "type":"STRING[]"  }
+         ,{ "sameas": "TestingTimestamps.dt2", "name":"dt2_arr", "aggregate":"ARRAY", "expression":"?::VARCHAR", "type":"STRING[]"  }
+         ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_arr", "aggregate":"ARRAY", "expression":"?::VARCHAR", "type":"STRING[]"  }
+         ,{ "sameas": "TestingTimestamps.dt4", "name":"dt4_arr", "aggregate":"ARRAY", "expression":"?::VARCHAR", "type":"STRING[]"  }
+        ]
+     }
+
+     
     ,{ "name": "Testing2View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
