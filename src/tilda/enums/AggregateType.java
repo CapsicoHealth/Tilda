@@ -45,12 +45,12 @@ public enum AggregateType
     ,NTH_VALUE   (true , false, OrderableType.REQUIRED, TargetColumnType.REQUIRED, ParameterSetting.NONE)
     ;
 //@formatter:on
-    
+
     /**
      * For STRING aggregates, we can't reuse the size of the source column, so we set a default here of 10B which hopefully is enough
      * 10MB = 10*1024*1024
      */
-    public static final Integer _DEFAULT_STRING_AGG_SIZE = 10*1024*1024;
+    public static final Integer _DEFAULT_STRING_AGG_SIZE = 10 * 1024 * 1024;
 
 
     public static enum TargetColumnType
@@ -178,7 +178,7 @@ public enum AggregateType
         return params.trim();
       }
 
-    public ColumnType getType(ColumnType T, boolean needsTZ)
+    public ColumnType getType(String fullColumnName, ColumnType T, boolean needsTZ)
       {
         // This method needs to be kept in sync with the types defined
         switch (this)
@@ -200,8 +200,10 @@ public enum AggregateType
               return ColumnType.LONG;
             case MIN:
             case MAX:
-              if (T != ColumnType.DATETIME && T != ColumnType.DATETIME_PLAIN || needsTZ == false)
+              if (T == ColumnType.DATETIME || needsTZ == false)
                 return T;
+              if (T == ColumnType.DATETIME_PLAIN)
+                throw new Error("Because '"+fullColumnName+"' is a DATETIME WITHOUT TIMEZONE, Min/Max are not supported as aggregates because they might cross multiple effective timezones. You can use First/Last with a refully constructed orderBy instead to the same effect.");
               break;
             case FIRST:
             case LAST:
@@ -225,12 +227,12 @@ public enum AggregateType
             default:
               throw new Error("Incomplete Switch statment: unknown Aggregate " + this.name() + ";");
           }
-        throw new Error("Cannot do a " + name() + " aggregate on type " + T.name() + ".");
+        throw new Error("Cannot do a " + name() + " aggregate for '"+fullColumnName+"' of type " + T.name() + ".");
       }
 
     public String isCompatible(ViewColumn VC)
       {
-        if (isCompatible(VC.getType(), VC.needsTZ()) == true)
+        if (isCompatible(VC.getFullName(), VC.getType(), VC.needsTZBaseTypeNoAggregate()) == true)
           return null;
 
         StringBuilder Str = new StringBuilder("View Column '" + VC.getFullName() + "' declares a nonsensical aggregate " + VC._Aggregate.name() + " over type " + VC._SameAsObj.getType().name() + ".");
@@ -239,11 +241,11 @@ public enum AggregateType
         return Str.toString();
       }
 
-    public boolean isCompatible(ColumnType type, boolean needsTZ)
+    public boolean isCompatible(String fullColumnName, ColumnType type, boolean needsTZ)
       {
         try
           {
-            getType(type, needsTZ);
+            getType(fullColumnName, type, needsTZ);
             return true;
           }
         catch (Throwable T)

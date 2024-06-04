@@ -93,7 +93,7 @@ public class ViewRealize
         O._SourceView = ParentView;
         O._Name = ParentView.getRealizedTableName(false);
         O._Prefix = ParentView._Prefix;
-        
+
         Schema targetSchema = null;
         if (TextUtil.isNullOrEmpty(_TargetSchema) == false)
           {
@@ -161,7 +161,7 @@ public class ViewRealize
                 }
 
         boolean OCC = false;
-//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
+        // LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
             if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, true, 0) == -1)
@@ -177,7 +177,9 @@ public class ViewRealize
                 if (C._Type == ColumnType.STRING && C.isCollection() == false && C._Size != null && C._Size <= 8)
                   C._Size = 10;
                 // Make sure that the type is managed through the getType() method to account for aggregates.
-                Column newCol = new Column(C._Name, C.getType().name() + (C.isList() ? "[]" : C.isSet() ? "{}" : ""), C._Size, C._Description/* + " (from " + C.getShortName() + ")"*/, C._Precision, C._Scale);
+                Column newCol = new Column(C._Name, C.getType().name() + (C.isList() ? "[]" : C.isSet() ? "{}" : ""), C._Size, C._Description/*
+                                                                                                                                              * + " (from " + C.getShortName() + ")"
+                                                                                                                                              */, C._Precision, C._Scale);
                 // If the final type is not a String or is a collection, we must clear the possible size since the aggregate changed the type.
                 if (newCol._TypeStr.startsWith("STRING") == false || C.isCollection() == true)
                   newCol._Size = null;
@@ -188,16 +190,16 @@ public class ViewRealize
                 newCol._expressionStrs = C._expressionStrs;
                 newCol._expressionDependencyColumnNames = C._expressionDependencyColumnNames;
                 newCol._Aggregate = C._Aggregate;
-//                newCol._OrderByObjs = C._OrderByObjs;
+                newCol._AggregateOrderBy = C._AggregateOrderBy;
                 // LDH-NOTE: Not sure why we need to define SAME_AS here given that we specify all the information previously. This is causing issues with some aggregates...
                 // newCol._SameAs = C._SameAs;
                 // newCol._SameAsObj = C._SameAsObj;
                 O._Columns.add(newCol);
               }
-//            else
-//              LOG.debug("Excluding "+C._Name);
+            // else
+            // LOG.debug("Excluding "+C._Name);
           }
-//        LOG.debug(O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
+        // LOG.debug(O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
 
         // We can't just copy the OCC status of the view because we don't know which columns are actually used.
         O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;

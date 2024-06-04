@@ -705,4 +705,22 @@ public class CollectionUtil
               return true;
         return false;
       }
+
+    /**
+     * Returns true if the collection is Null, is empty (has no element), or only has NULL elements. Returns false if 
+     * the collection has at least one not-null element.
+     * @param C
+     * @return
+     */
+    public static boolean isNullOrEmpty(Collection<?> C)
+      {
+        if (C == null)
+          return true;
+
+        Iterator<?> I = C.iterator();
+        while (I.hasNext() == true)
+          if (I.next() != null)
+            return false;
+        return true;
+      }
   }

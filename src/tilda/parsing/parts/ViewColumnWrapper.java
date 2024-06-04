@@ -44,7 +44,7 @@ public class ViewColumnWrapper extends Column
         if (VCol._Aggregate != null)
           {
             _Aggregate = VCol._Aggregate;
-//            _OrderByObjs   = VCol._OrderByObjs;
+            _AggregateOrderBy   = VCol._OrderBy; // needed for aggregate management of Tz columns
             _TypeStr = VCol.getType().name();
             _Precision = SameAsCol._Precision;
             _Scale = SameAsCol._Scale;

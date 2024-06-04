@@ -46,6 +46,7 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.PivotHelper;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
+import tilda.parsing.parts.helpers.TzNameHelper;
 import tilda.utils.Graph;
 import tilda.utils.TextUtil;
 
@@ -174,7 +175,7 @@ public class View extends Base
           return false;
 
         int Errs = PS.getErrorCount();
-        
+
         if (_PivotSingle != null && _Pivots.isEmpty() == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the pivot view '" + getFullName() + "' with both a 'pivot' and 'pivots' element. Only one is allowed.");
 
@@ -269,8 +270,11 @@ public class View extends Base
             // The column must need such a timezone and not be an aggregate, and not have an expression unless it's of type datetime.
             if ((VC.getType() == ColumnType.DATETIME || VC.getType() == ColumnType.DATETIME_PLAIN) && VC.needsTZ() == true)
               {
+                // LDH-NOTE: We have to be careful here... There are two important scenarios:
+                // - We import row timestamps from more than one different tables/views, and so we need to store them appropriately
+                // - We import row timestamps via some aggregates such as FIRST/LAST with different orderBy's, and so we need to store them appropriately as well
                 if (VC._SameAsObj._TzMode.isRow() == true && getColumn(VC.getTzName(false)) != null)
-                 continue;
+                  continue;
                 ViewColumn TZCol = createTZ(PS, VC);
                 _ViewColumns.add(i, TZCol);
                 ++i;
@@ -292,6 +296,8 @@ public class View extends Base
 
         if (err == true)
           return false;
+
+        updateTzColDescriptions(this);
 
         if (_TimeSeries != null)
           HandleTimeSeries(PS);
@@ -677,8 +683,11 @@ public class View extends Base
     public static ViewColumn createTZ(ParserSession PS, ViewColumn VC)
       {
         ViewColumn TZCol = new ViewColumn();
-        TZCol._SameAs = VC._SameAsObj._ParentObject.getFullName()+"."+VC.getTzName(true); // VC._SameAsObj + Convention.getDefaultTzColPostfix();
+        TZCol._SameAs = VC._SameAsObj._ParentObject.getFullName() + "." + VC.getTzName(true); // VC._SameAsObj + Convention.getDefaultTzColPostfix();
         TZCol._Name = VC._Name == null ? null : VC.getTzName(false); // VC._Name + Convention.getDefaultTzColPostfix();
+        // Descriptions for TZColumns are a bit more complicated when dealing with views. The whole view needs to be fully constructed
+        // before we can update the description to accurately describe which column a TzCol corresponds to.
+        // TZCol._Description = "Generated helper column to hold the time zone ID for " + TzNameHelper.getTzColumnNames(VC._ParentView._ViewColumns, VC) + ".";
         TZCol._As = VC._As;
         TZCol._AggregateStr = VC._AggregateStr;
         TZCol._OrderBy = VC._OrderBy;
@@ -691,6 +700,23 @@ public class View extends Base
 
         TZCol.validate(PS, VC._ParentView);
         return TZCol;
+      }
+
+    /**
+     * Descriptions for TZColumns are a bit more complicated when dealing with views. The whole view needs to be fully constructed
+     * before we can update the description to accurately describe which column a TzCol corresponds to. *
+     * 
+     * @param V
+     */
+    protected static void updateTzColDescriptions(View V)
+      {
+        for (ViewColumn col : V._ViewColumns)
+          if (col != null && col.needsTZ() == true)
+            {
+              ViewColumn tzCol = V.getViewColumn(col.getTzName(false));
+              tzCol._Description = "Generated helper column to hold the time zone ID for " + TzNameHelper.getTzColumnNames(V._ViewColumns, col) + ".";
+//              LOG.debug("Column: "+col._Name+", tzCol.name: "+tzCol._Name+", tzCol.descr: "+ tzCol._Description);
+            }
       }
 
 

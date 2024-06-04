@@ -42,6 +42,7 @@ import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
 import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.TzNameHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -73,6 +74,7 @@ public class Column extends TypeDef
     // LDH-NOTE: Because views can be materialized, we decided to create Proxy Objects. Since Aggregates
     // can affect the type of the column, we propagate it.
     public transient AggregateType       _Aggregate         = null;
+    public transient String[]            _AggregateOrderBy  = null;
 
     public transient ColumnMode          _Mode;
     public transient ProtectionType      _Protect;
@@ -710,7 +712,6 @@ public class Column extends TypeDef
     public String toString()
       {
         return getClass().getName() + ": " + getFullName() + " (" + super.toString() + ")";
-
       }
 
     String getLogicalName()
@@ -741,7 +742,12 @@ public class Column extends TypeDef
       {
         if (needsTZ() == false)
           return null;
-        return _TzMode.isColumn() == true ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
+        return _ParentObject._FST == FrameworkSourcedType.NONE
+            ? TzNameHelper.getTzName(_Name, this, null, null, false)
+            : TzNameHelper.getTzName(_Name, this, _Aggregate, _AggregateOrderBy, false);
+            
+        
+//        return _TzMode.isColumn() == true ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
       }
 
     protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)

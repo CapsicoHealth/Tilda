@@ -27,7 +27,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -37,6 +36,7 @@ import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ClonerHelper;
+import tilda.parsing.parts.helpers.TzNameHelper;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
@@ -237,6 +237,8 @@ public class Object extends Base
                   if (ColumnNames.add(C.getName().toUpperCase()) == false)
                     PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");
               }
+            if (_Name.equals("TestingTimestampsView") == true)
+              LOG.debug("xxx");
             // Let's take care of TZ columns
             for (int i = 0; i < _Columns.size(); ++i)
               {
@@ -247,7 +249,7 @@ public class Object extends Base
                     Column TZCol = null;
                     if (C._TzMode.isColumn() == true || getColumn(ColZName) == null)
                       {
-                        TZCol = new Column(ColZName, null, 0, C._Nullable, C._AllowEmpty, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for " + getTzColumnNames(C) + ".", null, null, null, C._TzMode);
+                        TZCol = new Column(ColZName, null, 0, C._Nullable, C._AllowEmpty, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for " + TzNameHelper.getTzColumnNames(_Columns, C) + ".", null, null, null, C._TzMode);
                         TZCol._TzCol = true;
                       }
                     if (TZCol != null)
@@ -361,26 +363,6 @@ public class Object extends Base
           }
 
         return _Validated = Errs == PS.getErrorCount();
-      }
-
-
-    private String getTzColumnNames(Column col)
-      {
-        if (col._TzMode.isColumn())
-          return "'" + col._Name + "'";
-
-        StringBuilder str = new StringBuilder("1 or more columns at the " + col._ParentObject.getShortName() + " row level: ");
-        boolean first = true;
-        for (Column c : _Columns)
-          if (c.needsTZ() == true && c._TzMode.isRow() == true)
-            {
-              if (first == true)
-                first = false;
-              else
-                str.append(", ");
-              str.append(c._Name);
-            }
-        return str.toString();
       }
 
     /**
