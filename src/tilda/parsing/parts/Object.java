@@ -237,8 +237,6 @@ public class Object extends Base
                   if (ColumnNames.add(C.getName().toUpperCase()) == false)
                     PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");
               }
-            if (_Name.equals("TestingTimestampsView") == true)
-              LOG.debug("xxx");
             // Let's take care of TZ columns
             for (int i = 0; i < _Columns.size(); ++i)
               {
@@ -273,6 +271,7 @@ public class Object extends Base
                       }
                   }
               }
+
             // Let's check after all columns are processes and framework-managed columns (e.g. TZ) are created
             // that we don't have more than ColumnDefinition._MAX_COL_COUNT columns, and set the sequence order.
             int Counter = -1;

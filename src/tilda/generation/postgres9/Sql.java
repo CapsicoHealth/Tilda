@@ -737,7 +737,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate == AggregateType.COUNT))
           Str.append(", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
         if (NoAs == false)
-          Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
+          Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + (TextUtil.isNullOrEmpty(VC._Description) == false ? VC._Description : VC._SameAsObj._Description)));
         if (VC._FormulaOnly == true)
           Str.append(" -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)");
         return hasAggregates;
@@ -1240,7 +1240,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                                                         // PivotHelper.isPivotAggregate(VC) == true))
               continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
-              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
+              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(TextUtil.isNullOrEmpty(VC._Description) == false ? VC._Description : VC._SameAsObj._Description) + ";");
           }
         for (ViewPivot P : V._Pivots)
           if (P != null)
