@@ -833,7 +833,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.REFNUM2._Mask);
           if (_refnum2 == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _refnum2 = new ArrayList<Long>();
            }
           else
@@ -2222,7 +2221,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask);
           if (_tops == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _tops = new ArrayList<String>();
            }
           else
@@ -2428,7 +2426,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask);
           if (_tops2 == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _tops2 = new TreeSet<String>();
            }
           else
@@ -2770,7 +2767,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask);
           if (_a2b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a2b = new ArrayList<Character>();
            }
           else
@@ -2966,7 +2962,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask);
           if (_a2c == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a2c = new TreeSet<Character>();
            }
           else
@@ -3302,7 +3297,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask);
           if (_a3b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a3b = new ArrayList<Boolean>();
            }
           else
@@ -3647,7 +3641,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask);
           if (_a4b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a4b = new ArrayList<Double>();
            }
           else
@@ -3992,7 +3985,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask);
           if (_a5b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a5b = new ArrayList<Float>();
            }
           else
@@ -4337,7 +4329,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask);
           if (_a6b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a6b = new ArrayList<Long>();
            }
           else
@@ -4533,7 +4524,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask);
           if (_a6c == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a6c = new TreeSet<Long>();
            }
           else
@@ -5305,7 +5295,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask);
           if (_a7b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a7b = new ArrayList<Integer>();
            }
           else
@@ -6938,7 +6927,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask);
           if (_a9bTZ == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a9bTZ = new ArrayList<String>();
            }
           else
@@ -7164,7 +7152,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask);
           if (_a9b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a9b = new ArrayList<ZonedDateTime>();
              _a9bTZ = new ArrayList<String>();
            }
@@ -7545,7 +7532,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask);
           if (_a9d == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a9d = new ArrayList<LocalDate>();
            }
           else
@@ -8353,7 +8339,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask);
           if (_a11b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a11b = new ArrayList<BigDecimal>();
            }
           else
@@ -8847,7 +8832,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask);
           if (_a12b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a12b = new ArrayList<Short>();
            }
           else
@@ -9196,7 +9180,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask);
           if (_a13b == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a13b = new ArrayList<UUID>();
            }
           else

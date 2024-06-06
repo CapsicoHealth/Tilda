@@ -723,7 +723,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
           if (_a9TZ == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a9TZ = new ArrayList<String>();
            }
           else
@@ -959,7 +958,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
           if (_a9 == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a9 = new ArrayList<ZonedDateTime>();
              _a9TZ = new ArrayList<String>();
            }
@@ -1172,7 +1170,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
           if (_a9c == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _a9c = new ArrayList<LocalDate>();
            }
           else

@@ -10,7 +10,7 @@ create table if not exists TILDATUTORIAL.User -- Users
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATUTORIAL.User)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATUTORIAL.User)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATUTORIAL.User)")
-  -- PRIMARY KEY(`refnum`)
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Users");
 -- Indices are not supported for this database, so logical definition only
@@ -29,11 +29,9 @@ create table if not exists TILDATUTORIAL.Form -- User-entered forms
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATUTORIAL.Form)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATUTORIAL.Form)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATUTORIAL.Form)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Form_User FOREIGN KEY (`userRefnum`) REFERENCES TILDATUTORIAL.User ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Form_fillDate FOREIGN KEY (`fillDateTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`userRefnum`) REFERENCES TILDATUTORIAL.User(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`fillDateTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="User-entered forms");
 -- Indices are not supported for this database, so logical definition only
@@ -50,9 +48,8 @@ create table if not exists TILDATUTORIAL.FormAnswer -- Form answers
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_FormAnswer_Form FOREIGN KEY (`formRefnum`) REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`formRefnum`) REFERENCES TILDATUTORIAL.Form(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Form answers");
 -- Indices are not supported for this database, so logical definition only
@@ -74,7 +71,7 @@ create table if not exists TILDATUTORIAL.TestQuestionAnswer -- Questions and ans
   , `created`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)")
   , `lastUpdated`    TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)")
   , `deleted`        TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATUTORIAL.TestQuestionAnswer)")
-  -- PRIMARY KEY(`refnum`)
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Questions and answers for multiple-choice tests");
 -- Indices are not supported for this database, so logical definition only
@@ -93,9 +90,8 @@ create table if not exists TILDATUTORIAL.TestAnswer -- Test answers
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestAnswer_Form FOREIGN KEY (`formRefnum`) REFERENCES TILDATUTORIAL.Form ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`formRefnum`) REFERENCES TILDATUTORIAL.Form(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Test answers");
 -- Indices are not supported for this database, so logical definition only
@@ -110,7 +106,7 @@ create or replace view TILDATUTORIAL.Form_SAT01_PivotView as
 with T as (
 -- 'A pivoted view of SAT_01 forms'
 select TILDATUTORIAL.Form.`refnum` as `formRefnum` -- The primary key for this record
-     , TILDATUTORIAL.Form.`fillDateTZ` as `formFillDateTZ` -- Generated helper column to hold the time zone ID for 'fillDate'.
+     , TILDATUTORIAL.Form.`fillDateTZ` as `formFillDateTZ` -- Generated helper column to hold the time zone ID for 'formFillDate'.
      , TILDATUTORIAL.Form.`fillDate` as `formFillDate` -- The date the form was filled
      , TILDATUTORIAL.User.`refnum` as `formUserRefnum` -- The primary key for this record
      , TILDATUTORIAL.User.`email` as `formUserEmail` -- The user's email
@@ -141,7 +137,7 @@ from T
 ;
 
 
-ALTER VIEW TILDATUTORIAL.Form_SAT01_PivotView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATUTORIAL.Form_SAT01_PivotView as \nwith T as (\n-- ''A pivoted view of SAT_01 forms''\nselect TILDATUTORIAL.Form.`refnum` as `formRefnum` -- The primary key for this record\n     , TILDATUTORIAL.Form.`fillDateTZ` as `formFillDateTZ` -- Generated helper column to hold the time zone ID for ''fillDate''.\n     , TILDATUTORIAL.Form.`fillDate` as `formFillDate` -- The date the form was filled\n     , TILDATUTORIAL.User.`refnum` as `formUserRefnum` -- The primary key for this record\n     , TILDATUTORIAL.User.`email` as `formUserEmail` -- The user''s email\n     , TILDATUTORIAL.FormAnswer.`field` as `field` -- question/field id -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , max(TILDATUTORIAL.FormAnswer.`value`) as `value` -- answer value -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n  from TILDATUTORIAL.Form\n     inner join TILDATUTORIAL.User on TILDATUTORIAL.Form.`userRefnum` = TILDATUTORIAL.User.`refnum`\n     left  join TILDATUTORIAL.FormAnswer on TILDATUTORIAL.FormAnswer.`formRefnum` = TILDATUTORIAL.Form.`refnum`\n where (    TILDATUTORIAL.Form.`type` = ''SAT_01''\n        and TILDATUTORIAL.Form.`deleted`is null\n        and TILDATUTORIAL.FormAnswer.`deleted`is null\n       )\n   and ( TILDATUTORIAL.FormAnswer.`field` in (''Q1'', ''Q2'', ''Q3'', ''Q4'')\n       )\n group by 1, 2, 3, 4, 5, 6\n) select `formRefnum` \n       , `formFillDateTZ` \n       , `formFillDate` \n       , `formUserRefnum` \n       , `formUserEmail` \n     , MAX(`value`) as `value`\n     , (Tilda.toInt(max(case when "field" = ''Q1'' then `value` else null end),null))::INT64 as `Q1`\n     , (Tilda.toInt(max(case when "field" = ''Q2'' then `value` else null end),null))::INT64 as `Q2`\n     , (Tilda.toInt(max(case when "field" = ''Q3'' then `value` else null end),null))::INT64 as `Q3`\n     , max(case when "field" = ''Q4'' then `value` else null end) as `Q4`\nfrom T\n     group by 1, 2, 3, 4, 5\n;\n\n');
+ALTER VIEW TILDATUTORIAL.Form_SAT01_PivotView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATUTORIAL.Form_SAT01_PivotView as \nwith T as (\n-- ''A pivoted view of SAT_01 forms''\nselect TILDATUTORIAL.Form.`refnum` as `formRefnum` -- The primary key for this record\n     , TILDATUTORIAL.Form.`fillDateTZ` as `formFillDateTZ` -- Generated helper column to hold the time zone ID for ''formFillDate''.\n     , TILDATUTORIAL.Form.`fillDate` as `formFillDate` -- The date the form was filled\n     , TILDATUTORIAL.User.`refnum` as `formUserRefnum` -- The primary key for this record\n     , TILDATUTORIAL.User.`email` as `formUserEmail` -- The user''s email\n     , TILDATUTORIAL.FormAnswer.`field` as `field` -- question/field id -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , max(TILDATUTORIAL.FormAnswer.`value`) as `value` -- answer value -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n  from TILDATUTORIAL.Form\n     inner join TILDATUTORIAL.User on TILDATUTORIAL.Form.`userRefnum` = TILDATUTORIAL.User.`refnum`\n     left  join TILDATUTORIAL.FormAnswer on TILDATUTORIAL.FormAnswer.`formRefnum` = TILDATUTORIAL.Form.`refnum`\n where (    TILDATUTORIAL.Form.`type` = ''SAT_01''\n        and TILDATUTORIAL.Form.`deleted`is null\n        and TILDATUTORIAL.FormAnswer.`deleted`is null\n       )\n   and ( TILDATUTORIAL.FormAnswer.`field` in (''Q1'', ''Q2'', ''Q3'', ''Q4'')\n       )\n group by 1, 2, 3, 4, 5, 6\n) select `formRefnum` \n       , `formFillDateTZ` \n       , `formFillDate` \n       , `formUserRefnum` \n       , `formUserEmail` \n     , MAX(`value`) as `value`\n     , (Tilda.toInt(max(case when "field" = ''Q1'' then `value` else null end),null))::INT64 as `Q1`\n     , (Tilda.toInt(max(case when "field" = ''Q2'' then `value` else null end),null))::INT64 as `Q2`\n     , (Tilda.toInt(max(case when "field" = ''Q3'' then `value` else null end),null))::INT64 as `Q3`\n     , max(case when "field" = ''Q4'' then `value` else null end) as `Q4`\nfrom T\n     group by 1, 2, 3, 4, 5\n;\n\n');
 
 
 

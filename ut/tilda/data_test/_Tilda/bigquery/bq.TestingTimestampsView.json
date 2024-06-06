@@ -2,7 +2,13 @@
     { "name":"id","type":"STRING","mode":"REQUIRED","description":"Medical system unique enterprise id" }
    ,{ "name":"dt1","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt1TZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'dt1'." }
+   ,{ "name":"dt1","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"rowTZ_TILDATEST_TestingTimestamps","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a." }
+   ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"dt3TZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'dt3'." }
    ,{ "name":"dt3","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
+   ,{ "name":"rowTZ_TILDATEST_TestingTimestamps","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a." }
    ,{ "name":"dt4","type":"DATETIME","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"dt1","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }

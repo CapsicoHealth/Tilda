@@ -11,9 +11,8 @@ create table if not exists TILDATEST.Test -- The table to keep track tests amd o
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.Test)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.Test)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.Test)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Test_Test FOREIGN KEY (`test_fk`) REFERENCES TILDATEST.Test ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`test_fk`) REFERENCES TILDATEST.Test(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="The table to keep track tests amd owners");
 -- Indices are not supported for this database, so logical definition only
@@ -28,9 +27,8 @@ create table if not exists TILDATEST.Test2 -- The table to keep track tests amd 
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.Test2)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.Test2)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.Test2)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Test2_Test FOREIGN KEY (`test_fk`) REFERENCES TILDATEST.Test ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`test_fk`) REFERENCES TILDATEST.Test(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="The table to keep track tests amd owners");
 -- Indices are not supported for this database, so logical definition only
@@ -90,15 +88,11 @@ create table if not exists TILDATEST.Testing -- blah blah
   , `created`      TIMESTAMP           DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.Testing)")
   , `lastUpdated`  TIMESTAMP           DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.Testing)")
   , `deleted`      TIMESTAMP                      OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.Testing)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_a6d FOREIGN KEY (`a6dTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_a8b FOREIGN KEY (`a8bTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_a9 FOREIGN KEY (`a9TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_a9a1 FOREIGN KEY (`a9a1TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`a6dTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`a8bTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`a9TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`a9a1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah");
 -- Indices are not supported for this database, so logical definition only
@@ -110,51 +104,44 @@ OPTIONS (description="blah blah");
 
 
 create table if not exists TILDATEST.TestingTimestamps -- blah blah
- (  `refnum`       INT64             not null  OPTIONS(description="The primary key for this record")
-  , `id`           STRING            not null  OPTIONS(description="Medical system unique enterprise id")
-  , `dt1TZ`        STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1'.")
-  , `dt1`          TIMESTAMP                   OPTIONS(description="The blah")
-  , `dt1nTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1n'.")
-  , `dt1n`         TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
-  , `dt1uTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1u'.")
-  , `dt1u`         TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt1aTZ`       ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1a'.")
-  , `dt1a`         ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
-  , `rowTZ`        STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.")
-  , `dt2`          TIMESTAMP                   OPTIONS(description="The blah")
-  , `dt2n`         TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
-  , `dt2u`         TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt2a`         ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
-  , `dt3TZ`        STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3'.")
-  , `dt3`          DATETIME                    OPTIONS(description="The blah")
-  , `dt3nTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3n'.")
-  , `dt3n`         DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
-  , `dt3uTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3u'.")
-  , `dt3u`         DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt3aTZ`       ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3a'.")
-  , `dt3a`         ARRAY<DATETIME>             OPTIONS(description="The blah")
-  , `dt4`          DATETIME                    OPTIONS(description="The blah")
-  , `dt4n`         DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
-  , `dt4u`         DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt4a`         ARRAY<DATETIME>             OPTIONS(description="The blah")
-  , `created`      TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.TestingTimestamps)")
-  , `lastUpdated`  TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)")
-  , `deleted`      TIMESTAMP                   OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt1 FOREIGN KEY (`dt1TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt1n FOREIGN KEY (`dt1nTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt1u FOREIGN KEY (`dt1uTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt2 FOREIGN KEY (`rowTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt3 FOREIGN KEY (`dt3TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt3n FOREIGN KEY (`dt3nTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_dt3u FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+ (  `refnum`                             INT64             not null  OPTIONS(description="The primary key for this record")
+  , `id`                                 STRING            not null  OPTIONS(description="Medical system unique enterprise id")
+  , `dt1TZ`                              STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1'.")
+  , `dt1`                                TIMESTAMP                   OPTIONS(description="The blah")
+  , `dt1nTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1n'.")
+  , `dt1n`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
+  , `dt1uTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1u'.")
+  , `dt1u`                               TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt1aTZ`                             ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1a'.")
+  , `dt1a`                               ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
+  , `rowTZ_TILDATEST_TestingTimestamps`  STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.")
+  , `dt2`                                TIMESTAMP                   OPTIONS(description="The blah")
+  , `dt2n`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
+  , `dt2u`                               TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt2a`                               ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
+  , `dt3TZ`                              STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3'.")
+  , `dt3`                                DATETIME                    OPTIONS(description="The blah")
+  , `dt3nTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3n'.")
+  , `dt3n`                               DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
+  , `dt3uTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3u'.")
+  , `dt3u`                               DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt3aTZ`                             ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3a'.")
+  , `dt3a`                               ARRAY<DATETIME>             OPTIONS(description="The blah")
+  , `dt4`                                DATETIME                    OPTIONS(description="The blah")
+  , `dt4n`                               DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
+  , `dt4u`                               DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt4a`                               ARRAY<DATETIME>             OPTIONS(description="The blah")
+  , `created`                            TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.TestingTimestamps)")
+  , `lastUpdated`                        TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)")
+  , `deleted`                            TIMESTAMP                   OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)")
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`dt1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt1nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt1uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`rowTZ_TILDATEST_TestingTimestamps`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah");
 -- Indices are not supported for this database, so logical definition only
@@ -215,15 +202,11 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , `created`      TIMESTAMP           DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.Testing_Cloned)")
   , `lastUpdated`  TIMESTAMP           DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)")
   , `deleted`      TIMESTAMP                      OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_Cloned_a6d FOREIGN KEY (`a6dTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_Cloned_a8b FOREIGN KEY (`a8bTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_Cloned_a9 FOREIGN KEY (`a9TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_Testing_Cloned_a9a1 FOREIGN KEY (`a9a1TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`a6dTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`a8bTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`a9TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`a9a1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah - Ready for publishing (cloned from TILDATEST.Testing)");
 -- Indices are not supported for this database, so logical definition only
@@ -235,51 +218,44 @@ OPTIONS (description="blah blah - Ready for publishing (cloned from TILDATEST.Te
 
 
 create table if not exists TILDATEST.TestingTimestamps_Cloned -- blah blah - Ready for publishing (cloned from TILDATEST.TestingTimestamps)
- (  `refnum`       INT64             not null  OPTIONS(description="The primary key for this record")
-  , `id`           STRING            not null  OPTIONS(description="Medical system unique enterprise id")
-  , `dt1TZ`        STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1'.")
-  , `dt1`          TIMESTAMP                   OPTIONS(description="The blah")
-  , `dt1nTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1n'.")
-  , `dt1n`         TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
-  , `dt1uTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1u'.")
-  , `dt1u`         TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt1aTZ`       ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1a'.")
-  , `dt1a`         ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
-  , `rowTZ`        STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.")
-  , `dt2`          TIMESTAMP                   OPTIONS(description="The blah")
-  , `dt2n`         TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
-  , `dt2u`         TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt2a`         ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
-  , `dt3TZ`        STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3'.")
-  , `dt3`          DATETIME                    OPTIONS(description="The blah")
-  , `dt3nTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3n'.")
-  , `dt3n`         DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
-  , `dt3uTZ`       STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3u'.")
-  , `dt3u`         DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt3aTZ`       ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3a'.")
-  , `dt3a`         ARRAY<DATETIME>             OPTIONS(description="The blah")
-  , `dt4`          DATETIME                    OPTIONS(description="The blah")
-  , `dt4n`         DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
-  , `dt4u`         DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt4a`         ARRAY<DATETIME>             OPTIONS(description="The blah")
-  , `created`      TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)")
-  , `lastUpdated`  TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)")
-  , `deleted`      TIMESTAMP                   OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt1 FOREIGN KEY (`dt1TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt1n FOREIGN KEY (`dt1nTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt1u FOREIGN KEY (`dt1uTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt2 FOREIGN KEY (`rowTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt3 FOREIGN KEY (`dt3TZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt3n FOREIGN KEY (`dt3nTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TestingTimestamps_Cloned_dt3u FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+ (  `refnum`                                    INT64             not null  OPTIONS(description="The primary key for this record")
+  , `id`                                        STRING            not null  OPTIONS(description="Medical system unique enterprise id")
+  , `dt1TZ`                                     STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1'.")
+  , `dt1`                                       TIMESTAMP                   OPTIONS(description="The blah")
+  , `dt1nTZ`                                    STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1n'.")
+  , `dt1n`                                      TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
+  , `dt1uTZ`                                    STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1u'.")
+  , `dt1u`                                      TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt1aTZ`                                    ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1a'.")
+  , `dt1a`                                      ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
+  , `rowTZ_TILDATEST_TestingTimestamps_Cloned`  STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.")
+  , `dt2`                                       TIMESTAMP                   OPTIONS(description="The blah")
+  , `dt2n`                                      TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
+  , `dt2u`                                      TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt2a`                                      ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
+  , `dt3TZ`                                     STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3'.")
+  , `dt3`                                       DATETIME                    OPTIONS(description="The blah")
+  , `dt3nTZ`                                    STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3n'.")
+  , `dt3n`                                      DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
+  , `dt3uTZ`                                    STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3u'.")
+  , `dt3u`                                      DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt3aTZ`                                    ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3a'.")
+  , `dt3a`                                      ARRAY<DATETIME>             OPTIONS(description="The blah")
+  , `dt4`                                       DATETIME                    OPTIONS(description="The blah")
+  , `dt4n`                                      DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
+  , `dt4u`                                      DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt4a`                                      ARRAY<DATETIME>             OPTIONS(description="The blah")
+  , `created`                                   TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)")
+  , `lastUpdated`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)")
+  , `deleted`                                   TIMESTAMP                   OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)")
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`dt1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt1nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt1uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`rowTZ_TILDATEST_TestingTimestamps_Cloned`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah - Ready for publishing (cloned from TILDATEST.TestingTimestamps)");
 -- Indices are not supported for this database, so logical definition only
@@ -395,8 +371,14 @@ create or replace view TILDATEST.TestingTimestampsView as
 select TILDATEST.TestingTimestamps.`id` as `id` -- Medical system unique enterprise id
      , max(TILDATEST.TestingTimestamps.`dt1`) as `dt1_max` -- The blah
      , max(TILDATEST.TestingTimestamps.`dt2`) as `dt2_max` -- The blah
-     , max(TILDATEST.TestingTimestamps.`dt3`) as `dt3_max` -- The blah
-     , max(TILDATEST.TestingTimestamps.`dt4`) as `dt4_max` -- The blah
+     , first(TILDATEST.TestingTimestamps.`dt1TZ` order by TILDATEST.TestingTimestamps.`dt1` ASC) as `dt1_firstTZ` -- Generated helper column to hold the time zone ID for 'dt1_first'.
+     , first(TILDATEST.TestingTimestamps.`dt1` order by TILDATEST.TestingTimestamps.`dt1` ASC) as `dt1_first` -- The blah
+     , first(TILDATEST.TestingTimestamps.`rowTZ_TILDATEST_TestingTimestamps` order by TILDATEST.TestingTimestamps.`dt2` ASC) as `rowTZ_TILDATEST_TestingTimestamps_FIRST_dt2` -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.
+     , first(TILDATEST.TestingTimestamps.`dt2` order by TILDATEST.TestingTimestamps.`dt2` ASC) as `dt2_first` -- The blah
+     , first(TILDATEST.TestingTimestamps.`dt3TZ` order by TILDATEST.TestingTimestamps.`dt3` ASC) as `dt3_firstTZ` -- Generated helper column to hold the time zone ID for 'dt3_first'.
+     , first(TILDATEST.TestingTimestamps.`dt3` order by TILDATEST.TestingTimestamps.`dt3` ASC) as `dt3_first` -- The blah
+     , first(TILDATEST.TestingTimestamps.`rowTZ_TILDATEST_TestingTimestamps` order by TILDATEST.TestingTimestamps.`dt4` ASC) as `rowTZ_TILDATEST_TestingTimestamps_FIRST_dt4` -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.
+     , first(TILDATEST.TestingTimestamps.`dt4` order by TILDATEST.TestingTimestamps.`dt4` ASC) as `dt4_first` -- The blah
      , count(TILDATEST.TestingTimestamps.`dt1`) as `dt1_cnt` -- The blah
      , count(TILDATEST.TestingTimestamps.`dt2`) as `dt2_cnt` -- The blah
      , count(TILDATEST.TestingTimestamps.`dt3`) as `dt3_cnt` -- The blah
@@ -410,7 +392,7 @@ select TILDATEST.TestingTimestamps.`id` as `id` -- Medical system unique enterpr
 ;
 
 
-ALTER VIEW TILDATEST.TestingTimestampsView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingTimestampsView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.TestingTimestamps.`id` as `id` -- Medical system unique enterprise id\n     , max(TILDATEST.TestingTimestamps.`dt1`) as `dt1_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt2`) as `dt2_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt3`) as `dt3_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt4`) as `dt4_max` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt1`) as `dt1_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt2`) as `dt2_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt3`) as `dt3_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt4`) as `dt4_cnt` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt1`::VARCHAR) as `dt1_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt2`::VARCHAR) as `dt2_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt3`::VARCHAR) as `dt3_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt4`::VARCHAR) as `dt4_arr` -- The blah\n  from TILDATEST.TestingTimestamps\n     group by 1\n;\n\n');
+ALTER VIEW TILDATEST.TestingTimestampsView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingTimestampsView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.TestingTimestamps.`id` as `id` -- Medical system unique enterprise id\n     , max(TILDATEST.TestingTimestamps.`dt1`) as `dt1_max` -- The blah\n     , max(TILDATEST.TestingTimestamps.`dt2`) as `dt2_max` -- The blah\n     , first(TILDATEST.TestingTimestamps.`dt1TZ` order by TILDATEST.TestingTimestamps.`dt1` ASC) as `dt1_firstTZ` -- Generated helper column to hold the time zone ID for ''dt1_first''.\n     , first(TILDATEST.TestingTimestamps.`dt1` order by TILDATEST.TestingTimestamps.`dt1` ASC) as `dt1_first` -- The blah\n     , first(TILDATEST.TestingTimestamps.`rowTZ_TILDATEST_TestingTimestamps` order by TILDATEST.TestingTimestamps.`dt2` ASC) as `rowTZ_TILDATEST_TestingTimestamps_FIRST_dt2` -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.\n     , first(TILDATEST.TestingTimestamps.`dt2` order by TILDATEST.TestingTimestamps.`dt2` ASC) as `dt2_first` -- The blah\n     , first(TILDATEST.TestingTimestamps.`dt3TZ` order by TILDATEST.TestingTimestamps.`dt3` ASC) as `dt3_firstTZ` -- Generated helper column to hold the time zone ID for ''dt3_first''.\n     , first(TILDATEST.TestingTimestamps.`dt3` order by TILDATEST.TestingTimestamps.`dt3` ASC) as `dt3_first` -- The blah\n     , first(TILDATEST.TestingTimestamps.`rowTZ_TILDATEST_TestingTimestamps` order by TILDATEST.TestingTimestamps.`dt4` ASC) as `rowTZ_TILDATEST_TestingTimestamps_FIRST_dt4` -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.\n     , first(TILDATEST.TestingTimestamps.`dt4` order by TILDATEST.TestingTimestamps.`dt4` ASC) as `dt4_first` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt1`) as `dt1_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt2`) as `dt2_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt3`) as `dt3_cnt` -- The blah\n     , count(TILDATEST.TestingTimestamps.`dt4`) as `dt4_cnt` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt1`::VARCHAR) as `dt1_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt2`::VARCHAR) as `dt2_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt3`::VARCHAR) as `dt3_arr` -- The blah\n     , array_agg(TILDATEST.TestingTimestamps.`dt4`::VARCHAR) as `dt4_arr` -- The blah\n  from TILDATEST.TestingTimestamps\n     group by 1\n;\n\n');
 
 
 

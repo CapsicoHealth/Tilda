@@ -1014,7 +1014,7 @@ var MasterIndex = {
 
 </HEAD>
 <BODY>
-<TABLE width="100%"><TR><TD><H1>Schema TILDATEST</H1></TD><TD align="right"><I>This documentation was generated on May 21 2024, 21:47:09 EDT</I></TD></TR></TABLE>
+<TABLE width="100%"><TR><TD><H1>Schema TILDATEST</H1></TD><TD align="right"><I>This documentation was generated on Jun 6 2024, 11:38:30 EDT</I></TD></TR></TABLE>
 This schema blah blah blah.<BR>
 <B>Copyright (c) 2017, CapsicoHealth Inc., All rights reserved.</B>
 <BR><BR>
@@ -2006,7 +2006,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TestingTimestamps-rowTZ_DIV' class='columns'>rowTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps-rowTZ_TILDATEST_TestingTimestamps_DIV' class='columns'>rowTZ_TILDATEST_TestingTimestamps</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
@@ -2992,7 +2992,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TestingTimestamps_Cloned-rowTZ_DIV' class='columns'>rowTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-rowTZ_TILDATEST_TestingTimestamps_Cloned_DIV' class='columns'>rowTZ_TILDATEST_TestingTimestamps_Cloned</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
@@ -3393,6 +3393,11 @@ This View contains the following columns:<BLOCKQUOTE>
 The View TILDATEST.TestingTimestampsView :<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TestingTimestampsView_Factory</B>, <B>TestingTimestampsView_Data</B> in the package <B>tilda.data_test</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
+<LI>Defines 4 foreign key(s):<BR>
+<TABLE style="margin-left: 25px; border:1px solid #BBB;" cellspacing="0px" cellpadding="5px" border="0px">
+<TR style="background-color:#DDD; font-weight:bold;"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>
+<TR ><TD>1</TD><TD>dt1_firstTZ</TD><TD><A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A></TD><TD>id</TD><TD>&nbsp;</TD></TR>
+</TABLE></LI>
 </UL>
 <B>Description</B>:<BLOCKQUOTE style="border-left: 1px solid #EEE;padding-left: 5px;">A test view to test aggregates.</BLOCKQUOTE>
 <BR>
@@ -3438,28 +3443,94 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TestingTimestampsView-dt3_max_DIV' class='columns'>dt3_max</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-dt1_firstTZ_DIV' class='columns'>dt1_firstTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt3_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt3</A></DIV></TD>
+<TD>Generated helper column to hold the time zone ID for 'dt1_first'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt1TZ_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt1TZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TestingTimestampsView-dt4_max_DIV' class='columns'>dt4_max</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-dt1_first_DIV' class='columns'>dt1_first</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt1_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt1</A></DIV></TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2_DIV' class='columns'>rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-dt2_first_DIV' class='columns'>dt2_first</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW</SPAN>&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt2_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt2</A></DIV></TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-dt3_firstTZ_DIV' class='columns'>dt3_firstTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'dt3_first'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt3TZ_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt3TZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-dt3_first_DIV' class='columns'>dt3_first</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt3_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt3</A></DIV></TD>
+</TR>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4_DIV' class='columns'>rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestampsView-dt4_first_DIV' class='columns'>dt4_first</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamp&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">ROW_NO_TZ</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt4_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt4</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>6&nbsp;&nbsp;</TD>
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt1_cnt_DIV' class='columns'>dt1_cnt</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3470,7 +3541,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt1_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt1</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>7&nbsp;&nbsp;</TD>
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt2_cnt_DIV' class='columns'>dt2_cnt</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3481,7 +3552,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt2_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt2</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>8&nbsp;&nbsp;</TD>
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt3_cnt_DIV' class='columns'>dt3_cnt</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3492,7 +3563,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt3_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>9&nbsp;&nbsp;</TD>
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt4_cnt_DIV' class='columns'>dt4_cnt</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3503,7 +3574,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt4_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt4</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>10&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt1_arr_DIV' class='columns'>dt1_arr</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3514,7 +3585,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt1_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt1</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>11&nbsp;&nbsp;</TD>
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt2_arr_DIV' class='columns'>dt2_arr</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3525,7 +3596,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt2_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt2</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>12&nbsp;&nbsp;</TD>
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt3_arr_DIV' class='columns'>dt3_arr</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3536,7 +3607,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('TestingTimestamps-dt3_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>TestingTimestamps<B>&nbsp;&#8226;&nbsp;</B>dt3</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
+    <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingTimestampsView-dt4_arr_DIV' class='columns'>dt4_arr</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>

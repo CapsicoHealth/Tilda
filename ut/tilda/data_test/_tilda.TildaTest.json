@@ -239,8 +239,12 @@
           { "sameas": "TestingTimestamps.id"   }
          ,{ "sameas": "TestingTimestamps.dt1", "name":"dt1_max", "aggregate":"MAX"  }
          ,{ "sameas": "TestingTimestamps.dt2", "name":"dt2_max", "aggregate":"MAX"  }
-         ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_max", "aggregate":"MAX"  }
-         ,{ "sameas": "TestingTimestamps.dt4", "name":"dt4_max", "aggregate":"MAX"  }
+//         ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_max", "aggregate":"MAX"  }
+//         ,{ "sameas": "TestingTimestamps.dt4", "name":"dt4_max", "aggregate":"MAX"  }
+         ,{ "sameas": "TestingTimestamps.dt1", "name":"dt1_first", "aggregate":"FIRST", "orderBy":["dt1"]  }
+         ,{ "sameas": "TestingTimestamps.dt2", "name":"dt2_first", "aggregate":"FIRST", "orderBy":["dt2"]  }
+         ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_first", "aggregate":"FIRST", "orderBy":["dt3"]  }
+         ,{ "sameas": "TestingTimestamps.dt4", "name":"dt4_first", "aggregate":"FIRST", "orderBy":["dt4"]  }
          ,{ "sameas": "TestingTimestamps.dt1", "name":"dt1_cnt", "aggregate":"COUNT"  }
          ,{ "sameas": "TestingTimestamps.dt2", "name":"dt2_cnt", "aggregate":"COUNT"  }
          ,{ "sameas": "TestingTimestamps.dt3", "name":"dt3_cnt", "aggregate":"COUNT"  }

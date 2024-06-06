@@ -9,7 +9,7 @@
    ,{ "name":"dt1u","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"dt1aTZ","type":"STRING","mode":"REPEATED","description":"Generated helper column to hold the time zone ID for 'dt1a'." }
    ,{ "name":"dt1a","type":"TIMESTAMP","mode":"REPEATED","description":"The blah" }
-   ,{ "name":"rowTZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a." }
+   ,{ "name":"rowTZ_TILDATEST_TestingTimestamps_Cloned","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a." }
    ,{ "name":"dt2","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"dt2n","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }
    ,{ "name":"dt2u","type":"TIMESTAMP","mode":"NULLABLE","description":"The blah" }

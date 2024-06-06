@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive                REFNUM     = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM                           = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"                           , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive              ID         = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, 20, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitive              ID                               = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "id"                               , 1/*1*/, 20, "Medical system unique enterprise id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DT1TZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1TZ"      , 2/*2*/, 5, "Generated helper column to hold the time zone ID for 'dt1'.", null, null, null);
+     public final Type_StringPrimitiveNull          DT1TZ                            = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1TZ"                            , 2/*2*/, 5, "Generated helper column to hold the time zone ID for 'dt1'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT1        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1"        , 3/*3*/, "The blah", null, null, DT1TZ);
+     public final Type_DatetimePrimitiveNull        DT1                              = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1"                              , 3/*3*/, "The blah", null, null, DT1TZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DT1NTZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1nTZ"     , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'dt1n'.", null, null, null);
+     public final Type_StringPrimitiveNull          DT1NTZ                           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1nTZ"                           , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'dt1n'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,7 +185,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT1N       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1n"       , 5/*5*/, "The blah", null, null, DT1NTZ);
+     public final Type_DatetimePrimitiveNull        DT1N                             = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1n"                             , 5/*5*/, "The blah", null, null, DT1NTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,7 +207,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DT1UTZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1uTZ"     , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'dt1u'.", null, null, null);
+     public final Type_StringPrimitiveNull          DT1UTZ                           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1uTZ"                           , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'dt1u'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,7 +240,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT1U       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1u"       , 7/*7*/, "The blah", null, null, DT1UTZ);
+     public final Type_DatetimePrimitiveNull        DT1U                             = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1u"                             , 7/*7*/, "The blah", null, null, DT1UTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         DT1ATZ     = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt1aTZ"     , 8/*8*/, "Generated helper column to hold the time zone ID for 'dt1a'.", null, null);
+     public final Type_StringCollectionNull         DT1ATZ                           = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt1aTZ"                           , 8/*8*/, "Generated helper column to hold the time zone ID for 'dt1a'.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,20 +288,20 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimeCollectionNull       DT1A       = new Type_DatetimeCollectionNull      (SCHEMA_LABEL, TABLENAME_LABEL, "dt1a"       , 9/*9*/, "The blah", null, null, DT1ATZ);
+     public final Type_DatetimeCollectionNull       DT1A                             = new Type_DatetimeCollectionNull      (SCHEMA_LABEL, TABLENAME_LABEL, "dt1a"                             , 9/*9*/, "The blah", null, null, DT1ATZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps.rowTZ -> TILDATEST.TestingTimestamps."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps.rowTZ_TILDATEST_TestingTimestamps -> TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps.rowTZ_TILDATEST_TestingTimestamps of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps.rowTZ_TILDATEST_TestingTimestamps</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -310,7 +310,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          ROWTZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "rowTZ"      , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.", null, null, null);
+     public final Type_StringPrimitiveNull          ROWTZ_TILDATEST_TESTINGTIMESTAMPS= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "rowTZ_TILDATEST_TestingTimestamps", 10/*10*/, 5, "Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -331,12 +331,12 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT2        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2"        , 11/*11*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT2                              = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2"                              , 11/*11*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,7 +357,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -369,7 +369,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT2N       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2n"       , 12/*12*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT2N                             = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2n"                             , 12/*12*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -390,7 +390,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -402,7 +402,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT2U       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2u"       , 13/*13*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT2U                             = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2u"                             , 13/*13*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,12 +423,12 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
 </TABLE>
 */
-     public final Type_DatetimeCollectionNull       DT2A       = new Type_DatetimeCollectionNull      (SCHEMA_LABEL, TABLENAME_LABEL, "dt2a"       , 14/*14*/, "The blah", null, null);
+     public final Type_DatetimeCollectionNull       DT2A                             = new Type_DatetimeCollectionNull      (SCHEMA_LABEL, TABLENAME_LABEL, "dt2a"                             , 14/*14*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +450,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DT3TZ      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3TZ"      , 15/*15*/, 5, "Generated helper column to hold the time zone ID for 'dt3'.", null, null, null);
+     public final Type_StringPrimitiveNull          DT3TZ                            = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3TZ"                            , 15/*15*/, 5, "Generated helper column to hold the time zone ID for 'dt3'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -476,7 +476,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT3        = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3"        , 16/*16*/, "The blah", null, null, DT3TZ);
+     public final Type_Datetime_plainPrimitiveNull  DT3                              = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3"                              , 16/*16*/, "The blah", null, null, DT3TZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,7 +498,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DT3NTZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3nTZ"     , 17/*17*/, 5, "Generated helper column to hold the time zone ID for 'dt3n'.", null, null, null);
+     public final Type_StringPrimitiveNull          DT3NTZ                           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3nTZ"                           , 17/*17*/, 5, "Generated helper column to hold the time zone ID for 'dt3n'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -531,7 +531,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT3N       = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3n"       , 18/*18*/, "The blah", null, null, DT3NTZ);
+     public final Type_Datetime_plainPrimitiveNull  DT3N                             = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3n"                             , 18/*18*/, "The blah", null, null, DT3NTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,7 +553,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DT3UTZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3uTZ"     , 19/*19*/, 5, "Generated helper column to hold the time zone ID for 'dt3u'.", null, null, null);
+     public final Type_StringPrimitiveNull          DT3UTZ                           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3uTZ"                           , 19/*19*/, 5, "Generated helper column to hold the time zone ID for 'dt3u'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -586,7 +586,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT3U       = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3u"       , 20/*20*/, "The blah", null, null, DT3UTZ);
+     public final Type_Datetime_plainPrimitiveNull  DT3U                             = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3u"                             , 20/*20*/, "The blah", null, null, DT3UTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -608,7 +608,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         DT3ATZ     = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt3aTZ"     , 21/*21*/, "Generated helper column to hold the time zone ID for 'dt3a'.", null, null);
+     public final Type_StringCollectionNull         DT3ATZ                           = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt3aTZ"                           , 21/*21*/, "Generated helper column to hold the time zone ID for 'dt3a'.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -634,7 +634,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainCollectionNull DT3A       = new Type_Datetime_plainCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "dt3a"       , 22/*22*/, "The blah", null, null, DT3ATZ);
+     public final Type_Datetime_plainCollectionNull DT3A                             = new Type_Datetime_plainCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "dt3a"                             , 22/*22*/, "The blah", null, null, DT3ATZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -655,12 +655,12 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT4        = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4"        , 23/*23*/, "The blah", null, null);
+     public final Type_Datetime_plainPrimitiveNull  DT4                              = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4"                              , 23/*23*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -681,7 +681,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -693,7 +693,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT4N       = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4n"       , 24/*24*/, "The blah", null, null);
+     public final Type_Datetime_plainPrimitiveNull  DT4N                             = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4n"                             , 24/*24*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -714,7 +714,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -726,7 +726,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT4U       = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4u"       , 25/*25*/, "The blah", null, null);
+     public final Type_Datetime_plainPrimitiveNull  DT4U                             = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4u"                             , 25/*25*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -747,12 +747,12 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps'</LI>
 </TD></TR>
 
 </TABLE>
 */
-     public final Type_Datetime_plainCollectionNull DT4A       = new Type_Datetime_plainCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "dt4a"       , 26/*26*/, "The blah", null, null);
+     public final Type_Datetime_plainCollectionNull DT4A                             = new Type_Datetime_plainCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "dt4a"                             , 26/*26*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -780,7 +780,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            CREATED    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 27/*27*/, "The timestamp for when the record was created. (TILDATEST.TestingTimestamps)", null, null);
+     public final Type_DatetimePrimitive            CREATED                          = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"                          , 27/*27*/, "The timestamp for when the record was created. (TILDATEST.TestingTimestamps)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -808,7 +808,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            LASTUPDATED= new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 28/*28*/, "The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED                      = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"                      , 28/*28*/, "The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -829,11 +829,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DELETED    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 29/*29*/, "The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED                          = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"                          , 29/*29*/, "The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.ID,COLS.DT1TZ,COLS.DT1,COLS.DT1NTZ,COLS.DT1N,COLS.DT1UTZ,COLS.DT1U,COLS.DT1ATZ,COLS.DT1A,COLS.ROWTZ,COLS.DT2,COLS.DT2N,COLS.DT2U,COLS.DT2A,COLS.DT3TZ,COLS.DT3,COLS.DT3NTZ,COLS.DT3N,COLS.DT3UTZ,COLS.DT3U,COLS.DT3ATZ,COLS.DT3A,COLS.DT4,COLS.DT4N,COLS.DT4U,COLS.DT4A,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.ID,COLS.DT1TZ,COLS.DT1,COLS.DT1NTZ,COLS.DT1N,COLS.DT1UTZ,COLS.DT1U,COLS.DT1ATZ,COLS.DT1A,COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS,COLS.DT2,COLS.DT2N,COLS.DT2U,COLS.DT2A,COLS.DT3TZ,COLS.DT3,COLS.DT3NTZ,COLS.DT3N,COLS.DT3UTZ,COLS.DT3U,COLS.DT3ATZ,COLS.DT3A,COLS.DT4,COLS.DT4N,COLS.DT4U,COLS.DT4A,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
@@ -1097,7 +1097,7 @@ object. The generic init method defaults to this general data structure as a gen
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
- @param id          (max size 20) Medical system unique enterprise id
+ @param id                                (max size 20) Medical system unique enterprise id
 */
    static public tilda.data_test.TestingTimestamps_Data create(String id) throws Exception
      {
@@ -1109,7 +1109,7 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
 
        // Explicit setters
-       Obj.setId         (id         );
+       Obj.setId                               (id                               );
 
        // Default Create-time setters
        Obj.setDt1nNow               ();
@@ -1268,7 +1268,7 @@ Lookup one record by the primary key: refnum.
        tilda.data_test._Tilda.TILDA__TESTINGTIMESTAMPS Obj = new tilda.data_test.TestingTimestamps_Data();
        Obj.initForLookup(0);
 
-       Obj.setRefnum     (refnum     ); Obj.__Saved_refnum      = Obj._refnum     ;
+       Obj.setRefnum                           (refnum                           ); Obj.__Saved_refnum                            = Obj._refnum                           ;
 
        return (tilda.data_test.TestingTimestamps_Data) Obj;
      }
@@ -1281,7 +1281,7 @@ Lookup one record by the unique index 'Id': id.
        tilda.data_test._Tilda.TILDA__TESTINGTIMESTAMPS Obj = new tilda.data_test.TestingTimestamps_Data();
        Obj.initForLookup(1);
 
-       Obj.setId         (id         ); 
+       Obj.setId                               (id                               ); 
 
        return (tilda.data_test.TestingTimestamps_Data) Obj;
      }
@@ -1474,8 +1474,8 @@ The results are ordered by: id asc
           out.write("[]");
         }
 
-      if (Obj.isNullRowTZ() == false && Obj.getRowTZ() != null)
-        JSONUtil.print(out, "rowTZ", ++i==0, Obj.getRowTZ());
+      if (Obj.isNullRowTZ_TILDATEST_TestingTimestamps() == false && Obj.getRowTZ_TILDATEST_TestingTimestamps() != null)
+        JSONUtil.print(out, "rowTZ_TILDATEST_TestingTimestamps", ++i==0, Obj.getRowTZ_TILDATEST_TestingTimestamps());
 
       if (Obj.isNullDt2() == false && Obj.getDt2() != null)
         JSONUtil.print(out, "dt2", ++i==0, Obj.getDt2());
@@ -1563,7 +1563,7 @@ The results are ordered by: id asc
 
    public static String getCSVHeader()
     {
-      return "\"refnum\",\"id\",\"dt1TZ\",\"dt1\",\"dt1nTZ\",\"dt1n\",\"dt1uTZ\",\"dt1u\",\"dt1aTZ\",\"dt1a\",\"rowTZ\",\"dt2\",\"dt2n\",\"dt2u\",\"dt2a\",\"dt3TZ\",\"dt3\",\"dt3nTZ\",\"dt3n\",\"dt3uTZ\",\"dt3u\",\"dt3aTZ\",\"dt3a\",\"dt4\",\"dt4n\",\"dt4u\",\"dt4a\",\"created\",\"lastUpdated\",\"deleted\"";
+      return "\"refnum\",\"id\",\"dt1TZ\",\"dt1\",\"dt1nTZ\",\"dt1n\",\"dt1uTZ\",\"dt1u\",\"dt1aTZ\",\"dt1a\",\"rowTZ_TILDATEST_TestingTimestamps\",\"dt2\",\"dt2n\",\"dt2u\",\"dt2a\",\"dt3TZ\",\"dt3\",\"dt3nTZ\",\"dt3n\",\"dt3uTZ\",\"dt3u\",\"dt3aTZ\",\"dt3a\",\"dt4\",\"dt4n\",\"dt4u\",\"dt4a\",\"created\",\"lastUpdated\",\"deleted\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data_test.TestingTimestamps_Data> L, boolean includeHeader) throws java.io.IOException
@@ -1606,7 +1606,7 @@ The results are ordered by: id asc
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, TextUtil.print(Obj.getDt1a(), ","));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getRowTZ());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getRowTZ_TILDATEST_TestingTimestamps());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt2()));
       Str.append(",");
@@ -1743,8 +1743,8 @@ The results are ordered by: id asc
           out.write("[]");
         }
 
-      if (Obj.isNullRowTZ() == false && Obj.getRowTZ() != null)
-        JSONUtil.print(out, "rowTZ", ++i==0, Obj.getRowTZ());
+      if (Obj.isNullRowTZ_TILDATEST_TestingTimestamps() == false && Obj.getRowTZ_TILDATEST_TestingTimestamps() != null)
+        JSONUtil.print(out, "rowTZ_TILDATEST_TestingTimestamps", ++i==0, Obj.getRowTZ_TILDATEST_TestingTimestamps());
 
       if (Obj.isNullDt2() == false && Obj.getDt2() != null)
         JSONUtil.print(out, "dt2", ++i==0, Obj.getDt2());

@@ -42,7 +42,7 @@
 "TILDATUTORIAL","TestAnswer","lastUpdated","DATETIME","false","false","The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)","","false","","",""
 "TILDATUTORIAL","TestAnswer","deleted","DATETIME","true","false","The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)","","false","","",""
 "TILDATUTORIAL","Form_SAT01_PivotView","formRefnum","LONG","false","false","The primary key for this record","","false","","",""
-"TILDATUTORIAL","Form_SAT01_PivotView","formFillDateTZ","STRING","true","false","Generated helper column to hold the time zone ID for 'fillDate'.","","false","","",""
+"TILDATUTORIAL","Form_SAT01_PivotView","formFillDateTZ","STRING","true","false","Generated helper column to hold the time zone ID for 'formFillDate'.","","false","","",""
 "TILDATUTORIAL","Form_SAT01_PivotView","formFillDate","DATETIME","true","false","The date the form was filled","","false","","",""
 "TILDATUTORIAL","Form_SAT01_PivotView","formUserRefnum","LONG","false","false","The primary key for this record","","false","","",""
 "TILDATUTORIAL","Form_SAT01_PivotView","formUserEmail","STRING","false","false","The user's email","","false","","",""

@@ -172,7 +172,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TestingTimestamps_Cloned-rowTZ_DIV' class='columns'>rowTZ</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingTimestamps_Cloned-rowTZ_TILDATEST_TestingTimestamps_Cloned_DIV' class='columns'>rowTZ_TILDATEST_TestingTimestamps_Cloned</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
@@ -2160,7 +2160,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ._Mask);
           if (_dt1aTZ == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt1aTZ = new ArrayList<String>();
            }
           else
@@ -2386,7 +2385,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask);
           if (_dt1a == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt1a = new ArrayList<ZonedDateTime>();
              _dt1aTZ = new ArrayList<String>();
            }
@@ -2520,15 +2518,15 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ -> TILDATEST.TestingTimestamps_Cloned."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned -> TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps_Cloned of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2537,19 +2535,19 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _rowTZ=null;
+   String _rowTZ_TILDATEST_TestingTimestamps_Cloned=null;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ -> TILDATEST.TestingTimestamps_Cloned."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned -> TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps_Cloned of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2558,20 +2556,20 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getRowTZ()
-      { return _rowTZ; }
+   public final String getRowTZ_TILDATEST_TestingTimestamps_Cloned()
+      { return _rowTZ_TILDATEST_TestingTimestamps_Cloned; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ -> TILDATEST.TestingTimestamps_Cloned."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned -> TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps_Cloned of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2580,20 +2578,20 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean isNullRowTZ()
-     { return __Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask); }
+   public final boolean isNullRowTZ_TILDATEST_TestingTimestamps_Cloned()
+     { return __Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ -> TILDATEST.TestingTimestamps_Cloned."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned -> TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps_Cloned of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2602,36 +2600,39 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setRowTZ(String v) throws Exception
+    void setRowTZ_TILDATEST_TestingTimestamps_Cloned(String v) throws Exception
      {
-       // DOING RowTz setter. Need additional logic
        long T0 = System.nanoTime();
        if (TextUtil.isNullOrEmpty(v) == true)
         {
-          setNullRowTZ();
+          setNullRowTZ_TILDATEST_TestingTimestamps_Cloned();
         }
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
-       else if (v.equals(_rowTZ) == false)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
+       else if (v.equals(_rowTZ_TILDATEST_TestingTimestamps_Cloned) == false)
         {
-          __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask);
-          __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask);
-       _rowTZ = v;
+           // This is a rowTZ setter, so needs additional logic because it is shared across possibly multipel columns.
+           // Here, we need to check that there is no inconsistency, i.e., setRowTZ i sbeing called with a different value than already set.
+           if (TextUtil.isNullOrEmpty(_rowTZ_TILDATEST_TestingTimestamps_Cloned) == false)
+            throw new Exception("Cannot change a rowTZ column once set. It is currently '"+_rowTZ_TILDATEST_TestingTimestamps_Cloned+"' and the new value is '"+v+"'.");
+          __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask);
+          __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask);
+       _rowTZ_TILDATEST_TestingTimestamps_Cloned = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ -> TILDATEST.TestingTimestamps_Cloned."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned -> TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps_Cloned of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2640,28 +2641,41 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullRowTZ()
+    void setNullRowTZ_TILDATEST_TestingTimestamps_Cloned()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask);
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask) == true) // already NULL
+       // This is a rowTZ null setter, so needs additional logic because it is shared across possibly multipel columns.
+       // Only set to NULL if all rowTz columns are also null.
+       boolean allRowTxColsAreNull = true;
+       if (_dt2 != null) allRowTxColsAreNull = false;
+       else if (_dt2n != null) allRowTxColsAreNull = false;
+       else if (_dt2u != null) allRowTxColsAreNull = false;
+       else if (CollectionUtil.isNullOrEmpty(_dt2a) == false) allRowTxColsAreNull = false;
+       else if (_dt4 != null) allRowTxColsAreNull = false;
+       else if (_dt4n != null) allRowTxColsAreNull = false;
+       else if (_dt4u != null) allRowTxColsAreNull = false;
+       else if (CollectionUtil.isNullOrEmpty(_dt4a) == false) allRowTxColsAreNull = false;
+       if (allRowTxColsAreNull == false)
         return;
-       __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask);
-       _rowTZ=null;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask);
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask) == true) // already NULL
+        return;
+       __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask);
+       _rowTZ_TILDATEST_TestingTimestamps_Cloned=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ -> TILDATEST.TestingTimestamps_Cloned."rowTZ"
+//   Field tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned -> TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestamps_Cloned of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ of type character(5)</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestamps_Cloned.rowTZ_TILDATEST_TestingTimestamps_Cloned</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2670,8 +2684,8 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedRowTZ()
-     { return __Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask); }
+   public boolean hasChangedRowTZ_TILDATEST_TestingTimestamps_Cloned()
+     { return __Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask); }
 
 
 
@@ -2697,7 +2711,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2727,7 +2741,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2753,7 +2767,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2779,7 +2793,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2799,7 +2813,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2822,7 +2836,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2835,7 +2849,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask);
        _dt2=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2857,7 +2871,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2885,7 +2899,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2913,7 +2927,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2941,7 +2955,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -2973,7 +2987,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3010,7 +3024,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3043,7 +3057,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3076,7 +3090,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3103,7 +3117,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2n' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3126,7 +3140,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3146,7 +3160,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask);
        _dt2n=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3168,7 +3182,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3203,7 +3217,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3238,7 +3252,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3273,7 +3287,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3312,7 +3326,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3349,7 +3363,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3382,7 +3396,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3415,7 +3429,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3442,7 +3456,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2u' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3465,7 +3479,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3485,7 +3499,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask);
        _dt2u=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3507,7 +3521,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3542,7 +3556,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3577,7 +3591,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3612,7 +3626,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -3651,7 +3665,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -3681,7 +3695,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -3711,7 +3725,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -3737,7 +3751,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -3753,7 +3767,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask);
           if (_dt2a == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt2a = new ArrayList<ZonedDateTime>();
            }
           else
@@ -3773,7 +3786,7 @@ This is the setter for:<BR>
              else if (ZIPrev.getId().equals(ZI.getId()) == false)
               throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2a' because the timezone value '"+i.getZone().getId()+"' is inconsistent with previous value '"+ZIPrev.getId()+"' and the tzMode is row-based. Timestamps covered by a row-based timezone must all be set within the same exact timezone.");
            }
-        setRowTZ(ZIPrev.getId());
+        setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZIPrev.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3794,7 +3807,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2a' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3837,7 +3850,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -3850,7 +3863,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask);
        _dt2a=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3872,7 +3885,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp with timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5419,7 +5432,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ._Mask);
           if (_dt3aTZ == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt3aTZ = new ArrayList<String>();
            }
           else
@@ -5645,7 +5657,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask);
           if (_dt3a == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt3a = new ArrayList<ZonedDateTime>();
              _dt3aTZ = new ArrayList<String>();
            }
@@ -5795,7 +5806,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5825,7 +5836,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5851,7 +5862,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5877,7 +5888,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5897,7 +5908,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -5920,7 +5931,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5933,7 +5944,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask);
        _dt4=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5955,7 +5966,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -5983,7 +5994,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6011,7 +6022,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6039,7 +6050,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6071,7 +6082,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6108,7 +6119,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6141,7 +6152,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6174,7 +6185,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6201,7 +6212,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4n' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -6224,7 +6235,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6244,7 +6255,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask);
        _dt4n=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -6266,7 +6277,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6301,7 +6312,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6336,7 +6347,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6371,7 +6382,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6410,7 +6421,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6447,7 +6458,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6480,7 +6491,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6513,7 +6524,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6540,7 +6551,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4u' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -6563,7 +6574,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6583,7 +6594,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask);
        _dt4u=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -6605,7 +6616,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6640,7 +6651,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6675,7 +6686,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6710,7 +6721,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
@@ -6749,7 +6760,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6779,7 +6790,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6809,7 +6820,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6835,7 +6846,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6851,7 +6862,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask);
           if (_dt4a == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _dt4a = new ArrayList<ZonedDateTime>();
            }
           else
@@ -6871,7 +6881,7 @@ This is the setter for:<BR>
              else if (ZIPrev.getId().equals(ZI.getId()) == false)
               throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4a' because the timezone value '"+i.getZone().getId()+"' is inconsistent with previous value '"+ZIPrev.getId()+"' and the tzMode is row-based. Timestamps covered by a row-based timezone must all be set within the same exact timezone.");
            }
-        setRowTZ(ZIPrev.getId());
+        setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZIPrev.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -6892,7 +6902,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4a' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -6935,7 +6945,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -6948,7 +6958,7 @@ This is the null setter for:<BR>
         return;
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask);
        _dt4a=null;
-    // setNullRowTZ(); // row TZs are shared, so can't just null it!
+    // setNullRowTZ_TILDATEST_TestingTimestamps_Cloned(); // row TZs are shared, so can't just null it!
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -6970,7 +6980,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
   <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
 <LI>Stored as a timestamp without timezone</LI>
-<LI>Timezone information stored in 'rowTZ'</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestamps_Cloned'</LI>
 </TD></TR>
 
 </TABLE>
@@ -7648,132 +7658,132 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data_test._Tilda.TILDA__TESTINGTIMESTAMPS_CLONED Dst) throws Exception
      {
-       if (_id          != null)
-        Dst.setId         (_id         );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1TZ._Mask) == true || _dt1TZ      ==null)
-        Dst.setNullDt1TZ      ();
+       if (_id                                       != null)
+        Dst.setId                                      (_id                                      );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1TZ._Mask) == true || _dt1TZ                                   ==null)
+        Dst.setNullDt1TZ                                   ();
        else
-        Dst.setDt1TZ      (_dt1TZ      );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1._Mask) == true || _dt1        ==null)
-        Dst.setNullDt1        ();
+        Dst.setDt1TZ                                   (_dt1TZ                                   );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1._Mask) == true || _dt1                                     ==null)
+        Dst.setNullDt1                                     ();
        else
-        Dst.setDt1        (_dt1        );
+        Dst.setDt1                                     (_dt1                                     );
        Dst.Str_dt1 = Str_dt1;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1NTZ._Mask) == true || _dt1nTZ     ==null)
-        Dst.setNullDt1nTZ     ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1NTZ._Mask) == true || _dt1nTZ                                  ==null)
+        Dst.setNullDt1nTZ                                  ();
        else
-        Dst.setDt1nTZ     (_dt1nTZ     );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N._Mask) == true || _dt1n       ==null)
-        Dst.setNullDt1n       ();
+        Dst.setDt1nTZ                                  (_dt1nTZ                                  );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N._Mask) == true || _dt1n                                    ==null)
+        Dst.setNullDt1n                                    ();
        else
-        Dst.setDt1n       (_dt1n       );
+        Dst.setDt1n                                    (_dt1n                                    );
        Dst.Str_dt1n = Str_dt1n;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1UTZ._Mask) == true || _dt1uTZ     ==null)
-        Dst.setNullDt1uTZ     ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1UTZ._Mask) == true || _dt1uTZ                                  ==null)
+        Dst.setNullDt1uTZ                                  ();
        else
-        Dst.setDt1uTZ     (_dt1uTZ     );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U._Mask) == true || _dt1u       ==null)
-        Dst.setNullDt1u       ();
+        Dst.setDt1uTZ                                  (_dt1uTZ                                  );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U._Mask) == true || _dt1u                                    ==null)
+        Dst.setNullDt1u                                    ();
        else
-        Dst.setDt1u       (_dt1u       );
+        Dst.setDt1u                                    (_dt1u                                    );
        Dst.Str_dt1u = Str_dt1u;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ._Mask) == true || _dt1aTZ     ==null)
-        Dst.setNullDt1aTZ     ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ._Mask) == true || _dt1aTZ                                  ==null)
+        Dst.setNullDt1aTZ                                  ();
        else
-        Dst.setDt1aTZ     (_dt1aTZ     );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask) == true || _dt1a       ==null)
-        Dst.setNullDt1a       ();
+        Dst.setDt1aTZ                                  (_dt1aTZ                                  );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask) == true || _dt1a                                    ==null)
+        Dst.setNullDt1a                                    ();
        else
-        Dst.setDt1a       (_dt1a       );
+        Dst.setDt1a                                    (_dt1a                                    );
        Dst.Str_dt1a = Str_dt1a;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask) == true || _rowTZ      ==null)
-        Dst.setNullRowTZ      ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask) == true || _rowTZ_TILDATEST_TestingTimestamps_Cloned==null)
+        Dst.setNullRowTZ_TILDATEST_TestingTimestamps_Cloned();
        else
-        Dst.setRowTZ      (_rowTZ      );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask) == true || _dt2        ==null)
-        Dst.setNullDt2        ();
+        Dst.setRowTZ_TILDATEST_TestingTimestamps_Cloned(_rowTZ_TILDATEST_TestingTimestamps_Cloned);
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask) == true || _dt2                                     ==null)
+        Dst.setNullDt2                                     ();
        else
-        Dst.setDt2        (_dt2        );
+        Dst.setDt2                                     (_dt2                                     );
        Dst.Str_dt2 = Str_dt2;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask) == true || _dt2n       ==null)
-        Dst.setNullDt2n       ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask) == true || _dt2n                                    ==null)
+        Dst.setNullDt2n                                    ();
        else
-        Dst.setDt2n       (_dt2n       );
+        Dst.setDt2n                                    (_dt2n                                    );
        Dst.Str_dt2n = Str_dt2n;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask) == true || _dt2u       ==null)
-        Dst.setNullDt2u       ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask) == true || _dt2u                                    ==null)
+        Dst.setNullDt2u                                    ();
        else
-        Dst.setDt2u       (_dt2u       );
+        Dst.setDt2u                                    (_dt2u                                    );
        Dst.Str_dt2u = Str_dt2u;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask) == true || _dt2a       ==null)
-        Dst.setNullDt2a       ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask) == true || _dt2a                                    ==null)
+        Dst.setNullDt2a                                    ();
        else
-        Dst.setDt2a       (_dt2a       );
+        Dst.setDt2a                                    (_dt2a                                    );
        Dst.Str_dt2a = Str_dt2a;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3TZ._Mask) == true || _dt3TZ      ==null)
-        Dst.setNullDt3TZ      ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3TZ._Mask) == true || _dt3TZ                                   ==null)
+        Dst.setNullDt3TZ                                   ();
        else
-        Dst.setDt3TZ      (_dt3TZ      );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3._Mask) == true || _dt3        ==null)
-        Dst.setNullDt3        ();
+        Dst.setDt3TZ                                   (_dt3TZ                                   );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3._Mask) == true || _dt3                                     ==null)
+        Dst.setNullDt3                                     ();
        else
-        Dst.setDt3        (_dt3        );
+        Dst.setDt3                                     (_dt3                                     );
        Dst.Str_dt3 = Str_dt3;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3NTZ._Mask) == true || _dt3nTZ     ==null)
-        Dst.setNullDt3nTZ     ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3NTZ._Mask) == true || _dt3nTZ                                  ==null)
+        Dst.setNullDt3nTZ                                  ();
        else
-        Dst.setDt3nTZ     (_dt3nTZ     );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N._Mask) == true || _dt3n       ==null)
-        Dst.setNullDt3n       ();
+        Dst.setDt3nTZ                                  (_dt3nTZ                                  );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N._Mask) == true || _dt3n                                    ==null)
+        Dst.setNullDt3n                                    ();
        else
-        Dst.setDt3n       (_dt3n       );
+        Dst.setDt3n                                    (_dt3n                                    );
        Dst.Str_dt3n = Str_dt3n;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3UTZ._Mask) == true || _dt3uTZ     ==null)
-        Dst.setNullDt3uTZ     ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3UTZ._Mask) == true || _dt3uTZ                                  ==null)
+        Dst.setNullDt3uTZ                                  ();
        else
-        Dst.setDt3uTZ     (_dt3uTZ     );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U._Mask) == true || _dt3u       ==null)
-        Dst.setNullDt3u       ();
+        Dst.setDt3uTZ                                  (_dt3uTZ                                  );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U._Mask) == true || _dt3u                                    ==null)
+        Dst.setNullDt3u                                    ();
        else
-        Dst.setDt3u       (_dt3u       );
+        Dst.setDt3u                                    (_dt3u                                    );
        Dst.Str_dt3u = Str_dt3u;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ._Mask) == true || _dt3aTZ     ==null)
-        Dst.setNullDt3aTZ     ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ._Mask) == true || _dt3aTZ                                  ==null)
+        Dst.setNullDt3aTZ                                  ();
        else
-        Dst.setDt3aTZ     (_dt3aTZ     );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask) == true || _dt3a       ==null)
-        Dst.setNullDt3a       ();
+        Dst.setDt3aTZ                                  (_dt3aTZ                                  );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask) == true || _dt3a                                    ==null)
+        Dst.setNullDt3a                                    ();
        else
-        Dst.setDt3a       (_dt3a       );
+        Dst.setDt3a                                    (_dt3a                                    );
        Dst.Str_dt3a = Str_dt3a;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask) == true || _dt4        ==null)
-        Dst.setNullDt4        ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask) == true || _dt4                                     ==null)
+        Dst.setNullDt4                                     ();
        else
-        Dst.setDt4        (_dt4        );
+        Dst.setDt4                                     (_dt4                                     );
        Dst.Str_dt4 = Str_dt4;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask) == true || _dt4n       ==null)
-        Dst.setNullDt4n       ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask) == true || _dt4n                                    ==null)
+        Dst.setNullDt4n                                    ();
        else
-        Dst.setDt4n       (_dt4n       );
+        Dst.setDt4n                                    (_dt4n                                    );
        Dst.Str_dt4n = Str_dt4n;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask) == true || _dt4u       ==null)
-        Dst.setNullDt4u       ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask) == true || _dt4u                                    ==null)
+        Dst.setNullDt4u                                    ();
        else
-        Dst.setDt4u       (_dt4u       );
+        Dst.setDt4u                                    (_dt4u                                    );
        Dst.Str_dt4u = Str_dt4u;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask) == true || _dt4a       ==null)
-        Dst.setNullDt4a       ();
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask) == true || _dt4a                                    ==null)
+        Dst.setNullDt4a                                    ();
        else
-        Dst.setDt4a       (_dt4a       );
+        Dst.setDt4a                                    (_dt4a                                    );
        Dst.Str_dt4a = Str_dt4a;
-       if (__Init == InitMode.CREATE && _created     != null)
-        Dst.setCreated    (_created    );
-       if (_lastUpdated != null)
-        Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
-        Dst.setNullDeleted    ();
+       if (__Init == InitMode.CREATE && _created                                  != null)
+        Dst.setCreated                                 (_created                                 );
+       if (_lastUpdated                              != null)
+        Dst.setLastUpdated                             (_lastUpdated                             );
+       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DELETED._Mask) == true || _deleted                                 ==null)
+        Dst.setNullDeleted                                 ();
        else
-        Dst.setDeleted    (_deleted    );
+        Dst.setDeleted                                 (_deleted                                 );
      }
 
 
@@ -7844,10 +7854,10 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum     );
+               PS.setLong      (++i, _refnum                                  );
                break;
              case 1: // Unique Index 'Id'
-               PS.setString    (++i, _id         );
+               PS.setString    (++i, _id                                      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -7955,7 +7965,7 @@ This is the hasChanged for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
 
        if (TextUtil.isNullOrEmpty(Str_dt2n) == false)
@@ -7969,7 +7979,7 @@ This is the hasChanged for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2n' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
 
        if (TextUtil.isNullOrEmpty(Str_dt2u) == false)
@@ -7983,7 +7993,7 @@ This is the hasChanged for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2u' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
 
        if (TextUtil.isNullOrEmpty(Str_dt2a) == false)
@@ -7999,7 +8009,7 @@ This is the hasChanged for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2a' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
             }
         }
 
@@ -8069,11 +8079,11 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask);
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask);
-          String zoneId = _rowTZ;
+          String zoneId = _rowTZ_TILDATEST_TestingTimestamps_Cloned;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
 
        if (TextUtil.isNullOrEmpty(Str_dt4n) == false)
@@ -8083,11 +8093,11 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4n' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask);
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask);
-          String zoneId = _rowTZ;
+          String zoneId = _rowTZ_TILDATEST_TestingTimestamps_Cloned;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4n' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
 
        if (TextUtil.isNullOrEmpty(Str_dt4u) == false)
@@ -8097,11 +8107,11 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4u' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask);
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask);
-          String zoneId = _rowTZ;
+          String zoneId = _rowTZ_TILDATEST_TestingTimestamps_Cloned;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4u' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
         }
 
        if (TextUtil.isNullOrEmpty(Str_dt4a) == false)
@@ -8113,11 +8123,11 @@ This is the hasChanged for:<BR>
           __Nulls.andNot(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask);
           for (int pos = 0; pos < _dt4a.size(); ++pos)
             {
-          String zoneId = _rowTZ;
+          String zoneId = _rowTZ_TILDATEST_TestingTimestamps_Cloned;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4a' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setRowTZ(ZI.getId());
+          setRowTZ_TILDATEST_TestingTimestamps_Cloned(ZI.getId());
             }
         }
      }
@@ -8172,7 +8182,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask) == true) { TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A.getFullColumnVarForInsert(C, S);
              V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask) == true) { TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask) == true) { TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask) == true) { TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask) == false && DateTimeUtil.isNowPlaceholder(_dt2) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
@@ -8283,7 +8293,7 @@ This is the hasChanged for:<BR>
            {
               TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A.getFullColumnVarForUpdate(C, S);
            }
-          if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask) == true) TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask) == true) TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask) == true)
            {
@@ -8471,9 +8481,9 @@ This is the hasChanged for:<BR>
         { 
           if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A.getType(), AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_dt1a));
         } 
-       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask) == true) 
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _rowTZ);
+          if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _rowTZ_TILDATEST_TestingTimestamps_Cloned);
         } 
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask) == true) 
         { 
@@ -8568,10 +8578,10 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_refnum      = _refnum     ;
+             __Saved_refnum                                   = _refnum                                  ;
              break;
           case 1:
-             __Saved_id          = _id         ;
+             __Saved_id                                       = _id                                      ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -8717,10 +8727,10 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum     );
+               PS.setLong      (++i, _refnum                                  );
                break;
              case 1: // Unique Index 'Id'
-               PS.setString    (++i, _id         );
+               PS.setString    (++i, _id                                      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -8753,15 +8763,15 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
-      __Saved_id          = _id          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ID._Mask         ); _id = null; }
-                            _dt1TZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1TZ._Mask      ); _dt1TZ = null; } else _dt1TZ       = _dt1TZ      .trim();
-                            _dt1         = JDBCHelper.processZDT(_dt1TZ        , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1        , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1TZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1._Mask        ); _dt1 = null; }
-                            _dt1nTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1NTZ._Mask     ); _dt1nTZ = null; } else _dt1nTZ      = _dt1nTZ     .trim();
-                            _dt1n        = JDBCHelper.processZDT(_dt1nTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1NTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N._Mask       ); _dt1n = null; }
-                            _dt1uTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1UTZ._Mask     ); _dt1uTZ = null; } else _dt1uTZ      = _dt1uTZ     .trim();
-                            _dt1u        = JDBCHelper.processZDT(_dt1uTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1UTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U._Mask       ); _dt1u = null; }
-                            _dt1aTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ._Mask     ); _dt1aTZ = null; }
+      __Saved_refnum                                   = _refnum                                   =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.REFNUM._Mask                                  ); _refnum = null; }
+      __Saved_id                                       = _id                                       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ID._Mask                                      ); _id = null; }
+                                                         _dt1TZ                                    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1TZ._Mask                                   ); _dt1TZ = null; } else _dt1TZ                                    = _dt1TZ                                   .trim();
+                                                         _dt1                                      = JDBCHelper.processZDT(_dt1TZ                                     , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1"                                     , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1                                     , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1TZ                                     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1._Mask                                     ); _dt1 = null; }
+                                                         _dt1nTZ                                   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1NTZ._Mask                                  ); _dt1nTZ = null; } else _dt1nTZ                                   = _dt1nTZ                                  .trim();
+                                                         _dt1n                                     = JDBCHelper.processZDT(_dt1nTZ                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1n"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1NTZ                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N._Mask                                    ); _dt1n = null; }
+                                                         _dt1uTZ                                   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1UTZ._Mask                                  ); _dt1uTZ = null; } else _dt1uTZ                                   = _dt1uTZ                                  .trim();
+                                                         _dt1u                                     = JDBCHelper.processZDT(_dt1uTZ                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1u"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1UTZ                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U._Mask                                    ); _dt1u = null; }
+                                                         _dt1aTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ._Mask                                  ); _dt1aTZ = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_dt1aTZ != null && _dt1aTZ.size() == 1 && _dt1aTZ.get(0) == null)
@@ -8769,19 +8779,19 @@ This is the hasChanged for:<BR>
                                  _dt1aTZ = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ._Mask);
                                }
-                            _dt1a        = JDBCHelper.processZDTs(_dt1aTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask       ); _dt1a = null; }
-                            _rowTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ._Mask      ); _rowTZ = null; } else _rowTZ       = _rowTZ      .trim();
-                            _dt2         = JDBCHelper.processZDT(_rowTZ        , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2        , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask        ); _dt2 = null; }
-                            _dt2n        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask       ); _dt2n = null; }
-                            _dt2u        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask       ); _dt2u = null; }
-                            _dt2a        = JDBCHelper.processZDTs(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask       ); _dt2a = null; }
-                            _dt3TZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3TZ._Mask      ); _dt3TZ = null; } else _dt3TZ       = _dt3TZ      .trim();
-                            _dt3         = JDBCHelper.processZDT(_dt3TZ        , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3        , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3TZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3._Mask        ); _dt3 = null; }
-                            _dt3nTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3NTZ._Mask     ); _dt3nTZ = null; } else _dt3nTZ      = _dt3nTZ     .trim();
-                            _dt3n        = JDBCHelper.processZDT(_dt3nTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3NTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N._Mask       ); _dt3n = null; }
-                            _dt3uTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3UTZ._Mask     ); _dt3uTZ = null; } else _dt3uTZ      = _dt3uTZ     .trim();
-                            _dt3u        = JDBCHelper.processZDT(_dt3uTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3UTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U._Mask       ); _dt3u = null; }
-                            _dt3aTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ._Mask     ); _dt3aTZ = null; }
+                                                         _dt1a                                     = JDBCHelper.processZDTs(_dt1aTZ                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt1a"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1ATZ                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask                                    ); _dt1a = null; }
+                                                         _rowTZ_TILDATEST_TestingTimestamps_Cloned = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED._Mask); _rowTZ_TILDATEST_TestingTimestamps_Cloned = null; } else _rowTZ_TILDATEST_TestingTimestamps_Cloned = _rowTZ_TILDATEST_TestingTimestamps_Cloned.trim();
+                                                         _dt2                                      = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                     , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2"                                     , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2                                     , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask                                     ); _dt2 = null; }
+                                                         _dt2n                                     = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2n"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask                                    ); _dt2n = null; }
+                                                         _dt2u                                     = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2u"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask                                    ); _dt2u = null; }
+                                                         _dt2a                                     = JDBCHelper.processZDTs(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt2a"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask                                    ); _dt2a = null; }
+                                                         _dt3TZ                                    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3TZ._Mask                                   ); _dt3TZ = null; } else _dt3TZ                                    = _dt3TZ                                   .trim();
+                                                         _dt3                                      = JDBCHelper.processZDT(_dt3TZ                                     , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3"                                     , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3                                     , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3TZ                                     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3._Mask                                     ); _dt3 = null; }
+                                                         _dt3nTZ                                   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3NTZ._Mask                                  ); _dt3nTZ = null; } else _dt3nTZ                                   = _dt3nTZ                                  .trim();
+                                                         _dt3n                                     = JDBCHelper.processZDT(_dt3nTZ                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3n"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3NTZ                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N._Mask                                    ); _dt3n = null; }
+                                                         _dt3uTZ                                   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3UTZ._Mask                                  ); _dt3uTZ = null; } else _dt3uTZ                                   = _dt3uTZ                                  .trim();
+                                                         _dt3u                                     = JDBCHelper.processZDT(_dt3uTZ                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3u"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3UTZ                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U._Mask                                    ); _dt3u = null; }
+                                                         _dt3aTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ._Mask                                  ); _dt3aTZ = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_dt3aTZ != null && _dt3aTZ.size() == 1 && _dt3aTZ.get(0) == null)
@@ -8789,14 +8799,14 @@ This is the hasChanged for:<BR>
                                  _dt3aTZ = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ._Mask);
                                }
-                            _dt3a        = JDBCHelper.processZDTs(_dt3aTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask       ); _dt3a = null; }
-                            _dt4         = JDBCHelper.processZDT(_rowTZ        , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4"        , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4        , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask        ); _dt4 = null; }
-                            _dt4n        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4n"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask       ); _dt4n = null; }
-                            _dt4u        = JDBCHelper.processZDT(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4u"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask       ); _dt4u = null; }
-                            _dt4a        = JDBCHelper.processZDTs(_rowTZ       , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4a"       , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A       , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask       ); _dt4a = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DELETED._Mask    ); _deleted = null; }
+                                                         _dt3a                                     = JDBCHelper.processZDTs(_dt3aTZ                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt3a"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3ATZ                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask                                    ); _dt3a = null; }
+                                                         _dt4                                      = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                     , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4"                                     , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4                                     , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask                                     ); _dt4 = null; }
+                                                         _dt4n                                     = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4n"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask                                    ); _dt4n = null; }
+                                                         _dt4u                                     = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4u"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask                                    ); _dt4u = null; }
+                                                         _dt4a                                     = JDBCHelper.processZDTs(_rowTZ_TILDATEST_TestingTimestamps_Cloned                                    , "tilda.data_test.TILDATEST.TestingTimestamps_Cloned.dt4a"                                    , RS, ++i, TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A                                    , TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS_CLONED                                    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask                                    ); _dt4a = null; }
+                                                         _created                                  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.CREATED._Mask                                 ); _created = null; }
+                                                         _lastUpdated                              = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.LASTUPDATED._Mask                             ); _lastUpdated = null; }
+                                                         _deleted                                  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DELETED._Mask                                 ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -8810,27 +8820,27 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                                            +                                   getRefnum     ()
-               + "; id: "                                                                                                                + TextUtil.printVariableStr        (getId         ())
-               + "; dt1"           + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1._Mask        ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt1        ()))
-               + "; dt1n"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt1n       ()))
-               + "; dt1u"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt1u       ()))
-               + "; dt1a"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt1a       ()))
-               + "; dt2"           + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask        ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt2        ()))
-               + "; dt2n"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt2n       ()))
-               + "; dt2u"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt2u       ()))
-               + "; dt2a"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt2a       ()))
-               + "; dt3"           + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3._Mask        ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt3        ()))
-               + "; dt3n"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt3n       ()))
-               + "; dt3u"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt3u       ()))
-               + "; dt3a"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt3a       ()))
-               + "; dt4"           + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask        ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt4        ()))
-               + "; dt4n"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt4n       ()))
-               + "; dt4u"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask       ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt4u       ()))
-               + "; dt4a"          + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt4a       ()))
-               + "; created: "                                                                                                           + DateTimeUtil.printDateTimeForJSON(getCreated    ())
-               + "; lastUpdated: "                                                                                                       + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
-               + "; deleted"       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DELETED._Mask    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
+                   "refnum: "                                                                                                                                                                      +                                   getRefnum                                  ()
+               + "; id: "                                                                                                                                                                          + TextUtil.printVariableStr        (getId                                      ())
+               + "; dt1"                                        + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1._Mask                                     ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt1                                     ()))
+               + "; dt1n"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1N._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt1n                                    ()))
+               + "; dt1u"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1U._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt1u                                    ()))
+               + "; dt1a"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT1A._Mask                                    ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt1a                                    ()))
+               + "; dt2"                                        + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2._Mask                                     ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt2                                     ()))
+               + "; dt2n"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2N._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt2n                                    ()))
+               + "; dt2u"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2U._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt2u                                    ()))
+               + "; dt2a"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT2A._Mask                                    ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt2a                                    ()))
+               + "; dt3"                                        + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3._Mask                                     ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt3                                     ()))
+               + "; dt3n"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3N._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt3n                                    ()))
+               + "; dt3u"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3U._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt3u                                    ()))
+               + "; dt3a"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT3A._Mask                                    ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt3a                                    ()))
+               + "; dt4"                                        + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4._Mask                                     ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt4                                     ()))
+               + "; dt4n"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4N._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt4n                                    ()))
+               + "; dt4u"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4U._Mask                                    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDt4u                                    ()))
+               + "; dt4a"                                       + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DT4A._Mask                                    ) == true ? ": NULL" : ": " + TextUtil.print                   (getDt4a                                    ()))
+               + "; created: "                                                                                                                                                                     + DateTimeUtil.printDateTimeForJSON(getCreated                                 ())
+               + "; lastUpdated: "                                                                                                                                                                 + DateTimeUtil.printDateTimeForJSON(getLastUpdated                             ())
+               + "; deleted"                                    + (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_CLONED_Factory.COLS.DELETED._Mask                                 ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted                                 ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

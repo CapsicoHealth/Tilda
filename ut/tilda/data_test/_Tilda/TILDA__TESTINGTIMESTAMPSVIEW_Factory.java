@@ -61,7 +61,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive              ID     = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "id"     , 0/*0*/, 20, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitive              ID                                             = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "id"                                             , 0/*0*/, 20, "Medical system unique enterprise id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT1_MAX= new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_max", 1/*1*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT1_MAX                                        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_max"                                        , 1/*1*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,49 +103,199 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DT2_MAX= new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_max", 2/*2*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT2_MAX                                        = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_max"                                        , 2/*2*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt3_max -> TILDATEST.TestingTimestampsView."dt3_max"
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt1_firstTZ -> TILDATEST.TestingTimestampsView."dt1_firstTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>dt3_max of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>dt1_firstTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'dt1_first'.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt1_firstTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt1_firstTZ</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitiveNull          DT1_FIRSTTZ                                    = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_firstTZ"                                    , 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'dt1_first'.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt1_first -> TILDATEST.TestingTimestampsView."dt1_first"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>dt1_first of type ZonedDateTime</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt3_max of type timestamp</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt3_max</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt1_first of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt1_first</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dt1_firstTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT3_MAX= new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_max", 3/*3*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT1_FIRST                                      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_first"                                      , 4/*4*/, "The blah", null, null, DT1_FIRSTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt4_max -> TILDATEST.TestingTimestampsView."dt4_max"
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2 -> TILDATEST.TestingTimestampsView."rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>dt4_max of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2 of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2 of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitiveNull          ROWTZ_TILDATEST_TESTINGTIMESTAMPSVIEW_FIRST_DT2= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2", 5/*5*/, 5, "Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt2_first -> TILDATEST.TestingTimestampsView."dt2_first"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>dt2_first of type ZonedDateTime</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt4_max of type timestamp</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt4_max</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt2_first of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt2_first</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_Datetime_plainPrimitiveNull  DT4_MAX= new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4_max", 4/*4*/, "The blah", null, null);
+     public final Type_DatetimePrimitiveNull        DT2_FIRST                                      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_first"                                      , 6/*6*/, "The blah", null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt3_firstTZ -> TILDATEST.TestingTimestampsView."dt3_firstTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>dt3_firstTZ of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'dt3_first'.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt3_firstTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt3_firstTZ</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitiveNull          DT3_FIRSTTZ                                    = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_firstTZ"                                    , 7/*7*/, 5, "Generated helper column to hold the time zone ID for 'dt3_first'.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt3_first -> TILDATEST.TestingTimestampsView."dt3_first"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>dt3_first of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt3_first of type timestamp</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt3_first</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'dt3_firstTZ'</LI>
+</TD></TR>
+
+</TABLE>
+*/
+     public final Type_Datetime_plainPrimitiveNull  DT3_FIRST                                      = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_first"                                      , 8/*8*/, "The blah", null, null, DT3_FIRSTTZ);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4 -> TILDATEST.TestingTimestampsView."rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4 of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4 of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitiveNull          ROWTZ_TILDATEST_TESTINGTIMESTAMPSVIEW_FIRST_DT4= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4", 9/*9*/, 5, "Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data_test.TILDATEST.TestingTimestampsView.dt4_first -> TILDATEST.TestingTimestampsView."dt4_first"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>dt4_first of type ZonedDateTime</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.TestingTimestampsView.dt4_first of type timestamp</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.TestingTimestampsView.dt4_first</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp without timezone</LI>
+<LI>Timezone information stored in 'rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4'</LI>
+</TD></TR>
+
+</TABLE>
+*/
+     public final Type_Datetime_plainPrimitiveNull  DT4_FIRST                                      = new Type_Datetime_plainPrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "dt4_first"                                      , 10/*10*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +316,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull            DT1_CNT= new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_cnt", 5/*5*/, "The blah", null, null, null);
+     public final Type_LongPrimitiveNull            DT1_CNT                                        = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_cnt"                                        , 11/*11*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +337,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull            DT2_CNT= new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_cnt", 6/*6*/, "The blah", null, null, null);
+     public final Type_LongPrimitiveNull            DT2_CNT                                        = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_cnt"                                        , 12/*12*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +358,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull            DT3_CNT= new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_cnt", 7/*7*/, "The blah", null, null, null);
+     public final Type_LongPrimitiveNull            DT3_CNT                                        = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_cnt"                                        , 13/*13*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -229,7 +379,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull            DT4_CNT= new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt4_cnt", 8/*8*/, "The blah", null, null, null);
+     public final Type_LongPrimitiveNull            DT4_CNT                                        = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "dt4_cnt"                                        , 14/*14*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,7 +401,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         DT1_ARR= new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_arr", 9/*9*/, "The blah", null, null);
+     public final Type_StringCollectionNull         DT1_ARR                                        = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt1_arr"                                        , 15/*15*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,7 +423,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         DT2_ARR= new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_arr", 10/*10*/, "The blah", null, null);
+     public final Type_StringCollectionNull         DT2_ARR                                        = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt2_arr"                                        , 16/*16*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,7 +445,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         DT3_ARR= new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_arr", 11/*11*/, "The blah", null, null);
+     public final Type_StringCollectionNull         DT3_ARR                                        = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt3_arr"                                        , 17/*17*/, "The blah", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,11 +467,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringCollectionNull         DT4_ARR= new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt4_arr", 12/*12*/, "The blah", null, null);
+     public final Type_StringCollectionNull         DT4_ARR                                        = new Type_StringCollectionNull        (SCHEMA_LABEL, TABLENAME_LABEL, "dt4_arr"                                        , 18/*18*/, "The blah", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.ID,COLS.DT1_MAX,COLS.DT2_MAX,COLS.DT3_MAX,COLS.DT4_MAX,COLS.DT1_CNT,COLS.DT2_CNT,COLS.DT3_CNT,COLS.DT4_CNT,COLS.DT1_ARR,COLS.DT2_ARR,COLS.DT3_ARR,COLS.DT4_ARR };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.ID,COLS.DT1_MAX,COLS.DT2_MAX,COLS.DT1_FIRSTTZ,COLS.DT1_FIRST,COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPSVIEW_FIRST_DT2,COLS.DT2_FIRST,COLS.DT3_FIRSTTZ,COLS.DT3_FIRST,COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPSVIEW_FIRST_DT4,COLS.DT4_FIRST,COLS.DT1_CNT,COLS.DT2_CNT,COLS.DT3_CNT,COLS.DT4_CNT,COLS.DT1_ARR,COLS.DT2_ARR,COLS.DT3_ARR,COLS.DT4_ARR };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] {  };
 
@@ -465,6 +615,10 @@ Lookup records by the query 'All' over
      }
 
 
+
+
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data_test.TestingTimestampsView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
@@ -488,7 +642,7 @@ Lookup records by the query 'All' over
 
    public static String getCSVHeader()
     {
-      return "\"id\",\"dt1_max\",\"dt2_max\",\"dt3_max\",\"dt4_max\",\"dt1_cnt\",\"dt2_cnt\",\"dt3_cnt\",\"dt4_cnt\",\"dt1_arr\",\"dt2_arr\",\"dt3_arr\",\"dt4_arr\"";
+      return "\"id\",\"dt1_max\",\"dt2_max\",\"dt1_firstTZ\",\"dt1_first\",\"rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2\",\"dt2_first\",\"dt3_firstTZ\",\"dt3_first\",\"rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4\",\"dt4_first\",\"dt1_cnt\",\"dt2_cnt\",\"dt3_cnt\",\"dt4_cnt\",\"dt1_arr\",\"dt2_arr\",\"dt3_arr\",\"dt4_arr\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data_test.TestingTimestampsView_Data> L, boolean includeHeader) throws java.io.IOException
@@ -517,9 +671,21 @@ Lookup records by the query 'All' over
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt2_max()));
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt3_max()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDt1_firstTZ());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt4_max()));
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt1_first()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt2_first()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDt3_firstTZ());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt3_first()));
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getDt4_first()));
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getDt1_cnt());
       Str.append(",");
@@ -604,11 +770,29 @@ Lookup records by the query 'All' over
       if (Obj.isNullDt2_max() == false && Obj.getDt2_max() != null)
         JSONUtil.print(out, "dt2_max", ++i==0, Obj.getDt2_max());
 
-      if (Obj.isNullDt3_max() == false && Obj.getDt3_max() != null)
-        JSONUtil.print(out, "dt3_max", ++i==0, Obj.getDt3_max());
+      if (Obj.isNullDt1_firstTZ() == false && Obj.getDt1_firstTZ() != null)
+        JSONUtil.print(out, "dt1_firstTZ", ++i==0, Obj.getDt1_firstTZ());
 
-      if (Obj.isNullDt4_max() == false && Obj.getDt4_max() != null)
-        JSONUtil.print(out, "dt4_max", ++i==0, Obj.getDt4_max());
+      if (Obj.isNullDt1_first() == false && Obj.getDt1_first() != null)
+        JSONUtil.print(out, "dt1_first", ++i==0, Obj.getDt1_first());
+
+      if (Obj.isNullRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2() == false && Obj.getRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2() != null)
+        JSONUtil.print(out, "rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2", ++i==0, Obj.getRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt2());
+
+      if (Obj.isNullDt2_first() == false && Obj.getDt2_first() != null)
+        JSONUtil.print(out, "dt2_first", ++i==0, Obj.getDt2_first());
+
+      if (Obj.isNullDt3_firstTZ() == false && Obj.getDt3_firstTZ() != null)
+        JSONUtil.print(out, "dt3_firstTZ", ++i==0, Obj.getDt3_firstTZ());
+
+      if (Obj.isNullDt3_first() == false && Obj.getDt3_first() != null)
+        JSONUtil.print(out, "dt3_first", ++i==0, Obj.getDt3_first());
+
+      if (Obj.isNullRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4() == false && Obj.getRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4() != null)
+        JSONUtil.print(out, "rowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4", ++i==0, Obj.getRowTZ_TILDATEST_TestingTimestampsView_FIRST_dt4());
+
+      if (Obj.isNullDt4_first() == false && Obj.getDt4_first() != null)
+        JSONUtil.print(out, "dt4_first", ++i==0, Obj.getDt4_first());
 
       if (Obj.isNullDt1_cnt() == false)
         JSONUtil.print(out, "dt1_cnt", ++i==0, Obj.getDt1_cnt());
