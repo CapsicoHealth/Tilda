@@ -162,18 +162,19 @@ public class Sql extends BigQuery implements CodeGenSql
             }
         if (O._PrimaryKey != null)
           {
-            Out.print("  -- PRIMARY KEY(");
+            Out.print("  , PRIMARY KEY(");
             PrintColumnList(Out, O._PrimaryKey._ColumnObjs);
-            Out.println(")");
+            Out.println(") NOT ENFORCED");
           }
         if (O._ForeignKeys != null)
           for (ForeignKey FK : O._ForeignKeys)
             if (FK != null)
               {
-                Out.println("  -- FK not supported in BQ");
-                Out.print("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
+                Out.print("  , FOREIGN KEY (");
                 PrintColumnList(Out, FK._SrcColumnObjs);
-                Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
+                Out.print(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name+"(");
+                PrintColumnList(Out, FK._DestObjectObj._PrimaryKey._ColumnObjs);
+                Out.println(") NOT ENFORCED");
               }
         Out.println(" )");
         Out.println("OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(O._Description)+");");
