@@ -57,7 +57,7 @@ public class Template extends Formula implements PatternObject
         _ParentView = ParentView;
         int Errs = PS.getErrorCount();
 
-        if (super.Validate(PS, ParentView) == false)
+        if (super.validate(PS, ParentView) == false)
          return false;
 
         if (_Expansions.size() == 0)
@@ -67,7 +67,7 @@ public class Template extends Formula implements PatternObject
         Set<String> Titles= new HashSet<String>();
         for (TemplateExpansion TE : _Expansions)
           {
-            TE.Validate(PS, _ParentView, this);
+            TE.validate(PS, _ParentView, this);
             if (Names.add(TE._Name) == false)
               PS.AddError("View " + _ParentView.getShortName() + " is defining a formula pattern '"+_Name+"' with a duplicate name '"+TE._Name+"'.");
             if (Titles.add(TE._Title) == false)

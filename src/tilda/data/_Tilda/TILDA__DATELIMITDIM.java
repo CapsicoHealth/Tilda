@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -48,7 +48,7 @@ The Table TILDA.DateLimitDim :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="DateLimitDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='DateLimitDim-invalidDate_DIV' class='columns'>invalidDate</B>&nbsp;&nbsp;</TD>
@@ -57,7 +57,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The invalid date<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The invalid date, e.g., '1111-11-11'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
 </TABLE>
 </TD>
 </TR>
@@ -69,7 +70,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The min date<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The min date included in the DIM<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
 </TABLE>
 </TD>
 </TR>
@@ -81,7 +83,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The max date<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The max date included in the DIM<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
 </TABLE>
 </TD>
 </TR>
@@ -134,7 +137,7 @@ public abstract class TILDA__DATELIMITDIM implements tilda.interfaces.WriterObje
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>invalidDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date, e.g., '1111-11-11'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.invalidDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.invalidDate</TD></TR>
 
@@ -156,7 +159,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>invalidDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date, e.g., '1111-11-11'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.invalidDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.invalidDate</TD></TR>
 
@@ -177,7 +180,7 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>invalidDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date, e.g., '1111-11-11'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.invalidDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.invalidDate</TD></TR>
 
@@ -209,7 +212,7 @@ This is the setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>invalidDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The invalid date, e.g., '1111-11-11'.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.invalidDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.invalidDate</TD></TR>
 
@@ -236,7 +239,7 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>minDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.minDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.minDate</TD></TR>
 
@@ -257,7 +260,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>minDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.minDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.minDate</TD></TR>
 
@@ -278,7 +281,7 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>minDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.minDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.minDate</TD></TR>
 
@@ -310,7 +313,7 @@ This is the setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>minDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The min date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.minDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.minDate</TD></TR>
 
@@ -337,7 +340,7 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>maxDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.maxDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.maxDate</TD></TR>
 
@@ -358,7 +361,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>maxDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.maxDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.maxDate</TD></TR>
 
@@ -379,7 +382,7 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>maxDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.maxDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.maxDate</TD></TR>
 
@@ -411,7 +414,7 @@ This is the setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>maxDate of type LocalDate</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The max date included in the DIM</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.DateLimitDim.maxDate of type date</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.DateLimitDim.maxDate</TD></TR>
 
@@ -523,7 +526,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -566,13 +569,13 @@ This is the hasChanged for:<BR>
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "DateLimitDim");
           int Pos = S.length();
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true) { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true ? C.getCommaCurrentDateTime() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -588,21 +591,21 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_invalidDate) == true)
-              { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATELIMITDIM_Factory.COLS.INVALIDDATE.getFullColumnVarForUpdate(C, S);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MINDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_minDate) == true)
-              { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATELIMITDIM_Factory.COLS.MINDATE.getFullColumnVarForUpdate(C, S);
            }
           if (__Changes.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__DATELIMITDIM_Factory.COLS.MAXDATE._Mask) == false && DateTimeUtil.isNowPlaceholder(_maxDate) == true)
-              { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__DATELIMITDIM_Factory.COLS.MAXDATE.getFullColumnVarForUpdate(C, S);
            }
@@ -813,7 +816,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__DATELIMITDIM_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

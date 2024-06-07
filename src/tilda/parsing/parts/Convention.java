@@ -8,13 +8,14 @@ import com.google.gson.annotations.SerializedName;
 import tilda.enums.ConventionNaming;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
+import tilda.enums.TZMode;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
 
 public class Convention
   {
-    protected static final Logger     LOG        = LogManager.getLogger(Convention.class.getName());
+    protected static final Logger     LOG                   = LogManager.getLogger(Convention.class.getName());
 
     /*@formatter:off*/
     @SerializedName("sameAs"                 ) public String  _SameAs                   ;
@@ -31,20 +32,29 @@ public class Convention
 //    @SerializedName("dbColumnNameTranslation") public Boolean _DBColumnNameTranslation  ;
     @SerializedName("defaultMode")             public String  _DefaultModeStr           ;
     @SerializedName("defaultLC")               public String  _DefaultLCStr             ;
+    @SerializedName("defaultTzMode")           public String  _DefaultTzModeStr         ;
+    @SerializedName("tzRowName")               public String  _TzRowName                ;
+//    @SerializedName("tzColPostfix")            public String  _TzColPostfix             ; // TERRIBLE IDEA TO ALLOW CUSTOMIZATION OF THIS!
     /*@formatter:on*/
 
     transient public Schema           _ParentSchema;
-    transient public Boolean          _Validated = null;
+    transient public Boolean          _Validated            = null;
     transient public ConventionNaming _ColumnNamingConvention;
     transient public ObjectMode       _DefaultMode;
     transient public ObjectLifecycle  _DefaultLC;
-    
-    public static final String _DEFAULT_PK = "refnum";
-    public static final String _DEFAULT_CREATED = "created";
-    public static final String _DEFAULT_LASTUPDATED = "lastUpdated";
-    public static final String _DEFAULT_DELETED = "deleted";
+    transient public TZMode           _DefaultTzMode;
 
-    public boolean Validate(ParserSession PS, Schema parentSchema)
+    private static final String        _DEFAULT_PK           = "refnum";
+    private static final String        _DEFAULT_CREATED      = "created";
+    private static final String        _DEFAULT_LASTUPDATED  = "lastUpdated";
+    private static final String        _DEFAULT_DELETED      = "deleted";
+    private static final String        _DEFAULT_TZROWNAME    = "rowTZ";
+    
+    // THIS IS NOT OVERRIDABLE. TOO CRITICAL FOR LOGIC OFTEN PERFORMED OUTSIDE OF THE TILDA CONTEXT
+    // WHERE SUCH CUSTOMIZATION MIGHT NOT BE KNOWN.
+    private static final String        _DEFAULT_TZCOLPOSTFIX = "TZ";  
+
+    public boolean validate(ParserSession PS, Schema parentSchema)
     throws Exception
       {
         _ParentSchema = parentSchema;
@@ -57,7 +67,7 @@ public class Convention
         LOG.info("Validating Tilda Schema '" + _ParentSchema.getFullName() + "' convention info.");
 
         int Errs = PS.getErrorCount();
-
+        
         if (TextUtil.isNullOrEmpty(_SameAs) == false)
           {
             if (_PrimaryKeyName != null)
@@ -68,6 +78,10 @@ public class Convention
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'lastUpdatedName'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
             if (_DeletedName != null)
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'deletedName'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
+            if (_TzRowName != null)
+              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'tzRowName'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
+//            if (_TzColPostfix != null)
+//              PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'tzColPostfix'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
 
             if (_ForeignKeyNamePostfix != null)
               PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined conventions with a 'sameAs' as well as 'foreignKeyNamePostfix'. You cannot reuse a set of conventions and redefine directivess as this would work against standardization of conventions across schemas. Only 'default' fields can be overriden.");
@@ -113,14 +127,13 @@ public class Convention
         // else if (_DBColumnNameTranslation == true && _ColumnNamingConvention != ConventionNaming.CAMEL_CASE_JS)
         // PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined convention 'dbColumnNameTranslation' to true, but 'columnNamingConvention' has a value of '" +
         // _ColumnNamingConventionStr + "'. dbColumnNameTranslation can only be set to true if 'columnNamingConvention' is '" + ConventionNaming.CAMEL_CASE_JS + "'.");
-        
+
         int count = (TextUtil.isNullOrEmpty(_CreatedName) == true ? 0 : 1)
-                  + (TextUtil.isNullOrEmpty(_LastUpdatedName) == true ? 0 : 1)
-                  + (TextUtil.isNullOrEmpty(_DeletedName) == true ? 0 : 1)
-                  ;
-        if (count !=0 && count != 3)
-          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined at least one value for created/lastUpdated/created, bu not all three. To enforce consistency, either define all 3, or none.");
-        
+        + (TextUtil.isNullOrEmpty(_LastUpdatedName) == true ? 0 : 1)
+        + (TextUtil.isNullOrEmpty(_DeletedName) == true ? 0 : 1);
+        if (count != 0 && count != 3)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined at least one value for created/lastUpdated/created, but not all three. To enforce consistency, either define all 3, or none.");
+
         if (TextUtil.isNullOrEmpty(_PrimaryKeyName) == true)
           _PrimaryKeyName = _DEFAULT_PK;
         if (TextUtil.isNullOrEmpty(_CreatedName) == true)
@@ -129,7 +142,11 @@ public class Convention
           _LastUpdatedName = _DEFAULT_LASTUPDATED;
         if (TextUtil.isNullOrEmpty(_DeletedName) == true)
           _DeletedName = _DEFAULT_DELETED;
-        
+        if (TextUtil.isNullOrEmpty(_TzRowName) == true)
+          _TzRowName = _DEFAULT_TZROWNAME;
+//        if (TextUtil.isNullOrEmpty(_TzColPostfix) == true)
+//          _TzRowName = _DEFAULT_TZCOLPOSTFIX;
+
         if (TextUtil.isNullOrEmpty(_ForeignKeyNamePostfix) == true)
           _ForeignKeyNamePostfix = "";
 
@@ -158,9 +175,21 @@ public class Convention
         else if (_DefaultLCStr != null && (_DefaultLC = ObjectLifecycle.parse(_DefaultLCStr)) == null)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid convention 'defaultLC' '" + _DefaultLCStr + "'.");
 
+        if (_DefaultTzModeStr != null)
+          {
+            _DefaultTzMode = TZMode.parse(_DefaultTzModeStr);
+            if (_DefaultTzMode == null)
+             PS.AddError("Schema '" + _ParentSchema.getFullName() + "' defined an invalid convention 'defaultTzMode' '" + _DefaultTzModeStr + "'.");
+          }
+        else
+          {
+            _DefaultTzMode = TZMode.COLUMN;
+            _DefaultTzModeStr = _DefaultTzMode.name();
+          }
+        
         if (_CaseSensitiveColumns == null)
           _CaseSensitiveColumns = Boolean.TRUE;
-
+        
         return _Validated = Errs == PS.getErrorCount();
       }
 
@@ -176,19 +205,27 @@ public class Convention
         _ColumnNamingConventionStr = conventions._ColumnNamingConventionStr;
         // _DBColumnNameTranslation = conventions._DBColumnNameTranslation;
 
+        _CaseSensitiveColumns = conventions._CaseSensitiveColumns;
+
         // Defaults are optional and can be overridden.
         if (TextUtil.isNullOrEmpty(_DefaultModeStr) == true)
           _DefaultModeStr = conventions._DefaultModeStr;
         if (TextUtil.isNullOrEmpty(_DefaultLCStr) == true)
           _DefaultLCStr = conventions._DefaultLCStr;
+        if (TextUtil.isNullOrEmpty(_DefaultTzModeStr) == true)
+          _DefaultTzModeStr = conventions._DefaultTzModeStr;
 
-        _CaseSensitiveColumns = conventions._CaseSensitiveColumns;
-
+        _TzRowName = conventions._TzRowName;
       }
 
+    public static String getDefaultTzColPostfix()
+      {
+        return _DEFAULT_TZCOLPOSTFIX;
+      }
+    
     public static boolean isOCCDefaultColumnName(String name)
       {
         return name.equals(_DEFAULT_CREATED) || name.equals(_DEFAULT_LASTUPDATED) || name.equals(_DEFAULT_DELETED);
       }
-    
+
   }

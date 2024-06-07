@@ -191,11 +191,16 @@ public class BQHelper
 
     public static JobResults runQuery(BigQuery bq, String q)
       {
+        return runQuery(bq, q, 10_100l);
+      }
+
+    public static JobResults runQuery(BigQuery bq, String q, long maxQueryResults)
+      {
         try
           {
             long ts = System.nanoTime();
             LOG.debug("BIGQUERY (sync): " + q);
-            QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).build();
+            QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).setMaxResults(maxQueryResults).build();
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
             Job job = bq.create(jobInfo);
@@ -374,7 +379,7 @@ public class BQHelper
       }
 
 
-    public Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
+    public static Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {
         return bq.getTable(datasetName, tableName).getDefinition().getSchema();
       }
@@ -617,5 +622,15 @@ public class BQHelper
         return DateTimeUtil.parseDate(f.getStringValue());
       }
 
+
+    /**
+     * Creates a table in a JDBC destination (based on the Connection) from a BQ Schema definition
+     * @param schema
+     * @param C
+     */
+    public static void createTable(Schema schema, Connection C)
+      {
+        //schema.getFields()
+      }
 
   }

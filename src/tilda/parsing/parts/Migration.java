@@ -26,15 +26,16 @@ import tilda.parsing.ParserSession;
 public class Migration
   {
     /*@formatter:off*/
-    @SerializedName("renames") public List<MigrationRename> _Renames = new ArrayList<MigrationRename>();
-// DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
-//    @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
-    @SerializedName("moves"  ) public List<MigrationMove>   _Moves   = new ArrayList<MigrationMove  >();
+    @SerializedName("renames" ) public List<MigrationRename>   _Renames  = new ArrayList<MigrationRename >();
+    @SerializedName("moves"   ) public List<MigrationMove>     _Moves    = new ArrayList<MigrationMove   >();
+    @SerializedName("notNulls") public List<MigrationNotNull>  _NotNulls = new ArrayList<MigrationNotNull>();
+//  DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
+//  @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
     /*@formatter:on*/
 
     public transient Schema              _Parent;
 
-    public boolean Validate(ParserSession PS, Schema Parent)
+    public boolean validate(ParserSession PS, Schema Parent)
       {
         int Errs = PS.getErrorCount();
         _Parent = Parent;
@@ -42,7 +43,7 @@ public class Migration
         for (int i = 0; i < _Renames.size(); ++i)
           {
             MigrationRename M = _Renames.get(i);
-            M.Validate(PS, Parent);
+            M.validate(PS, Parent);
             if (M._Object != null && M._Object._CloneAs != null)
               for (Cloner cl : M._Object._CloneAs)
                 {
@@ -54,12 +55,24 @@ public class Migration
 
         // DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
 //        for (MigrationDrop M : _Drops)
-//          M.Validate(PS, Parent);
+//          M.validate(PS, Parent);
 
         for (MigrationMove M : _Moves)
-          M.Validate(PS, Parent);
+          M.validate(PS, Parent);
+
+        for (MigrationNotNull M : _NotNulls)
+          M.validate(PS, Parent);
 
         return Errs == PS.getErrorCount();
+      }
+
+    public MigrationNotNull getNotNull(Column col)
+      {
+        for (MigrationNotNull mnn : _NotNulls)
+          for (Column c : mnn._Columns)
+            if (col.getFullName().equals(c.getFullName()) == true)
+             return mnn;
+        return null;
       }
 
   }

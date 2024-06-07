@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          JOBREFNUM          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"          , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                JOBREFNUM          = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"          , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBNAME            = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobName"            , 1/*1*/, 250, "Name", null, null, null);
+     public final Type_StringPrimitive              JOBNAME            = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "jobName"            , 1/*1*/, 250, "Name", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBTYPE            = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobType"            , 2/*2*/, 250, "Job type", null, null, null);
+     public final Type_StringPrimitiveNull          JOBTYPE            = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobType"            , 2/*2*/, 250, "Job type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBUSERID          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobUserId"          , 3/*3*/, 250, "Job user Id", null, null, null);
+     public final Type_StringPrimitiveNull          JOBUSERID          = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobUserId"          , 3/*3*/, 250, "Job user Id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBDATASTARTTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStartTZ"     , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'jobDataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull          JOBDATASTARTTZ     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStartTZ"     , 4/*4*/, 5, "Generated helper column to hold the time zone ID for 'jobDataStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,9 +167,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  JOBDATASTART       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStart"       , 5/*5*/, "StartTime", null, null, JOBDATASTARTTZ);
+     public final Type_DatetimePrimitiveNull        JOBDATASTART       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataStart"       , 5/*5*/, "StartTime", null, null, JOBDATASTARTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +196,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBDATAENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEndTZ"       , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'jobDataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull          JOBDATAENDTZ       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEndTZ"       , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'jobDataEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,9 +215,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  JOBDATAEND         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEnd"         , 7/*7*/, "StartTime", null, null, JOBDATAENDTZ);
+     public final Type_DatetimePrimitiveNull        JOBDATAEND         = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "jobDataEnd"         , 7/*7*/, "StartTime", null, null, JOBDATAENDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +244,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBSTARTTZ         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobStartTZ"         , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'jobStart'.", null, null, null);
+     public final Type_StringPrimitive              JOBSTARTTZ         = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "jobStartTZ"         , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'jobStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,9 +263,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitive      JOBSTART           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "jobStart"           , 9/*9*/, "StartTime", null, null, JOBSTARTTZ);
+     public final Type_DatetimePrimitive            JOBSTART           = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "jobStart"           , 9/*9*/, "StartTime", null, null, JOBSTARTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,7 +292,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBENDTZ           = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobEndTZ"           , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 'jobEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull          JOBENDTZ           = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobEndTZ"           , 10/*10*/, 5, "Generated helper column to hold the time zone ID for 'jobEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,9 +311,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  JOBEND             = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobEnd"             , 11/*11*/, "EndTime", null, null, JOBENDTZ);
+     public final Type_DatetimePrimitiveNull        JOBEND             = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "jobEnd"             , 11/*11*/, "EndTime", null, null, JOBENDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,7 +339,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   JOBSTATUS          = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobStatus"          , 12/*12*/, "Status", null, null, null);
+     public final Type_BooleanPrimitiveNull         JOBSTATUS          = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "jobStatus"          , 12/*12*/, "Status", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +361,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBMSG             = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobMsg"             , 13/*13*/, 8192, "Message details", null, null, null);
+     public final Type_StringPrimitiveNull          JOBMSG             = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobMsg"             , 13/*13*/, 8192, "Message details", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -363,7 +383,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBPARTNAME        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartName"        , 14/*14*/, 250, "Job part name", null, null, null);
+     public final Type_StringPrimitive              JOBPARTNAME        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartName"        , 14/*14*/, 250, "Job part name", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -385,7 +405,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTTYPE        = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartType"        , 15/*15*/, 250, "Job part type", null, null, null);
+     public final Type_StringPrimitiveNull          JOBPARTTYPE        = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartType"        , 15/*15*/, 250, "Job part type", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -407,7 +427,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTDATASTARTTZ = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStartTZ" , 16/*16*/, 5, "Generated helper column to hold the time zone ID for 'jobPartDataStart'.", null, null, null);
+     public final Type_StringPrimitiveNull          JOBPARTDATASTARTTZ = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStartTZ" , 16/*16*/, 5, "Generated helper column to hold the time zone ID for 'jobPartDataStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,9 +446,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  JOBPARTDATASTART   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStart"   , 17/*17*/, "Job part data start", null, null, JOBPARTDATASTARTTZ);
+     public final Type_DatetimePrimitiveNull        JOBPARTDATASTART   = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataStart"   , 17/*17*/, "Job part data start", null, null, JOBPARTDATASTARTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +475,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTDATAENDTZ   = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEndTZ"   , 18/*18*/, 5, "Generated helper column to hold the time zone ID for 'jobPartDataEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull          JOBPARTDATAENDTZ   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEndTZ"   , 18/*18*/, 5, "Generated helper column to hold the time zone ID for 'jobPartDataEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -469,9 +494,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartDataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  JOBPARTDATAEND     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEnd"     , 19/*19*/, "Job part data end", null, null, JOBPARTDATAENDTZ);
+     public final Type_DatetimePrimitiveNull        JOBPARTDATAEND     = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartDataEnd"     , 19/*19*/, "Job part data end", null, null, JOBPARTDATAENDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -493,7 +523,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBPARTSTARTTZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStartTZ"     , 20/*20*/, 5, "Generated helper column to hold the time zone ID for 'jobPartStart'.", null, null, null);
+     public final Type_StringPrimitive              JOBPARTSTARTTZ     = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStartTZ"     , 20/*20*/, 5, "Generated helper column to hold the time zone ID for 'jobPartStart'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -512,9 +542,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitive      JOBPARTSTART       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStart"       , 21/*21*/, "Job part execution start", null, null, JOBPARTSTARTTZ);
+     public final Type_DatetimePrimitive            JOBPARTSTART       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStart"       , 21/*21*/, "Job part execution start", null, null, JOBPARTSTARTTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -536,7 +571,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    JOBPARTENDTZ       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEndTZ"       , 22/*22*/, 5, "Generated helper column to hold the time zone ID for 'jobPartEnd'.", null, null, null);
+     public final Type_StringPrimitiveNull          JOBPARTENDTZ       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEndTZ"       , 22/*22*/, 5, "Generated helper column to hold the time zone ID for 'jobPartEnd'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -555,9 +590,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'jobPartEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  JOBPARTEND         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEnd"         , 23/*23*/, "Job part execution end", null, null, JOBPARTENDTZ);
+     public final Type_DatetimePrimitiveNull        JOBPARTEND         = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartEnd"         , 23/*23*/, "Job part execution end", null, null, JOBPARTENDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -578,7 +618,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitiveNull   JOBPARTRECORDSCOUNT= new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRecordsCount", 24/*24*/, "count of database or file or ... records.", null, null, null);
+     public final Type_IntegerPrimitiveNull         JOBPARTRECORDSCOUNT= new Type_IntegerPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRecordsCount", 24/*24*/, "count of database or file or ... records.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -599,7 +639,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitiveNull   JOBPARTSTATUS      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStatus"      , 25/*25*/, "Status flag, i.e., success=true and failure-false", null, null, null);
+     public final Type_BooleanPrimitiveNull         JOBPARTSTATUS      = new Type_BooleanPrimitiveNull        (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartStatus"      , 25/*25*/, "Status flag, i.e., success=true and failure-false", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +660,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitive       JOBPARTNOTIFY      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartNotify"      , 26/*26*/, "Notification flag", null, null, null);
+     public final Type_BooleanPrimitive             JOBPARTNOTIFY      = new Type_BooleanPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartNotify"      , 26/*26*/, "Notification flag", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -642,7 +682,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        JOBPARTMESSAGE     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartMessage"     , 27/*27*/, 8192, "Message details", null, null, null);
+     public final Type_StringPrimitive              JOBPARTMESSAGE     = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartMessage"     , 27/*27*/, 8192, "Message details", null, null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -763,7 +803,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -801,13 +841,19 @@ Lookup records by the query 'All' over
    public static ListResults<tilda.data.JobView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.JobView_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
 
 

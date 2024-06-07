@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -43,11 +43,11 @@ The Table TILDA.JobPart :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>jobRefnumstart desc
+<LI>Has the following indices:<UL><LI>jobRefnum, start desc
 </LI>
-<LI>namestart desc
+<LI>name, start desc
 </LI>
-<LI>typestart desc
+<LI>type, start desc
 </LI>
 </UL></LI>
 </UL>
@@ -55,7 +55,7 @@ The Table TILDA.JobPart :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="JobPart_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JobPart-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -63,6 +63,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -73,6 +74,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Parent Job Refnum<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Job_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Job</A>: refnum</TD></TR>
 </TABLE>
@@ -86,6 +88,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Job part name</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -96,6 +99,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Job part type</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -103,8 +107,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-dataStartTZ_DIV' class='columns'>dataStartTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dataStart'.</TD>
 </TR>
@@ -116,6 +121,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part data start</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -123,8 +129,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-dataEndTZ_DIV' class='columns'>dataEndTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'dataEnd'.</TD>
 </TR>
@@ -136,6 +143,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part data end</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -143,8 +151,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-startTZ_DIV' class='columns'>startTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'start'.</TD>
 </TR>
@@ -156,6 +165,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part execution start</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -163,8 +173,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-endTZ_DIV' class='columns'>endTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'end'.</TD>
 </TR>
@@ -176,6 +187,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>Job part execution end</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -185,6 +197,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>count of database or file or ... records.</TD>
 </TR>
@@ -196,6 +209,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Status flag, i.e., success=true and failure-false</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -203,8 +217,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.JobPart)</TD>
 </TR>
@@ -213,8 +228,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.JobPart)</TD>
 </TR>
@@ -223,8 +239,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='JobPart-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDA.JobPart)</TD>
 </TR>
@@ -514,8 +531,8 @@ This is the setter for:<BR>
    public void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 250)
         throw new Exception("Cannot set tilda.data.TILDA.JobPart.name: the size "+v.length()+" is larger than the max allowed of 250: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -643,7 +660,7 @@ This is the setter for:<BR>
    public void setType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullType();
         }
@@ -803,7 +820,7 @@ This is the setter for:<BR>
     void setDataStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDataStartTZ();
         }
@@ -892,6 +909,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dataStart")
@@ -917,6 +939,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getDataStart()
@@ -938,6 +965,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDataStart()
@@ -959,6 +991,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDataStart(ZonedDateTime v) throws Exception
@@ -997,6 +1034,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDataStart()
@@ -1027,6 +1069,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDataStartNow() throws Exception
@@ -1050,6 +1097,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDataStartUndefined() throws Exception
@@ -1073,6 +1125,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDataStart(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -1096,6 +1153,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataStartTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDataStart()
@@ -1194,7 +1256,7 @@ This is the setter for:<BR>
     void setDataEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDataEndTZ();
         }
@@ -1283,6 +1345,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("dataEnd")
@@ -1308,6 +1375,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getDataEnd()
@@ -1329,6 +1401,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullDataEnd()
@@ -1350,6 +1427,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setDataEnd(ZonedDateTime v) throws Exception
@@ -1388,6 +1470,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullDataEnd()
@@ -1418,6 +1505,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDataEndNow() throws Exception
@@ -1441,6 +1533,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDataEndUndefined() throws Exception
@@ -1464,6 +1561,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setDataEnd(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -1487,6 +1589,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'dataEndTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedDataEnd()
@@ -1563,8 +1670,8 @@ This is the setter for:<BR>
     void setStartTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.JobPart.startTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_startTZ) == false)
@@ -1620,6 +1727,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("start")
@@ -1645,6 +1757,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getStart()
@@ -1666,6 +1783,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setStart(ZonedDateTime v) throws Exception
@@ -1702,6 +1824,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setStartNow() throws Exception
@@ -1725,6 +1852,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setStartUndefined() throws Exception
@@ -1748,6 +1880,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setStart(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -1771,6 +1908,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedStart()
@@ -1869,7 +2011,7 @@ This is the setter for:<BR>
     void setEndTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullEndTZ();
         }
@@ -1958,6 +2100,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("end")
@@ -1983,6 +2130,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getEnd()
@@ -2004,6 +2156,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullEnd()
@@ -2025,6 +2182,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setEnd(ZonedDateTime v) throws Exception
@@ -2063,6 +2225,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullEnd()
@@ -2093,6 +2260,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndNow() throws Exception
@@ -2116,6 +2288,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndUndefined() throws Exception
@@ -2139,6 +2316,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEnd(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -2162,6 +2344,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedEnd()
@@ -3280,7 +3467,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -3316,9 +3503,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.dataStart' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.DATASTART._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_dataStart.getZone().getId());
+          String zoneId = _dataStart.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.dataStart' because the timezone value '"+_dataStart.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.dataStart' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setDataStartTZ(ZI.getId());
         }
 
@@ -3329,9 +3517,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.dataEnd' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.DATAEND._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_dataEnd.getZone().getId());
+          String zoneId = _dataEnd.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.dataEnd' because the timezone value '"+_dataEnd.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.dataEnd' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setDataEndTZ(ZI.getId());
         }
 
@@ -3345,9 +3534,10 @@ This is the hasChanged for:<BR>
         throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.start' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__JOBPART_Factory.COLS.START._Mask);
        __Nulls.andNot(TILDA__JOBPART_Factory.COLS.START._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_start.getZone().getId());
+       String zoneId = _start.getZone().getId();
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.start' because the timezone value '"+_start.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+        throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.start' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setStartTZ(ZI.getId());
         }
 
@@ -3358,9 +3548,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.JobPart.end' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__JOBPART_Factory.COLS.END._Mask);
           __Nulls.andNot(TILDA__JOBPART_Factory.COLS.END._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_end.getZone().getId());
+          String zoneId = _end.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.end' because the timezone value '"+_end.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.JobPart.end' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setEndTZ(ZI.getId());
         }
 
@@ -3397,43 +3588,43 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "JobPart");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOBPART_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask) == true) { TILDA__JOBPART_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask) == true) { TILDA__JOBPART_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true) { TILDA__JOBPART_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.DATASTARTTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.REFNUM._Mask) == true) { TILDA__JOBPART_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.JOBREFNUM._Mask) == true) { TILDA__JOBPART_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.NAME._Mask) == true) { TILDA__JOBPART_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.TYPE._Mask) == true) { TILDA__JOBPART_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.DATASTARTTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == true) { TILDA__JOBPART_Factory.COLS.DATASTART.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == false && DateTimeUtil.isNowPlaceholder(_dataStart) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATASTART._Mask) == false && DateTimeUtil.isNowPlaceholder(_dataStart) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.DATAENDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.DATAENDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == true) { TILDA__JOBPART_Factory.COLS.DATAEND.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == false && DateTimeUtil.isNowPlaceholder(_dataEnd) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DATAEND._Mask) == false && DateTimeUtil.isNowPlaceholder(_dataEnd) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.STARTTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.STARTTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == true) { TILDA__JOBPART_Factory.COLS.START.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == false && DateTimeUtil.isNowPlaceholder(_start) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.START._Mask) == false && DateTimeUtil.isNowPlaceholder(_start) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.ENDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask) == true) { TILDA__JOBPART_Factory.COLS.ENDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == true) { TILDA__JOBPART_Factory.COLS.END.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == false && DateTimeUtil.isNowPlaceholder(_end) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.END._Mask) == false && DateTimeUtil.isNowPlaceholder(_end) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) { TILDA__JOBPART_Factory.COLS.RECORDSCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) { TILDA__JOBPART_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask) == true) { TILDA__JOBPART_Factory.COLS.RECORDSCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.STATUS._Mask) == true) { TILDA__JOBPART_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == true) { TILDA__JOBPART_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__JOBPART_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__JOBPART_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == true) { TILDA__JOBPART_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__JOBPART_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -3713,7 +3904,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPART_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -3727,42 +3918,23 @@ This is the hasChanged for:<BR>
                              _name         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.NAME._Mask        ); _name = null; }
                              _type         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.TYPE._Mask        ); _type = null; }
                              _dataStartTZ  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTARTTZ._Mask ); _dataStartTZ = null; } else _dataStartTZ  = _dataStartTZ .trim();
-                             _dataStart    = processZDT(_dataStartTZ   , "tilda.data.TILDA.JobPart.dataStart"   , RS, ++i, TILDA__JOBPART_Factory.COLS.DATASTART   , TILDA__JOBPART_Factory.COLS.DATASTARTTZ   ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask   ); _dataStart = null; }
+                             _dataStart    = JDBCHelper.processZDT(_dataStartTZ   , "tilda.data.TILDA.JobPart.dataStart"   , RS, ++i, TILDA__JOBPART_Factory.COLS.DATASTART   , TILDA__JOBPART_Factory.COLS.DATASTARTTZ   , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATASTART._Mask   ); _dataStart = null; }
                              _dataEndTZ    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAENDTZ._Mask   ); _dataEndTZ = null; } else _dataEndTZ    = _dataEndTZ   .trim();
-                             _dataEnd      = processZDT(_dataEndTZ     , "tilda.data.TILDA.JobPart.dataEnd"     , RS, ++i, TILDA__JOBPART_Factory.COLS.DATAEND     , TILDA__JOBPART_Factory.COLS.DATAENDTZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask     ); _dataEnd = null; }
+                             _dataEnd      = JDBCHelper.processZDT(_dataEndTZ     , "tilda.data.TILDA.JobPart.dataEnd"     , RS, ++i, TILDA__JOBPART_Factory.COLS.DATAEND     , TILDA__JOBPART_Factory.COLS.DATAENDTZ     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DATAEND._Mask     ); _dataEnd = null; }
                              _startTZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.STARTTZ._Mask     ); _startTZ = null; } else _startTZ      = _startTZ     .trim();
-                             _start        = processZDT(_startTZ       , "tilda.data.TILDA.JobPart.start"       , RS, ++i, TILDA__JOBPART_Factory.COLS.START       , TILDA__JOBPART_Factory.COLS.STARTTZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.START._Mask       ); _start = null; }
+                             _start        = JDBCHelper.processZDT(_startTZ       , "tilda.data.TILDA.JobPart.start"       , RS, ++i, TILDA__JOBPART_Factory.COLS.START       , TILDA__JOBPART_Factory.COLS.STARTTZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.START._Mask       ); _start = null; }
                              _endTZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.ENDTZ._Mask       ); _endTZ = null; } else _endTZ        = _endTZ       .trim();
-                             _end          = processZDT(_endTZ         , "tilda.data.TILDA.JobPart.end"         , RS, ++i, TILDA__JOBPART_Factory.COLS.END         , TILDA__JOBPART_Factory.COLS.ENDTZ         ); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask         ); _end = null; }
+                             _end          = JDBCHelper.processZDT(_endTZ         , "tilda.data.TILDA.JobPart.end"         , RS, ++i, TILDA__JOBPART_Factory.COLS.END         , TILDA__JOBPART_Factory.COLS.ENDTZ         , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.END._Mask         ); _end = null; }
                              _recordsCount =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.RECORDSCOUNT._Mask); _recordsCount = null; }
                              _status       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.STATUS._Mask      ); _status = null; }
-                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask     ); _created = null; }
-                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask ); _lastUpdated = null; }
-                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask     ); _deleted = null; }
+                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.CREATED._Mask     ); _created = null; }
+                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.LASTUPDATED._Mask ); _lastUpdated = null; }
+                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPART_Factory.COLS.DELETED._Mask     ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

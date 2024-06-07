@@ -505,7 +505,7 @@ END $$;
 
 ---------------------
 -- array_cat_agg
--- With Postgres 14, there was a major Type change, and array functions were change from working with ANYARRAY
+-- With Postgres 14, there was a major Type change, and array functions were changed from working with ANYARRAY
 -- to ANYCOMPATIBLEARRAY. We use 'array_cat' in this aggregate and so we have to create this convoluted piece
 -- of code to try to create the "anyarray" version (the default), but catch the exception that should occur on V14
 -- and do the "anycompatiblearray" version instead.
@@ -711,6 +711,11 @@ CREATE OR REPLACE FUNCTION TILDA.boolToSmallint(boolean)
 DROP CAST IF EXISTS (boolean AS smallint);
 CREATE CAST (boolean AS smallint) WITH FUNCTION TILDA.boolToSmallint(boolean) as Implicit;
 */
+CREATE OR REPLACE FUNCTION TILDA.boolToSmallintNoNull(boolean)
+  RETURNS smallint
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+'SELECT (case when $1 = true then 1 else 0 end)::SMALLINT;';
+
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------

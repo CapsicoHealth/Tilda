@@ -97,7 +97,7 @@ public class AnalyzerData
         return false;
       }
 
-    public void ValidateAndLoadRules(Connection C, Map<String, List<String>> Map, Map<String, List<Rule>> RuleMap)
+    public void validateAndLoadRules(Connection C, Map<String, List<String>> Map, Map<String, List<Rule>> RuleMap)
       throws Exception
       {
         LOG.debug("Validation rules started.");

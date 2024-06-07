@@ -16,6 +16,7 @@
 
 package tilda.utils.json;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
@@ -35,8 +36,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import tilda.db.Connection;
 import tilda.db.JDBCHelper;
@@ -45,6 +48,7 @@ import tilda.interfaces.JSONable;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
+import tilda.utils.PaddingUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -137,7 +141,7 @@ public class JSONUtil
     public static void print(Writer Out, String Name, boolean FirstElement)
     throws IOException
       {
-        Out.write(FirstElement == false ? ", " : " ");
+        Out.write(FirstElement == false ? "," : " ");
         if (Name != null)
           {
             Out.write("\"");
@@ -579,7 +583,13 @@ public class JSONUtil
         Out.write("]");
       }
 
-    public static void print(Writer Out, String Name, boolean FirstElement, String[] a)
+    public static void print(Writer out, String name, boolean first, String[] a)
+    throws IOException
+      {
+        print(out, name, first, a, 0, true);
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, String[] a, int padding, boolean flatPrint)
     throws IOException
       {
         print(Out, Name, FirstElement);
@@ -592,12 +602,20 @@ public class JSONUtil
         boolean First = true;
         for (String i : a)
           {
+            if (flatPrint == false)
+              Out.write("\n"+PaddingUtil.getPad(padding));
             if (First == true)
-              First = false;
+              {
+                First = false;
+                if (flatPrint == false)
+                  Out.write(" ");
+              }
             else
-              Out.write(", ");
+              Out.write(",");
             printString(Out, i);
           }
+        if (flatPrint == false)
+          Out.write("\n"+PaddingUtil.getPad(padding+2));
         Out.write("]");
       }
 
@@ -718,6 +736,73 @@ public class JSONUtil
             Out.write("]");
           }
         Out.write("]");
+      }
+
+    public static void print(Writer out, int padding, String name, boolean first, JsonArray val, Class type, boolean flatPrint)
+    throws IOException
+      {
+        out.write(PaddingUtil.getPad(padding));
+        if (val == null || val.isJsonNull() == true)
+          {
+            print(out, name, first);
+            out.write("null");
+            return;
+          }
+        if (val.size() == 0)
+          {
+            print(out, name, first);
+            out.write("[]");
+            return;
+
+          }
+        JsonElement e = null;
+        for (int i = 0; i < val.size(); ++i)
+          if (val.get(i).isJsonNull() == false)
+            {
+              e = val.get(i);
+              break;
+            }
+        if (e == null)
+          throw new IOException("Element array '" + name + "' only contains NULL values and type cannot be infered.");
+        if (e.isJsonPrimitive() == false)
+          throw new IOException("Element array '" + name + "' not of primitive types");
+        JsonPrimitive p = e.getAsJsonPrimitive();
+        if (p.isString() == true)
+          {
+            String[] arr = new String[val.size()];
+            for (int i = 0; i < val.size(); ++i)
+              arr[i] = val.get(i).isJsonNull()==true ? null : val.get(i).getAsJsonPrimitive().getAsString();
+            print(out, name, first, arr, padding, flatPrint);
+          }
+        else if (p.isBoolean() == true)
+          {
+            boolean[] arr = new boolean[val.size()];
+            for (int i = 0; i < val.size(); ++i)
+              arr[i] = val.get(i).getAsJsonPrimitive().getAsBoolean();
+            print(out, name, first, arr);
+          }
+        else if (p.isNumber() == true)
+          {
+            if (type.isAssignableFrom(Short.class) == true)
+              {
+                long[] arr = new long[val.size()];
+                for (int i = 0; i < val.size(); ++i)
+                  arr[i] = val.get(i).getAsJsonPrimitive().getAsLong();
+                print(out, name, first, arr);
+              }
+            else if (type.isAssignableFrom(Float.class) == true)
+              {
+                double[] arr = new double[val.size()];
+                for (int i = 0; i < val.size(); ++i)
+                  arr[i] = val.get(i).getAsJsonPrimitive().getAsDouble();
+                print(out, name, first, arr);
+              }
+            else
+              throw new IOException("Invalid json array number type '" + type + "': must be of interger or float types");
+          }
+        else
+          throw new IOException("Invalid json array type with values '" + p + "': must be of json primitives");
+
       }
 
 
@@ -877,6 +962,11 @@ public class JSONUtil
     public static JsonObject fromJSONObj(String JsonStr)
       {
         return new Gson().fromJson(JsonStr.toString(), JsonObject.class);
+      }
+
+    public static JsonObject fromJSONObj(BufferedReader R)
+      {
+        return new Gson().fromJson(R, JsonObject.class);
       }
 
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header)
@@ -1094,7 +1184,13 @@ public class JSONUtil
         return gson.toJson(e);
       }
 
-    public static void print(Writer out, Connection C, String elementName, ResultSet RS, int idx, ColumnMeta cm)
+    public static void print(Writer out, String elementName, ResultSet RS, int idx, ColumnMeta cm)
+    throws Exception
+      {
+        print(out, elementName, RS, idx, cm, false);
+      }
+
+    public static void print(Writer out, String elementName, ResultSet RS, int idx, ColumnMeta cm, boolean trimStrings)
     throws Exception
       {
         switch (cm._TildaType)
@@ -1105,10 +1201,10 @@ public class JSONUtil
             case BOOLEAN:
               if (cm.isArray() == true)
                 {
-                  List<Boolean> v_bool = (List<Boolean>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Boolean> v_bool = (List<Boolean>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_bool = null;
-                  print(out, elementName, idx == 1, (Boolean[]) CollectionUtil.toObjectArray(v_bool));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Boolean.class, v_bool));
                 }
               else
                 {
@@ -1124,7 +1220,7 @@ public class JSONUtil
             case JSON:
               if (cm.isArray() == true)
                 {
-                  List<String> v_str = (List<String>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<String> v_str = (List<String>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v_str = null;
                   print(out, elementName, idx == 1, CollectionUtil.toStringArray(v_str));
@@ -1132,16 +1228,16 @@ public class JSONUtil
               else
                 {
                   String v_str = RS.getString(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v_str);
+                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : trimStrings == true ? v_str.trim() : v_str);
                 }
               break;
             case DATE:
               if (cm.isArray() == true)
                 {
-                  List<LocalDate> v_ld = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, idx, cm._TildaType, false));
+                  List<LocalDate> v_ld = DateTimeUtil.toLocalDates((List<java.sql.Date>) JDBCHelper.getArray(RS, idx, cm._TildaType, false));
                   if (RS.wasNull() == true)
                     v_ld = null;
-                  print(out, elementName, idx == 1, (LocalDate[]) CollectionUtil.toObjectArray(v_ld));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(LocalDate.class, v_ld));
                 }
               else
                 {
@@ -1150,8 +1246,9 @@ public class JSONUtil
                 }
               break;
             case DATETIME:
-              // most Tilda tables have a "TZ" column accompanying a datetime column, but not all. Also,
-              // if this is used for a plain table, we have to assume that the TX info is not there and
+            case DATETIME_PLAIN:
+              // most Tilda tables have a 'TZ' column accompanying a datetime column, but not all. Also,
+              // if this is used for a plain table, we have to assume that the Tz info is not there and
               // use UTC as a default.
               if (cm.isArray() == true)
                 {
@@ -1159,26 +1256,25 @@ public class JSONUtil
                   List<String> v_tz = null;
                   if (tzCol != null)
                     {
-                      v_tz = (List<String>) C.getArray(RS, tzCol._NameOriginal, tzCol._TildaType, false);
+                      v_tz = (List<String>) JDBCHelper.getArray(RS, tzCol._NameOriginal, tzCol._TildaType, false);
                       if (RS.wasNull() == true)
-                       v_tz = null;
+                        v_tz = null;
                     }
-                  
-                  List<Timestamp> v_ts = (List<Timestamp>) C.getArray(RS, idx, cm._TildaType, false);
-                  if (RS.wasNull() == true)
-                   v_ts = null;
 
-                  
+                  List<Timestamp> v_ts = (List<Timestamp>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
+                  if (RS.wasNull() == true)
+                    v_ts = null;
+
                   List<ZonedDateTime> v_zdt = new ArrayList<ZonedDateTime>();
                   if (v_ts != null)
-                  for (int i = 0; i < v_ts.size(); ++i)
-                    {
-                      String TimezoneId = v_tz!=null && i < v_tz.size() && v_tz.get(i) != v_tz.get(i) ? v_tz.get(i) : "UTC";
-                      tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-                      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(v_ts.get(i), ZI.getValue());
-                      v_zdt.add(ZDT);
-                    }
-                  print(out, elementName, idx == 1, (ZonedDateTime[]) CollectionUtil.toObjectArray(v_zdt));
+                    for (int i = 0; i < v_ts.size(); ++i)
+                      {
+                        String TimezoneId = v_tz != null && i < v_tz.size() && v_tz.get(i) != v_tz.get(i) ? v_tz.get(i) : "UTC";
+                        tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+                        ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(v_ts.get(i), ZI.getValue());
+                        v_zdt.add(ZDT);
+                      }
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(ZonedDateTime.class, v_zdt));
                 }
               else
                 {
@@ -1188,10 +1284,11 @@ public class JSONUtil
                     {
                       v_tz = RS.getString(tzCol._NameOriginal);
                       if (RS.wasNull() == true)
-                       v_tz = null;
+                        v_tz = null;
                     }
                   tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(v_tz);
-                  if (ZI == null && TextUtil.isNullOrEmpty(v_tz) == false)
+                  // No timezone and v_tz was also null
+                  if (ZI == null && TextUtil.isNullOrEmpty(v_tz) == true)
                     ZI = tilda.data.ZoneInfo_Factory.getEnumerationById("UTC"); // assume UTC
                   ZonedDateTime v_zdt = DateTimeUtil.toZonedDateTime(RS.getTimestamp(idx, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
                   if (RS.wasNull() == true)
@@ -1202,80 +1299,96 @@ public class JSONUtil
             case DOUBLE:
               if (cm.isArray() == true)
                 {
-                  List<Double> v = (List<Double>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Double> v = (List<Double>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Double[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Double.class, v));
                 }
               else
                 {
                   double v = RS.getDouble(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                  else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case FLOAT:
               if (cm.isArray() == true)
                 {
-                  List<Float> v = (List<Float>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Float> v = (List<Float>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Float[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Float.class, v));
                 }
               else
                 {
                   float v = RS.getFloat(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                  else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case INTEGER:
               if (cm.isArray() == true)
                 {
-                  List<Integer> v = (List<Integer>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Integer> v = (List<Integer>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Integer[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Integer.class, v));
                 }
               else
                 {
                   int v = RS.getInt(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                  else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case LONG:
               if (cm.isArray() == true)
                 {
-                  List<Long> v = (List<Long>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Long> v = (List<Long>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Integer[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Long.class, v));
                 }
               else
                 {
                   long v = RS.getLong(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                  else
+                    print(out, elementName, idx == 1, v);
                 }
               break;
             case SHORT:
               if (cm.isArray() == true)
                 {
-                  List<Short> v = (List<Short>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<Short> v = (List<Short>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (Short[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(Short.class, v));
                 }
               else
                 {
                   short v = RS.getShort(idx);
-                  print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
+                  if (RS.wasNull() == true)
+                    print(out, elementName, idx == 1, (String) null);
+                  else
+                    print(out, elementName, idx == 1, v);
+
                 }
               break;
             case NUMERIC:
               if (cm.isArray() == true)
                 {
-                  List<BigDecimal> v = (List<BigDecimal>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<BigDecimal> v = (List<BigDecimal>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (BigDecimal[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(BigDecimal.class, v));
                 }
               else
                 {
@@ -1286,10 +1399,10 @@ public class JSONUtil
             case UUID:
               if (cm.isArray() == true)
                 {
-                  List<UUID> v = (List<UUID>) C.getArray(RS, idx, cm._TildaType, false);
+                  List<UUID> v = (List<UUID>) JDBCHelper.getArray(RS, idx, cm._TildaType, false);
                   if (RS.wasNull() == true)
                     v = null;
-                  print(out, elementName, idx == 1, (UUID[]) CollectionUtil.toObjectArray(v));
+                  print(out, elementName, idx == 1, CollectionUtil.toObjectArray(UUID.class, v));
                 }
               else
                 {

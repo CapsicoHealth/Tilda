@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -40,7 +40,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="FormulaResultView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FormulaResultView-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
@@ -48,6 +48,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The parent formula.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('CatalogFormulaResult-formulaRefnum_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>CatalogFormulaResult<B>&nbsp;&#8226;&nbsp;</B>formulaRefnum</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Catalog-refnum_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Catalog<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
@@ -59,6 +60,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('CatalogFormulaResult-value_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>CatalogFormulaResult<B>&nbsp;&#8226;&nbsp;</B>value</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -68,6 +70,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The description of the result value.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('CatalogFormulaResult-description_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>CatalogFormulaResult<B>&nbsp;&#8226;&nbsp;</B>description</A></DIV></TD>
 </TR>
@@ -79,6 +82,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the schema this column is defined in.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Catalog-schemaName_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Catalog<B>&nbsp;&#8226;&nbsp;</B>schemaName</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -89,6 +93,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the primary table/view this column is defined in.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Catalog-tableViewName_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Catalog<B>&nbsp;&#8226;&nbsp;</B>tableViewName</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -98,6 +103,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the column.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Catalog-columnName_DIV', -50)">TILDA<B>&nbsp;&#8226;&nbsp;</B>Catalog<B>&nbsp;&#8226;&nbsp;</B>columnName</A></DIV></TD>
 </TR>
@@ -298,8 +304,8 @@ This is the setter for:<BR>
     void setValue(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.value to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.value to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 100)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.value: the size "+v.length()+" is larger than the max allowed of 100: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_value) == false)
@@ -395,8 +401,8 @@ This is the setter for:<BR>
     void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.description to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.description to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.description: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_description) == false)
@@ -482,8 +488,8 @@ This is the setter for:<BR>
     void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.schemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.schemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.schemaName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
@@ -579,8 +585,8 @@ This is the setter for:<BR>
     void setTableViewName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.tableViewName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.tableViewName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.tableViewName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_tableViewName) == false)
@@ -676,8 +682,8 @@ This is the setter for:<BR>
     void setColumnName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.columnName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.columnName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.FormulaResultView.columnName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_columnName) == false)
@@ -781,7 +787,7 @@ This is the setter for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

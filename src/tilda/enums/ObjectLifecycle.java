@@ -35,10 +35,10 @@ public enum ObjectLifecycle
      */
     WORM;
     
-    public static ObjectLifecycle parse(String Str)
+    public static ObjectLifecycle parse(String str)
       {
         for (ObjectLifecycle e : ObjectLifecycle.values())
-          if (Str.equalsIgnoreCase(e.name()) == true)
+          if (e.name().equalsIgnoreCase(str) == true)
             return e;
         return null;
       }

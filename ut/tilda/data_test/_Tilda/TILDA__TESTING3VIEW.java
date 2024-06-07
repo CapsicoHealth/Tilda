@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -46,7 +46,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 </TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="Testing3View_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left" nowrap><label>Realized<input type="checkbox" onchange="filterTable('Testing3View_TBL', 'R')", id="Testing3View_TBL_R"></label>&nbsp;</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left" nowrap><label>Realized<input type="checkbox" onchange="filterTable('Testing3View_TBL', 'R')", id="Testing3View_TBL_R"></label>&nbsp;</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing3View-refnum_DIV' class='columns realizedcolumns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -54,6 +54,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-refnum_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>refnum</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Testing-refnum_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
@@ -65,6 +66,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Medical system unique enterprise id<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-name_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>name</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Testing-name_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -72,8 +74,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='Testing3View-lastUpdated_DIV' class='columns realizedcolumns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-lastUpdated_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Testing-lastUpdated_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
 </TR>
@@ -82,8 +85,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='Testing3View-xxxLastUpdated_DIV' class='columns realizedcolumns'>xxxLastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing)<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing2View-xxxLastUpdated_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing2View<B>&nbsp;&#8226;&nbsp;</B>xxxLastUpdated</A><BR>&rarr;&nbsp;<A href="javascript:openDiv('Testing-lastUpdated_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
 </TR>
@@ -284,8 +288,8 @@ This is the setter for:<BR>
     void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing3View.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing3View.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 10)
         throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing3View.name: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -583,7 +587,7 @@ This is the setter for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING3VIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING3VIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -594,8 +598,8 @@ This is the setter for:<BR>
      __Init = InitMode.LOOKUP;
                                _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
                                _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask          ); _name = null; }
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
-                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

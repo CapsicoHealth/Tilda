@@ -97,7 +97,7 @@ public class Flagging implements PatternObject
         for (FlaggingRange FR : _Ranges)
           {
 
-            FR.Validate(PS, _ParentView, this);
+            FR.validate(PS, _ParentView, this);
 
             Formula F = new Formula();
 

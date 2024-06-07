@@ -91,7 +91,7 @@ public class PivotHelper
         PVC._UseMapper = VC._UseMapper;
         PVC._UseEnum = VC._UseEnum;
         PVC._Description = VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')";
-        PVC.Validate(PS, VC._ParentView);
+        PVC.validate(PS, VC._ParentView);
 
         VC._ParentView._PivotColumns.add(PVC);
         Column C = new ViewColumnWrapper(PVC._SameAsObj, PVC, O._Columns.size());
@@ -99,10 +99,10 @@ public class PivotHelper
 
         if (PVC.needsTZ() == true)
           {
-            PVC.needsTZ();
+//            PVC.needsTZ();
             ViewColumn TZViewCol = View.createTZ(PS, PVC);
             TZViewCol._Filter = PS._CGSql.getShortColumnVar(P._VC.getName()) + " = " + TextUtil.escapeSingleQuoteForSQL(VPV._Value);
-            TZViewCol._NameInner = VC._Name + "TZ";
+            TZViewCol._NameInner = VC.getTzName(false);
             VC._ParentView._PivotColumns.add(TZViewCol);
             // LDH-NOTE: No need to add the column to O because TZ handling is automated in the Object's Validation logic.
           }
@@ -199,7 +199,7 @@ public class PivotHelper
                   if (VPA._VC == VC && P._Globals == true)
                     return true;
                   // Is it a TZ companion to a column that needs TZ?
-                  if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC._Name + "TZ") == true)
+                  if (VPA._VC != null && VPA._VC.needsTZ() == true && VC._FCT == FrameworkColumnType.TZ && VC._Name.equals(VPA._VC.getTzName(false)) == true)
                     return true;
                 }
             }
@@ -234,7 +234,7 @@ public class PivotHelper
         // Let's validate
         for (ViewPivot P : V._Pivots)
           {
-            P.Validate(PS, V);
+            P.validate(PS, V);
             if (PivotNames.add(P._VC.getShortName()) == false)
               PS.AddError("View '" + V.getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
             for (ViewPivotAggregate F : P._Aggregates)

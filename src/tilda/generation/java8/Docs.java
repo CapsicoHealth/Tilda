@@ -21,6 +21,7 @@ import java.util.List;
 
 import tilda.enums.ColumnType;
 import tilda.enums.MultiType;
+import tilda.enums.TZMode;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenDocs;
@@ -207,6 +208,17 @@ public class Docs implements CodeGenDocs
         + "  <TR><TD align=\"right\"><B>Mode</B></TD><TD>" + C._Mode + "</TD></TR>" + SystemValues.NEWLINE
         + "  <TR><TD align=\"right\"><B>Invariant</B></TD><TD>" + C._Invariant + "</TD></TR>" + SystemValues.NEWLINE
         + "  <TR><TD align=\"right\"><B>Protect</B></TD><TD>" + (C._Protect == null ? "NONE" : C._Protect) + "</TD></TR>");
+        if ((C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN) && C.needsTZ() == true)
+          {
+            Out.println("  <TR valign=\"top\"><TD align=\"right\"><B>TZMode</B></TD><TD><UL>");
+            
+            if (C._TzMode.isTZ() == true)
+              Out.println("<LI>Stored as a timestamp with timezone</LI>");
+            else
+              Out.println("<LI>Stored as a timestamp without timezone</LI>");
+            Out.println("<LI>Timezone information stored in '"+C.getTZName()+"'</LI>");
+            Out.println("</TD></TR>" + SystemValues.NEWLINE);  
+          }
         if (C._Values != null)
           {
             Out.println("  <TR valign=\"top\"><TD align=\"right\"><B>Values</B></TD><TD>" + SystemValues.NEWLINE);
@@ -275,7 +287,7 @@ public class Docs implements CodeGenDocs
       {
         Out.println(
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-        + " If any of the 'signature' columns have changed, creates a new instance of '"+O.getHistoryObjectName()+"' and " + SystemValues.NEWLINE
+        + " If any of the 'signature' columns have changed, creates a new instance of '"+O.getHistoryObject()+"' and " + SystemValues.NEWLINE
         + "copies all columns included for history over." + SystemValues.NEWLINE
         + "<BR>" + SystemValues.NEWLINE
         + "<B>Signature</B>:<UL><LI>"+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI></UL>" + SystemValues.NEWLINE
@@ -296,7 +308,7 @@ public class Docs implements CodeGenDocs
         for (Column c : O._Columns)
           if (TextUtil.isNullOrEmpty(c._MaskDef) == false)
             {
-              Out.println("     <TR><TD align=\"right\"><B>"+c.getName()+"</B>:&nbsp;</TD><TD>"+ValueHelper.printValueJava(c.getName(), c.getType(), c.isCollection(), c._MaskDef)+"</TD></TR>");
+              Out.println("     <TR><TD align=\"right\"><B>"+c.getName()+"</B>:&nbsp;</TD><TD>"+ValueHelper.printValueJava(c.getName(), c.getType(), c.isCollection(), c._MaskDef,c.getName())+"</TD></TR>");
             }
         Out.println("</TABLE><BR>Note that the internal state of the object doesn't change, so the getters return the actual field values irrespective of the masking status." + SystemValues.NEWLINE
              +Helper.getMultiLineCommentEnd());

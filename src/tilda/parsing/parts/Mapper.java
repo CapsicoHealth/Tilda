@@ -45,7 +45,7 @@ public class Mapper
     public transient Schema _ParentSchema;
 
 
-    public boolean Validate(ParserSession PS, Schema ParentSchema, int pos)
+    public boolean validate(ParserSession PS, Schema ParentSchema, int pos)
       {
         int Errs = PS.getErrorCount();
         _ParentSchema = ParentSchema;
@@ -61,7 +61,7 @@ public class Mapper
 
         if (_MappingColumns == null)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a mapper '" + _Name + "' without mappingColumns.");
-        _MappingColumns.Validate(PS, this);
+        _MappingColumns.validate(PS, this);
 
         if (_MappingColumns._GroupColumn != null)
          {

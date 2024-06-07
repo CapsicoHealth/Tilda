@@ -61,7 +61,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SCHEMANAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"    , 0/*0*/, 64, "The name of the schema tracked", null, null, null);
+     public final Type_StringPrimitive              SCHEMANAME    = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"    , 0/*0*/, 64, "The name of the schema tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        OBJECTNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"    , 1/*1*/, 64, "The name of the table/object tracked", null, null, null);
+     public final Type_StringPrimitive              OBJECTNAME    = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"    , 1/*1*/, 64, "The name of the table/object tracked", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatePrimitiveNull      STARTDATEINCR = new Type_DatePrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "startDateIncr" , 2/*2*/, "The date passed in for incremental refills.", null, null);
+     public final Type_DatePrimitiveNull            STARTDATEINCR = new Type_DatePrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "startDateIncr" , 2/*2*/, "The date passed in for incremental refills.", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        STARTTIMETZ   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"   , 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'startTime'.", null, null, null);
+     public final Type_StringPrimitive              STARTTIMETZ   = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"   , 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'startTime'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,9 +145,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitive      STARTTIME     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startTime"     , 4/*4*/, "The timestamp for when the refill started.", null, null, STARTTIMETZ);
+     public final Type_DatetimePrimitive            STARTTIME     = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "startTime"     , 4/*4*/, "The timestamp for when the refill started.", null, null, STARTTIMETZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +174,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        ENDTIMETZ     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"     , 5/*5*/, 5, "Generated helper column to hold the time zone ID for 'endTime'.", null, null, null);
+     public final Type_StringPrimitive              ENDTIMETZ     = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"     , 5/*5*/, 5, "Generated helper column to hold the time zone ID for 'endTime'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,9 +193,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitive      ENDTIME       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endTime"       , 6/*6*/, "The timestamp for when the refill ended.", null, null, ENDTIMETZ);
+     public final Type_DatetimePrimitive            ENDTIME       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "endTime"       , 6/*6*/, "The timestamp for when the refill ended.", null, null, ENDTIMETZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,7 +221,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          TIMEINSERTSEC = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeInsertSec" , 7/*7*/, "The time, in seconds, the inserts took.", null, null, null);
+     public final Type_LongPrimitive                TIMEINSERTSEC = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "timeInsertSec" , 7/*7*/, "The time, in seconds, the inserts took.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +242,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          TIMEDELETESEC = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeDeleteSec" , 8/*8*/, "The time, in seconds, the deletes took.", null, null, null);
+     public final Type_LongPrimitive                TIMEDELETESEC = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "timeDeleteSec" , 8/*8*/, "The time, in seconds, the deletes took.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,7 +263,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          TIMEANALYZESEC= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeAnalyzeSec", 9/*9*/, "The time, in seconds, the analyze took.", null, null, null);
+     public final Type_LongPrimitive                TIMEANALYZESEC= new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "timeAnalyzeSec", 9/*9*/, "The time, in seconds, the analyze took.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +291,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_LongPrimitive          TIMETOTALSEC  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeTotalSec"  , 10/*10*/, "The time, in seconds, the analyze took.", null, null, new String[][] {{"0","timeTotalSec_CreateDefault"}});
+     public final Type_LongPrimitive                TIMETOTALSEC  = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "timeTotalSec"  , 10/*10*/, "The time, in seconds, the analyze took.", null, null, new String[][] {{"0","timeTotalSec_CreateDefault"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -302,7 +312,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          INSERTCOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"   , 11/*11*/, "The count of inserted rows.", null, null, null);
+     public final Type_LongPrimitive                INSERTCOUNT   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"   , 11/*11*/, "The count of inserted rows.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,7 +333,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          DELETECOUNT   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"   , 12/*12*/, "The count of rows deleted.", null, null, null);
+     public final Type_LongPrimitive                DELETECOUNT   = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"   , 12/*12*/, "The count of rows deleted.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,7 +361,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED       = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 13/*13*/, "The timestamp for when the record was created. (TILDA.RefillPerf)", null, null);
+     public final Type_DatetimePrimitive            CREATED       = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"       , 13/*13*/, "The timestamp for when the record was created. (TILDA.RefillPerf)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,7 +389,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED   = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 14/*14*/, "The timestamp for when the record was last updated. (TILDA.RefillPerf)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED   = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 14/*14*/, "The timestamp for when the record was last updated. (TILDA.RefillPerf)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,7 +410,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 15/*15*/, "The timestamp for when the record was deleted. (TILDA.RefillPerf)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED       = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"       , 15/*15*/, "The timestamp for when the record was deleted. (TILDA.RefillPerf)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -546,7 +556,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -796,7 +806,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -820,7 +830,7 @@ Lookup one record by the primary key: schemaName, objectName, startTime.
 /**
 Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The results are ordered by: objectName asc, startTime desc
 */
-   static public ListResults<tilda.data.RefillPerf_Data> lookupWhereSchemaByObjectStart(Connection C, String schemaName, int start, int size) throws Exception
+   static public ListResults<tilda.data.RefillPerf_Data> lookupWhereSchemaByObjectStart(Connection C, String schemaName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -828,15 +838,15 @@ Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The resul
        Obj.setSchemaName    (schemaName    );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The results are ordered by: objectName asc, startTime desc
 */
-   static public void lookupWhereSchemaByObjectStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.RefillPerf_Data> OP, String schemaName, int start, int size) throws Exception
+   static public void lookupWhereSchemaByObjectStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.RefillPerf_Data> OP, String schemaName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -845,7 +855,7 @@ Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The resul
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -853,7 +863,7 @@ Lookup records by the index 'SchemaByObjectStart' over  schemaName.<BR>The resul
 /**
 Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<BR>The results are ordered by: startTime desc
 */
-   static public ListResults<tilda.data.RefillPerf_Data> lookupWhereSchemaObjectByStart(Connection C, String schemaName, String objectName, int start, int size) throws Exception
+   static public ListResults<tilda.data.RefillPerf_Data> lookupWhereSchemaObjectByStart(Connection C, String schemaName, String objectName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -862,15 +872,15 @@ Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<
        Obj.setObjectName    (objectName    );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<BR>The results are ordered by: startTime desc
 */
-   static public void lookupWhereSchemaObjectByStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.RefillPerf_Data> OP, String schemaName, String objectName, int start, int size) throws Exception
+   static public void lookupWhereSchemaObjectByStart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.RefillPerf_Data> OP, String schemaName, String objectName, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__REFILLPERF Obj = new tilda.data.RefillPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -880,7 +890,7 @@ Lookup records by the index 'SchemaObjectByStart' over  schemaName, objectName.<
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -924,13 +934,19 @@ The results are ordered by: schemaName asc, objectName asc, startTime asc
    public static ListResults<tilda.data.RefillPerf_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.RefillPerf_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

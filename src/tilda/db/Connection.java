@@ -91,6 +91,7 @@ public final class Connection
         // LDH-NOTE: YEAH YEAH.... This is ugly!!! Need a virtual constructor pattern here.
         _DB = _Url.startsWith("jdbc:postgresql:") ? DBType.Postgres
         : _Url.startsWith("jdbc:datadirect:googlebigquery:") ? DBType.BigQuery
+        : _Url.startsWith("jdbc:bigquery:") ? DBType.BigQuery
         : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
         // : _Url.startsWith("jdbc:db2:") ? DBType.DB2
         : null;
@@ -458,8 +459,8 @@ public final class Connection
             throw E;
           }
       }
-    
-    
+
+
     /**
      * Executes a query expecting a single result of any integer, up to a Long.
      */
@@ -468,10 +469,10 @@ public final class Connection
       {
         ScalarRP RP = new ScalarRP();
         if (executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false) > 0)
-         return RP.getResult();
+          return RP.getResult();
         return null;
       }
-    
+
     /**
      * Executes a query expecting a single result of of a string.
      */
@@ -480,10 +481,10 @@ public final class Connection
       {
         StringRP RP = new StringRP();
         if (executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false) > 0)
-         return RP.getResult();
+          return RP.getResult();
         return null;
       }
-    
+
 
     public int executeMetaFullSelect(String schemaName, String tableViewName, RecordProcessor RP)
     throws Exception
@@ -590,10 +591,10 @@ public final class Connection
         return _C.getMetaData();
       }
 
-    public boolean alterTableAddColumn(Column Col, String DefaultValue)
+    public boolean alterTableAddColumn(Column Col, String DefaultValue, String temporaryDefaultValue)
     throws Exception
       {
-        return _DB.alterTableAddColumn(this, Col, DefaultValue);
+        return _DB.alterTableAddColumn(this, Col, DefaultValue, temporaryDefaultValue);
       }
 
     public boolean alterTableDropColumn(Object Obj, String ColumnName)
@@ -674,6 +675,11 @@ public final class Connection
         return _DB.supportsReorg();
       }
 
+    public boolean isCaseSentitiveSchemaTableViewNames()
+      {
+        return _DB.isCaseSentitiveSchemaTableViewNames();
+      }
+
     /**
      * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
      * (or whatever the equivalents are across different databases).
@@ -743,6 +749,21 @@ public final class Connection
         return ", " + _DB.getCurrentTimestampStr();
       }
 
+    public java.lang.Object getEqualCurrentDateTime()
+      {
+        return "=" + _DB.getCurrentDateTimeStr();
+      }
+
+    public java.lang.Object getCommaCurrentDateTime()
+      {
+        return ", " + _DB.getCurrentTimestampStr();
+      }
+    
+    public String getShortColumnVar(String ColumnName)
+      {
+        return _DB.getShortColumnVar(ColumnName);
+      }
+
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
         _DB.getFullColumnVar(Str, SchemaName, TableName, ColumnName);
@@ -782,24 +803,17 @@ public final class Connection
         _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
       }
 
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, char[] val)
+    throws Exception
+      {
+        _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
+      }
+
     public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, Collection<?> val)
     throws Exception
       {
         _DB.setArray(this, PS, i, Type, allocatedArrays, val);
       }
-
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        return _DB.getArray(RS, i, Type, isSet);
-      }
-
-    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        return _DB.getArray(RS, colName, Type, isSet);
-      }
-
 
     public String getJsonParametrizedQueryPlaceHolder()
       {
@@ -946,14 +960,14 @@ public final class Connection
       {
         return _C.getAutoCommit();
       }
-    
+
     public void setAutoCommit(boolean val)
     throws Exception
       {
         _C.setAutoCommit(val);
       }
-    
-    
+
+
     /**
      * 
      * @param CL

@@ -36,7 +36,7 @@ public class MigrationMove
     public transient List<Object> _Objects = new ArrayList<Object>();
     public transient List<View>   _Views = new ArrayList<View>();
 
-    public boolean Validate(ParserSession PS, Schema Parent)
+    public boolean validate(ParserSession PS, Schema Parent)
       {
         int Errs = PS.getErrorCount();
         _Parent = Parent;

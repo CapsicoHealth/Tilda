@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -39,7 +39,7 @@ The Table TILDATEST.Testing3Realized :<UL>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, lastUpdated desc
+<LI>Has the following index:<UL><LI>lastUpdated desc
 </LI>
 </UL></LI>
 </UL>
@@ -47,7 +47,7 @@ The Table TILDATEST.Testing3Realized :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="Testing3Realized_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing3Realized-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -55,6 +55,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -66,6 +67,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Medical system unique enterprise id</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -76,6 +78,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -85,6 +88,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing)</TD>
 </TR>
@@ -367,7 +371,7 @@ This is the setter for:<BR>
    public void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullName();
         }
@@ -985,7 +989,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1026,15 +1030,15 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDATEST", "Testing3Realized");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           if (__Changes.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) { TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_xxxLastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_xxxLastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1276,7 +1280,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -1287,8 +1291,8 @@ This is the hasChanged for:<BR>
      __Init = InitMode.LOOKUP;
       __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
                                _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask          ); _name = null; }
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
-                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

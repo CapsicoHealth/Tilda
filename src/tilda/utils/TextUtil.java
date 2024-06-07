@@ -1068,17 +1068,22 @@ public class TextUtil
         return set.toArray(new String[0]);
       }
 
-    public static void print(String[] StrArray, StringBuilder s)
+    public static void print(String[] strArray, StringBuilder s)
       {
-        if (StrArray == null)
+        print(strArray, ", ", s);
+      }
+    
+    public static void print(String[] strArray, String separator, StringBuilder s)
+      {
+        if (strArray == null)
           return;
         boolean First = true;
-        for (String str : StrArray)
+        for (String str : strArray)
           {
             if (First == true)
               First = false;
             else
-              s.append(", ");
+              s.append(separator);
             s.append(str);
           }
       }
@@ -1207,11 +1212,16 @@ public class TextUtil
           }
       }
 
-    public static final String print(String[] StrArray)
+    public static final String print(String[] strArray)
       {
-        StringBuilder Str = new StringBuilder();
-        print(StrArray, Str);
-        return Str.toString();
+        return print(strArray, ", ");
+      }
+
+    public static final String print(String[] strArray, String separator)
+      {
+        StringBuilder str = new StringBuilder();
+        print(strArray, separator, str);
+        return str.toString();
       }
 
 
@@ -2043,4 +2053,26 @@ public class TextUtil
             parts[i] = '%' + parts[i] + '%';
       }
 
+    /**
+     * Returns a new Iterator on a list where all incoming values have been replaced by the mask
+     * @param <T>
+     * @param I
+     * @param val
+     * @return
+     */
+    public static <T> Iterator<T> mask(Iterator<T> I, T val)
+      {
+        List<T> L = new ArrayList<T>();
+        while (I.hasNext() == true)
+          L.add(val);
+        return L.iterator();
+      }
+
+    public static <T> T[] mask(T[] A, T val)
+      {
+        T[] arr = (T[]) new Object[A.length];
+        for (int i = 0; i < A.length; ++i)
+          arr[i] = val;
+        return arr;
+      }
   }

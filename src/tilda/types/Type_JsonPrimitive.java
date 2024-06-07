@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_JsonPrimitive extends ColumnDefinition
   {
-    public Type_JsonPrimitive(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
+    public Type_JsonPrimitive(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies, String[][] values)
       {
-        super(SchemaName, TableName, ColumnName, Count, ColumnType.JSON, false, Description, expressionStrs, expressionsDependencies);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.JSON, false, Description, expressionStrs, expressionsDependencies, values);
       }
     
   }

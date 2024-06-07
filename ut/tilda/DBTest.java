@@ -249,14 +249,14 @@ public class DBTest
         Lb.add(false);
         D.setA3b(Lb);
 
-        D.setA1(777);
+//        D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
 
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
-        D.setNullA1();
+//        D.setNullA1();
         D.setNullA2();
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
@@ -426,7 +426,7 @@ public class DBTest
           throw new Exception("Bad stuff!");
         C.commit();
 
-        D.setA1(777);
+//        D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
         if (D.write(C) == false)

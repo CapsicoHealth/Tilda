@@ -61,7 +61,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        ID           = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"           , 0/*0*/, 5, "The id for this enumeration.", null, null, null);
+     public final Type_StringPrimitive              ID           = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "id"           , 0/*0*/, 5, "The id for this enumeration.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, 50, "The value for this enumeration.", null, null, null);
+     public final Type_StringPrimitive              VALUE        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, 50, "The value for this enumeration.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>ABSOLUTE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        LABEL        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "label"        , 2/*2*/, 254, "The label for this enumeration.", null, null, null);
+     public final Type_StringPrimitive              LABEL        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "label"        , 2/*2*/, 254, "The label for this enumeration.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +127,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    DEACTIVATEDTZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deactivatedTZ", 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'deactivated'.", null, null, null);
+     public final Type_StringPrimitiveNull          DEACTIVATEDTZ= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "deactivatedTZ", 3/*3*/, 5, "Generated helper column to hold the time zone ID for 'deactivated'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +138,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>deactivated of type ZonedDateTime</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The label for this enumeration.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The datetime when this enumeration was deactivated.</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ZoneInfo.deactivated of type timestamptz</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.ZoneInfo.deactivated</TD></TR>
 
@@ -146,9 +146,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'deactivatedTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DEACTIVATED  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deactivated"  , 4/*4*/, "The label for this enumeration.", null, null, DEACTIVATEDTZ);
+     public final Type_DatetimePrimitiveNull        DEACTIVATED  = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deactivated"  , 4/*4*/, "The datetime when this enumeration was deactivated.", null, null, DEACTIVATEDTZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,7 +181,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.ZoneInfo)", null, null);
+     public final Type_DatetimePrimitive            CREATED      = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.ZoneInfo)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -204,7 +209,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.ZoneInfo)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.ZoneInfo)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +230,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.ZoneInfo)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.ZoneInfo)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -355,7 +360,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -551,7 +556,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -599,22 +604,22 @@ Lookup one record by the unique index 'Value': value.
 /**
 Lookup records by the index 'All' over  .<BR>The results are ordered by: id asc
 */
-   static public ListResults<tilda.data.ZoneInfo_Data> lookupWhereAll(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.data.ZoneInfo_Data> lookupWhereAll(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 3, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'All' over  .<BR>The results are ordered by: id asc
 */
-   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -622,7 +627,7 @@ Lookup records by the index 'All' over  .<BR>The results are ordered by: id asc
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 3, RPI, Obj, null, start, size);
+       readMany(C, 3, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -633,13 +638,19 @@ Lookup records by the index 'All' over  .<BR>The results are ordered by: id asc
    public static ListResults<tilda.data.ZoneInfo_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

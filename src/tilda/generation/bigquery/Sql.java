@@ -104,11 +104,21 @@ public class Sql extends BigQuery implements CodeGenSql
       {
         return "= "+getCurrentTimestampStr();
       }
+    @Override
+    public String getEqualCurentDateTime()
+      {
+        return "= "+getCurrentDateTimeStr();
+      }
 
     @Override
     public String getCommaCurentTimestamp()
       {
         return ", "+getCurrentTimestampStr();
+      }
+    @Override
+    public String getCommaCurentDateTime()
+      {
+        return ", "+getCurrentDateTimeStr();
       }
 
     @Override
@@ -152,18 +162,19 @@ public class Sql extends BigQuery implements CodeGenSql
             }
         if (O._PrimaryKey != null)
           {
-            Out.print("  -- PRIMARY KEY(");
+            Out.print("  , PRIMARY KEY(");
             PrintColumnList(Out, O._PrimaryKey._ColumnObjs);
-            Out.println(")");
+            Out.println(") NOT ENFORCED");
           }
         if (O._ForeignKeys != null)
           for (ForeignKey FK : O._ForeignKeys)
             if (FK != null)
               {
-                Out.println("  -- FK not supported in BQ");
-                Out.print("  -- , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
+                Out.print("  , FOREIGN KEY (");
                 PrintColumnList(Out, FK._SrcColumnObjs);
-                Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
+                Out.print(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name+"(");
+                PrintColumnList(Out, FK._DestObjectObj._PrimaryKey._ColumnObjs);
+                Out.println(") NOT ENFORCED");
               }
         Out.println(" )");
         Out.println("OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(O._Description)+");");
@@ -272,7 +283,7 @@ public class Sql extends BigQuery implements CodeGenSql
                             ForeignKey FK = TotalMess.getClosestFKTable(FuckList, V, T, columnCount);
                             if (FK == null)
                               {
-                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far (or found multiple ones, causing ambiguity): " + TableRankTracker.PrintTableNames(TableStack));
                               }
                             else
                               {
@@ -510,7 +521,7 @@ public class Sql extends BigQuery implements CodeGenSql
         // If the column has a sameAs string, but no sameAsObj and is managed, then we print the sameAs as is.
         if (VC.isSameAsLitteral() == true)
           {
-            Str.append(TextUtil.isNullOrEmpty(VC._Expression) == true ? VC._SameAs : VC._Expression.replaceAll("\\?", VC._SameAs));
+            Str.append(TextUtil.isNullOrEmpty(VC._Expression) == true ? VC._SameAs : rewriteExpressionColumnQuoting(VC._Expression.replaceAll("\\?", VC._SameAs)));
           }
         else
           {
@@ -530,7 +541,7 @@ public class Sql extends BigQuery implements CodeGenSql
               Str.append("trim(");
             String ColExpr = VC._Aggregate != null && VC._Aggregate.isWindowOnly() == true ? "" : (textConversionNeeded ? "CAST(" : "") + TI.getFullName() + "." + getShortColumnVar(VC._SameAsObj.getName()) + (textConversionNeeded ? " AS STRING)" : "");
             if (TextUtil.isNullOrEmpty(VC._Expression) == false)
-              ColExpr = VC._Expression.replaceAll("\\?", ColExpr);
+              ColExpr = rewriteExpressionColumnQuoting(VC._Expression.replaceAll("\\?", ColExpr));
             boolean filteredAggregate = VC._Aggregate != null &&  TextUtil.isNullOrEmpty(VC._Filter) == false;
             if (filteredAggregate == true && supportsFilterClause() == false)
              Str.append("case when ").append(rewriteExpressionColumnQuoting(VC._Filter)).append(" then ");
@@ -563,7 +574,7 @@ public class Sql extends BigQuery implements CodeGenSql
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false && (VC._Aggregate == null || VC._Aggregate == AggregateType.COUNT))
           Str.append(", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC._SameAsObj.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")");
         if (NoAs == false)
-          Str.append(" as " + getShortColumnVar(VC.getName()) + " " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
+          Str.append(" as " + getShortColumnVar(VC.getName()) + " " + (VC._SameAsObj == null ? "" : "-- " + (TextUtil.isNullOrEmpty(VC._Description) == false ? VC._Description : VC._SameAsObj._Description)));
         if (VC._FormulaOnly == true)
           Str.append(" -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)");
         return hasAggregates;
@@ -1032,7 +1043,7 @@ public class Sql extends BigQuery implements CodeGenSql
 
         String Expr = Str.toString();
         if (TextUtil.isNullOrEmpty(VC._Expression) == false)
-          Expr = VC._Expression.replaceAll("\\?", Expr);
+          Expr = rewriteExpressionColumnQuoting(VC._Expression.replaceAll("\\?", Expr));
 
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
           Expr = "coalesce(" + Expr + ", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";

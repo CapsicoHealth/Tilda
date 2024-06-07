@@ -44,7 +44,7 @@ public class ViewPivotColumn
 
 
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -71,7 +71,7 @@ public class ViewPivotColumn
           }
 
 
-        _Join.Validate(PS, _ParentView, _Source);
+        _Join.validate(PS, _ParentView, _Source);
 
         return Errs == PS.getErrorCount();
       }

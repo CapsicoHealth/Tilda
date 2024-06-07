@@ -56,7 +56,7 @@ public class FolderCompare
 
         @Override
         public void startFolder(File D)
-          throws Exception
+        throws Exception
           {
             FolderStats FS = new FolderStats();
             FS._D = D;
@@ -67,7 +67,7 @@ public class FolderCompare
 
         @Override
         public void processFile(File F)
-          throws Exception
+        throws Exception
           {
             FolderStats Current = _S.peek();
             if (Current._OldestFile > F.lastModified())
@@ -76,24 +76,24 @@ public class FolderCompare
               Current._NewestFile = F.lastModified();
             ++Current._FileCount;
             Current._FileSize += F.length();
-            System.out.println("Current -  "+Current._D.getName()+": "+Current._FileCount+", "+Current._FileSize);
+            System.out.println("Current -  " + Current._D.getName() + ": " + Current._FileCount + ", " + Current._FileSize);
           }
 
         @Override
         public void endFolder(File D)
-          throws Exception
+        throws Exception
           {
             if (_S.size() > 1)
               {
                 FolderStats Current = _S.peek();
                 Current._FileCountDescendents += Current._FileCount;
                 Current._FileSizeDescendents += Current._FileSize;
-                System.out.println("Rollup Current -  "+Current._D.getName()+": "+Current._FileCount+", "+Current._FileSize);
+                System.out.println("Rollup Current -  " + Current._D.getName() + ": " + Current._FileCount + ", " + Current._FileSize);
                 FolderStats Parent = _S.get(_S.size() - 2);
                 Parent._FileCountDescendents += Current._FileCountDescendents;
                 Parent._FileSizeDescendents += Current._FileSizeDescendents;
                 Parent._Descendents.add(Current);
-                System.out.println("   Parent -  "+Parent._D.getName()+": "+Parent._FileCountDescendents+", "+Parent._FileSizeDescendents);
+                System.out.println("   Parent -  " + Parent._D.getName() + ": " + Parent._FileCountDescendents + ", " + Parent._FileSizeDescendents);
               }
             _S.pop();
           }
@@ -109,10 +109,11 @@ public class FolderCompare
             for (File f : Subfolders)
               {
                 if (f.isDirectory() == false)
-                 continue;
+                  continue;
                 FolderStatsProcessor FSP1 = new FolderStatsProcessor();
-                FileUtil.iterate(f, FSP1, new String[] {".*", "bin" });
-                BufferedWriter Out = new BufferedWriter(new FileWriter(D1.getAbsolutePath()+"\\"+f.getName()+".filecounts.csv"));
+                FileUtil.iterate(f, FSP1, new String[] { ".*", "bin"
+                });
+                BufferedWriter Out = new BufferedWriter(new FileWriter(D1.getAbsolutePath() + "\\" + f.getName() + ".filecounts.csv"));
                 Out.write("Path, FileCount, FileSize, Oldest, Newest, TotalCount, TotalSize\r\n");
                 print(Out, FSP1._Root, 0);
                 Out.close();
@@ -126,28 +127,29 @@ public class FolderCompare
 
       }
 
-    private static void print(Writer Out, FolderStats FS, int Level) throws IOException
+    private static void print(Writer Out, FolderStats FS, int Level)
+    throws IOException
       {
         for (int i = 0; i < Level; ++i)
-         Out.write("  ");
+          Out.write("  ");
         Out.write(FS._D.getCanonicalPath());
 
-        Out.write(", "+FS._FileCount);
-        Out.write(", "+FS._FileSize);
-        
+        Out.write(", " + FS._FileCount);
+        Out.write(", " + FS._FileSize);
+
         Out.write(", ");
         ZonedDateTime ZDT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(FS._OldestFile), ZoneId.systemDefault());
         Out.write(DateTimeUtil.printDateTime(ZDT));
-        
+
         Out.write(", ");
         ZDT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(FS._NewestFile), ZoneId.systemDefault());
         Out.write(DateTimeUtil.printDateTime(ZDT));
 
-        Out.write(", "+FS._FileCountDescendents);
-        Out.write(", "+FS._FileSizeDescendents);
+        Out.write(", " + FS._FileCountDescendents);
+        Out.write(", " + FS._FileSizeDescendents);
         Out.write("\r\n");
-        
+
         for (FolderStats fs : FS._Descendents)
-          print(Out, fs, Level+1);
+          print(Out, fs, Level + 1);
       }
   }

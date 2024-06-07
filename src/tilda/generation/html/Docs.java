@@ -275,9 +275,9 @@ public class Docs
                 {
                   Out.print("<LI>");
                   if (I._ColumnObjs.isEmpty() == false)
-                  Out.print(Column.printColumnList(I._ColumnObjs, true));
+                   Out.print(Column.printColumnList(I._ColumnObjs, true));
                   if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
-                   Out.println((I._ColumnObjs.isEmpty() == false ? "" : ", ") + OrderBy.printOrderByList(I._OrderByObjs));
+                   Out.println((I._ColumnObjs.isEmpty() == false ? ", " : "") + OrderBy.printOrderByList(I._OrderByObjs));
                   if (I._Db != true)
                     Out.print(" <B><I>(Application-side Only)</I></B>");
                   else if (I._Cluster == true)
@@ -308,8 +308,8 @@ public class Docs
 
         if (O._Mode != ObjectMode.DB_ONLY)
           {
-          Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH>");
-          colCount += 3;
+          Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">TZ</TH>");
+          colCount += 4;
         }
         Out.print("<TH align=\"left\">Description" + (view != null && view._FormulasRegEx != null ? "/<label>Formula<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'F')\", id=\"" + O._Name + "_TBL_F\"></label>" : "") + "</TH></TR>" + SystemValues.NEWLINE);
         colCount += 1;
@@ -352,9 +352,10 @@ public class Docs
               }
             if (O._Mode != ObjectMode.DB_ONLY)
               {
-                Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : "<SPAN style=\"font-weight:bold;font-size:10px\">"+C._Mode+"</SPAN>") + "&nbsp;&nbsp;</TD>");
                 Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
-                Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : "<SPAN style=\"font-weight:bold;font-size:10px\">"+C._Protect+"</SPAN>") + "&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"center\">" + (C.needsTZ() == true ? "<SPAN style=\"font-weight:bold;font-size:10px\">"+C._TzMode.name()+"</SPAN>" : "-") + "&nbsp;&nbsp;</TD>");
               }
 
             Out.print("<TD>" + processExternalLinks(C._Description));
@@ -437,7 +438,7 @@ public class Docs
                 Out.println("<BR>This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".<BR>");
                 // Out.println("</TD></TR>");
               }
-            if (C._Values != null && C.getType().equals(ColumnType.DATE) == false && C.getType().equals(ColumnType.DATETIME) == false)
+            if (C._Values != null && C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN)
               {
                 // Out.println(" <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
                 Out.println("<BR>This column has defined a number of constant values:");

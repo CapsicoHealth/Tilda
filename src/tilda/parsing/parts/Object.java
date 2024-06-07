@@ -32,9 +32,11 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
 import tilda.enums.OutputFormatType;
+import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ClonerHelper;
+import tilda.parsing.parts.helpers.TzNameHelper;
 import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
@@ -47,11 +49,11 @@ public class Object extends Base
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true;
     @SerializedName("tzFk"          ) public Boolean              _TZFK       = true;
+    @SerializedName("tzMode"        ) public String               _TzModeStr;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      ;
     @SerializedName("cloneFrom"     ) public ClonerFrom           _CloneFrom  ;
     @SerializedName("cloneAs"       ) public Cloner[]             _CloneAs    ;
-
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column    >();
 
     @SerializedName("primary"       ) public PrimaryKey           _PrimaryKey = null;
@@ -68,8 +70,9 @@ public class Object extends Base
     public transient View                 _SourceView   = null;                                        // For tables such as Realized tables generated out of views.
     public transient Object               _SourceObject = null;                                        // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
+    public transient TZMode               _TzMode;
     public transient Object               _HistoryObj   = null;                                        // For tables with history settings
-
+    public transient List<Object>         _Clones       = new ArrayList<Object>();
 
     public Object()
       {
@@ -81,6 +84,7 @@ public class Object extends Base
         super(obj);
         _OCC = obj._OCC;
         _TZFK = obj._TZFK;
+        _TzModeStr = obj._TzModeStr;
         _ETL = obj._ETL;
         _LCStr = obj._LCStr;
         for (Column C : obj._Columns)
@@ -138,7 +142,7 @@ public class Object extends Base
         return _OCC;
       }
 
-    public boolean Validate(ParserSession PS, Schema parentSchema)
+    public boolean validate(ParserSession PS, Schema parentSchema)
       {
         if (_Validated == true)
           return true;
@@ -151,17 +155,20 @@ public class Object extends Base
             _ParentSchema = parentSchema;
             _OriginalName = _Name;
             if (_CloneFrom.validate(PS, this) == true)
-              ClonerHelper.handleClonefrom(PS, this);
+              {
+                ClonerHelper.handleClonefrom(PS, this);
+                _CloneFrom._SrcObjectObj._Clones.add(this);
+              }
             _ParentSchema = null;
             _OriginalName = null;
           }
 
-        if (super.Validate(PS, parentSchema) == false)
+        if (super.validate(PS, parentSchema) == false)
           return false;
 
         if (_CloneAs != null)
           if (ClonerHelper.handleCloneAs(PS, this) == false)
-           return false;
+            return false;
 
         // We get a lot of reusable bits from this central TILDA table, so let's check it's all good.
         if (getFullName().equals("tilda.data.TILDA.Key") == true)
@@ -199,10 +206,20 @@ public class Object extends Base
               }
           }
 
+        // Pick up TZMode from Schema conventions if present and local value is empty, unless it's an Object proxy for a view.
+        if (_FST != FrameworkSourcedType.VIEW)
+          {
+            if (TextUtil.isNullOrEmpty(_TzModeStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultTzModeStr != null)
+              _TzModeStr = parentSchema._Conventions._DefaultTzModeStr;
+            if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
+              return PS.AddError("Object '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
+          }
+
         if (_Columns == null || _Columns.isEmpty() == true)
           PS.AddError("Object '" + getFullName() + "' doesn't define any columns!");
         else
           {
+            // Let's process the columns and check for unicity.
             Set<String> ColumnNames = new HashSet<String>();
             for (int i = 0; i < _Columns.size(); ++i)
               {
@@ -216,14 +233,26 @@ public class Object extends Base
                   }
 
                 _PadderColumnNames.track(C.getLogicalName());
-                if (C.Validate(PS, this) == true)
+                if (C.validate(PS, this) == true)
+                  if (ColumnNames.add(C.getName().toUpperCase()) == false)
+                    PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");
+              }
+            // Let's take care of TZ columns
+            for (int i = 0; i < _Columns.size(); ++i)
+              {
+                Column C = _Columns.get(i);
+                if (C.needsTZ() == true && _FST != FrameworkSourcedType.REALIZED)
                   {
-                    if (ColumnNames.add(C.getName().toUpperCase()) == false)
-                      PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
-                    if (C.needsTZ() == true && _FST != FrameworkSourcedType.REALIZED)
+                    String ColZName = C.getTZName();
+                    Column TZCol = null;
+                    if (C._TzMode.isColumn() == true || getColumn(ColZName) == null)
                       {
-                        Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.", null, null, null);
-                        if (C.isCollection() == false)
+                        TZCol = new Column(ColZName, null, 0, C._Nullable, C._AllowEmpty, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for " + TzNameHelper.getTzColumnNames(_Columns, C) + ".", null, null, null, C._TzMode);
+                        TZCol._TzCol = true;
+                      }
+                    if (TZCol != null)
+                      {
+                        if (C.isCollection() == false || C._TzMode.isRow() == true) // Row-level means one for all timestamps, including if they are arrays.
                           TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
                         else
                           TZCol._TypeStr = "STRING[]"; // Only Arrays/Lists allowed for DateTimes.
@@ -231,7 +260,7 @@ public class Object extends Base
                         _Columns.add(i, TZCol);
                         ++i;
                         _PadderColumnNames.track(TZCol.getName());
-                        TZCol.Validate(PS, this);
+                        TZCol.validate(PS, this);
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                         if (C.isCollection() == false && _TZFK == true)
@@ -242,6 +271,9 @@ public class Object extends Base
                       }
                   }
               }
+
+            // Let's check after all columns are processes and framework-managed columns (e.g. TZ) are created
+            // that we don't have more than ColumnDefinition._MAX_COL_COUNT columns, and set the sequence order.
             int Counter = -1;
             for (int i = 0; i < _Columns.size(); ++i)
               {
@@ -250,9 +282,7 @@ public class Object extends Base
                   continue;
                 C.setSequenceOrder(++Counter);
                 if (Counter >= ColumnDefinition._MAX_COL_COUNT)
-                  {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + ColumnDefinition._MAX_COL_COUNT + "!");
-                  }
+                  PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + ColumnDefinition._MAX_COL_COUNT + "!");
               }
           }
 
@@ -267,7 +297,7 @@ public class Object extends Base
           {
             if (I == null)
               continue;
-            if (I.Validate(PS, this) == true)
+            if (I.validate(PS, this) == true)
               if (Names.add(I._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate index named '" + I._Name + "'.");
             if (I._Db == true && Signatures.add(I.getSignature()) == false)
@@ -303,14 +333,14 @@ public class Object extends Base
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
 
         if (_PrimaryKey != null)
-          _PrimaryKey.Validate(PS, this);
+          _PrimaryKey.validate(PS, this);
 
         Set<String> FKNames = new HashSet<String>();
         for (ForeignKey FK : _ForeignKeys)
           {
             if (FK == null)
               continue;
-            if (FK.Validate(PS, this) == true)
+            if (FK.validate(PS, this) == true)
               if (FKNames.add(FK._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey named '" + FK._Name + "'.");
           }
@@ -326,14 +356,13 @@ public class Object extends Base
         super.validateOutputMaps(PS);
         super.validateMasks(PS);
 
-        if (_History != null && _History.Validate(PS, this) == true)
+        if (_History != null && _History.validate(PS, this) == true)
           {
             setupHistory(PS, parentSchema);
           }
 
         return _Validated = Errs == PS.getErrorCount();
       }
-
 
     /**
      * To call after parent object has been validated
@@ -386,7 +415,7 @@ public class Object extends Base
                 I._Columns = new String[] { _ParentSchema.getConventionPrimaryKeyName()
                 };
               }
-            I._OrderBy = new String[] { ParentSchema.getConventionLastUpdatedName()+" desc"
+            I._OrderBy = new String[] { ParentSchema.getConventionLastUpdatedName() + " desc"
             };
             I._Db = true;
             obj._Indices.add(I);
@@ -397,7 +426,7 @@ public class Object extends Base
           for (Index I : obj._Indices)
             if (I != null && (I._OrderBy == null || I._OrderBy.length == 0))
               {
-                I._OrderBy = new String[] { ParentSchema.getConventionLastUpdatedName()+" desc"
+                I._OrderBy = new String[] { ParentSchema.getConventionLastUpdatedName() + " desc"
                 };
               }
 
@@ -413,7 +442,7 @@ public class Object extends Base
         ParentSchema._Objects.add(obj);
       }
 
-    public Object getHistoryObjectName()
+    public Object getHistoryObject()
       {
         return _HistoryObj;
       }
@@ -466,7 +495,7 @@ public class Object extends Base
               return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '" + _ParentSchema.getConventionPrimaryKeyName() + "', which is a reserved name.");
           }
 
-        Column C = new Column(_ParentSchema.getConventionPrimaryKeyName(), null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null);
+        Column C = new Column(_ParentSchema.getConventionPrimaryKeyName(), null, 0, false, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.refnum";
         _Columns.add(0, C);
 
@@ -481,13 +510,11 @@ public class Object extends Base
               continue;
 
             String N = C.getLogicalName();
-            if (N != null && (   N.equalsIgnoreCase(_ParentSchema.getConventionCreatedName()) == true
-                              || N.equalsIgnoreCase(_ParentSchema.getConventionLastUpdatedName()) == true
-                              || N.equalsIgnoreCase(_ParentSchema.getConventionCreatedName()+"ETL") == true
-                              || N.equalsIgnoreCase(_ParentSchema.getConventionLastUpdatedName()+"ETL") == true
-                              || N.equalsIgnoreCase(_ParentSchema.getConventionDeletedName()) == true
-                             )
-               )
+            if (N != null && (N.equalsIgnoreCase(_ParentSchema.getConventionCreatedName()) == true
+            || N.equalsIgnoreCase(_ParentSchema.getConventionLastUpdatedName()) == true
+            || N.equalsIgnoreCase(_ParentSchema.getConventionCreatedName() + "ETL") == true
+            || N.equalsIgnoreCase(_ParentSchema.getConventionLastUpdatedName() + "ETL") == true
+            || N.equalsIgnoreCase(_ParentSchema.getConventionDeletedName()) == true))
               return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
           }
 
@@ -503,29 +530,32 @@ public class Object extends Base
             throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
           }
 
-        Column C = new Column(_ParentSchema.getConventionCreatedName(), null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description + " (" + getShortName() + ")", null, null, null);
+        // LDH-NOTE: At this point in time, the referenced columns are not fully validated, so do not
+        // try to clone the "sameAs" column or any of the attributes, such as _FCT. Things have to be
+        // spelled out directly here in order to support the Tilda master schema and entities.
+        Column C = new Column(_ParentSchema.getConventionCreatedName(), null, 0, false, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description + " (" + getShortName() + ")", null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.created";
         C._FCT = FrameworkColumnType.OCC_CREATED;
         _Columns.add(C);
 
-        C = new Column(_ParentSchema.getConventionLastUpdatedName(), null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")._Description + " (" + getShortName() + ")", null, null, null);
+        C = new Column(_ParentSchema.getConventionLastUpdatedName(), null, 0, false, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")._Description + " (" + getShortName() + ")", null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.lastUpdated";
         C._FCT = FrameworkColumnType.OCC_LASTUPDATED;
         _Columns.add(C);
 
-        C = new Column(_ParentSchema.getConventionDeletedName(), null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")._Description + " (" + getShortName() + ")", null, null, null);
+        C = new Column(_ParentSchema.getConventionDeletedName(), null, 0, true, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")._Description + " (" + getShortName() + ")", null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.deleted";
         C._FCT = FrameworkColumnType.OCC_DELETED;
         _Columns.add(C);
 
         if (addETLLastUpdated == true)
           {
-            C = new Column(_ParentSchema.getConventionCreatedName()+"ETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")._Description + " (" + getShortName() + ")", null, null, null);
+            C = new Column(_ParentSchema.getConventionCreatedName() + "ETL", null, 0, true, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")._Description + " (" + getShortName() + ")", null, null, null, null);
             C._SameAs = "tilda.data.TILDA.Key.createdETL";
             C._FCT = FrameworkColumnType.OCC_CREATED;
             _Columns.add(C);
 
-            C = new Column(_ParentSchema.getConventionLastUpdatedName()+"ETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")._Description + " (" + getShortName() + ")", null, null, null);
+            C = new Column(_ParentSchema.getConventionLastUpdatedName() + "ETL", null, 0, true, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")._Description + " (" + getShortName() + ")", null, null, null, null);
             C._SameAs = "tilda.data.TILDA.Key.lastUpdatedETL";
             C._FCT = FrameworkColumnType.OCC_LASTUPDATED;
             _Columns.add(C);
@@ -698,7 +728,7 @@ public class Object extends Base
      * be returned only if there are no natural identities.<BR>
      * A natural identity is defined as a unique index, of a non-autogen primary key.
      * <BR>
-     * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
+     * This method should only be called <B>AFTER</B> {@link Object#validate(ParserSession, Schema)} has been called first.
      * 
      * @return
      */

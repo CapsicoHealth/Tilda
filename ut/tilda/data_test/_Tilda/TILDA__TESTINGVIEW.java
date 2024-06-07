@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -44,7 +44,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 </TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="TestingView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestingView-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
@@ -52,6 +52,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Medical system unique enterprise id<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-name_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
@@ -63,6 +64,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-refnum_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -72,6 +74,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a2_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a2</A></DIV></TD>
 </TR>
@@ -83,6 +86,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a2_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a2</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -90,8 +94,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TestingView-a9TZ_DIV' class='columns'>a9TZ</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a9'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a9TZ_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9TZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
 </TR>
@@ -103,6 +108,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a9_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -112,6 +118,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a9c_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9c</A></DIV></TD>
 </TR>
@@ -123,6 +130,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a6_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a6</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -132,6 +140,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Testing-a6_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a6</A></DIV></TD>
 </TR>
@@ -242,8 +251,8 @@ This is the setter for:<BR>
     void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.TestingView.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.TestingView.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 10)
         throw new Exception("Cannot set tilda.data_test.TILDATEST.TestingView.name: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -732,7 +741,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a9TZ == null)
         _a9TZ = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9TZ();
         }
@@ -815,6 +824,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -847,6 +861,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -879,6 +898,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -907,6 +931,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1011,6 +1040,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -1555,7 +1589,7 @@ This is the null setter for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTINGVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTINGVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -1570,7 +1604,7 @@ This is the null setter for:<BR>
                         _refnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask ); _refnum = null; }
                         _a2Min   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  ); _a2Min = null; }
                         _a2Max   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  ); _a2Max = null; }
-                        _a9TZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask   ); _a9TZ = null; }
+                        _a9TZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask   ); _a9TZ = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_a9TZ != null && _a9TZ.size() == 1 && _a9TZ.get(0) == null)
@@ -1578,8 +1612,8 @@ This is the null setter for:<BR>
                                  _a9TZ = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
                                }
-                        _a9      = processZDTs(C, _a9TZ     , "tilda.data_test.TILDATEST.TestingView.a9"     , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9     , TILDA__TESTINGVIEW_Factory.COLS.A9TZ     ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     ); _a9 = null; }
-                        _a9c     = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ); _a9c = null; }
+                        _a9      = JDBCHelper.processZDTs(_a9TZ     , "tilda.data_test.TILDATEST.TestingView.a9"     , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9     , TILDA__TESTINGVIEW_Factory.COLS.A9TZ     , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     ); _a9 = null; }
+                        _a9c     = DateTimeUtil.toLocalDates((List<java.sql.Date>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ); _a9c = null; }
                         _a6First =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask); _a6First = null; }
                         _a6Last  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask ); _a6Last = null; }
      __LookupId = 0;
@@ -1587,53 +1621,6 @@ This is the null setter for:<BR>
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
-   }
-  private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     if (DTNull == true)
-      return null;
-
-     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
-     for (int i = 0; i < TimezoneIds.size(); ++i)
-       {
-         String TimezoneId = TimezoneIds.get(i);
-         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
-         ZDTs.add(ZDT);
-       }
-     return ZDTs;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

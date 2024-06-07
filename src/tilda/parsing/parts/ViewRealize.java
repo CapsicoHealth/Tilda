@@ -66,13 +66,13 @@ public class ViewRealize
     public transient boolean _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView, ViewRealizedWrapper ParentRealized)
+    public boolean validate(ParserSession PS, View ParentView, ViewRealizedWrapper ParentRealized)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
 
-        if (_ParentRealized.Validate(PS, ParentView._ParentSchema) == false)
+        if (_ParentRealized.validate(PS, ParentView._ParentSchema) == false)
           return false;
 
         if (TextUtil.isNullOrEmpty(_SubRealized_DEPRECATED) == false)
@@ -93,7 +93,7 @@ public class ViewRealize
         O._SourceView = ParentView;
         O._Name = ParentView.getRealizedTableName(false);
         O._Prefix = ParentView._Prefix;
-        
+
         Schema targetSchema = null;
         if (TextUtil.isNullOrEmpty(_TargetSchema) == false)
           {
@@ -141,7 +141,7 @@ public class ViewRealize
         O._Indices = _Indices;
         if (_IndexTemplates != null)
           for (IndexTemplate IT : _IndexTemplates)
-            if (IT.Validate(PS, ParentRealized._O) == true)
+            if (IT.validate(PS, ParentRealized._O) == true)
               for (String col : IT._Columns)
                 {
                   Index I = new Index();
@@ -161,7 +161,7 @@ public class ViewRealize
                 }
 
         boolean OCC = false;
-//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
+        // LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
             if (TextUtil.findStarElement(_Exclude_DEPRECATED, C._Name, true, 0) == -1)
@@ -177,7 +177,9 @@ public class ViewRealize
                 if (C._Type == ColumnType.STRING && C.isCollection() == false && C._Size != null && C._Size <= 8)
                   C._Size = 10;
                 // Make sure that the type is managed through the getType() method to account for aggregates.
-                Column newCol = new Column(C._Name, C.getType().name() + (C.isList() ? "[]" : C.isSet() ? "{}" : ""), C._Size, C._Description/* + " (from " + C.getShortName() + ")"*/, C._Precision, C._Scale);
+                Column newCol = new Column(C._Name, C.getType().name() + (C.isList() ? "[]" : C.isSet() ? "{}" : ""), C._Size, C._Description/*
+                                                                                                                                              * + " (from " + C.getShortName() + ")"
+                                                                                                                                              */, C._Precision, C._Scale);
                 // If the final type is not a String or is a collection, we must clear the possible size since the aggregate changed the type.
                 if (newCol._TypeStr.startsWith("STRING") == false || C.isCollection() == true)
                   newCol._Size = null;
@@ -188,16 +190,16 @@ public class ViewRealize
                 newCol._expressionStrs = C._expressionStrs;
                 newCol._expressionDependencyColumnNames = C._expressionDependencyColumnNames;
                 newCol._Aggregate = C._Aggregate;
-//                newCol._OrderByObjs = C._OrderByObjs;
+                newCol._AggregateOrderBy = C._AggregateOrderBy;
                 // LDH-NOTE: Not sure why we need to define SAME_AS here given that we specify all the information previously. This is causing issues with some aggregates...
                 // newCol._SameAs = C._SameAs;
                 // newCol._SameAsObj = C._SameAsObj;
                 O._Columns.add(newCol);
               }
-//            else
-//              LOG.debug("Excluding "+C._Name);
+            // else
+            // LOG.debug("Excluding "+C._Name);
           }
-//        LOG.debug(O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
+        // LOG.debug(O.getFullName()+": "+TextUtil.print(O.getColumnNames()));
 
         // We can't just copy the OCC status of the view because we don't know which columns are actually used.
         O._OCC = O.getColumn("created") != null && O.getColumn("lastUpdated") != null && O.getColumn("deleted") != null;
@@ -208,20 +210,20 @@ public class ViewRealize
         O._RealizedView = ParentView;
 
         // default target schema is the current schema, i.e., the parent view's schema.);
-        O.Validate(PS, targetSchema != null ? targetSchema : ParentView._ParentSchema);
+        O.validate(PS, targetSchema != null ? targetSchema : ParentView._ParentSchema);
 
         Set<String> Names = new HashSet<String>();
         for (Index I : _Indices)
           if (I != null)
             {
-              // if (I.Validate(PS, ParentRealized) == false)
+              // if (I.validate(PS, ParentRealized) == false)
               // continue;
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
             }
 
         if (_Incremental != null)
-          _Incremental.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
+          _Incremental.validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns(false));
 
         // if (O._Name.equals("Testing2Realized") == true)
         // LOG.debug("yyyyy");

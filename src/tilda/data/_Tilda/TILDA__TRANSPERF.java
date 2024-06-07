@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -48,14 +48,15 @@ The Table TILDA.TransPerf :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="TransPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TransPerf-startPeriodTZ_DIV' class='columns'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'startPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -69,6 +70,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -76,8 +78,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TransPerf-endPeriodTZ_DIV' class='columns'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'endPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -91,6 +94,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -100,6 +104,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -117,6 +122,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -132,6 +138,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -149,6 +156,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -164,6 +172,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -181,6 +190,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -196,6 +206,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -213,6 +224,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -228,6 +240,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -245,6 +258,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -260,6 +274,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -277,6 +292,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -292,6 +308,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -309,6 +326,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -324,6 +342,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -341,6 +360,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -356,6 +376,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -373,6 +394,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -388,6 +410,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -405,6 +428,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -420,6 +444,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -437,6 +462,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -452,6 +478,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -469,6 +496,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Blah...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -482,8 +510,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TransPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD>
 </TR>
@@ -492,8 +521,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TransPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD>
 </TR>
@@ -502,8 +532,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='TransPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD>
 </TR>
@@ -613,8 +644,8 @@ This is the setter for:<BR>
     void setStartPeriodTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.startPeriodTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.startPeriodTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.TransPerf.startPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_startPeriodTZ) == false)
@@ -672,6 +703,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("startPeriod")
@@ -698,6 +734,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getStartPeriod()
@@ -719,6 +760,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    protected void setStartPeriod(ZonedDateTime v) throws Exception
@@ -822,8 +868,8 @@ This is the setter for:<BR>
     void setEndPeriodTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.endPeriodTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.endPeriodTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.TransPerf.endPeriodTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_endPeriodTZ) == false)
@@ -879,6 +925,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("endPeriod")
@@ -904,6 +955,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getEndPeriod()
@@ -925,6 +981,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setEndPeriod(ZonedDateTime v) throws Exception
@@ -961,6 +1022,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndPeriodNow() throws Exception
@@ -984,6 +1050,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndPeriodUndefined() throws Exception
@@ -1007,6 +1078,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndPeriod(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -1030,6 +1106,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endPeriodTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedEndPeriod()
@@ -1081,14 +1162,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.commitNano, which
    public static final boolean checkCommitNano(long v)
     {
       for (String[] a : _commitNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapCommitNano(long v)
     {
       for (String[] a : _commitNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1261,14 +1342,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.commitCount, whic
    public static final boolean checkCommitCount(int v)
     {
       for (String[] a : _commitCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapCommitCount(int v)
     {
       for (String[] a : _commitCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1441,14 +1522,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackNano, whi
    public static final boolean checkRollbackNano(long v)
     {
       for (String[] a : _rollbackNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapRollbackNano(long v)
     {
       for (String[] a : _rollbackNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1621,14 +1702,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackCount, wh
    public static final boolean checkRollbackCount(int v)
     {
       for (String[] a : _rollbackCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapRollbackCount(int v)
     {
       for (String[] a : _rollbackCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1801,14 +1882,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetNano,
    public static final boolean checkSavepointSetNano(long v)
     {
       for (String[] a : _savepointSetNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSavepointSetNano(long v)
     {
       for (String[] a : _savepointSetNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -1981,14 +2062,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetCount
    public static final boolean checkSavepointSetCount(int v)
     {
       for (String[] a : _savepointSetCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSavepointSetCount(int v)
     {
       for (String[] a : _savepointSetCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2161,14 +2242,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitNa
    public static final boolean checkSavepointCommitNano(long v)
     {
       for (String[] a : _savepointCommitNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSavepointCommitNano(long v)
     {
       for (String[] a : _savepointCommitNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2341,14 +2422,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitCo
    public static final boolean checkSavepointCommitCount(int v)
     {
       for (String[] a : _savepointCommitCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSavepointCommitCount(int v)
     {
       for (String[] a : _savepointCommitCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2521,14 +2602,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollback
    public static final boolean checkSavepointRollbackNano(long v)
     {
       for (String[] a : _savepointRollbackNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSavepointRollbackNano(long v)
     {
       for (String[] a : _savepointRollbackNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2701,14 +2782,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollback
    public static final boolean checkSavepointRollbackCount(int v)
     {
       for (String[] a : _savepointRollbackCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapSavepointRollbackCount(int v)
     {
       for (String[] a : _savepointRollbackCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -2881,14 +2962,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseNan
    public static final boolean checkStatementCloseNano(long v)
     {
       for (String[] a : _statementCloseNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapStatementCloseNano(long v)
     {
       for (String[] a : _statementCloseNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3061,14 +3142,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseCou
    public static final boolean checkStatementCloseCount(int v)
     {
       for (String[] a : _statementCloseCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapStatementCloseCount(int v)
     {
       for (String[] a : _statementCloseCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3241,14 +3322,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseNa
    public static final boolean checkConnectionCloseNano(long v)
     {
       for (String[] a : _connectionCloseNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapConnectionCloseNano(long v)
     {
       for (String[] a : _connectionCloseNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3421,14 +3502,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseCo
    public static final boolean checkConnectionCloseCount(int v)
     {
       for (String[] a : _connectionCloseCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapConnectionCloseCount(int v)
     {
       for (String[] a : _connectionCloseCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3601,14 +3682,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetNano
    public static final boolean checkConnectionGetNano(long v)
     {
       for (String[] a : _connectionGetNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapConnectionGetNano(long v)
     {
       for (String[] a : _connectionGetNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3781,14 +3862,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetCoun
    public static final boolean checkConnectionGetCount(int v)
     {
       for (String[] a : _connectionGetCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapConnectionGetCount(int v)
     {
       for (String[] a : _connectionGetCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -3961,14 +4042,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterNano, 
    public static final boolean checkTildaSetterNano(long v)
     {
       for (String[] a : _tildaSetterNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaSetterNano(long v)
     {
       for (String[] a : _tildaSetterNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -4141,14 +4222,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterCount,
    public static final boolean checkTildaSetterCount(int v)
     {
       for (String[] a : _tildaSetterCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaSetterCount(int v)
     {
       for (String[] a : _tildaSetterCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -4321,14 +4402,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringNano
    public static final boolean checkTildaToStringNano(long v)
     {
       for (String[] a : _tildaToStringNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaToStringNano(long v)
     {
       for (String[] a : _tildaToStringNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -4501,14 +4582,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringCoun
    public static final boolean checkTildaToStringCount(int v)
     {
       for (String[] a : _tildaToStringCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaToStringCount(int v)
     {
       for (String[] a : _tildaToStringCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -4681,14 +4762,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonNano, 
    public static final boolean checkTildaToJsonNano(long v)
     {
       for (String[] a : _tildaToJsonNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaToJsonNano(long v)
     {
       for (String[] a : _tildaToJsonNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -4861,14 +4942,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonCount,
    public static final boolean checkTildaToJsonCount(int v)
     {
       for (String[] a : _tildaToJsonCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaToJsonCount(int v)
     {
       for (String[] a : _tildaToJsonCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -5041,14 +5122,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvNano, w
    public static final boolean checkTildaToCsvNano(long v)
     {
       for (String[] a : _tildaToCsvNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaToCsvNano(long v)
     {
       for (String[] a : _tildaToCsvNano_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -5221,14 +5302,14 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvCount, 
    public static final boolean checkTildaToCsvCount(int v)
     {
       for (String[] a : _tildaToCsvCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return true;
       return false;
     }
    public static final String mapTildaToCsvCount(int v)
     {
       for (String[] a : _tildaToCsvCount_Values)
-       if (a[0].equals(v) == true)
+       if (a[0].equals(String.valueOf(v)) == true)
         return a[2];
       return null;
     }
@@ -6175,7 +6256,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -6198,9 +6279,10 @@ This is the hasChanged for:<BR>
         throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startPeriod.getZone().getId());
+       String zoneId = _startPeriod.getZone().getId();
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.startPeriod' because the timezone value '"+_startPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+        throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.startPeriod' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setStartPeriodTZ(ZI.getId());
         }
 
@@ -6214,9 +6296,10 @@ This is the hasChanged for:<BR>
         throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
        __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_endPeriod.getZone().getId());
+       String zoneId = _endPeriod.getZone().getId();
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.endPeriod' because the timezone value '"+_endPeriod.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+        throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.endPeriod' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setEndPeriodTZ(ZI.getId());
         }
 
@@ -6359,51 +6442,51 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "TransPerf");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTSETCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTCOMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SAVEPOINTROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STATEMENTCLOSECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONCLOSECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CONNECTIONGETCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDASETTERNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDASETTERCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOSTRINGCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOJSONNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -6806,7 +6889,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -6816,9 +6899,9 @@ This is the hasChanged for:<BR>
       int i = 0;
      __Init = InitMode.LOOKUP;
                                        _startPeriodTZ          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask         ); _startPeriodTZ = null; } else _startPeriodTZ          = _startPeriodTZ         .trim();
-      __Saved_startPeriod            = _startPeriod            = processZDT(_startPeriodTZ           , "tilda.data.TILDA.TransPerf.startPeriod"           , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD           , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ           ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask           ); _startPeriod = null; }
+      __Saved_startPeriod            = _startPeriod            = JDBCHelper.processZDT(_startPeriodTZ           , "tilda.data.TILDA.TransPerf.startPeriod"           , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD           , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ           , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask           ); _startPeriod = null; }
                                        _endPeriodTZ            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask           ); _endPeriodTZ = null; } else _endPeriodTZ            = _endPeriodTZ           .trim();
-                                       _endPeriod              = processZDT(_endPeriodTZ             , "tilda.data.TILDA.TransPerf.endPeriod"             , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD             , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ             ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask             ); _endPeriod = null; }
+                                       _endPeriod              = JDBCHelper.processZDT(_endPeriodTZ             , "tilda.data.TILDA.TransPerf.endPeriod"             , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD             , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ             , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask             ); _endPeriod = null; }
                                        _commitNano             =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask            ); _commitNano = null; }
                                        _commitCount            =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask           ); _commitCount = null; }
                                        _rollbackNano           =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask          ); _rollbackNano = null; }
@@ -6843,33 +6926,14 @@ This is the hasChanged for:<BR>
                                        _tildaToJsonCount       =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOJSONCOUNT._Mask      ); _tildaToJsonCount = null; }
                                        _tildaToCsvNano         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVNANO._Mask        ); _tildaToCsvNano = null; }
                                        _tildaToCsvCount        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.TILDATOCSVCOUNT._Mask       ); _tildaToCsvCount = null; }
-                                       _created                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask               ); _created = null; }
-                                       _lastUpdated            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask           ); _lastUpdated = null; }
-                                       _deleted                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask               ); _deleted = null; }
+                                       _created                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask               ); _created = null; }
+                                       _lastUpdated            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask           ); _lastUpdated = null; }
+                                       _deleted                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask               ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

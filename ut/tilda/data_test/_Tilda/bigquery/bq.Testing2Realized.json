@@ -1,23 +1,17 @@
 [
-    { "name":"refnum", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record" }
-   ,{ "name":"name", "type":"STRING", "mode":"NULLABLE", "description":"Medical system unique enterprise id" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
-   ,{ "name":"xxxLastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
-   ,{ "name":"description", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
-   ,{ "name":"desc2", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
-   ,{ "name":"desc3", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
-   ,{ "name":"desc4", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
-   ,{ "name":"desc5", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
-   ,{ "name":"desc6", "type":"STRING", "mode":"NULLABLE", "description":"The title for a person, i.e., Mr, Miss, Mrs..." }
-   ,{ "name":"a3", "type":"BOOL", "mode":"NULLABLE", "description":"<B>Not A3</B>: Blah..." }
-   ,{ "name":"bastille", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Bastille Day</B>: Blah..." }
-   ,{ "name":"toto", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"<B>Last Updated</B>: Blah..." }
-   ,{ "name":"desc2_Cat1", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View." }
-   ,{ "name":"desc2_Cat2", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View." }
-   ,{ "name":"desc2_Cat3", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View." }
-   ,{ "name":"a7_Cat4", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0." }
-   ,{ "name":"a7_Cat5", "type":"FLOAT64", "mode":"NULLABLE", "description":"<B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0." }
-   ,{ "name":"a5_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a5</B>: Whether a5 is null or not" }
-   ,{ "name":"a6_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a6</B>: Whether a6 is null or not" }
-   ,{ "name":"a7_null", "type":"INT64", "mode":"NULLABLE", "description":"<B>Null a7</B>: Whether a7 is null or not" }
+    { "name":"refnum","type":"INT64","mode":"NULLABLE","description":"The primary key for this record" }
+   ,{ "name":"name","type":"STRING","mode":"NULLABLE","description":"Medical system unique enterprise id" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
+   ,{ "name":"xxxLastUpdated","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
+   ,{ "name":"description","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc2","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc3","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc4","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc5","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"desc6","type":"STRING","mode":"NULLABLE","description":"The title for a person, i.e., Mr, Miss, Mrs..." }
+   ,{ "name":"bastille","type":"TIMESTAMP","mode":"NULLABLE","description":"<B>Bastille Day</B>: Blah..." }
+   ,{ "name":"toto","type":"TIMESTAMP","mode":"NULLABLE","description":"<B>Last Updated</B>: Blah..." }
+   ,{ "name":"desc2_Cat1","type":"FLOAT64","mode":"NULLABLE","description":"<B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View." }
+   ,{ "name":"desc2_Cat2","type":"FLOAT64","mode":"NULLABLE","description":"<B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View." }
+   ,{ "name":"desc2_Cat3","type":"FLOAT64","mode":"NULLABLE","description":"<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View." }
 ]

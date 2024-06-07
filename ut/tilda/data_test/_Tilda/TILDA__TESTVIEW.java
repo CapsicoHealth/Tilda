@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -42,7 +42,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 </TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="TestView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TestView-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -50,6 +50,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test-refnum_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
@@ -60,6 +61,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the test<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Test-name_DIV', -50)">TILDATEST<B>&nbsp;&#8226;&nbsp;</B>Test<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
 </TR>
@@ -260,8 +262,8 @@ This is the setter for:<BR>
     void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.TestView.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.TestView.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data_test.TILDATEST.TestView.name: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -365,7 +367,7 @@ This is the setter for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }

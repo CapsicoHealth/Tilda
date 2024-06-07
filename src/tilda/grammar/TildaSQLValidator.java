@@ -494,7 +494,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             if (_CG != null)
               _CG.valueLiteralTimestamp(ZDT);
           }
-        if (_TypeManager.handleType(ColumnType.DATETIME, ctx) == false)
+        if (_TypeManager.handleType(ColumnType.DATETIME, ctx) == false || _TypeManager.handleType(ColumnType.DATETIME_PLAIN, ctx) == false)
           _Errors.addError(_TypeManager.getLastError(), ctx);
         super.enterValueTimestampLiteral(ctx);
       }

@@ -43,7 +43,7 @@ public class DataValue
         _Label = Label;
       }
 
-    public boolean Validate(ParserSession PS, Enumeration E)
+    public boolean validate(ParserSession PS, Enumeration E)
       {
         int Errs = PS.getErrorCount();
 
@@ -59,8 +59,8 @@ public class DataValue
         if (TextUtil.isNullOrEmpty(_Label) == false)
           PS.AddError("Enumeration '" + _ParentEnumeration._Name + "' defines a data value without a 'label'.");
 
-        _ParentEnumeration._Id   .CheckValueType(PS, "Enumeration '" + _ParentEnumeration._Name + "' data value 'id'"   , _Id   , false, null);
-        _ParentEnumeration._Value.CheckValueType(PS, "Enumeration '" + _ParentEnumeration._Name + "' data value 'value'", _Value, false, null);
+        _ParentEnumeration._Id   .checkValueType(PS, "Enumeration '" + _ParentEnumeration._Name + "' data value 'id'"   , _Id   , false, null);
+        _ParentEnumeration._Value.checkValueType(PS, "Enumeration '" + _ParentEnumeration._Name + "' data value 'value'", _Value, false, null);
 
         return Errs == PS.getErrorCount();
       }

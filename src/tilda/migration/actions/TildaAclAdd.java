@@ -19,6 +19,7 @@ package tilda.migration.actions;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,6 +33,7 @@ import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.LogUtil;
 
 public class TildaAclAdd extends MigrationAction
   {
@@ -74,8 +76,14 @@ public class TildaAclAdd extends MigrationAction
               return true;
 
             ZonedDateTime startZDT = DateTimeUtil.nowLocal();
+            LOG.debug("Setting up the ACL details for all database assets");
+            LogUtil.setLogLevel(Level.ERROR);
             if (superUserCon.executeDDL(MaintenanceLog_Factory.SCHEMA_LABEL, TILDA_HELPERS_ACL, statement) == false)
-              return false;
+              {
+                LogUtil.resetLogLevel();
+                return false;
+              }
+            LogUtil.resetLogLevel();
 
             /*@formatter:off*/
             MaintenanceLog_Data M = MaintenanceLog_Factory.create(superUserCon

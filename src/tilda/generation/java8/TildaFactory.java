@@ -122,7 +122,7 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarFull = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
               // String ColVarShort = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               // String ColVarOthers = TextUtil.escapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
+              String ColumnTypeClassName = "Type_" + TextUtil.normalCapitalization(C.getType().getMappedName()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               Out.println();
               Out.println();
               G.getGenDocs().docField(Out, G, C, "column definition");
@@ -143,12 +143,17 @@ public class TildaFactory implements CodeGenTildaFactory
                 + (C.isCollection() == false && C.getType() == ColumnType.STRING ? ""+C._Size+", " : "")
                 + TextUtil.escapeDoubleQuoteWithSlash(C._Description) + ", null, null");
 
-              if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
+              if ((C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN) && C.needsTZ() == true && O.getColumn(C.getName() + "TZ") != null)
                 {
                   Out.print(", " + C.getName().toUpperCase() + "TZ");
                 }
+
+//              if (C.getType() == ColumnType.DATETIME && C.needsTZ() == true && O.getColumn(C.getTZName()) != null)
+//                {
+//                  Out.print(", " + C.getTZName().toUpperCase());
+//                }
               // Although DATE and DATETIME do support values, we don't want them here because they are always markers and default values, not enumerations per se.
-              if (C.isCollection() == false && C.getType() != ColumnType.DATE && C.getType() != ColumnType.DATETIME && ValueHelper.isSuported(C.getType()) == true)
+              if (C.isCollection() == false && C.getType() != ColumnType.DATE && (C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN) && ValueHelper.isSuported(C.getType()) == true)
                 Out.print(", " + ColumnValue.toJavaStringDoubleArray(C._Values));
               Out.println(");");
             }
@@ -546,7 +551,7 @@ public class TildaFactory implements CodeGenTildaFactory
                 Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + A._VarName);
               }
           }
-        Out.println(", int start, int size) throws Exception");
+        Out.println(", int __start__, int __size__) throws Exception");
 
       }
 
@@ -597,8 +602,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     {");
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
-        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", __start__, __size__);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println();
@@ -609,7 +614,7 @@ public class TildaFactory implements CodeGenTildaFactory
         genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", start, size);");
+        Out.println("       readMany(C, " + LookupId + ", RPI, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", __start__, __size__);");
         Out.println("     }");
         Out.println();
         if (q != null && q._Attributes.isEmpty() == false)
@@ -744,13 +749,19 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);");
-        Out.println("       readMany(C, -7, RPI, null, Q, start, size);");
+        Out.println("       if (Q.isFullSelectQuery() == true)");
+        Out.println("        readMany(C, -77, RPI, null, Q.toString(), start, size);");
+        Out.println("       else");
+        Out.println("        readMany(C, -7, RPI, null, Q, start, size);");
         Out.println("       return RPI._L;");
         Out.println("     }");
         Out.println("   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<" + Helper.getFullAppDataClassName(O) + "> OP, int start, int size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);");
-        Out.println("       readMany(C, -7, RPI, null, Q, start, size);");
+        Out.println("       if (Q.isFullSelectQuery() == true)");
+        Out.println("        readMany(C, -77, RPI, null, Q.toString(), start, size);");
+        Out.println("       else");
+        Out.println("        readMany(C, -7, RPI, null, Q, start, size);");
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {

@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull      REFNUM        = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitiveNull            REFNUM        = new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"        , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull    NAME          = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, 10, "Medical system unique enterprise id", null, null, null);
+     public final Type_StringPrimitiveNull          NAME          = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "name"          , 1/*1*/, 10, "Medical system unique enterprise id", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  LASTUPDATED   = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 2/*2*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
+     public final Type_DatetimePrimitiveNull        LASTUPDATED   = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"   , 2/*2*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  XXXLASTUPDATED= new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 3/*3*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
+     public final Type_DatetimePrimitiveNull        XXXLASTUPDATED= new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "xxxLastUpdated", 3/*3*/, "The timestamp for when the record was last updated. (TILDATEST.Testing)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -259,7 +259,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -431,7 +431,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING3REALIZED_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -453,22 +453,22 @@ Lookup one record by the unique index 'Refnum': refnum.
 /**
 Lookup records by the index 'LastUpdated' over  .<BR>The results are ordered by: lastUpdated desc
 */
-   static public ListResults<tilda.data_test.Testing3Realized_Data> lookupWhereLastUpdated(Connection C, int start, int size) throws Exception
+   static public ListResults<tilda.data_test.Testing3Realized_Data> lookupWhereLastUpdated(Connection C, int __start__, int __size__) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING3REALIZED Obj = new tilda.data_test.Testing3Realized_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'LastUpdated' over  .<BR>The results are ordered by: lastUpdated desc
 */
-   static public void lookupWhereLastUpdated(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing3Realized_Data> OP, int start, int size) throws Exception
+   static public void lookupWhereLastUpdated(Connection C, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing3Realized_Data> OP, int __start__, int __size__) throws Exception
      {
        tilda.data_test._Tilda.TILDA__TESTING3REALIZED Obj = new tilda.data_test.Testing3Realized_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -476,7 +476,7 @@ Lookup records by the index 'LastUpdated' over  .<BR>The results are ordered by:
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -518,13 +518,19 @@ The results are ordered by: refnum asc
    public static ListResults<tilda.data_test.Testing3Realized_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data_test.Testing3Realized_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

@@ -42,12 +42,12 @@ public class Schema
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("dynamic"      ) public boolean           _Dynamic = false;
-    @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
-    @SerializedName("entityClasses") public String[]          _EntityClasses = new String[] { };
+    @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
-    @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
-    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces    = new ArrayList<Interface  >();
+    @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
+    @SerializedName("entityClasses") public String[]          _EntityClasses = new String[] { };
+//    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces    = new ArrayList<Interface  >();
     @SerializedName("enumerations" ) public List<Enumeration> _Enumerations  = new ArrayList<Enumeration>();
     @SerializedName("mappers"      ) public List<Mapper     > _Mappers       = new ArrayList<Mapper     >();
     @SerializedName("objects"      ) public List<Object     > _Objects       = new ArrayList<Object     >();
@@ -250,7 +250,7 @@ public class Schema
         return V == null ? null : V.getViewColumn(columnName);
       }
 
-    public boolean Validate(ParserSession PS)
+    public boolean validate(ParserSession PS)
     throws Exception
       {
         if (_Validated != null)
@@ -266,7 +266,7 @@ public class Schema
         setDefaultDependencies(PS);
 
         if (_Conventions != null)
-         _Conventions.Validate(PS, this);
+         _Conventions.validate(PS, this);
         
         if (_EntityClasses != null && _EntityClasses.length > 0)
           {
@@ -279,12 +279,12 @@ public class Schema
         for (Enumeration E : _Enumerations)
           if (E != null)
             {
-              E.Validate(PS, this, ++i);
+              E.validate(PS, this, ++i);
             }
         for (Mapper M : _Mappers)
           if (M != null)
             {
-              M.Validate(PS, this, ++i);
+              M.validate(PS, this, ++i);
             }
         Set<String> ThingNames = new HashSet<String>();
         for (i = 0; i < _Objects.size(); ++i)
@@ -294,7 +294,7 @@ public class Schema
               {
                 if (ThingNames.add(O._Name.toUpperCase()) == false)
                   PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
-                O.Validate(PS, this);
+                O.validate(PS, this);
               }
           }
 
@@ -305,7 +305,7 @@ public class Schema
             {
               if (ThingNames.add(V._Name.toUpperCase()) == false)
                 PS.AddError("The View '" + V._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
-              V.Validate(PS, this);
+              V.validate(PS, this);
               if (V._Formulas != null && V._Formulas.isEmpty() == false)
                 {
                   // hasFormulas = true;
@@ -320,7 +320,7 @@ public class Schema
             }
         
         if (_Migration != null)
-          _Migration.Validate(PS, this);
+          _Migration.validate(PS, this);
 
         /*
          * if (hasFormulas == true)
@@ -394,7 +394,7 @@ public class Schema
      * O._OutputMaps.add(OM);
      * 
      * _Objects.add(O);
-     * O.Validate(PS, this);
+     * O.validate(PS, this);
      * 
      * 
      * O = new Object();
@@ -438,7 +438,7 @@ public class Schema
      * O._OutputMaps.add(OM);
      * 
      * _Objects.add(O);
-     * O.Validate(PS, this);
+     * O.validate(PS, this);
      * 
      * O = new Object();
      * O._ModeStr = ObjectMode.DB_ONLY.toString();
@@ -492,7 +492,7 @@ public class Schema
      * O._OutputMaps.add(OM);
      * 
      * _Objects.add(O);
-     * O.Validate(PS, this);
+     * O.validate(PS, this);
      * }
      */
 
@@ -679,7 +679,16 @@ public class Schema
       {
         return _Conventions._DeletedName;
       }
+    public String getConventionTzColPostfix()
+      {
+        return Convention.getDefaultTzColPostfix();
+      }
+    public String getConventionTzRowName()
+      {
+        return _Conventions._TzRowName;
+      }
 
+    
     public boolean isOCCColumnName(String name)
       {
         return name.equals(_Conventions._CreatedName) || name.equals(_Conventions._LastUpdatedName) || name.equals(_Conventions._DeletedName)

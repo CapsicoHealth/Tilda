@@ -111,7 +111,7 @@ public class ExporterRecordProcessorCSVJSON extends ExporterRecordProcessor
               }
             else
               {
-                JSONUtil.print(_out, _C, cm._NameOriginal, RS, idx, cm);
+                JSONUtil.print(_out, cm._NameOriginal, RS, idx, cm, true);
               }
           }
         if (_type == 2)

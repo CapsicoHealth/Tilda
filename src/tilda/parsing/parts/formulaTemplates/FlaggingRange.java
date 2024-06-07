@@ -64,7 +64,7 @@ public class FlaggingRange
     }
 
 
-    public void Validate(ParserSession PS, View ParentView, Flagging F)
+    public void validate(ParserSession PS, View ParentView, Flagging F)
       {        
         _ParentView = ParentView;
         

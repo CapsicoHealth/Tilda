@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -72,19 +73,19 @@ public class TypeDef
       }
 
 
-    public boolean Validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+    public boolean validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional, FrameworkSourcedType FST)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, What, AllowArrays, StringSizeOptional);
+        validateBase(PS, What, AllowArrays, StringSizeOptional, FST);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
     protected static Pattern _P = Pattern.compile("STRING\\s*\\(\\s*(\\d+)\\s*\\)");
     
-    private void ValidateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+    private void validateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional, FrameworkSourcedType FST)
       {
         if (_TypeStr == null)
           {
@@ -116,7 +117,7 @@ public class TypeDef
             BaseType = "STRING";
           }
 
-        if ((_Type = ColumnType.parse(BaseType)) == null)
+        if ((_Type = ColumnType.parse(BaseType)) == null || (FST == FrameworkSourcedType.NONE && _Type._InternalOnly == true))
           {
             PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "'.");
             return;
@@ -131,7 +132,7 @@ public class TypeDef
               }
             if (_Type.isCollectionCompatible(_TypeCollection) == false)
               {
-                PS.AddError(What + "is defined as a 'type' '" + _Type + "' which is not supported as an Array.");
+                PS.AddError(What + "is defined as a '" + _Type + "' which is not supported as a "+_TypeCollection.name()+".");
                 return;
               }
           }
@@ -204,7 +205,7 @@ public class TypeDef
         return _TypeCollection == MultiType.LIST;
       }
 
-    public boolean CheckValueType(ParserSession PS, String What, String Value, boolean DateTimeAllowed, DefaultType Default)
+    public boolean checkValueType(ParserSession PS, String What, String Value, boolean DateTimeAllowed, DefaultType Default)
     throws Error
       {
         switch (_Type)
@@ -215,6 +216,7 @@ public class TypeDef
               PS.AddError(What + " is a '" + _Type + "' which is not allowed.");
               return false;
             case DATETIME:
+            case DATETIME_PLAIN:
               if (DateTimeAllowed == false)
                 return PS.AddError(What + " is a '" + _Type + "' which is not allowed.");
               if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false)

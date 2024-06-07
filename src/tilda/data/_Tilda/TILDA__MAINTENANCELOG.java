@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -43,9 +43,9 @@ The Table TILDA.MaintenanceLog :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>schemaName, objectNamestartTime desc
+<LI>Has the following indices:<UL><LI>schemaName, objectName, startTime desc
 </LI>
-<LI>typestartTime desc
+<LI>type, startTime desc
 </LI>
 </UL></LI>
 </UL>
@@ -53,7 +53,7 @@ The Table TILDA.MaintenanceLog :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="MaintenanceLog_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='MaintenanceLog-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -61,6 +61,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -71,6 +72,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The type of maintenance, e.g., Migration, Reorg...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -89,6 +91,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the schema for the resource.</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -99,6 +102,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the resource.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -108,6 +112,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The type of the resource.<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
@@ -134,6 +139,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the maintenance resource to track.<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -158,8 +164,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='MaintenanceLog-startTimeTZ_DIV' class='columns'>startTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'startTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -173,6 +180,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the refill started.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -180,8 +188,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='MaintenanceLog-endTimeTZ_DIV' class='columns'>endTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'endTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
@@ -195,6 +204,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the refill ended.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -204,6 +214,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The value of the maintenance resource to track.</TD>
 </TR>
@@ -215,6 +226,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the maintenance resource to track.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -222,8 +234,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='MaintenanceLog-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.MaintenanceLog)</TD>
 </TR>
@@ -232,8 +245,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='MaintenanceLog-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.MaintenanceLog)</TD>
 </TR>
@@ -242,8 +256,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='MaintenanceLog-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDA.MaintenanceLog)</TD>
 </TR>
@@ -514,8 +529,8 @@ This is the setter for:<BR>
    public void setType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.type to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.type to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 64)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.type: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_type) == false)
@@ -659,8 +674,8 @@ This is the setter for:<BR>
    public void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.schemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.schemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.schemaName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
@@ -790,7 +805,7 @@ This is the setter for:<BR>
    public void setObjectName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullObjectName();
         }
@@ -1209,7 +1224,7 @@ This is the setter for:<BR>
    public void setObjectType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullObjectType();
         }
@@ -1842,7 +1857,7 @@ This is the setter for:<BR>
    public void setAction(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullAction();
         }
@@ -2186,8 +2201,8 @@ This is the setter for:<BR>
     void setStartTimeTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.startTimeTZ to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.startTimeTZ to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 5)
         throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.startTimeTZ: the size "+v.length()+" is larger than the max allowed of 5: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_startTimeTZ) == false)
@@ -2245,6 +2260,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("startTime")
@@ -2270,6 +2290,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getStartTime()
@@ -2291,6 +2316,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setStartTime(ZonedDateTime v) throws Exception
@@ -2329,6 +2359,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setStartTimeNow() throws Exception
@@ -2352,6 +2387,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setStartTimeUndefined() throws Exception
@@ -2375,6 +2415,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setStartTime(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -2398,6 +2443,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'startTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedStartTime()
@@ -2496,7 +2546,7 @@ This is the setter for:<BR>
     void setEndTimeTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullEndTimeTZ();
         }
@@ -2587,6 +2637,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("endTime")
@@ -2612,6 +2667,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getEndTime()
@@ -2633,6 +2693,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullEndTime()
@@ -2654,6 +2719,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setEndTime(ZonedDateTime v) throws Exception
@@ -2694,6 +2764,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullEndTime()
@@ -2724,6 +2799,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndTimeNow() throws Exception
@@ -2747,6 +2827,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndTimeUndefined() throws Exception
@@ -2770,6 +2855,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setEndTime(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -2793,6 +2883,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'endTimeTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedEndTime()
@@ -2892,7 +2987,7 @@ This is the setter for:<BR>
    public void setStatement(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullStatement();
         }
@@ -3055,7 +3150,7 @@ This is the setter for:<BR>
    public void setDescr(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDescr();
         }
@@ -3933,7 +4028,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__MAINTENANCELOG_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__MAINTENANCELOG_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -3984,9 +4079,10 @@ This is the hasChanged for:<BR>
         throw new Exception("Incoming value for 'tilda.data.TILDA.MaintenanceLog.startTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask);
        __Nulls.andNot(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask);
-       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_startTime.getZone().getId());
+       String zoneId = _startTime.getZone().getId();
+       tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
        if (ZI == null)
-        throw new Exception("Cannot set field 'tilda.data.TILDA.MaintenanceLog.startTime' because the timezone value '"+_startTime.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+        throw new Exception("Cannot set field 'tilda.data.TILDA.MaintenanceLog.startTime' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setStartTimeTZ(ZI.getId());
         }
 
@@ -3997,9 +4093,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data.TILDA.MaintenanceLog.endTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
           __Nulls.andNot(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_endTime.getZone().getId());
+          String zoneId = _endTime.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.MaintenanceLog.endTime' because the timezone value '"+_endTime.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.MaintenanceLog.endTime' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setEndTimeTZ(ZI.getId());
         }
 
@@ -4034,35 +4131,35 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "MaintenanceLog");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.REFNUM._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.TYPE._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.ACTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.REFNUM._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.TYPE._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.ACTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_startTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_startTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_endTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_endTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.DESCR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.DESCR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__MAINTENANCELOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -4318,7 +4415,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__MAINTENANCELOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__MAINTENANCELOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -4334,38 +4431,19 @@ This is the hasChanged for:<BR>
                             _objectType  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask ); _objectType = null; }
                             _action      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask     ); _action = null; }
                             _startTimeTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ._Mask); _startTimeTZ = null; } else _startTimeTZ = _startTimeTZ.trim();
-                            _startTime   = processZDT(_startTimeTZ  , "tilda.data.TILDA.MaintenanceLog.startTime"  , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME  , TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ  ); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask  ); _startTime = null; }
+                            _startTime   = JDBCHelper.processZDT(_startTimeTZ  , "tilda.data.TILDA.MaintenanceLog.startTime"  , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME  , TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ  , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask  ); _startTime = null; }
                             _endTimeTZ   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask  ); _endTimeTZ = null; } else _endTimeTZ   = _endTimeTZ  .trim();
-                            _endTime     = processZDT(_endTimeTZ    , "tilda.data.TILDA.MaintenanceLog.endTime"    , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME    , TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ    ); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask    ); _endTime = null; }
+                            _endTime     = JDBCHelper.processZDT(_endTimeTZ    , "tilda.data.TILDA.MaintenanceLog.endTime"    , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME    , TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask    ); _endTime = null; }
                             _statement   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask  ); _statement = null; }
                             _descr       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask      ); _descr = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask    ); _deleted = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

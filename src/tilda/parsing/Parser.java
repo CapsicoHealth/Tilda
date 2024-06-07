@@ -16,11 +16,7 @@
 
 package tilda.parsing;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -32,13 +28,13 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Schema;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public abstract class Parser
   {
@@ -56,7 +52,7 @@ public abstract class Parser
               return null;
           }
         for (Schema S : SchemaList)
-          S.Validate(PS);
+          S.validate(PS);
         return PS;
       }
 
@@ -175,7 +171,7 @@ public abstract class Parser
 
         I = Schemas.iterator();
         while (I.hasNext() == true)
-          if (I.next().Validate(PS) == false)
+          if (I.next().validate(PS) == false)
             break;
         if (PS.getErrorCount() == 0)
           {
@@ -183,7 +179,7 @@ public abstract class Parser
               {
                 PS.addDependencySchema(BaseSchema);
               }
-            BaseSchema.Validate(PS);
+            BaseSchema.validate(PS);
           }
 
         return true;

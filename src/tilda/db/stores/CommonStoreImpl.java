@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Array;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -54,6 +53,7 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationNotNull;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
@@ -61,9 +61,9 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
-import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.ColMetaColPair;
+import tilda.utils.pairs.StringStringPair;
 
 public abstract class CommonStoreImpl implements DBType
   {
@@ -85,6 +85,90 @@ public abstract class CommonStoreImpl implements DBType
 
         return Str.toString();
       }
+    
+    
+    
+    protected abstract ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
+    throws Exception;
+    
+    @Override
+    public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
+    throws Exception
+      {
+        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
+        ColumnType TildaType = null;
+        String TypeSql = null;
+        switch (Type)
+          {
+            /*@formatter:off*/
+            case java.sql.Types.ARRAY        : TypeSql = "ARRAY"        ;
+                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                               break;
+            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ;
+                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                               break;
+            case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
+            case java.sql.Types.BINARY       : TypeSql = "BINARY"       ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.BIT          : TypeSql = "BIT"          ; TildaType = ColumnType.BOOLEAN; break;
+            case java.sql.Types.BLOB         : TypeSql = "BLOB"         ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.BOOLEAN      : TypeSql = "BOOLEAN"      ; TildaType = ColumnType.BOOLEAN; break;
+            case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
+            case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
+            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = ColumnType.DATE; break;
+            case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
+            case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
+            case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
+            case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.LONGVARCHAR  : TypeSql = "LONGVARCHAR"  ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
+            case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
+            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.NUMERIC; break;
+            case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.OTHER        :
+              if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
+                {
+                  TypeSql = "JSONB";
+                  TildaType = ColumnType.JSON;
+                }
+              else if (TypeName != null && TypeName.equalsIgnoreCase("uuid") == true)
+                {
+                  TypeSql = "UUID";
+                  TildaType = ColumnType.UUID;
+                }
+              else
+                {
+                  TypeSql = "OTHER";
+                  TildaType = null;
+                }
+              break;
+            case java.sql.Types.REAL                   : TypeSql = "REAL"                   ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.REF                    : TypeSql = "REF"                    ; TildaType = null; break;
+            case java.sql.Types.ROWID                  : TypeSql = "ROWID"                  ; TildaType = null; break;
+            case java.sql.Types.SQLXML                 : TypeSql = "SQLXML"                 ; TildaType = null; break;
+            case java.sql.Types.STRUCT                 : TypeSql = "STRUCT"                 ; TildaType = null; break;
+            case java.sql.Types.TIME                   : TypeSql = "TIME"                   ; TildaType = null; break;
+            case java.sql.Types.TIMESTAMP              : 
+            case java.sql.Types.TIMESTAMP_WITH_TIMEZONE: TypeSql = "TIMESTAMP"              ;
+                                                         TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                                         break;
+            case java.sql.Types.TINYINT                : TypeSql = "TINYINT"                ; TildaType = null; break;
+            case java.sql.Types.VARBINARY              : TypeSql = "VARBINARY"              ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.VARCHAR                : TypeSql = "VARCHAR"                ; TildaType = ColumnType.STRING; break;
+            default:
+              TildaType = null;
+              LOG.warn("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+"). Has been set to UNMAPPED column type.");
+            /*@formatter:on*/
+          }
+        return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
+      }
+
+  
 
     @Override
     public boolean createSchema(Connection Con, Schema S)
@@ -162,29 +246,48 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    public boolean alterTableAddColumn(Connection com, Column col, String defaultValue, String temporaryDefaultValue)
     throws Exception
       {
-        if (Col._Nullable == false && DefaultValue == null)
+        if (col._Nullable == false && defaultValue == null && temporaryDefaultValue == null)
           {
             if (JDBCHelper.isRehearsal() == false)
               {
-                String Q = "SELECT 1 from " + Col._ParentObject.getShortName() + " limit 1";
+                String Q = "SELECT 1 from " + col._ParentObject.getShortName() + " limit 1";
                 ScalarRP RP = new ScalarRP();
-                int rows = Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+                int rows = com.executeSelect(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q, RP);
                 if (rows > 0)
-                  throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+                  throw new Exception("Cannot add new 'not null' column '" + col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
               }
           }
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
-        if (Col._Nullable == false && DefaultValue != null)
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ADD COLUMN \"" + col.getName() + "\" " + getColumnType(col.getType(), col._Size, col._Mode, col.isCollection(), col._Precision, col._Scale);
+        if (col._Nullable == false && temporaryDefaultValue == null)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue);
+            Q += " not null";
           }
-        if (Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
+        if (defaultValue != null)
+          {
+            Q += "  DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), defaultValue);
+          }
+        if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
           return false;
 
-        return alterTableAlterColumnComment(Con, Col);
+        if (col._Nullable == false && temporaryDefaultValue != null)
+          {
+            String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
+            Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + ";";
+            if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
+              return false;
+            Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ALTER COLUMN \"" + col.getName() + "\" SET NOT NULL;";
+            if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
+              return false;
+
+            // LDH-NOTE: Alternative implementation would have been to set the column default to set the values
+            // in the existing rows, and then drop the default. Unsure if this would have been better
+            // performance-wise vs the update/alter solution implemented currently.
+          }
+
+        return alterTableAlterColumnComment(com, col);
       }
 
     @Override
@@ -329,7 +432,7 @@ public abstract class CommonStoreImpl implements DBType
 
         if (ColMeta._TildaType == ColumnType.STRING)
           {
-            if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
+            if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN || Col.getType() == ColumnType.DATE
             || Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE
             || Col.getType() == ColumnType.BOOLEAN || Col.getType() == ColumnType.UUID)
               {
@@ -341,7 +444,7 @@ public abstract class CommonStoreImpl implements DBType
                 if (Col.getType() != ColumnType.DATETIME || res == false)
                   return res;
 
-                Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
+                Col = Col._ParentObject.getColumn(Col.getTZName());
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
 
                 return Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
@@ -408,7 +511,7 @@ public abstract class CommonStoreImpl implements DBType
             if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
                 //@formatter:off
-                if (   CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATE 
+                if (   CMP._Col.getType() == ColumnType.DATETIME || CMP._Col.getType() == ColumnType.DATETIME_PLAIN || CMP._Col.getType() == ColumnType.DATE 
                     || CMP._Col.getType() == ColumnType.UUID
                     || CMP._Col.getType() == ColumnType.SHORT || CMP._Col.getType() == ColumnType.INTEGER  || CMP._Col.getType() == ColumnType.LONG 
                     || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE
@@ -416,6 +519,7 @@ public abstract class CommonStoreImpl implements DBType
                     || CMP._Col.getType() == ColumnType.NUMERIC 
                     || CMP._Col.getType() == ColumnType.JSON 
                     || CMP._Col.getType() == ColumnType.STRING && CMP._Col._Size != CMP._CMeta._Size
+                    || CMP._Col.getType() == ColumnType.CHAR   && CMP._CMeta._TildaType == ColumnType.STRING
                    )
                 //@formatter:on
                   {
@@ -426,12 +530,12 @@ public abstract class CommonStoreImpl implements DBType
                     // For datetime columns, we have to deal with the TZ column as well.
                     if (CMP._Col.getType() == ColumnType.DATETIME && CMP._Col.needsTZ() == true)
                       {
-                        Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getName() + "TZ");
+                        Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getTZName());
                         QU.add("UPDATE " + CMP._Col._ParentObject.getShortName() + " SET \"" + ColTZ.getName() + "\" = 'UTC' WHERE \"" + ColTZ.getName() + "\" IS NULL;");
                       }
                   }
                 else
-                  throw new Exception("Cannot alter a column from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
+                  throw new Exception("Cannot alter a column '" + CMP._Col.getShortName() + "' from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
               }
             else
               {
@@ -546,13 +650,20 @@ public abstract class CommonStoreImpl implements DBType
     // case Y would get quoted, incorrectly since it's a table name. The "from" negative lookahead is not working
     // as expected, so punting for now.
     // protected static Pattern REQUOTE1 = Pattern.compile("(?<!from\\s*)(?:[a-z_A-Z]\\w+)\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
-    protected static Pattern REQUOTE1 = Pattern.compile("\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
+
+    // It is hard to find patterns such as "schema.func(" or "schema.func   (" to eliminate from the quoting logic
+    // So let's first clean that up by removing spaces between  word character and a '.' or a '('.
+    protected static Pattern REQUOTE0 = Pattern.compile("\\.(\\w+)\\s+([\\.|\\(])");
+    // Then we look to quote tokens preceded by a '.' but not followed by a '.' or a '('.
+    protected static Pattern REQUOTE1 = Pattern.compile("\\.\\s*([a-z_A-Z]\\w*\\b)([^\\.\\(]|\\z)");
+    // Then we have one last pass to correct code that quotes using default double-quote characters
     protected static Pattern REQUOTE2 = Pattern.compile("\\.\"([^\"]+)\"");
 
     @Override
     public String rewriteExpressionColumnQuoting(String expr)
       {
-        return expr.replaceAll(REQUOTE1.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar() + "$2")
+        return expr.replaceAll(REQUOTE0.pattern(), ".$1$2")
+        .replaceAll(REQUOTE1.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar() + "$2")
         .replaceAll(REQUOTE2.pattern(), "." + getColumnQuotingStartChar() + "$1" + getColumnQuotingEndChar());
       }
 
@@ -598,31 +709,6 @@ public abstract class CommonStoreImpl implements DBType
       }
 
 
-    @Override
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        Array A = RS.getArray(i);
-        if (A == null)
-          return null;
-        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-        : CollectionUtil.toList(A.getArray());
-        A.free();
-        return val;
-      }
-
-    @Override
-    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        Array A = RS.getArray(colName);
-        if (A == null)
-          return null;
-        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-        : CollectionUtil.toList(A.getArray());
-        A.free();
-        return val;
-      }
 
     @Override
     public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
@@ -631,7 +717,6 @@ public abstract class CommonStoreImpl implements DBType
         Str.append(Asc == true ? " ASC" : " DESC");
         Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");
       }
-
 
     @Override
     public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
@@ -854,6 +939,15 @@ public abstract class CommonStoreImpl implements DBType
       {
         ZonedDateTimeRP RP = new ZonedDateTimeRP();
         Con.executeSelect("TILDA", "CURRENT_TIMESTAMP", "select " + getCurrentTimestampStr(), RP);
+        return RP.getResult();
+      }
+
+    @Override
+    public ZonedDateTime getCurrentDateTime(Connection Con)
+    throws Exception
+      {
+        ZonedDateTimeRP RP = new ZonedDateTimeRP();
+        Con.executeSelect("TILDA", "CURRENT_DATETIME", "select " + getCurrentDateTimeStr(), RP);
         return RP.getResult();
       }
 

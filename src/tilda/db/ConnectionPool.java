@@ -51,7 +51,6 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.MetaPerformance;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.migration.MigrationScript;
 import tilda.migration.Migrator;
 import tilda.parsing.Loader;
 import tilda.parsing.ParserSession;
@@ -59,7 +58,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.AsciiArt;
-import tilda.utils.ClassStaticInit;
+import tilda.utils.ClassUtils;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
@@ -291,7 +290,14 @@ public class ConnectionPool
                 _DependencySchemas = Defs._DependencySchemas;
                 for (Conn Co : Defs._Conns)
                   {
-                    addDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+                    boolean user = Co._DB.indexOf("${user}") > 0;
+                    boolean pswd = Co._DB.indexOf("${pswd}") > 0;
+                    if (user != pswd)
+                     throw new Error("Invalid jdbc connection string for '"+Co._Id+"': must have either both ${user} and ${pswd} markers or none and only one was found (" + Co._DB + ")");
+                    if (user == true)
+                     addDatasource(Co._Id, Co._Driver, Co._DB.replace("${user}", Co._User).replace("${pswd}", Co._Pswd), null, null, Co._Initial, Co._Max);
+                    else
+                     addDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
                   }
                 if (Defs._EmailConfig != null)
                   {
@@ -324,7 +330,7 @@ public class ConnectionPool
                 Bootstrappers Bs = gson.fromJson(R, Bootstrappers.class);
                 if (Bs._classNames != null)
                   for (String className : Bs._classNames)
-                    ClassStaticInit.initClass(className);
+                    ClassUtils.initClass(className);
               }
           }
         finally
@@ -464,7 +470,7 @@ public class ConnectionPool
                 S.setDefaultDependencies(PS);
               }
 
-            if (S.Validate(PS) == false)
+            if (S.validate(PS) == false)
               {
                 PS.printErrors();
                 throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
@@ -526,13 +532,10 @@ public class ConnectionPool
                 if (userId == null)
                   C = BDS.getConnection();
                 else
-                  {
-                    Class.forName(BDS.getDriverClassName());
-                    C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
-                    C.setAutoCommit(false);
-                    C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                    C.setClientInfo("defaultRowFetchSize", "5000");
-                  }
+                  C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
+                C.setAutoCommit(false);
+                C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+//                C.setClientInfo("defaultRowFetchSize", "10000");
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;
               }

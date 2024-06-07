@@ -66,23 +66,23 @@ public class ColumnMapper
         _Multi = Multi;
       }
 
-    public boolean Validate(ParserSession PS, Column ParentColumn)
+    public boolean validate(ParserSession PS, Column ParentColumn)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, ParentColumn);
+        validateBase(PS, ParentColumn);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    private void ValidateBase(ParserSession PS, Column ParentColumn)
+    private void validateBase(ParserSession PS, Column ParentColumn)
       {
         _ParentColumn = ParentColumn;
 
-        if (ValidateDestinationObject(PS) == false)
+        if (validateDestinationObject(PS) == false)
           return;
-        if (ValidateSourceColumns(PS) == false)
+        if (validateSourceColumns(PS) == false)
           return;
         _SrcColumnObjs.add(_ParentColumn);
 
@@ -116,8 +116,8 @@ public class ColumnMapper
               }
             else
               {
-                Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
-                false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale, null);
+                Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _ParentColumn._AllowEmpty, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
+                false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale, null, _ParentColumn._TzMode);
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_GROUP;
                 Col._MapperDef = this;
@@ -136,8 +136,8 @@ public class ColumnMapper
               }
             else
               {
-                Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
-                _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale, null);
+                Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _ParentColumn._AllowEmpty, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
+                _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.", _ParentColumn._Precision, _ParentColumn._Scale, null, _ParentColumn._TzMode);
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
                 Col._FCT = FrameworkColumnType.MAPPER_NAME;
                 Col._MapperDef = this;
@@ -147,7 +147,7 @@ public class ColumnMapper
 
       }
 
-    private boolean ValidateSourceColumns(ParserSession PS)
+    private boolean validateSourceColumns(ParserSession PS)
       {
         if (_SrcColumns == null || _SrcColumns.length == 0)
           return PS.AddError("Column '" + _ParentColumn.getFullName() + "' is defining a mapper without any source column.");
@@ -157,7 +157,7 @@ public class ColumnMapper
         return true;
       }
 
-    private boolean ValidateDestinationObject(ParserSession PS)
+    private boolean validateDestinationObject(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_DestObject) == true)
           return PS.AddError("Column '" + _ParentColumn.getFullName() + "' is defining a mapper without a destination object.");

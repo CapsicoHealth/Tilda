@@ -29,7 +29,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ViewJoin
   {
-    static final Logger             LOG                = LogManager.getLogger(ViewJoin.class.getName());
+    static final Logger LOG = LogManager.getLogger(ViewJoin.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("object"     ) public String  _Object ;
@@ -37,19 +37,23 @@ public class ViewJoin
 	@SerializedName("on"         ) public Query[] _Ons    ;
     @SerializedName("joinType"   ) public String  _JoinStr;
     /*@formatter:on*/
-	
-    
+
+
     public ViewJoin()
-     {
-     }
+      {
+      }
 
     public transient View     _ParentView;
     public transient Object   _ObjectObj;
     public transient JoinType _Join;
     public transient boolean  _FailedValidation = false;
 
-    
-    public boolean Validate(ParserSession PS, View ParentView)
+    public String getSignature()
+      {
+        return _ObjectObj.getShortName() + _As;
+      }
+
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -63,7 +67,7 @@ public class ViewJoin
 
         for (Query q : _Ons)
           q._ClauseStatic = q._Clause;
-        
+
         ReferenceHelper R = ReferenceHelper.parseObjectReference(_Object, ParentView._ParentSchema);
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
           PS.AddError("View '" + ParentView.getFullName() + "' declares a join '" + _Object + "' with an incorrect syntax. It should be '((package\\.)?schema\\.)?object'.");
@@ -71,21 +75,21 @@ public class ViewJoin
           {
             _ObjectObj = PS.getObject(R._P, R._S, R._O);
             if (_ObjectObj == null)
-              return PS.AddError("View '" + ParentView.getFullName() + "' declares a join '" + _Object + "' with Object '" + _Object + "' resolving to '"+R.getFullName()+"' which cannot be found.");
+              return PS.AddError("View '" + ParentView.getFullName() + "' declares a join '" + _Object + "' with Object '" + _Object + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             if (_ObjectObj._Validated == false)
-             return PS.AddError("View '" + ParentView.getFullName() + "' declares a join '" + _Object + "' with Object '" + _Object + "' which has failed validation.");
+              return PS.AddError("View '" + ParentView.getFullName() + "' declares a join '" + _Object + "' with Object '" + _Object + "' which has failed validation.");
           }
-        
+
         if (_JoinStr != null)
           if ((_Join = JoinType.parse(_JoinStr)) == null)
             return PS.AddError("Join on '" + _ObjectObj.getFullName() + "' defined an invalid 'joinType' '" + _JoinStr + "'.");
-        
+
         return Errs == PS.getErrorCount();
       }
-    
+
     public Query getQuery(DBType Db)
       {
         return Query.getQuery(_Ons, Db);
       }
-    
+
   }

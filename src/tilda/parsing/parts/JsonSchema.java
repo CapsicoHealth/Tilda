@@ -48,7 +48,7 @@ public class JsonSchema
           _Validation = new JsonValidation(js._Validation);
       }
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean validate(ParserSession PS, Column C)
       {
         boolean Success = true;
 
@@ -65,12 +65,12 @@ public class JsonSchema
           }
 
         for (JsonField f : _Fields)
-          if (f != null && f.Validate(PS, C) == false)
+          if (f != null && f.validate(PS, C) == false)
             Success = false;
 
         if (Success == true)
           {
-            if (_Validation != null && _Validation.Validate(PS, C) == false)
+            if (_Validation != null && _Validation.validate(PS, C) == false)
               Success = false;
           }
 

@@ -67,7 +67,7 @@ public class OutputMap
 
     public transient Base                   _ParentObject;
 
-    public boolean Validate(ParserSession PS, Base ParentObject)
+    public boolean validate(ParserSession PS, Base ParentObject)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;
@@ -79,15 +79,11 @@ public class OutputMap
         if (_Name == null)
           _Name = "";
 
-        if (_Columns != null && _Columns.length > 0)
-          {
-            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name, _Exclude));
-          }
-
         if (TextUtil.isNullOrEmpty(_Columns) == true)
           PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output map '" + _Name + "' with no listed column.");
         else
           {
+            _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns, PS, "outputMap", _Name, _Exclude));
             _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor()
               {
                 @Override

@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM       = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          JOBREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"    , 1/*1*/, "Parent Job Refnum", null, null, null);
+     public final Type_LongPrimitive                JOBREFNUM    = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"    , 1/*1*/, "Parent Job Refnum", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +102,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitiveNull      JOBPARTREFNUM= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRefnum", 2/*2*/, "Parent Job Part Refnum", null, null, null);
+     public final Type_LongPrimitiveNull            JOBPARTREFNUM= new Type_LongPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "jobPartRefnum", 2/*2*/, "Parent Job Part Refnum", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_BooleanPrimitive       NOTIFY       = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "notify"       , 3/*3*/, "Notification flag", null, null, null);
+     public final Type_BooleanPrimitive             NOTIFY       = new Type_BooleanPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "notify"       , 3/*3*/, "Notification flag", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +145,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        MSG          = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "msg"          , 4/*4*/, 8192, "Message details", null, null, null);
+     public final Type_StringPrimitive              MSG          = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "msg"          , 4/*4*/, 8192, "Message details", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +173,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.JobPartMessage)", null, null);
+     public final Type_DatetimePrimitive            CREATED      = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created. (TILDA.JobPartMessage)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.JobPartMessage)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated. (TILDA.JobPartMessage)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +222,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.JobPartMessage)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted. (TILDA.JobPartMessage)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -367,7 +367,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -574,7 +574,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__JOBPARTMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -596,7 +596,7 @@ Lookup one record by the primary key: refnum.
 /**
 Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by: created desc
 */
-   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereJob(Connection C, long jobRefnum, int start, int size) throws Exception
+   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereJob(Connection C, long jobRefnum, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -604,15 +604,15 @@ Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by
        Obj.setJobRefnum    (jobRefnum    );
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by: created desc
 */
-   static public void lookupWhereJob(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, long jobRefnum, int start, int size) throws Exception
+   static public void lookupWhereJob(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, long jobRefnum, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -621,7 +621,7 @@ Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 1, RPI, Obj, null, start, size);
+       readMany(C, 1, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -629,7 +629,7 @@ Lookup records by the index 'Job' over  jobRefnum.<BR>The results are ordered by
 /**
 Lookup records by the index 'JobPart' over  jobPartRefnum.<BR>The results are ordered by: created desc
 */
-   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereJobPart(Connection C, long jobPartRefnum, int start, int size) throws Exception
+   static public ListResults<tilda.data.JobPartMessage_Data> lookupWhereJobPart(Connection C, long jobPartRefnum, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -637,15 +637,15 @@ Lookup records by the index 'JobPart' over  jobPartRefnum.<BR>The results are or
        Obj.setJobPartRefnum(jobPartRefnum);
 
 
-       RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
        return RPI._L;
      }
 
 /**
 Lookup records by the index 'JobPart' over  jobPartRefnum.<BR>The results are ordered by: created desc
 */
-   static public void lookupWhereJobPart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, long jobPartRefnum, int start, int size) throws Exception
+   static public void lookupWhereJobPart(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, long jobPartRefnum, int __start__, int __size__) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBPARTMESSAGE Obj = new tilda.data.JobPartMessage_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -654,7 +654,7 @@ Lookup records by the index 'JobPart' over  jobPartRefnum.<BR>The results are or
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, 2, RPI, Obj, null, start, size);
+       readMany(C, 2, RPI, Obj, null, __start__, __size__);
      }
 
 
@@ -698,13 +698,19 @@ The results are ordered by: refnum asc
    public static ListResults<tilda.data.JobPartMessage_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.JobPartMessage_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

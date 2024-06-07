@@ -26,7 +26,7 @@ import tilda.db.ConnectionPool;
 import tilda.utils.SystemValues;
 
 /**
- * Thread-friendly class to create a new connection and invoke a subclass' soRun() method for any processing.
+ * Thread-friendly class to create a new connection and invoke a subclass' doRun() method for any processing.
  * <P>
  * Any user of this class is responsible for calling the init() and close() methods. The class implements the Runnable interface
  * and as such can be used in a new thread. the derived class doRun() method is called repeatedly at given intervals until it

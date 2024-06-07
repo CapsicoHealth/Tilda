@@ -41,7 +41,7 @@ public class JsonField extends TypeDef
         _Description = jf._Description;
       }
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean validate(ParserSession PS, Column C)
       {
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
@@ -55,7 +55,7 @@ public class JsonField extends TypeDef
         if (TextUtil.isNullOrEmpty(_Description) == true)
           PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with field '" + _Name + "' without a description.");
 
-        if (super.Validate(PS, "JsonSchema field", true, true) == false)
+        if (super.validate(PS, "JsonSchema field", true, true, C._ParentObject._FST) == false)
           return false;
 
         return true;

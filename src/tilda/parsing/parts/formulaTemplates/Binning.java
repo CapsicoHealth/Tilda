@@ -91,7 +91,7 @@ public class Binning implements PatternObject
       
       for(BinningRange BR : _Ranges)
         {     
-          BR.Validate(PS, _ParentView, this);
+          BR.validate(PS, _ParentView, this);
           
           Formula F = new Formula();
           

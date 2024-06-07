@@ -66,7 +66,7 @@ public class Interface
         return _ParentSchema.getShortName() + "." + _Name;
       }
 
-    public boolean Validate(ParserSession PS, Schema ParentSchema)
+    public boolean validate(ParserSession PS, Schema ParentSchema)
       {
         int Errs = PS.getErrorCount();
         _ParentSchema = ParentSchema;
@@ -97,7 +97,7 @@ public class Interface
                 else
                   {
                     _PadderFieldNames.track(F._Name);
-                    if (F.Validate(PS, this) == true)
+                    if (F.validate(PS, this) == true)
                       if (FieldNames.add(F._Name.toUpperCase()) == false)
                         PS.AddError("Field '" + F.getFullName() + "' is defined more than once in Interface '" + getFullName() + "'.");
                   }

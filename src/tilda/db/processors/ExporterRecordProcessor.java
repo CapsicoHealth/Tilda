@@ -80,10 +80,11 @@ public abstract class ExporterRecordProcessor implements RecordProcessor
     throws Exception
       {
         ++_totalCount;
-        if (count % _logFreq == 0)
+        if (_totalCount == 1 || _totalCount % _logFreq == 0)
           {
+            _out.flush();
             long durationNano = System.nanoTime() - _startTs;
-            LOG.info("Saved " + NumberFormatUtil.printWith000Sep(count) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, count) + " records/min)");
+            LOG.info("Saved " + NumberFormatUtil.printWith000Sep(_totalCount) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, _totalCount) + " records/min)");
           }
         return true;
       }

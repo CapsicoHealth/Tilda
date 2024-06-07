@@ -222,7 +222,7 @@ public class ClonerHelper
       {
         for (Cloner C : obj._CloneAs)
           {
-            if (C.Validate(PS, obj) == false)
+            if (C.validate(PS, obj) == false)
               return false;
             Object newObj = new Object(obj);
             newObj._Name = C._Name;
@@ -234,6 +234,7 @@ public class ClonerHelper
             newObj._FST = FrameworkSourcedType.CLONED;
             newObj._SourceObject = obj;
             obj._ParentSchema._Objects.add(newObj);
+            obj._Clones.add(newObj);
           }
         return true;
       }

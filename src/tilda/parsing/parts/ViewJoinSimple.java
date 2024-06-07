@@ -44,7 +44,7 @@ public class ViewJoinSimple
       {
       }
 
-    public boolean Validate(ParserSession PS, View ParentView, View Source)
+    public boolean validate(ParserSession PS, View ParentView, View Source)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;

@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: 
+Tilda: tilda/data_test/_tilda.TildaTest.json;tilda/tutorial/data/_tilda.
+ TildaTutorial.json;tilda/data/_tilda.Tilda.json;tilda/data/tmp/_tilda.T
+ ildaTmp.json; 

@@ -16,6 +16,8 @@
 
 package tilda.utils;
 
+import java.util.Arrays;
+
 public class PaddingUtil
   {
     static final String[] _PADS = new String[100];
@@ -32,7 +34,13 @@ public class PaddingUtil
 
     public static final String pad(String S, int Padding)
       {
-        return Padding >= 0 && Padding < _PADS.length ? S+_PADS[Padding-S.length()] : S;
+        return Padding-S.length() >= 0 && Padding < _PADS.length ? S+_PADS[Padding-S.length()] : S;
+      }
+
+    public static final String pad(String S, int Padding, char pad)
+      {
+        int len = Padding-S.length();
+        return len > 0 ? S+getPad(len, pad) : S;
       }
 
     public static final void pad(StringBuilder Str, String S, int MaxLen)
@@ -45,7 +53,14 @@ public class PaddingUtil
       {
         return  Padding <= 0 ? ""
               : Padding < _PADS.length ? _PADS[Padding]
-              : _PADS[_PADS.length-1];
+              : getPad(Padding, ' ');
+      }
+
+    public static final String getPad(int Padding, char pad)
+      {
+        char[] p = new char[Padding];
+        Arrays.fill(p, pad);
+        return new String(p);
       }
     
     public static final String leftPad(String str, int minLen, char pad)
@@ -71,4 +86,25 @@ public class PaddingUtil
         return sb.toString();
       }
     
+    public static String autoPad(String[][] values)
+     {
+       StringBuilder str = new StringBuilder();
+       int[] maxWidths = new int[values[0].length];
+       for (int i = 0; i < values.length; ++i)
+         for (int j = 0; j < values[i].length; ++j)
+           {
+             int len = values[i][j].length();
+             if (maxWidths[j] < len)
+               maxWidths[j] = len;
+           }
+
+       for (int i = 0; i < values.length; ++i)
+         {
+           for (int j = 0; j < values[i].length; ++j)
+             pad(str, values[i][j], maxWidths[j]+4);
+           str.append(SystemValues.NEWLINE);
+         }
+       return str.toString();
+     }
   }
+

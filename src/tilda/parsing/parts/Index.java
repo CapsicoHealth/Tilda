@@ -66,7 +66,7 @@ public class Index
         return TextUtil.print(_Parent._Prefix, _Parent._OriginalName) + "_" + _Name;
       }
 
-    public boolean Validate(ParserSession PS, Base Parent)
+    public boolean validate(ParserSession PS, Base Parent)
       {
         int Errs = PS.getErrorCount();
         _Parent = Parent;

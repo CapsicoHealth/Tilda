@@ -1,18 +1,18 @@
 [
-    { "name":"schemaName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the schema tracked" }
-   ,{ "name":"objectName", "type":"STRING", "mode":"REQUIRED", "description":"The name of the table/object tracked" }
-   ,{ "name":"startDateIncr", "type":"DATE", "mode":"NULLABLE", "description":"The date passed in for incremental refills." }
-   ,{ "name":"startTimeTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'startTime'." }
-   ,{ "name":"startTime", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the refill started." }
-   ,{ "name":"endTimeTZ", "type":"STRING", "mode":"REQUIRED", "description":"Generated helper column to hold the time zone ID for 'endTime'." }
-   ,{ "name":"endTime", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the refill ended." }
-   ,{ "name":"timeInsertSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the inserts took." }
-   ,{ "name":"timeDeleteSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the deletes took." }
-   ,{ "name":"timeAnalyzeSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the analyze took." }
-   ,{ "name":"timeTotalSec", "type":"INT64", "mode":"REQUIRED", "description":"The time, in seconds, the analyze took." }
-   ,{ "name":"insertCount", "type":"INT64", "mode":"REQUIRED", "description":"The count of inserted rows." }
-   ,{ "name":"deleteCount", "type":"INT64", "mode":"REQUIRED", "description":"The count of rows deleted." }
-   ,{ "name":"created", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was created. (TILDA.RefillPerf)" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"REQUIRED", "description":"The timestamp for when the record was last updated. (TILDA.RefillPerf)" }
-   ,{ "name":"deleted", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was deleted. (TILDA.RefillPerf)" }
+    { "name":"schemaName","type":"STRING","mode":"REQUIRED","description":"The name of the schema tracked" }
+   ,{ "name":"objectName","type":"STRING","mode":"REQUIRED","description":"The name of the table/object tracked" }
+   ,{ "name":"startDateIncr","type":"DATE","mode":"NULLABLE","description":"The date passed in for incremental refills." }
+   ,{ "name":"startTimeTZ","type":"STRING","mode":"REQUIRED","description":"Generated helper column to hold the time zone ID for 'startTime'." }
+   ,{ "name":"startTime","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the refill started." }
+   ,{ "name":"endTimeTZ","type":"STRING","mode":"REQUIRED","description":"Generated helper column to hold the time zone ID for 'endTime'." }
+   ,{ "name":"endTime","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the refill ended." }
+   ,{ "name":"timeInsertSec","type":"INT64","mode":"REQUIRED","description":"The time, in seconds, the inserts took." }
+   ,{ "name":"timeDeleteSec","type":"INT64","mode":"REQUIRED","description":"The time, in seconds, the deletes took." }
+   ,{ "name":"timeAnalyzeSec","type":"INT64","mode":"REQUIRED","description":"The time, in seconds, the analyze took." }
+   ,{ "name":"timeTotalSec","type":"INT64","mode":"REQUIRED","description":"The time, in seconds, the analyze took." }
+   ,{ "name":"insertCount","type":"INT64","mode":"REQUIRED","description":"The count of inserted rows." }
+   ,{ "name":"deleteCount","type":"INT64","mode":"REQUIRED","description":"The count of rows deleted." }
+   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.RefillPerf)" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.RefillPerf)" }
+   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.RefillPerf)" }
 ]

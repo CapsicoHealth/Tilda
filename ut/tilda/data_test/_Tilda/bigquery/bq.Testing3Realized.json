@@ -1,6 +1,6 @@
 [
-    { "name":"refnum", "type":"INT64", "mode":"NULLABLE", "description":"The primary key for this record" }
-   ,{ "name":"name", "type":"STRING", "mode":"NULLABLE", "description":"Medical system unique enterprise id" }
-   ,{ "name":"lastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
-   ,{ "name":"xxxLastUpdated", "type":"TIMESTAMP", "mode":"NULLABLE", "description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
+    { "name":"refnum","type":"INT64","mode":"NULLABLE","description":"The primary key for this record" }
+   ,{ "name":"name","type":"STRING","mode":"NULLABLE","description":"Medical system unique enterprise id" }
+   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
+   ,{ "name":"xxxLastUpdated","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was last updated. (TILDATEST.Testing)" }
 ]

@@ -40,7 +40,7 @@ public class SubWhereX
       {
       }
 
-    public boolean Validate(ParserSession PS, Base ParentObject, String What)
+    public boolean validate(ParserSession PS, Base ParentObject, String What)
       {
         int Errs = PS.getErrorCount();
 

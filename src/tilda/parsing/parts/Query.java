@@ -117,7 +117,11 @@ public class Query
 
     private static final Pattern _ParamPattern    = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
     private static final Pattern _ArrayPattern    = Pattern.compile("\\?\\[([a-z_A-Z]\\w*)?\\]");
-    private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)(?!\\()\\b");
+    /**
+     * Taking patterns as <token>(.<token>)? not followed by a '(' or a '\'' to delimit what is most likely
+     * a column name, or a "table.column" string that is not a function call, or a string.
+     */
+    private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)\\s*(?!\\(|')\\b");
 
     public boolean validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {

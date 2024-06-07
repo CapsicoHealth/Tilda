@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -60,7 +60,7 @@ A pivot was done as part of this view explicitly on the following columns and va
 </TABLE></PRE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="Form_SAT01_PivotView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Form_SAT01_PivotView-formRefnum_DIV' class='columns'>formRefnum</B>&nbsp;&nbsp;</TD>
@@ -69,6 +69,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Form-refnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -76,8 +77,9 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='Form_SAT01_PivotView-formFillDateTZ_DIV' class='columns'>formFillDateTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'formFillDate'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Form-fillDateTZ_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>fillDateTZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
 </TR>
@@ -89,6 +91,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The date the form was filled<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('Form-fillDate_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>Form<B>&nbsp;&#8226;&nbsp;</B>fillDate</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -98,6 +101,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('User-refnum_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>User<B>&nbsp;&#8226;&nbsp;</B>refnum</A></DIV></TD>
 </TR>
@@ -109,6 +113,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The user's email<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="javascript:openDiv('User-email_DIV', -50)">TILDATUTORIAL<B>&nbsp;&#8226;&nbsp;</B>User<B>&nbsp;&#8226;&nbsp;</B>email</A></DIV></TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -118,6 +123,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Q1 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q1')</TD>
 </TR>
@@ -129,6 +135,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Q2 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q2')</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -139,6 +146,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Q3 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q3')</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -148,6 +156,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Q4 (pivot of MAX(TILDATUTORIAL.FormAnswer.value) on TILDATUTORIAL.FormAnswer.field='Q4')</TD>
 </TR>
@@ -369,7 +378,7 @@ This is the setter for:<BR>
     void setFormFillDateTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullFormFillDateTZ();
         }
@@ -438,6 +447,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'formFillDateTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("formFillDate")
@@ -463,6 +477,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'formFillDateTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getFormFillDate()
@@ -484,6 +503,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'formFillDateTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullFormFillDate()
@@ -505,6 +529,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'formFillDateTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setFormFillDate(ZonedDateTime v) throws Exception
@@ -545,6 +574,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'formFillDateTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
     void setNullFormFillDate()
@@ -721,8 +755,8 @@ This is the setter for:<BR>
     void setFormUserEmail(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formUserEmail to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formUserEmail to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formUserEmail: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_formUserEmail) == false)
@@ -1220,7 +1254,7 @@ This is the setter for:<BR>
     void setQ4(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullQ4();
         }
@@ -1347,7 +1381,7 @@ This is the null setter for:<BR>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FORM_SAT01_PIVOTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FORM_SAT01_PIVOTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -1358,7 +1392,7 @@ This is the null setter for:<BR>
      __Init = InitMode.LOOKUP;
                                _formRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMREFNUM._Mask    ); _formRefnum = null; }
                                _formFillDateTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ._Mask); _formFillDateTZ = null; } else _formFillDateTZ = _formFillDateTZ.trim();
-                               _formFillDate   = processZDT(_formFillDateTZ  , "tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formFillDate"  , RS, ++i, TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE  , TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ  ); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE._Mask  ); _formFillDate = null; }
+                               _formFillDate   = JDBCHelper.processZDT(_formFillDateTZ  , "tilda.tutorial.data.TILDATUTORIAL.Form_SAT01_PivotView.formFillDate"  , RS, ++i, TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE  , TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATETZ  , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMFILLDATE._Mask  ); _formFillDate = null; }
                                _formUserRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMUSERREFNUM._Mask); _formUserRefnum = null; }
                                _formUserEmail  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.FORMUSEREMAIL._Mask ); _formUserEmail = null; }
                                _Q1             =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FORM_SAT01_PIVOTVIEW_Factory.COLS.Q1._Mask            ); _Q1 = null; }
@@ -1370,25 +1404,6 @@ This is the null setter for:<BR>
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

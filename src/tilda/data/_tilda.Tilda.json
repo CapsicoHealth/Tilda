@@ -41,15 +41,15 @@
         { "name": "max"           , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
         { "name": "count"         , "type": "INTEGER"    , "nullable": false,                                             "description": "The size of the pre-allocation required by this table/object." },
         
-        { "name": "created"       , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO", "invariant": true, "description": "The timestamp for when the record was created.",
+        { "name": "created"       , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO", "invariant": true, "tzMode":"COLUMN", "description": "The timestamp for when the record was created.",
                                     "values": [ { "name": "Creation", "value": "NOW", "description": "Creation time"    , "default": "CREATE"} ]
         },
-        { "name": "createdETL"    , "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was ETL-created."},
-        { "name": "lastUpdated"   , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO",                    "description": "The timestamp for when the record was last updated.",
+        { "name": "createdETL"    , "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "tzMode":"COLUMN", "description": "The timestamp for when the record was ETL-created."},
+        { "name": "lastUpdated"   , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO",                    "tzMode":"COLUMN", "description": "The timestamp for when the record was last updated.",
                                     "values": [ { "name": "Update"  , "value": "NOW", "description": "Last updated time", "default": "ALWAYS"} ]
         },
-        { "name": "lastUpdatedETL", "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was last ETL-updated."},
-        { "name": "deleted"       , "type": "DATETIME"   , "nullable": true ,                                             "description": "The timestamp for when the record was deleted." }
+        { "name": "lastUpdatedETL", "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "tzMode":"COLUMN", "description": "The timestamp for when the record was last ETL-updated."},
+        { "name": "deleted"       , "type": "DATETIME"   , "nullable": true ,                                             "tzMode":"COLUMN", "description": "The timestamp for when the record was deleted." }
       ],
       "primary": { "columns": ["refnum"], "autogen": false },
       "indices":[ 
@@ -481,9 +481,9 @@
      ,"occ":false
      ,"description": "A single row for min, max and invalid dates for the Date_Dim"
      ,"columns":[
-          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date"  }
-         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date"  }
-         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date"  }
+          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date, e.g., '1111-11-11'."  }
+         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date included in the DIM"  }
+         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date included in the DIM"  }
       ]
      ,"foreign": [
           { "name":"InvalidDt" , "srcColumns":["invalidDate" ], "destObject": "DateDim" }

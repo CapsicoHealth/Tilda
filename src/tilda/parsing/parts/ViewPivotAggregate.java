@@ -65,7 +65,7 @@ public class ViewPivotAggregate
         _Coalesce = from._Coalesce;
       }
 
-    public boolean Validate(ParserSession PS, ViewPivot ParentPivot)
+    public boolean validate(ParserSession PS, ViewPivot ParentPivot)
       {
         int Errs = PS.getErrorCount();
         _ParentPivot = ParentPivot;
@@ -81,7 +81,7 @@ public class ViewPivotAggregate
         _VC._FormulaOnly = true;
         if (_VC.needsTZ() == true)
           {
-            ViewColumn TZ = ParentPivot._ParentView.getViewColumn(_Name + "TZ");
+            ViewColumn TZ = ParentPivot._ParentView.getViewColumn(_Name + Convention.getDefaultTzColPostfix());
             if (TZ != null)
               TZ._FormulaOnly = true;
           }

@@ -31,6 +31,11 @@ public class JobHelper
     public static Job completeJob(Job job, List<String> errorMessages)
       {
         List<BigQueryError> errs = null;
+        if (job == null)
+          {
+            errorMessages.add("Job is null.");
+            return null;
+          }
         try
           {
             LOG.info("Waiting for the BQ job to complete...");

@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -39,9 +39,9 @@ The Table TILDA.Catalog :<UL>
 <LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
 <LI>Unique Index: schemaName, tableViewName, columnName</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>, referencedColumns asc
+<LI>Has the following indices:<UL><LI>referencedColumns asc
 </LI>
-<LI>, referencedFormulas asc
+<LI>referencedFormulas asc
 </LI>
 </UL></LI>
 </UL>
@@ -49,7 +49,7 @@ The Table TILDA.Catalog :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="Catalog_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Catalog-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -57,6 +57,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -68,6 +69,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the schema this column is defined in.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -77,6 +79,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the primary table/view this column is defined in.</TD>
 </TR>
@@ -88,6 +91,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the column.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -97,6 +101,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The type of the column.</TD>
 </TR>
@@ -108,6 +113,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Whether the collumn is a nullable or not null.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -117,6 +123,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Whether the collumn is a collection/array.</TD>
 </TR>
@@ -128,6 +135,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The description of the column.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -137,6 +145,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the secondary table/view (a derived view, a realized table), if applicable.</TD>
 </TR>
@@ -148,6 +157,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The aggregate type of the column, if any.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -157,6 +167,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title of the formula/expression that may be associated with this column.</TD>
 </TR>
@@ -168,6 +179,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The expression/formula that may be associated with this column.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -177,6 +189,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Whether this column is a formula defined as a measure or not.</TD>
 </TR>
@@ -188,6 +201,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Pre-rendered html fragment with the full documentation for this formula.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -197,6 +211,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The list of columns this formula depends on.</TD>
 </TR>
@@ -208,6 +223,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The list of columns this formula depends on.</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -215,8 +231,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='Catalog-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.Catalog)</TD>
 </TR>
@@ -225,8 +242,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='Catalog-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.Catalog)</TD>
 </TR>
@@ -235,8 +253,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='Catalog-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDA.Catalog)</TD>
 </TR>
@@ -428,8 +447,8 @@ This is the setter for:<BR>
    protected void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.schemaName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.schemaName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.schemaName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_schemaName) == false)
@@ -548,8 +567,8 @@ This is the setter for:<BR>
    protected void setTableViewName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.tableViewName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_tableViewName) == false)
@@ -668,8 +687,8 @@ This is the setter for:<BR>
    protected void setColumnName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.columnName to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.columnName to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.columnName: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_columnName) == false)
@@ -787,8 +806,8 @@ This is the setter for:<BR>
    public void setType(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.type to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.type to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 128)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.type: the size "+v.length()+" is larger than the max allowed of 128: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_type) == false)
@@ -1192,8 +1211,8 @@ This is the setter for:<BR>
    public void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.Catalog.description to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data.TILDA.Catalog.description to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 32000)
         throw new Exception("Cannot set tilda.data.TILDA.Catalog.description: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_description) == false)
@@ -1321,7 +1340,7 @@ This is the setter for:<BR>
    public void setTableViewName2(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTableViewName2();
         }
@@ -1482,7 +1501,7 @@ This is the setter for:<BR>
    public void setAggregate(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullAggregate();
         }
@@ -1643,7 +1662,7 @@ This is the setter for:<BR>
    public void setTitle(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTitle();
         }
@@ -1804,7 +1823,7 @@ This is the setter for:<BR>
    public void setFormula(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullFormula();
         }
@@ -2114,7 +2133,7 @@ This is the setter for:<BR>
    public void setHtmlDoc(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullHtmlDoc();
         }
@@ -2287,6 +2306,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask);
           if (_referencedColumns == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _referencedColumns = new ArrayList<String>();
            }
           else
@@ -2305,7 +2325,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_referencedColumns == null)
         _referencedColumns = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullReferencedColumns();
         }
@@ -2492,6 +2512,7 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask);
           if (_referencedFormulas == null)
            {
+             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _referencedFormulas = new ArrayList<String>();
            }
           else
@@ -2510,7 +2531,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_referencedFormulas == null)
         _referencedFormulas = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullReferencedFormulas();
         }
@@ -3413,7 +3434,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -3529,33 +3550,33 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "Catalog");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFNUM._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLUMNNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.NULLABLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) { TILDA__CATALOG_Factory.COLS.AGGREGATE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TITLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true) { TILDA__CATALOG_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true) { TILDA__CATALOG_Factory.COLS.MEASURE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask) == true) { TILDA__CATALOG_Factory.COLS.HTMLDOC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFNUM._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLUMNNAME._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLUMNNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TYPE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.NULLABLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.NULLABLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.COLLECTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.COLLECTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__CATALOG_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2._Mask) == true) { TILDA__CATALOG_Factory.COLS.TABLEVIEWNAME2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.AGGREGATE._Mask) == true) { TILDA__CATALOG_Factory.COLS.AGGREGATE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.TITLE._Mask) == true) { TILDA__CATALOG_Factory.COLS.TITLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.FORMULA._Mask) == true) { TILDA__CATALOG_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.MEASURE._Mask) == true) { TILDA__CATALOG_Factory.COLS.MEASURE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask) == true) { TILDA__CATALOG_Factory.COLS.HTMLDOC.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask) == true) { TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.CREATED._Mask) == true) { TILDA__CATALOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__CATALOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__CATALOG_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__CATALOG_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == true) { TILDA__CATALOG_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__CATALOG_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -3911,7 +3932,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__CATALOG_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -3936,7 +3957,7 @@ This is the hasChanged for:<BR>
                                    _formula            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.FORMULA._Mask           ); _formula = null; }
                                    _measure            =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.MEASURE._Mask           ); _measure = null; }
                                    _htmlDoc            = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.HTMLDOC._Mask           ); _htmlDoc = null; }
-                                   _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask ); _referencedColumns = null; }
+                                   _referencedColumns = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask ); _referencedColumns = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_referencedColumns != null && _referencedColumns.size() == 1 && _referencedColumns.get(0) == null)
@@ -3944,7 +3965,7 @@ This is the hasChanged for:<BR>
                                  _referencedColumns = new ArrayList<String>();
                                  __Nulls.or(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask);
                                }
-                                   _referencedFormulas = (List<String>) C.getArray(RS, ++i, TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask); _referencedFormulas = null; }
+                                   _referencedFormulas = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask); _referencedFormulas = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_referencedFormulas != null && _referencedFormulas.size() == 1 && _referencedFormulas.get(0) == null)
@@ -3952,9 +3973,9 @@ This is the hasChanged for:<BR>
                                  _referencedFormulas = new ArrayList<String>();
                                  __Nulls.or(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask);
                                }
-                                   _created            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.CREATED._Mask           ); _created = null; }
-                                   _lastUpdated        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask       ); _lastUpdated = null; }
-                                   _deleted            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.DELETED._Mask           ); _deleted = null; }
+                                   _created            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.CREATED._Mask           ); _created = null; }
+                                   _lastUpdated        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.LASTUPDATED._Mask       ); _lastUpdated = null; }
+                                   _deleted            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__CATALOG_Factory.COLS.DELETED._Mask           ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

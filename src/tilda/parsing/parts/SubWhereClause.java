@@ -76,6 +76,7 @@ public class SubWhereClause
     public boolean validate(ParserSession PS, Base ParentObject, String What, boolean TopLevel)
       {
         _ParentObject = ParentObject;
+        
         // Does it have a name?
         if (TopLevel == true && TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError(What + " is defining a SubWhereClause without a name.");

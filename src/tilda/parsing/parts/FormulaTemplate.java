@@ -64,7 +64,7 @@ public class FormulaTemplate
         return this._ParentView.getShortName() + "." + this._Name;
       }
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
 

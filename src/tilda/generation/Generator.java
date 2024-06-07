@@ -57,8 +57,8 @@ public class Generator
   {
     protected static final Logger LOG                 = LogManager.getLogger(Parser.class.getName());
 
-    public static final String    TILDA_VERSION       = "2.3";
-    public static final String    TILDA_VERSION_VAROK = "2_3";
+    public static final String    TILDA_VERSION       = "2.5";
+    public static final String    TILDA_VERSION_VAROK = "2_5";
 
     public static boolean generate(Schema S, GeneratorSession G)
     throws Exception
@@ -343,7 +343,7 @@ public class Generator
                 {
                   DG.docField(Out, G, C, "definition");
                   CG.genField(Out, G, C);
-                  if (C._Values != null && C.getType() != ColumnType.DATETIME)
+                  if (C._Values != null && C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN)
                     {
                       DG.docFieldValues(Out, G, C);
                       CG.genFieldValues(Out, G, C);
@@ -354,7 +354,7 @@ public class Generator
               DG.docField(Out, G, C, "getter");
               CG.genMethodGet(Out, G, C);
 
-              if (C._Values != null && C.getType() != ColumnType.DATETIME)
+              if (C._Values != null && C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN)
                 for (ColumnValue V : C._Values)
                   {
                     if (V == null)
@@ -401,7 +401,7 @@ public class Generator
 
                   if (O._LC == ObjectLifecycle.NORMAL || O._LC == ObjectLifecycle.WORM)
                     {
-                      if (C._Values != null && C.getType() != ColumnType.DATETIME)
+                      if (C._Values != null && C.getType() != ColumnType.DATETIME && C.getType() != ColumnType.DATETIME_PLAIN)
                         for (ColumnValue V : C._Values)
                           if (V != null)
                             {
@@ -413,7 +413,7 @@ public class Generator
 
                       if (C._PrimaryKey == false) // only non pk columns can be changed.
                         {
-                          if (C.getType() == ColumnType.DATETIME && C.getTypeCollection() == MultiType.NONE)
+                          if ((C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN) && C.getTypeCollection() == MultiType.NONE)
                             {
                               Out.println();
                               DG.docField(Out, G, C, "NOW setter");

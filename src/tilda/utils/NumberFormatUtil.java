@@ -78,51 +78,60 @@ public class NumberFormatUtil
       {
         return F2c.format(Number);
       }
-    
+
     public static final String leadingZero1(long X)
       {
-        return X >= 10 || X <= -10 ? Long.toString(X) 
-             : X >= 0 ? "0"+X 
-             : "-0"+(-X);
+        return X >= 10 || X <= -10 ? Long.toString(X)
+        : X >= 0 ? "0" + X
+        : "-0" + (-X);
       }
 
     public static final String leadingZero2(long X)
       {
-        return X >= 100 || X <= -100 ? Long.toString(X) 
-             : X > -100 && X <= -10 ? "-0"+(-X)
-             : X > -10 && X < 0 ? "-00"+(-X) 
-             : X >= 0 && X < 10 ? "00"+X
-             : "0"+X;
+        return X >= 100 || X <= -100 ? Long.toString(X)
+        : X > -100 && X <= -10 ? "-0" + (-X)
+        : X > -10 && X < 0 ? "-00" + (-X)
+        : X >= 0 && X < 10 ? "00" + X
+        : "0" + X;
       }
 
     public static final String leadingZero3(long X)
       {
-        return X >=  1000 || X <= -1000 ? Long.toString(X) 
-             : X >  -1000 && X <=  -100 ?   "-0"+(-X) 
-             : X >   -100 && X <=   -10 ?  "-00"+(-X)
-             : X >    -10 && X <      0 ? "-000"+(-X) 
-             : X >=     0 && X <     10 ?  "000"+X
-             : X >=    10 && X <    100 ?   "00"+X
-             : "0"+X;
+        return X >= 1000 || X <= -1000 ? Long.toString(X)
+        : X > -1000 && X <= -100 ? "-0" + (-X)
+        : X > -100 && X <= -10 ? "-00" + (-X)
+        : X > -10 && X < 0 ? "-000" + (-X)
+        : X >= 0 && X < 10 ? "000" + X
+        : X >= 10 && X < 100 ? "00" + X
+        : "0" + X;
       }
 
     public static final String leadingZeros(long x, int count)
       {
-        String str = Long.toString(x>= 0 ? x : -x);
-        int fill = count-str.length();
+        String str = Long.toString(x >= 0 ? x : -x);
+        int fill = count - str.length();
         if (fill >= 0)
-         {
-           char[] c = new char[fill];
-           Arrays.fill(c, '0');
-           return (x <= 0 ? "-":"")+new String(c)+str;
-         }
-        return (x <= 0 ? "-":"")+str;
+          {
+            char[] c = new char[fill];
+            Arrays.fill(c, '0');
+            return (x <= 0 ? "-" : "") + new String(c) + str;
+          }
+        return (x <= 0 ? "-" : "") + str;
       }
 
     public static final String leadingSpace(long X, int spaces)
       {
         int length = String.valueOf(X).length();
-        return (length < spaces ? PaddingUtil.getPad(spaces-length):"")+X;
+        return (length < spaces ? PaddingUtil.getPad(spaces - length) : "") + X;
       }
-    
+
+    public static final String printDataSize(long bytes)
+      {
+        return bytes < 1024 ? printWith000Sep(bytes) + "B"
+        : bytes < 1024 * 1024 ? printWith2DecAnd000Sep(bytes / 1024.0) + "KB"
+        : bytes < 1024 * 1024 * 1024 ? printWith2DecAnd000Sep(bytes / (1024.0 * 1024.0)) + "MB"
+        : printWith2DecAnd000Sep(bytes / (1024.0 * 1024.0 * 1024.0)) + "GB";
+      }
+
+
   }

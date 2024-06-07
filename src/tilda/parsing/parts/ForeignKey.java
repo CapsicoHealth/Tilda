@@ -61,7 +61,7 @@ public class ForeignKey
         return "fk_" + _ParentObject.getBaseName() + "_" + _Name;
       }
 
-    public boolean Validate(ParserSession PS, Object O)
+    public boolean validate(ParserSession PS, Object O)
       {
         int Errs = PS.getErrorCount();
         _ParentObject = O;

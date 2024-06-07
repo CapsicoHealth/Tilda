@@ -48,7 +48,7 @@ public class History
         _CompressionSeconds = h._CompressionSeconds;
       }
 
-    public boolean Validate(ParserSession PS, Object obj)
+    public boolean validate(ParserSession PS, Object obj)
       {
         int Errs = PS.getErrorCount();
 

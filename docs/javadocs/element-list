@@ -15,13 +15,14 @@ tilda.db.processors
 tilda.db.stores
 tilda.enums
 tilda.generation
+tilda.generation.bigquery
 tilda.generation.graphviz
 tilda.generation.helpers
 tilda.generation.html
 tilda.generation.interfaces
 tilda.generation.java8
 tilda.generation.postgres9
-tilda.generation.SQLServer2014
+tilda.generation.sqlserver2014
 tilda.grammar
 tilda.grammar.servlets
 tilda.interfaces

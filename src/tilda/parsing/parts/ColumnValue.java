@@ -16,14 +16,14 @@
 
 package tilda.parsing.parts;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.DefaultType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class ColumnValue
   {
@@ -35,7 +35,6 @@ public class ColumnValue
     @SerializedName("description") public String      _Description;
     @SerializedName("groupings"  ) public String[]    _Groupings;
     @SerializedName("default"    ) public DefaultType _Default = DefaultType.NONE;
-//    @SerializedName("raw"        ) public boolean     _Raw     = false;
     /*@formatter:on*/
 
     public transient Column            _ParentColumn;
@@ -66,17 +65,17 @@ public class ColumnValue
         _Default     = Default;
       }
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean validate(ParserSession PS, Column C)
       {
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, C);
+        validateBase(PS, C);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    private void ValidateBase(ParserSession PS, Column ParentColumn)
+    private void validateBase(ParserSession PS, Column ParentColumn)
       {
         _ParentColumn = ParentColumn;
 
@@ -93,7 +92,7 @@ public class ColumnValue
             return;
           }
 
-        if (TextUtil.isNullOrEmpty(_Value) == true)
+        if (_Value == null)
           _Value = _Name;
 
         if (TextUtil.isNullOrEmpty(_Label) == true)

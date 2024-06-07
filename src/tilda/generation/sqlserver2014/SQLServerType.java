@@ -32,6 +32,7 @@ public enum SQLServerType
     BOOLEAN ("bit"             , "integer" , ColumnType.BOOLEAN ),
     DATE    ("date"            , null      , ColumnType.DATE    ),
     DATETIME("datetimeoffset"  , null      , ColumnType.DATETIME),
+    DATETIME_PLAIN("datetime"  , null      , ColumnType.DATETIME_PLAIN),
     BINARY  ("varbinary"       , null      , ColumnType.BINARY  ),
     BITFIELD("integer"         , null      , ColumnType.BITFIELD),
     NUMERIC ("numeric"         , null      , ColumnType.NUMERIC ),
@@ -39,7 +40,7 @@ public enum SQLServerType
     /*@formatter:on*/
 
     static {
-      ColumnType.validate(SQLServerType.values());
+      ColumnType.validate(SQLServerType.values(), "SQLServerType");
     }
     
     private SQLServerType(String SQLType, String SQLArrayType, ColumnType T)

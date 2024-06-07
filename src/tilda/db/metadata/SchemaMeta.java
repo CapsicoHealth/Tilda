@@ -59,11 +59,22 @@ public class SchemaMeta
          }
         Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern);
 
-        ResultSet RS = meta.getTables(null, _SchemaName.toLowerCase(), TablePattern == null ? null : TablePattern.toLowerCase(), null);
+        String schemaName = _SchemaName;
+        String tablePattern = TablePattern;
+        if (C.isCaseSentitiveSchemaTableViewNames() == false)
+          {
+            if (schemaName != null)
+              schemaName = schemaName.toLowerCase();
+            if (tablePattern != null)
+              tablePattern = tablePattern.toLowerCase();
+          }
+        ResultSet RS = meta.getTables(null, schemaName, tablePattern, null);
+        boolean caseSensitive = C.isCaseSentitiveSchemaTableViewNames();
         while (RS.next() != false)
           {
+//            LOG.debug(JDBCHelper.printResultSet(RS));
             String Type = RS.getString("TABLE_TYPE");
-            String Name = RS.getString("TABLE_NAME").toLowerCase();
+            String Name = caseSensitive ? RS.getString("TABLE_NAME") : RS.getString("TABLE_NAME").toLowerCase();
             String Descr = RS.getString("REMARKS");
             if ("table".equalsIgnoreCase(Type) == true)
               {
@@ -120,12 +131,20 @@ public class SchemaMeta
     throws Exception
       {
         long TS = System.nanoTime();
+        if (C.isCaseSentitiveSchemaTableViewNames() == false)
+          {
+            if (SchemaName != null)
+              SchemaName = SchemaName.toLowerCase();
+            if (TableName != null)
+              TableName = TableName.toLowerCase();
+          }
         Map<String, Map<String, Map<String, ColumnMeta>>> columns = new HashMap<String, Map<String, Map<String, ColumnMeta>>>();
-        ResultSet RS = meta.getColumns(null, SchemaName == null ? null : SchemaName.toLowerCase(), TableName == null ? null : TableName.toLowerCase(), null);
+        ResultSet RS = meta.getColumns(null, SchemaName, TableName, null);
         while (RS.next() != false)
           {
             if (RS.getString("TABLE_SCHEM").equalsIgnoreCase("information_schema") == true)
               continue;
+//            LOG.debug(JDBCHelper.printResultSet(RS));
             ColumnMeta CI = new ColumnMeta(C, RS);
             Map<String, Map<String, ColumnMeta>> schema = columns.get(CI._SrcSchema.toLowerCase());
             if (schema == null)

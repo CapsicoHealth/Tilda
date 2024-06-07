@@ -16,8 +16,6 @@
 
 package tilda.migration;
 
-import java.io.PrintWriter;
-
 /**
  * Tilda migration is non destructive by design. We want to separate drop scripts which we do not execute
  * against a DB from other migration actions.

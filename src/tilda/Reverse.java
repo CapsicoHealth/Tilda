@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.config.ConnDefs;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKColumnMeta;
 import tilda.db.metadata.FKMeta;
@@ -55,6 +56,7 @@ public class Reverse
         LOG.info("");
         try
           {
+            ConnDefs._SKIP_TILDA_LOADING = true; // Skip loading Tilda infrastructure since we are 100% JDBC-based DB meta-data only.
             Connection C = ConnectionPool.get("MAIN");
             SchemaMeta S = new SchemaMeta(args[0]);
             S.load(C, args.length == 2 && TextUtil.isNullOrEmpty(args[1]) == false ? args[1] : null);

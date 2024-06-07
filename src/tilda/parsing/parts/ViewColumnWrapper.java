@@ -33,6 +33,7 @@ public class ViewColumnWrapper extends Column
 
         _VCol = VCol;
         _SequenceOrder = SequenceOrder;
+        _MaskDef = SameAsCol!=null ? SameAsCol._MaskDef : null;
         _Invariant = SameAsCol!=null?SameAsCol._Invariant : false;
         _FCT = SameAsCol != null ? SameAsCol._FCT : VCol._FCT;
         if (SameAsCol != null && VCol._UseMapper == true && SameAsCol._Mapper != null)
@@ -43,7 +44,7 @@ public class ViewColumnWrapper extends Column
         if (VCol._Aggregate != null)
           {
             _Aggregate = VCol._Aggregate;
-//            _OrderByObjs   = VCol._OrderByObjs;
+            _AggregateOrderBy   = VCol._OrderBy; // needed for aggregate management of Tz columns
             _TypeStr = VCol.getType().name();
             _Precision = SameAsCol._Precision;
             _Scale = SameAsCol._Scale;
@@ -86,6 +87,9 @@ public class ViewColumnWrapper extends Column
             _Scale = VCol._SameAsObj._Scale;
             _Precision = VCol._SameAsObj._Precision;
           }
+        
+        if (_TypeStr.startsWith(ColumnType.DATETIME.name()) == true)
+         _TzModeStr = VCol._SameAsObj._TzModeStr;
       }
 
     protected ViewColumn _VCol;

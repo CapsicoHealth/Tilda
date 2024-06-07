@@ -50,7 +50,7 @@ public class MigrationRename
         this._OldNames = mr._OldNames == null ? null : Arrays.copyOf(mr._OldNames, mr._OldNames.length);
       }
 
-    public boolean Validate(ParserSession PS, Schema Parent)
+    public boolean validate(ParserSession PS, Schema Parent)
       {
         int Errs = PS.getErrorCount();
         _Schema = Parent;

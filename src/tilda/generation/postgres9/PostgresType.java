@@ -23,6 +23,7 @@ public enum PostgresType
     /*@formatter:off*/
     STRING  ("varchar"         , "varchar"    , ColumnType.STRING    ),
     JSON    ("jsonb"           , null         , ColumnType.JSON      ),
+    VECTOR  ("vector"          , null         , ColumnType.VECTOR    ),
     CHAR    ("character"       , "bpchar"     , ColumnType.CHAR      ),
     SHORT   ("smallint"        , "int2"       , ColumnType.SHORT     ),
     INTEGER ("integer"         , "int4"       , ColumnType.INTEGER   ),
@@ -33,6 +34,7 @@ public enum PostgresType
     BOOLEAN ("boolean"         , "bool"       , ColumnType.BOOLEAN   ),
     DATE    ("date"            , "date"       , ColumnType.DATE      ),
     DATETIME("timestamptz"     , "timestamptz", ColumnType.DATETIME  ),
+    DATETIME_PLAIN("timestamp" , "timestamp"  , ColumnType.DATETIME_PLAIN  ),
     BINARY  ("BYTEA"           , null         , ColumnType.BINARY    ),
     BITFIELD("INTEGER"         , "int4"       , ColumnType.BITFIELD  ),
     UUID    ("UUID"            , "uuid"       , ColumnType.UUID      );
@@ -40,7 +42,7 @@ public enum PostgresType
 
     static
       {
-        ColumnType.validate(PostgresType.values());
+        ColumnType.validate(PostgresType.values(), "PostgresType");
       }
 
     private PostgresType(String SQLType, String SQLArrayType, ColumnType T)

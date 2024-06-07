@@ -74,8 +74,16 @@ public interface DBType
     public String[] getConnectionNoDataStates();
     public String[] getConnectionLockMsgs();
     public String[] getConnectionCancelStates();
+    /**
+     * @return The string denoting the current timestamp with timezone statement, e.g., "statement_timestamp()" for Postgres, or "CURRENT_TIMESTAMP" for bigquery.
+     */
     public String   getCurrentTimestampStr();
+    /**
+     * @return The string denoting the current timestamp without timezone statement, "statement_timestamp()::timestamp" for Postgres, or "CURRENT_DATETIME" for bigquery.
+     */
+    public String   getCurrentDateTimeStr();
     public String   getCurrentDateStr();
+    public boolean  isCaseSentitiveSchemaTableViewNames();
     
     public CodeGenSql getSQlCodeGen();
 
@@ -86,7 +94,7 @@ public interface DBType
     public boolean dropView                        (Connection Con, View V) throws Exception;
     public boolean dropView                        (Connection con, ViewMeta v, boolean cascade) throws Exception;
     public boolean createView                      (Connection Con, View V) throws Exception;
-    public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue, String temporaryDefaultValue) throws Exception;
     public boolean alterTableAlterColumnDefault    (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col) throws Exception;
     public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;   
@@ -140,8 +148,6 @@ public interface DBType
     public String           getColumnTypeRaw(Column C, boolean MultiOverride);
     public String           getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
     public void             setArray(Connection Con, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
-    public Collection<?>    getArray(                ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
-    public Collection<?>    getArray(                ResultSet         RS, String colName, ColumnType Type, boolean isSet) throws Exception;
     public String           getJsonParametrizedQueryPlaceHolder();
     public void             setOrderByWithNullsOrdering(Connection Con, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
     public void             age(Connection Con, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
@@ -152,6 +158,7 @@ public interface DBType
     public boolean renameTableView(Connection con, Base base, String oldName) throws Exception;
     public boolean renameTableColumn(Connection con, Column col, String oldName) throws Exception;
     public ZonedDateTime getCurrentTimestamp(Connection con) throws Exception;
+    public ZonedDateTime getCurrentDateTime(Connection con) throws Exception;
     public LocalDate getCurrentDate(Connection con) throws Exception;
     public boolean supportsReorg();
     public boolean reorgTable(Connection con, String schemaName, String tableName, String clusterIndexName, boolean verbose, boolean full) throws Exception;

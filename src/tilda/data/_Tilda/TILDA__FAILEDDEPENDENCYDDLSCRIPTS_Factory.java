@@ -61,7 +61,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SRCSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcSchemaName", 0/*0*/, 100, "The result value.", null, null, null);
+     public final Type_StringPrimitive              SRCSCHEMANAME= new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "srcSchemaName", 0/*0*/, 100, "The result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SRCTVNAME    = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "srcTVName"    , 1/*1*/, 100, "The result value.", null, null, null);
+     public final Type_StringPrimitive              SRCTVNAME    = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "srcTVName"    , 1/*1*/, 100, "The result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_IntegerPrimitive       SEQ          = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "seq"          , 2/*2*/, "The blah", null, null, null);
+     public final Type_IntegerPrimitive             SEQ          = new Type_IntegerPrimitive            (SCHEMA_LABEL, TABLENAME_LABEL, "seq"          , 2/*2*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DEPSCHEMANAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depSchemaName", 3/*3*/, 100, "The result value.", null, null, null);
+     public final Type_StringPrimitive              DEPSCHEMANAME= new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "depSchemaName", 3/*3*/, 100, "The result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DEPVIEWNAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "depViewName"  , 4/*4*/, 100, "The result value.", null, null, null);
+     public final Type_StringPrimitive              DEPVIEWNAME  = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "depViewName"  , 4/*4*/, 100, "The result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        RESTORESCRIPT= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "restoreScript", 5/*5*/, 500000, "The result value.", null, null, null);
+     public final Type_StringPrimitive              RESTORESCRIPT= new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "restoreScript", 5/*5*/, 500000, "The result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +198,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 6/*6*/, "The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)", null, null);
+     public final Type_DatetimePrimitive            CREATED      = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 6/*6*/, "The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +226,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 7/*7*/, "The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 7/*7*/, "The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -247,7 +247,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 8/*8*/, "The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 8/*8*/, "The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -376,7 +376,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -587,7 +587,7 @@ object. The generic init method defaults to this general data structure as a gen
          }
        finally
          {
-           TILDA__2_3.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           TILDA__2_5.handleFinally(PS, T0, TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
            PS = null;
            AllocatedArrays = null;
          }
@@ -646,13 +646,19 @@ The results are ordered by: srcSchemaName asc, srcTVName asc, created asc, seq a
    public static ListResults<tilda.data.FailedDependencyDDLScripts_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.FailedDependencyDDLScripts_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }

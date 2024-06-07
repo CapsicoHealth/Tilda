@@ -90,6 +90,36 @@ public class MSSQL implements DBType
       {
         return "current_timestamp";
       }
+    
+    @Override
+    public String getCurrentDateTimeStr()
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public ZonedDateTime getCurrentDateTime(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public ZonedDateTime getCurrentTimestamp(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public LocalDate getCurrentDate(Connection con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = {
         "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed", "connection has been closed"
@@ -260,7 +290,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue, String temporaryDefaultValue)
     throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)
@@ -400,7 +430,8 @@ public class MSSQL implements DBType
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
             case microsoft.sql.Types.DATETIMEOFFSET:             
-            case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
+            case java.sql.Types.TIMESTAMP              : TypeSql = "TIMESTAMP"              ; TildaType = ColumnType.DATETIME_PLAIN; break;
+            case java.sql.Types.TIMESTAMP_WITH_TIMEZONE: TypeSql = "TIMESTAMP_WITH_TIMEZONE"; TildaType = ColumnType.DATETIME      ; break;
             case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
@@ -442,7 +473,7 @@ public class MSSQL implements DBType
         TextUtil.escapeSingleQuoteForSQL(Str, val, true);
         PS.setString(i, Str.toString());
       }
-
+/*
     @Override
     public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
     throws Exception
@@ -494,7 +525,8 @@ public class MSSQL implements DBType
         // Convert String[] to proper type and collection.
         return Type.parse(isSet, parts);
       }
-    
+*/
+
 /*
     @Override
     public void setJson(PreparedStatement PS, int i, String jsonValue)
@@ -703,21 +735,6 @@ public class MSSQL implements DBType
 
 
     @Override
-    public ZonedDateTime getCurrentTimestamp(Connection con)
-    throws Exception
-      {
-        throw new UnsupportedOperationException();
-      }
-
-
-    @Override
-    public LocalDate getCurrentDate(Connection con)
-    throws Exception
-      {
-        throw new UnsupportedOperationException();
-      }
-
-    @Override
     public boolean moveTableView(Connection con, Base base, String oldSchemaName)
     throws Exception
       {
@@ -850,5 +867,12 @@ public class MSSQL implements DBType
       {
         return false;
       }
+
+    @Override
+    public boolean isCaseSentitiveSchemaTableViewNames()
+      {
+        return false;
+      }
+
     
   }

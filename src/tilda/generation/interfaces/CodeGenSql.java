@@ -48,8 +48,9 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getBaseSelectStatement(List<Column> Columns);
 
     public String getEqualCurentTimestamp();
-
+    public String getEqualCurentDateTime();
     public String getCommaCurentTimestamp();
+    public String getCommaCurentDateTime();
 
     public void genDDL(PrintWriter Out, Object O)
     throws Exception;

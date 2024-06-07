@@ -36,6 +36,7 @@ import tilda.enums.JoinType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.TzNameHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
@@ -147,7 +148,7 @@ public class ViewColumn
         if (_Aggregate == null)
           return baseLineType;
 
-        return baseLineType == null ? null : _Aggregate.getType(baseLineType, needsTZ());
+        return baseLineType == null ? null : _Aggregate.getType(this.getFullName(), baseLineType, needsTZBaseTypeNoAggregate());
       }
 
     /**
@@ -193,7 +194,7 @@ public class ViewColumn
 
     static protected final Pattern _RANGEREGEX = Pattern.compile("((UNBOUNDED|\\d+|CURRENT)\\s+(PRECEDING|FOLLOWING|ROW))\\s+AND\\s+((UNBOUNDED|\\d+|CURRENT)\\s+(PRECEDING|FOLLOWING|ROW))", Pattern.CASE_INSENSITIVE);
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public boolean validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -327,7 +328,7 @@ public class ViewColumn
         if (_TypeStr != null)
           {
             _Type = new TypeDef(_TypeStr, _Size, _Precision, _Scale);
-            _Type.Validate(PS, "View Column '" + getFullName() + "'", true, false);
+            _Type.validate(PS, "View Column '" + getFullName() + "'", true, false, FrameworkSourcedType.VIEW);
           }
         // Checking that type information is only present when expression is specified and vice-versa.
         if (TextUtil.isNullOrEmpty(_Expression) == false && _Type == null)
@@ -437,20 +438,42 @@ public class ViewColumn
       }
 
     /**
-     * A view column of type 'DATETIME' needs an extra timezone support field if the underlying column needs one, and the
-     * view column is not an aggregate, and does not have an expression unless it's of type datetime, and is a
-     * non-framework-generated column.
-     * 
+     * A view column of type 'DATETIME' (or DATETIME_PLAIN) needs an extra timezone support field if:<UL>
+     *  <LI> the underlying column needs one,</LI>
+     *  <LI> and the view column is not an aggregate,</LI> 
+     *  <LI> and does not have an expression unless it's of type datetime,</LI>
+     *  <LI> and is a non-framework-generated column.</LI>
+     * </UL>
      * @return
      */
     public boolean needsTZ()
       {
+        ColumnType t = _Type != null ? _Type._Type : _SameAsObj._Type;
+
         return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
         && (_Aggregate == null || _Aggregate.isZonedDateTimeCompatible() == true)
-        && (TextUtil.isNullOrEmpty(_Expression) == true || (_Type != null ? _Type._Type : _SameAsObj._Type) == ColumnType.DATETIME)
+        && (TextUtil.isNullOrEmpty(_Expression) == true || t == ColumnType.DATETIME || t == ColumnType.DATETIME_PLAIN)
         && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
       }
 
+    /**
+     * A view column of type 'DATETIME' (or DATETIME_PLAIN) needs an extra timezone support field if:<UL>
+     *  <LI> the underlying column needs one,</LI>
+     *  <LI> and does not have an expression unless it's of type datetime,</LI>
+     *  <LI> and is a non-framework-generated column.</LI>
+     * </UL>
+     * This method is different from {@link #needsTZ()} is that it does not take into account aggregations and looks at the underlying type only.
+     * @return
+     */
+    public boolean needsTZBaseTypeNoAggregate()
+      {
+        ColumnType t = _Type != null ? _Type._Type : _SameAsObj._Type;
+
+        return (_SameAsObj == null || _SameAsObj.needsTZ() == true)
+        && (TextUtil.isNullOrEmpty(_Expression) == true || t == ColumnType.DATETIME || t == ColumnType.DATETIME_PLAIN)
+        && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
+      }
+    
     public boolean isList()
       {
         return _SameAsObj != null && _SameAsObj.isList() == true || _Aggregate != null && _Aggregate.isList() == true;
@@ -471,4 +494,23 @@ public class ViewColumn
         return _SameAsObj == null || _SameAsObj._Nullable == true;
       }
 
+    /**
+     * Returns the name of the associated TZ column for this column. This should be called only if "needsTZ" returns true.
+     * For row columns, will rename the rowTZ based on the source table/view, or aggregate. For example:<UL>
+     * <LI>sameAs="SomeTable1.DateTimeColumnWithRowTZ"</LI>
+     * <LI>sameAs="SomeTable2.DateTimeColumnWithRowTZ"</LI>
+     * <LI>sameAs="SomeTable1.DateTimeColumn1WithRowTZ", aggregate="FIRST", orderBy:["dt1"]</LI>
+     * <LI>sameAs="SomeTable1.DateTimeColumn2WithRowTZ", aggregate="FIRST", orderBy:["dt2"]</LI>
+     * </UL>
+     * We need to make sure that in the resulting view has 4 instances of rowTZ because:<UL>
+     * <LI>The first two come from 2 different tables, so their rowTZ might be different
+     * <LI>The last 2 have a different orderBy, and so the matching rowTZ might again be different.
+     * </UL>
+     * @param sameAs
+     * @return
+     */
+    public String getTzName(boolean sameAs)
+      {
+        return TzNameHelper.getTzName(_Name, _SameAsObj, _Aggregate, _OrderBy, sameAs);
+      }
   }

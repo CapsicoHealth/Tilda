@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -40,7 +40,7 @@ The Table TILDATUTORIAL.User :<UL>
 <LI>Unique Index: id</LI>
 <LI>Unique Index: email</LI>
 </UL></LI>
-<LI>Has the following index:<UL><LI>, lastUpdated asc
+<LI>Has the following index:<UL><LI>lastUpdated asc
 </LI>
 </UL></LI>
 </UL>
@@ -48,7 +48,7 @@ The Table TILDATUTORIAL.User :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="User_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='User-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -56,6 +56,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -67,6 +68,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The user's id</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -77,6 +79,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The user's email</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
@@ -84,8 +87,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='User-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDATUTORIAL.User)</TD>
 </TR>
@@ -94,8 +98,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='User-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATUTORIAL.User)</TD>
 </TR>
@@ -104,8 +109,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="right"><B id='User-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDATUTORIAL.User)</TD>
 </TR>
@@ -297,8 +303,8 @@ This is the setter for:<BR>
    public void setId(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.User.id to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.User.id to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 40)
         throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.User.id: the size "+v.length()+" is larger than the max allowed of 40: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_id) == false)
@@ -405,8 +411,8 @@ This is the setter for:<BR>
    public void setEmail(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.User.email to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.User.email to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 255)
         throw new Exception("Cannot set tilda.tutorial.data.TILDATUTORIAL.User.email: the size "+v.length()+" is larger than the max allowed of 255: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_email) == false)
@@ -1217,7 +1223,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__USER_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__USER_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
         }
 
@@ -1257,20 +1263,20 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDATUTORIAL", "User");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__USER_Factory.COLS.REFNUM._Mask) == true) { TILDA__USER_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.tutorial.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__USER_Factory.COLS.ID._Mask) == true) { TILDA__USER_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.tutorial.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__USER_Factory.COLS.EMAIL._Mask) == true) { TILDA__USER_Factory.COLS.EMAIL.getFullColumnVarForInsert(C, S); V.append(tilda.tutorial.data._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__USER_Factory.COLS.REFNUM._Mask) == true) { TILDA__USER_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.tutorial.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__USER_Factory.COLS.ID._Mask) == true) { TILDA__USER_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.tutorial.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__USER_Factory.COLS.EMAIL._Mask) == true) { TILDA__USER_Factory.COLS.EMAIL.getFullColumnVarForInsert(C, S); V.append(tilda.tutorial.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__USER_Factory.COLS.CREATED._Mask) == true) { TILDA__USER_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__USER_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.tutorial.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__USER_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.tutorial.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__USER_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__USER_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__USER_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__USER_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.tutorial.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__USER_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.tutorial.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__USER_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__USER_Factory.COLS.DELETED._Mask) == true) { TILDA__USER_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__USER_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.tutorial.data._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__USER_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.tutorial.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1572,7 +1578,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.tutorial.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__USER_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.tutorial.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__USER_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
     }
@@ -1584,9 +1590,9 @@ This is the hasChanged for:<BR>
       __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
       __Saved_id          = _id          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.ID._Mask         ); _id = null; }
       __Saved_email       = _email       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.EMAIL._Mask      ); _email = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.DELETED._Mask    ); _deleted = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__USER_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

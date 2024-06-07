@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          REFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM= new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        NAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, 128, "The name of the test", null, null, null);
+     public final Type_StringPrimitive              NAME  = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, 128, "The name of the test", null, null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -203,7 +203,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -233,13 +233,19 @@ Lookup records by the query 'All' over
    public static ListResults<tilda.data_test.TestView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data_test.TestView_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
 
 

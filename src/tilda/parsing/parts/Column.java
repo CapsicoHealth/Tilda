@@ -31,15 +31,18 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.enums.FrameworkColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
+import tilda.enums.TZMode;
 import tilda.enums.TildaType;
 import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
+import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.TzNameHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -53,14 +56,16 @@ public class Column extends TypeDef
 	@SerializedName("sameas"     ) public String         _SameAs__DEPRECATED;
     @SerializedName("sameAs"     ) public String         _SameAs     ;
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
-    @SerializedName("mode"       ) public String         _ModeStr    ;
+    @SerializedName("allowEmpty" ) public Boolean        _AllowEmpty ;
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
+    @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("protect"    ) public String         _ProtectStr ;
+    @SerializedName("tzMode"     ) public String         _TzModeStr  ;    
+    @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("description") public String         _Description;
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
     @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
-    @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
 
@@ -69,9 +74,11 @@ public class Column extends TypeDef
     // LDH-NOTE: Because views can be materialized, we decided to create Proxy Objects. Since Aggregates
     // can affect the type of the column, we propagate it.
     public transient AggregateType       _Aggregate         = null;
+    public transient String[]            _AggregateOrderBy  = null;
 
     public transient ColumnMode          _Mode;
     public transient ProtectionType      _Protect;
+    public transient TZMode              _TzMode;
     public transient Column              _SameAsObj;
     public transient Object              _ParentObject;
     public transient PaddingTracker      _PadderValueNames  = new PaddingTracker();
@@ -83,6 +90,7 @@ public class Column extends TypeDef
     public transient ColumnValue         _DefaultCreateValue;
     public transient ColumnValue         _DefaultUpdateValue;
     public transient String              _MaskDef;
+    public transient boolean             _TzCol;
 
     protected transient int              _SequenceOrder     = -1;
 
@@ -102,9 +110,11 @@ public class Column extends TypeDef
         _SameAs__DEPRECATED = c._SameAs__DEPRECATED;
         _SameAs = c._SameAs;
         _Nullable = c._Nullable;
+        _AllowEmpty = c._AllowEmpty;
         _ModeStr = c._ModeStr;
         _Invariant = c._Invariant;
         _ProtectStr = c._ProtectStr;
+        _TzModeStr = c._TzModeStr;
         // _Mask = c._Mask;
         _Description = c._Description;
         if (c._Mapper != null)
@@ -120,6 +130,7 @@ public class Column extends TypeDef
         _Default = c._Default;
         if (c._JsonSchema != null)
           _JsonSchema = new JsonSchema(c._JsonSchema);
+        _MaskDef = c._MaskDef;
       }
 
     public Column(String Name, String TypeStr, Integer Size, String Description, Integer Precision, Integer Scale)
@@ -130,18 +141,20 @@ public class Column extends TypeDef
 
       }
 
-    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description, Integer Precision, Integer Scale, String Mask)
+    public Column(String name, String typeStr, Integer size, boolean nullable, boolean allowEmpty, ColumnMode mode, boolean invariant, ProtectionType protect, String Description, Integer Precision, Integer Scale, String maskDef, TZMode tzMode)
       {
-        super(TypeStr, Size, Precision, Scale);
-        _Name = Name;
-        _Nullable = Nullable;
-        _ModeStr = Mode == null ? null : Mode.name();
-        _Invariant = Invariant;
-        _ProtectStr = Protect == null ? null : Protect.name();
-        // _Mask = Mask;
+        super(typeStr, size, Precision, Scale);
+        _Name = name;
+        _Nullable = nullable;
+        _AllowEmpty = allowEmpty;
+        _ModeStr = mode == null ? null : mode.name();
+        _Invariant = invariant;
+        _ProtectStr = protect == null ? null : protect.name();
+        _MaskDef = maskDef;
         _Description = Description;
         _Precision = Precision;
         _Scale = Scale;
+        _TzMode = tzMode;
       }
 
     public Column(String Name, ColumnType Type, String Description)
@@ -203,9 +216,10 @@ public class Column extends TypeDef
       {
         return _Name;
       }
-    
+
     /**
      * Changes the column's name. Must only be called before any validation has occurred.
+     * 
      * @param newName
      */
     public void renameTo(String newName)
@@ -213,18 +227,18 @@ public class Column extends TypeDef
         _Name = newName;
       }
 
-    public boolean Validate(ParserSession PS, Object ParentObject)
+    public boolean validate(ParserSession PS, Object ParentObject)
       {
         _ParentObject = ParentObject;
         if (_Validation != ValidationStatus.NONE)
           return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-        ValidateBase(PS, ParentObject);
+        validateBase(PS, ParentObject);
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    private void ValidateBase(ParserSession PS, Object ParentObject)
+    private void validateBase(ParserSession PS, Object ParentObject)
       {
         String N = getLogicalName();
         if (TextUtil.isNullOrEmpty(N) == true)
@@ -235,7 +249,7 @@ public class Column extends TypeDef
 
         ValidationHelper.validateColumnName(PS, "Object", N, getFullName(), _ParentObject._ParentSchema._Conventions);
 
-        if (ValidateSameAs(PS) == false)
+        if (validateSameAs(PS) == false)
           return;
 
         // Checking values
@@ -255,8 +269,40 @@ public class Column extends TypeDef
 
         setDefaults();
 
-        if (super.Validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
+        if (super.validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED, ParentObject._FST) == false)
           return;
+        
+        if (_Type == ColumnType.DATETIME || _Type == ColumnType.DATETIME_PLAIN)
+          {
+            if (TextUtil.isNullOrEmpty(_TzModeStr) == true)
+              _TzModeStr = ParentObject._TzModeStr;
+            if ((_TzMode = TZMode.parse(_TzModeStr)) == null)
+              PS.AddError("Column '" + getFullName() + "' defined an invalid 'tzMode' '" + _TzModeStr + "'.");
+            // LDH-NOTE: Not sure why we had this in the first place. Arrays and sets are fine with the row mode.
+            // if (isCollection() == true && _TzMode == TZMode.ROW)
+            // PS.AddError("Column '" + getFullName() + "' is a datetime collection with tzMode='" + _TzModeStr + "': datetime collections cannot have row-level tzMode.");
+            if (isSet() == true && _TzMode.isColumn() == true)
+              PS.AddError("Column '" + getFullName() + "' is a datetime unordered set with tzMode='" + _TzModeStr + "': datetime unordered sets cannot have column-level tzMode as there wouldn't be a way to match thee timestamp with the timezone.");
+          }
+        else
+          {
+            if (_ParentObject._FST == FrameworkSourcedType.VIEW)
+              _TzModeStr = null;
+            else if (TextUtil.isNullOrEmpty(_TzModeStr) == false)
+              PS.AddError("Column '" + getFullName() + "' defined tzMode value '" + _TzModeStr + "' when the column is not a DATETIME but a "+_Type+".");
+          }
+
+        // Convert from DATETIME ("with timezone") to DATETIME_PLAIN ("without timezone") if _TzMode says so.
+        if (_Type == ColumnType.DATETIME && _TzMode != null && _TzMode.isNoTZ() == true)
+          _Type = ColumnType.DATETIME_PLAIN;
+
+        if (_AllowEmpty == true)
+          {
+            if (_Type != ColumnType.STRING)
+              PS.AddError("Column '" + getFullName() + "' is not a String: 'allowEmpty' only makes sense for Strings.");
+            if (_Nullable == true)
+              PS.AddError("Column '" + getFullName() + "' is nullable: 'allowEmpty' is set to true, which doesn't make sense for nullables.");
+          }
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
           {
@@ -271,19 +317,19 @@ public class Column extends TypeDef
         if (_Protect != null && _Type != ColumnType.STRING)
           PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
 
-        ValidateValues(PS);
+        validateValues(PS);
 
         if (_Mapper != null && _Enum != null)
           PS.AddError("Column '" + getFullName() + "' is defining both a mapper and an enum, which is not allowed: only one can be defined at a time.");
         else if (_Mapper != null)
-          _Mapper.Validate(PS, this);
+          _Mapper.validate(PS, this);
         else if (_Enum != null)
-          _Enum.Validate(PS, this);
+          _Enum.validate(PS, this);
 
         if (_JsonSchema != null && _Type != ColumnType.JSON)
           PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
         if (_JsonSchema != null)
-          _JsonSchema.Validate(PS, this);
+          _JsonSchema.validate(PS, this);
 
         // if ((_Nullable == null || _Nullable == true)
         // && _Values != null
@@ -298,7 +344,7 @@ public class Column extends TypeDef
       }
 
 
-    private boolean ValidateSameAs(ParserSession PS)
+    private boolean validateSameAs(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_SameAs) == true && TextUtil.isNullOrEmpty(_SameAs__DEPRECATED) == true)
           return true;
@@ -422,8 +468,14 @@ public class Column extends TypeDef
         if (_ModeStr == null)
           _ModeStr = _SameAsObj._ModeStr;
 
+        if (_TzModeStr == null)
+          _TzModeStr = _SameAsObj._TzModeStr;
+
         if (_Nullable == null)
           _Nullable = _SameAsObj._Nullable;
+
+        if (_AllowEmpty == null)
+          _AllowEmpty = _SameAsObj._AllowEmpty;
 
         // Only reuse Invariant definition if the destination column is not a PK. By definition, PKs are invariant, so when
         // their definition are reused, mostly as part of an FK definition, most likely Invariant=true makes no sense as
@@ -439,6 +491,8 @@ public class Column extends TypeDef
       {
         if (_Nullable == null)
           _Nullable = Boolean.TRUE;
+        if (_AllowEmpty == null)
+          _AllowEmpty = Boolean.FALSE;
         if (_Mode == null)
           _Mode = ColumnMode.NORMAL;
         if (_Invariant == null)
@@ -447,14 +501,17 @@ public class Column extends TypeDef
           _Protect = ProtectionType.ABSOLUTE;
       }
 
-    private boolean ValidateValues(ParserSession PS)
+    private boolean validateValues(ParserSession PS)
       {
-        if (_Values != null && _Values.length > 0 && TextUtil.isNullOrEmpty(_Default) == false)
+        if (_Values != null && _Values.length > 0 && _Default != null) // we want to allow "" as a default value, so only checking for null here, not isNullOrEmpty.
           return PS.AddError("Column '" + getFullName() + "' defines a 'default' and 'values' attributes. Only one or the other is alowed.");
 
-        if (TextUtil.isNullOrEmpty(_Default) == false)
-          _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
-          };
+        if (_Default != null) // we want to allow "" as a default value, so only checking for null here, not isNullOrEmpty.
+          {
+            _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE)
+            };
+            _Default = null;
+          }
 
         if (_Values == null || _Values.length == 0)
           return true;
@@ -470,7 +527,7 @@ public class Column extends TypeDef
             if (V == null)
               continue;
 
-            V.Validate(PS, this);
+            V.validate(PS, this);
 
             _PadderValueNames.track(V._Name);
             _PadderValueValues.track(V._Value);
@@ -655,7 +712,6 @@ public class Column extends TypeDef
     public String toString()
       {
         return getClass().getName() + ": " + getFullName() + " (" + super.toString() + ")";
-
       }
 
     String getLogicalName()
@@ -673,13 +729,25 @@ public class Column extends TypeDef
       }
 
     /**
-     * A column needs an extra timezone support column if it is of type DATETIME and was not framework-generated (e.g., created, lastUpdated...)
+     * A column needs an extra timezone support column if it is of type DATETIME/DATETIME_PLAIN and was not framework-generated (e.g., created, lastUpdated...)
      * 
      * @return
      */
     public boolean needsTZ()
       {
-        return getType() == ColumnType.DATETIME && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
+        return (getType() == ColumnType.DATETIME || getType() == ColumnType.DATETIME_PLAIN) && (_FCT == FrameworkColumnType.NONE || _FCT == FrameworkColumnType.PIVOT);
+      }
+
+    public String getTZName()
+      {
+        if (needsTZ() == false)
+          return null;
+        return _ParentObject._FST == FrameworkSourcedType.NONE
+            ? TzNameHelper.getTzName(_Name, this, null, null, false)
+            : TzNameHelper.getTzName(_Name, this, _Aggregate, _AggregateOrderBy, false);
+            
+        
+//        return _TzMode.isColumn() == true ? getName() + _ParentObject._ParentSchema.getConventionTzColPostfix() : _ParentObject._ParentSchema.getConventionTzRowName();
       }
 
     protected static Column deepColumnSearch(ParserSession PS, Base parent, String colName)
@@ -705,6 +773,11 @@ public class Column extends TypeDef
               }
           }
         return null;
+      }
+
+    public boolean isMasked()
+      {
+        return _MaskDef != null;
       }
 
   }

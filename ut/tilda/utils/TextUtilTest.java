@@ -40,9 +40,34 @@ public class TextUtilTest
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
 //          Test_FindLikeElement();
-          Test_Perf_endsWith_vs_charAt();
+//          Test_Perf_endsWith_vs_charAt();
 //          Test_isNullOrEmpty();
+          testcharAt();
+          testExpressionRewrite();
       }
+    
+    private static void testcharAt()
+     {
+       final int rounds = 10_000_000;
+       char c = 'a';
+       String[] blah = {"a", "aaaaa", "aaaaaaa"};
+       int x = 0;
+
+       long TS = System.nanoTime();
+       for (int i = 0; i < rounds; ++i)
+         if (blah[0].equals(""+c) == true)
+          ++x;
+       TS = System.nanoTime() - TS;
+       LOG.debug("equals-1: "+DurationUtil.printDuration(TS) +" with "+DurationUtil.printPerformancePerSecond(TS, x)+" calls/s");
+       
+       x = 0;
+       TS = System.nanoTime();
+       for (int i = 0; i < rounds; ++i)
+         if (blah[0].charAt(0) == c)
+          ++x;
+       TS = System.nanoTime() - TS;
+       LOG.debug("equals-2: "+DurationUtil.printDuration(TS) +" with "+DurationUtil.printPerformancePerSecond(TS, x)+" calls/s");
+     }
 
     private static void test_EscapeXML()
      {
@@ -494,4 +519,29 @@ public class TextUtilTest
          }
        LOG.info("SimplifyName_Regex4: " + DurationUtil.printPerformancePerSecond(System.nanoTime() - T0, count)+" ops.");
      }
+
+
+    // Eliminates white spaces between a word character and a '.' or a '('
+    protected static Pattern REQUOTE0 = Pattern.compile("(\\w)\\s+([\\.|\\(])");
+    protected static Pattern REQUOTE1 = Pattern.compile("\\.\\s*([a-z_A-Z]\\w*\\b)([^\\.\\(]|\\z)");
+    protected static Pattern REQUOTE2 = Pattern.compile("\\.\"([^\"]+)\"");
+
+    public static String rewriteExpressionColumnQuoting(String expr)
+      {
+        return expr.replaceAll(REQUOTE0.pattern(), "$1$2")
+        .replaceAll(REQUOTE1.pattern(), ".\"$1\"$2")
+        .replaceAll(REQUOTE2.pattern(), ".\"$1\"");
+      }
+  
+    private static void testExpressionRewrite()
+      {
+        String[] expressions = {"tilda.toDate (x)", "tilda.toDate (x.y)"
+            , "tilda.toDate(x) = toto.y and toto.a = toto.b", "tilda.toDate(func   ( x.y   ))"
+            , "tilda.toDate (x) and toto. x=toto.y and x > 4 or toto.y or blah.toto(schema . table . g)"
+            };
+        for (String e : expressions)
+         LOG.debug(e+"  -->>  "+rewriteExpressionColumnQuoting(e));
+      }
+  
+  
   }

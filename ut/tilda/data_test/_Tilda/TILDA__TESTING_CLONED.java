@@ -1,5 +1,5 @@
 /*
- Tilda V2.3 data object.
+ Tilda V2.5 data object.
 
  Code is generated: do not modify! Instead, create a derived class and override desired functionality
 */
@@ -44,13 +44,13 @@ The Table TILDATEST.Testing_Cloned :<UL>
 </TABLE></LI>
 <LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
-<LI>Has the following indices:<UL><LI>, name asc
+<LI>Has the following indices:<UL><LI>name asc
  <B><I>(Application-side Only)</I></B></LI>
-<LI>, name asc
+<LI>name asc
 </LI>
-<LI>, name desc
+<LI>name desc
 </LI>
-<LI>, name asc, description desc
+<LI>name asc, description desc
 </LI>
 </UL></LI>
 </UL>
@@ -58,7 +58,7 @@ The Table TILDATEST.Testing_Cloned :<UL>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="Testing_Cloned_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid #BBB;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">TZ</TH><TH align="left">Description</TH></TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -66,6 +66,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The primary key for this record</TD>
 </TR>
@@ -77,6 +78,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The person's primary key</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -86,6 +88,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Medical system unique enterprise id</TD>
 </TR>
@@ -97,6 +100,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -106,6 +110,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
@@ -117,6 +122,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -126,6 +132,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
@@ -137,6 +144,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -146,7 +154,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">SMART&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">SMART</SPAN>&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...<BR>This column has defined a number of constant values:
 <BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #BBB;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -164,6 +173,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
@@ -174,423 +184,454 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Testing_Cloned-a1_DIV' class='columns'>a1</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;INTEGER&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The blah</TD>
-</TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a2_DIV' class='columns'>a2</B>&nbsp;&nbsp;</TD>
 <TD>char&nbsp;/&nbsp;character&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a2b_DIV' class='columns'>a2b</B>&nbsp;&nbsp;</TD>
 <TD>List<Character> List<>&nbsp;/&nbsp;character[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>15&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a2c_DIV' class='columns'>a2c</B>&nbsp;&nbsp;</TD>
 <TD>Set <Character> Set<>&nbsp;/&nbsp;character[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>16&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a3_DIV' class='columns'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>17&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a3b_DIV' class='columns'>a3b</B>&nbsp;&nbsp;</TD>
 <TD>List<Boolean> List<>&nbsp;/&nbsp;boolean[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>18&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a4_DIV' class='columns'>a4</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>19&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a4b_DIV' class='columns'>a4b</B>&nbsp;&nbsp;</TD>
 <TD>List<Double> List<>&nbsp;/&nbsp;double precision[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>20&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>19&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a5_DIV' class='columns'>a5</B>&nbsp;&nbsp;</TD>
 <TD>float&nbsp;/&nbsp;real&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>21&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a5b_DIV' class='columns'>a5b</B>&nbsp;&nbsp;</TD>
 <TD>List<Float> List<>&nbsp;/&nbsp;real[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>22&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>21&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a6_DIV' class='columns'>a6</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>23&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>22&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a6b_DIV' class='columns'>a6b</B>&nbsp;&nbsp;</TD>
 <TD>List<Long> List<>&nbsp;/&nbsp;bigint[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>24&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>23&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a6c_DIV' class='columns'>a6c</B>&nbsp;&nbsp;</TD>
 <TD>Set <Long> Set<>&nbsp;/&nbsp;bigint[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>25&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>24&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a6dTZ_DIV' class='columns'>a6dTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a6d'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>26&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>25&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a6d_DIV' class='columns'>a6d</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>27&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>26&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a7_DIV' class='columns'>a7</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>28&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>27&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a7b_DIV' class='columns'>a7b</B>&nbsp;&nbsp;</TD>
 <TD>List<Integer> List<>&nbsp;/&nbsp;integer[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>29&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>28&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a8bTZ_DIV' class='columns'>a8bTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a8b'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>30&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>29&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a8b_DIV' class='columns'>a8b</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>31&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>30&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9TZ_DIV' class='columns'>a9TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a9'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>32&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>31&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9_DIV' class='columns'>a9</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>33&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>32&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9a1TZ_DIV' class='columns'>a9a1TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a9a1'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>34&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>33&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9a1_DIV' class='columns'>a9a1</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>35&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>34&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9bTZ_DIV' class='columns'>a9bTZ</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a9b'.</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>36&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>35&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9b_DIV' class='columns'>a9b</B>&nbsp;&nbsp;</TD>
 <TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center"><SPAN style="font-weight:bold;font-size:10px">COLUMN</SPAN>&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>37&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>36&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9c_DIV' class='columns'>a9c</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>38&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>37&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a9d_DIV' class='columns'>a9d</B>&nbsp;&nbsp;</TD>
 <TD>List<LocalDate> List<>&nbsp;/&nbsp;date[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>39&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>38&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a10a_DIV' class='columns'>a10a</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>40&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>39&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a10b_DIV' class='columns'>a10b</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>41&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>40&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a10c_DIV' class='columns'>a10c</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>42&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>41&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a11_DIV' class='columns'>a11</B>&nbsp;&nbsp;</TD>
 <TD>BigDecimal&nbsp;/&nbsp;numeric(8,4)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>43&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>42&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a11b_DIV' class='columns'>a11b</B>&nbsp;&nbsp;</TD>
 <TD>List<BigDecimal> List<>&nbsp;/&nbsp;numeric(6,3)[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>44&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>43&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a11c_DIV' class='columns'>a11c</B>&nbsp;&nbsp;</TD>
 <TD>BigDecimal&nbsp;/&nbsp;numeric(5,4)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>45&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>44&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a12_DIV' class='columns'>a12</B>&nbsp;&nbsp;</TD>
 <TD>short&nbsp;/&nbsp;smallint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>46&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>45&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a12b_DIV' class='columns'>a12b</B>&nbsp;&nbsp;</TD>
 <TD>List<Short> List<>&nbsp;/&nbsp;smallint[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>47&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>46&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a13_DIV' class='columns'>a13</B>&nbsp;&nbsp;</TD>
 <TD>UUID&nbsp;/&nbsp;UUID&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>48&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>47&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a13b_DIV' class='columns'>a13b</B>&nbsp;&nbsp;</TD>
 <TD>List<UUID> List<>&nbsp;/&nbsp;UUID[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>49&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>48&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-a14_DIV' class='columns'>a14</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;jsonb&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>50&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>49&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDATEST.Testing_Cloned)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>51&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>50&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>52&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>51&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing_Cloned-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="left"><SPAN style="font-weight:bold;font-size:10px">AUTO</SPAN>&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)</TD>
 </TR>
@@ -940,8 +981,8 @@ This is the setter for:<BR>
    public void setName(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing_Cloned.name to null: it's not nullable.");
+       if (TextUtil.isNullOrEmpty(v) == true)
+        throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing_Cloned.name to null or an empty value: it's not nullable and empty values are not allowed.");
        else if (v.length() > 10)
         throw new Exception("Cannot set tilda.data_test.TILDATEST.Testing_Cloned.name: the size "+v.length()+" is larger than the max allowed of 10: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_name) == false)
@@ -1069,7 +1110,7 @@ This is the setter for:<BR>
    public void setDescription(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDescription();
         }
@@ -1230,7 +1271,7 @@ This is the setter for:<BR>
    public void setDesc2(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc2();
         }
@@ -1391,7 +1432,7 @@ This is the setter for:<BR>
    public void setDesc3(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc3();
         }
@@ -1552,7 +1593,7 @@ This is the setter for:<BR>
    public void setDesc4(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc4();
         }
@@ -1713,7 +1754,7 @@ This is the setter for:<BR>
    public void setDesc5(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc5();
         }
@@ -1962,7 +2003,7 @@ This is the setter for:<BR>
    public void setDesc6(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullDesc6();
         }
@@ -2198,7 +2239,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_tops == null)
         _tops = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTops();
         }
@@ -2403,7 +2444,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_tops2 == null)
         _tops2 = new TreeSet<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullTops2();
         }
@@ -2474,155 +2515,6 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedTops2()
      { return __Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask); }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   @SerializedName("a1")
-   Integer _a1=null;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final int getA1()
-      { return _a1; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullA1()
-     { return __Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setA1(int v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (__Init == InitMode.CREATE || _a1 == null || v != _a1)
-        {
-          __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
-          __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
-       _a1 = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setNullA1()
-     {
-       long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
-       if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true) // already NULL
-        return;
-       __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
-       _a1=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data_test.TILDATEST.Testing_Cloned.a1 -> TILDATEST.Testing_Cloned."a1"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>a1 of type int</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDATEST.Testing_Cloned.a1 of type INTEGER</TD></TR>
-  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data_test.TILDATEST.Testing_Cloned.a1</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedA1()
-     { return __Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask); }
 
 
 
@@ -4809,7 +4701,7 @@ This is the setter for:<BR>
     void setA6dTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA6dTZ();
         }
@@ -4898,6 +4790,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("a6d")
@@ -4923,6 +4820,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getA6d()
@@ -4944,6 +4846,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullA6d()
@@ -4965,6 +4872,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setA6d(ZonedDateTime v) throws Exception
@@ -5003,6 +4915,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullA6d()
@@ -5033,6 +4950,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setA6dNow() throws Exception
@@ -5056,6 +4978,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setA6dUndefined() throws Exception
@@ -5079,6 +5006,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setA6d(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -5102,6 +5034,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a6dTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA6d()
@@ -5544,7 +5481,7 @@ This is the setter for:<BR>
     void setA8bTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA8bTZ();
         }
@@ -5633,6 +5570,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("a8b")
@@ -5658,6 +5600,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getA8b()
@@ -5679,6 +5626,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullA8b()
@@ -5700,6 +5652,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setA8b(ZonedDateTime v) throws Exception
@@ -5738,6 +5695,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullA8b()
@@ -5768,6 +5730,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setA8bNow() throws Exception
@@ -5791,6 +5758,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setA8bUndefined() throws Exception
@@ -5814,6 +5786,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final void setA8b(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -5837,6 +5814,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a8bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA8b()
@@ -5935,7 +5917,7 @@ This is the setter for:<BR>
     void setA9TZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9TZ();
         }
@@ -6024,6 +6006,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6056,6 +6043,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6084,6 +6076,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6112,6 +6109,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6157,6 +6159,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6194,6 +6201,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6224,6 +6236,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6254,6 +6271,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6284,6 +6306,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6389,7 +6416,7 @@ This is the setter for:<BR>
     void setA9a1TZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9a1TZ();
         }
@@ -6478,6 +6505,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6510,6 +6542,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6538,6 +6575,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6566,6 +6608,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6611,6 +6658,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6648,6 +6700,11 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6678,6 +6735,11 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6708,6 +6770,11 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6738,6 +6805,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9a1TZ'</LI>
+</TD></TR>
+
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
@@ -6873,7 +6945,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a9bTZ == null)
         _a9bTZ = new ArrayList<String>();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA9bTZ();
         }
@@ -6976,6 +7048,11 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    @SerializedName("a9b")
@@ -7001,6 +7078,11 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime[] getA9bAsArray()
@@ -7026,6 +7108,11 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullA9b()
@@ -7047,6 +7134,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setA9b(List<ZonedDateTime> v) throws Exception
@@ -7140,6 +7232,11 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public void setNullA9b()
@@ -7170,6 +7267,11 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>TZMode</B></TD><TD><UL>
+<LI>Stored as a timestamp with timezone</LI>
+<LI>Timezone information stored in 'a9bTZ'</LI>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedA9b()
@@ -7770,7 +7872,7 @@ This is the setter for:<BR>
    public void setA10b(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (TextUtil.isNullOrEmpty(v) == true)
         {
           setNullA10b();
         }
@@ -10034,10 +10136,6 @@ This is the hasChanged for:<BR>
         Dst.setNullTops2      ();
        else
         Dst.setTops2      (_tops2      );
-       if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true || _a1         ==null)
-        Dst.setNullA1         ();
-       else
-        Dst.setA1         (_a1         );
        if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask) == true || _a2         ==null)
         Dst.setNullA2         ();
        else
@@ -10288,7 +10386,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING_CLONED_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING_CLONED_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -10358,12 +10456,6 @@ This is the hasChanged for:<BR>
         {
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask);
-        }
-
-       if (_a1 != null)
-        {
-          __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
-          __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask);
         }
 
        if (_a2 != null)
@@ -10445,9 +10537,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a6d' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a6d.getZone().getId());
+          String zoneId = _a6d.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a6d' because the timezone value '"+_a6d.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a6d' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA6dTZ(ZI.getId());
         }
 
@@ -10470,9 +10563,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a8b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a8b.getZone().getId());
+          String zoneId = _a8b.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a8b' because the timezone value '"+_a8b.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a8b' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA8bTZ(ZI.getId());
         }
 
@@ -10483,9 +10577,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a9.getZone().getId());
+          String zoneId = _a9.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9' because the timezone value '"+_a9.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA9TZ(ZI.getId());
         }
 
@@ -10496,9 +10591,10 @@ This is the hasChanged for:<BR>
            throw new Exception("Incoming value for 'tilda.data_test.TILDATEST.Testing_Cloned.a9a1' was not in the expected format. Dates should follow the ISO format.\n"+toString());
           __Changes.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask);
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask);
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a9a1.getZone().getId());
+          String zoneId = _a9a1.getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9a1' because the timezone value '"+_a9a1.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9a1' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setA9a1TZ(ZI.getId());
         }
 
@@ -10511,9 +10607,10 @@ This is the hasChanged for:<BR>
           __Nulls.andNot(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask);
           for (int pos = 0; pos < _a9b.size(); ++pos)
             {
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(_a9b.get(pos).getZone().getId());
+          String zoneId = _a9b.get(pos).getZone().getId();
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(zoneId);
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9b' because the timezone value '"+_a9b.get(pos).getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data_test.TILDATEST.Testing_Cloned.a9b' because the timezone value '"+zoneId+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           addToA9bTZ(pos, ZI.getId());
             }
         }
@@ -10617,85 +10714,84 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDATEST", "Testing_Cloned");
           int Pos = S.length();
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.REFNUM._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.REFNUM2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.REFNUM2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.NAME._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC3.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC4.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC5.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC6.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.TOPS.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A1.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A2B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A2C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A3.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A3B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A4.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A4B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A5.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A5B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6DTZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6DTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.REFNUM._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.REFNUM2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.REFNUM2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.NAME._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC3._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC3.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC4.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC5.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DESC6.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.TOPS.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A2.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A2B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A2C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A3.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A3B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A4.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A4B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A5.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A5B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6DTZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6DTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A6D.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == false && DateTimeUtil.isNowPlaceholder(_a6d) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask) == false && DateTimeUtil.isNowPlaceholder(_a6d) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8BTZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A8BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8BTZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A8BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A8B.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == false && DateTimeUtil.isNowPlaceholder(_a8b) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask) == false && DateTimeUtil.isNowPlaceholder(_a8b) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          else { TILDA__TESTING_CLONED_Factory.COLS.A9.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          else { TILDA__TESTING_CLONED_Factory.COLS.A9.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9A1.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9a1) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9a1) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          else { TILDA__TESTING_CLONED_Factory.COLS.A9A1.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION); }          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          else { TILDA__TESTING_CLONED_Factory.COLS.A9A1.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION); }          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9B.getFullColumnVarForInsert(C, S);
-             V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true ? C.getCommaCurrentDateTime() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A9D.getFullColumnVarForInsert(C, S);
-             V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10A._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A10A.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A10B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A10C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A11.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A11B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A11C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A12.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A12B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A13.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A13B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10A._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A10A.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A10B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A10C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A10C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A11.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A11B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A11C._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A11C.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A12.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A12B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A13.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A13B.getFullColumnVarForInsert(C, S); V.append(tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.A14.getFullColumnVarForInsert(C, S); V.append(",").append(C.getJsonParametrizedQueryPlaceHolder()); }
 
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__TESTING_CLONED_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           else { TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == true) { TILDA__TESTING_CLONED_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_3._COMMAQUESTION);
+             V.append(__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data_test._Tilda.TILDA__2_5._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -10719,7 +10815,6 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.DESC6.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.TOPS.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getFullColumnVarForUpdate(C, S);
-          if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A1.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A2.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A2B.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask) == true) TILDA__TESTING_CLONED_Factory.COLS.A2C.getFullColumnVarForUpdate(C, S);
@@ -10779,7 +10874,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == true)
            {
              if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true)
-              { TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+              { TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentDateTime()); }
              else
               TILDA__TESTING_CLONED_Factory.COLS.A9C.getFullColumnVarForUpdate(C, S);
            }
@@ -10894,10 +10989,6 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.VARCHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getType(), AllocatedArrays, _tops2);
-        } 
-       if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true) 
-        { 
-          if (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setInt       (++i, _a1);
         } 
        if (__Changes.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask) == true) 
         { 
@@ -11164,7 +11255,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data_test._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__TESTING_CLONED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data_test._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__TESTING_CLONED_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -11176,7 +11267,7 @@ This is the hasChanged for:<BR>
       int i = 0;
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
-                            _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.REFNUM2.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.REFNUM2._Mask    ); _refnum2 = null; }
+                            _refnum2 = (List<Long>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.REFNUM2.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.REFNUM2._Mask    ); _refnum2 = null; }
                             _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.NAME._Mask       ); _name = null; }
                             _description = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESCRIPTION._Mask); _description = null; }
                             _desc2       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC2._Mask      ); _desc2 = null; }
@@ -11184,7 +11275,7 @@ This is the hasChanged for:<BR>
                             _desc4       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC4._Mask      ); _desc4 = null; }
                             _desc5       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC5._Mask      ); _desc5 = null; }
                             _desc6       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask      ); _desc6 = null; }
-                            _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask       ); _tops = null; }
+                            _tops = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask       ); _tops = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_tops != null && _tops.size() == 1 && _tops.get(0) == null)
@@ -11192,31 +11283,30 @@ This is the hasChanged for:<BR>
                                  _tops = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask);
                                }
-                            _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask      ); _tops2 = null; }
-                            _a1          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask         ); _a1 = null; }
+                            _tops2 = (Set<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.TOPS2.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask      ); _tops2 = null; }
                             _a2          = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask         ); _a2 = null; }
-                            _a2b = (List<Character>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A2B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask        ); _a2b = null; }
-                            _a2c = (Set<Character>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A2C.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask        ); _a2c = null; }
+                            _a2b = (List<Character>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A2B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask        ); _a2b = null; }
+                            _a2c = (Set<Character>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A2C.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask        ); _a2c = null; }
                             _a3          =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A3._Mask         ); _a3 = null; }
-                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A3B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask        ); _a3b = null; }
+                            _a3b = (List<Boolean>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A3B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A3B._Mask        ); _a3b = null; }
                             _a4          =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A4._Mask         ); _a4 = null; }
-                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A4B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask        ); _a4b = null; }
+                            _a4b = (List<Double>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A4B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A4B._Mask        ); _a4b = null; }
                             _a5          =                              RS.getFloat     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A5._Mask         ); _a5 = null; }
-                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A5B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask        ); _a5b = null; }
+                            _a5b = (List<Float>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A5B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A5B._Mask        ); _a5b = null; }
                             _a6          =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6._Mask         ); _a6 = null; }
-                            _a6b = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A6B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask        ); _a6b = null; }
-                            _a6c = (Set<Long>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A6C.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask        ); _a6c = null; }
+                            _a6b = (List<Long>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A6B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6B._Mask        ); _a6b = null; }
+                            _a6c = (Set<Long>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A6C.getType(), true); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6C._Mask        ); _a6c = null; }
                             _a6dTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6DTZ._Mask      ); _a6dTZ = null; } else _a6dTZ       = _a6dTZ      .trim();
-                            _a6d         = processZDT(_a6dTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a6d"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A6D        , TILDA__TESTING_CLONED_Factory.COLS.A6DTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask        ); _a6d = null; }
+                            _a6d         = JDBCHelper.processZDT(_a6dTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a6d"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A6D        , TILDA__TESTING_CLONED_Factory.COLS.A6DTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A6D._Mask        ); _a6d = null; }
                             _a7          =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A7._Mask         ); _a7 = null; }
-                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A7B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask        ); _a7b = null; }
+                            _a7b = (List<Integer>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A7B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A7B._Mask        ); _a7b = null; }
                             _a8bTZ       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A8BTZ._Mask      ); _a8bTZ = null; } else _a8bTZ       = _a8bTZ      .trim();
-                            _a8b         = processZDT(_a8bTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a8b"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A8B        , TILDA__TESTING_CLONED_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask        ); _a8b = null; }
+                            _a8b         = JDBCHelper.processZDT(_a8bTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a8b"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A8B        , TILDA__TESTING_CLONED_Factory.COLS.A8BTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A8B._Mask        ); _a8b = null; }
                             _a9TZ        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9TZ._Mask       ); _a9TZ = null; } else _a9TZ        = _a9TZ       .trim();
-                            _a9          = processZDT(_a9TZ         , "tilda.data_test.TILDATEST.Testing_Cloned.a9"         , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9         , TILDA__TESTING_CLONED_Factory.COLS.A9TZ         ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask         ); _a9 = null; }
+                            _a9          = JDBCHelper.processZDT(_a9TZ         , "tilda.data_test.TILDATEST.Testing_Cloned.a9"         , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9         , TILDA__TESTING_CLONED_Factory.COLS.A9TZ         , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9._Mask         ); _a9 = null; }
                             _a9a1TZ      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ._Mask     ); _a9a1TZ = null; } else _a9a1TZ      = _a9a1TZ     .trim();
-                            _a9a1        = processZDT(_a9a1TZ       , "tilda.data_test.TILDATEST.Testing_Cloned.a9a1"       , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9A1       , TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ       ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask       ); _a9a1 = null; }
-                            _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask      ); _a9bTZ = null; }
+                            _a9a1        = JDBCHelper.processZDT(_a9a1TZ       , "tilda.data_test.TILDATEST.Testing_Cloned.a9a1"       , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9A1       , TILDA__TESTING_CLONED_Factory.COLS.A9A1TZ       , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9A1._Mask       ); _a9a1 = null; }
+                            _a9bTZ = (List<String>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9BTZ.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask      ); _a9bTZ = null; }
                              //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.
                              //Those values show up as a [null] array (1 element, which is null).
                              if (_a9bTZ != null && _a9bTZ.size() == 1 && _a9bTZ.get(0) == null)
@@ -11224,76 +11314,29 @@ This is the hasChanged for:<BR>
                                  _a9bTZ = new ArrayList<String>();
                                  __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9BTZ._Mask);
                                }
-                            _a9b         = processZDTs(C, _a9bTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a9b"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9B        , TILDA__TESTING_CLONED_Factory.COLS.A9BTZ        ); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask        ); _a9b = null; }
+                            _a9b         = JDBCHelper.processZDTs(_a9bTZ        , "tilda.data_test.TILDATEST.Testing_Cloned.a9b"        , RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9B        , TILDA__TESTING_CLONED_Factory.COLS.A9BTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9B._Mask        ); _a9b = null; }
                             _a9c         = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9C._Mask        ); _a9c = null; }
-                            _a9d         = DateTimeUtil.toLocalDates((List<java.sql.Date>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9D.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask        ); _a9d = null; }
+                            _a9d         = DateTimeUtil.toLocalDates((List<java.sql.Date>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A9D.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A9D._Mask        ); _a9d = null; }
                             _a10a        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A10A._Mask       ); _a10a = null; }
                             _a10b        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A10B._Mask       ); _a10b = null; }
                             _a10c        =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A10C._Mask       ); _a10c = null; }
                             _a11         =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A11._Mask        ); _a11 = null; }
-                            _a11b = (List<BigDecimal>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A11B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask       ); _a11b = null; }
+                            _a11b = (List<BigDecimal>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A11B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A11B._Mask       ); _a11b = null; }
                             _a11c        =                              RS.getBigDecimal(++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A11C._Mask       ); _a11c = null; }
                             _a12         =                              RS.getShort     (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A12._Mask        ); _a12 = null; }
-                            _a12b = (List<Short>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A12B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask       ); _a12b = null; }
+                            _a12b = (List<Short>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A12B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A12B._Mask       ); _a12b = null; }
                             _a13         =                              (java.util.UUID) RS.getObject(++i);  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A13._Mask        ); _a13 = null; }
-                            _a13b = (List<UUID>) C.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A13B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask       ); _a13b = null; }
+                            _a13b = (List<UUID>) JDBCHelper.getArray(RS, ++i, TILDA__TESTING_CLONED_Factory.COLS.A13B.getType(), false); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A13B._Mask       ); _a13b = null; }
                             _a14         =                              RS.getString    (++i) ; 
  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.A14._Mask        ); _a14 = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask    ); _deleted = null; }
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.CREATED._Mask    ); _created = null; }
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING_CLONED_Factory.COLS.DELETED._Mask    ); _deleted = null; }
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
 
      return afterRead(C);
-   }
-
-  private final ZonedDateTime processZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
-   }
-  private final List<ZonedDateTime> processZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField.getType(), false);
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     if (DTNull == true)
-      return null;
-
-     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
-     for (int i = 0; i < TimezoneIds.size(); ++i)
-       {
-         String TimezoneId = TimezoneIds.get(i);
-         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
-         ZDTs.add(ZDT);
-       }
-     return ZDTs;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -11313,7 +11356,6 @@ This is the hasChanged for:<BR>
                + "; desc6"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.DESC6._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDesc6      ()))
                + "; tops"          + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS._Mask       ) == true ? ": NULL" : ": " + TextUtil.print                   (getTops       ()))
                + "; tops2"         + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.TOPS2._Mask      ) == true ? ": NULL" : ": " + TextUtil.print                   (getTops2      ()))
-               + "; a1"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A1._Mask         ) == true ? ": NULL" : ": " +                                   getA1         ())
                + "; a2"            + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2._Mask         ) == true ? ": NULL" : ": " +                                   getA2         ())
                + "; a2b"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2B._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA2b        ()))
                + "; a2c"           + (__Nulls.intersects(TILDA__TESTING_CLONED_Factory.COLS.A2C._Mask        ) == true ? ": NULL" : ": " + TextUtil.print                   (getA2c        ()))

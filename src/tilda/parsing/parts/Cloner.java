@@ -43,7 +43,7 @@ public class Cloner
         _Description = c._Description;
       }
 
-    public boolean Validate(ParserSession PS, Object parentObject)
+    public boolean validate(ParserSession PS, Object parentObject)
       {
         _ParentObject = parentObject;
         if (TextUtil.isNullOrEmpty(_Name) == true)

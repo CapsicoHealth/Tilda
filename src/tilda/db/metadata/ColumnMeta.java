@@ -19,7 +19,9 @@ package tilda.db.metadata;
 import java.sql.ResultSet;
 
 import tilda.db.Connection;
+import tilda.db.JDBCHelper;
 import tilda.enums.ColumnType;
+import tilda.parsing.parts.Convention;
 import tilda.utils.pairs.StringStringPair;
 
 public class ColumnMeta
@@ -27,21 +29,20 @@ public class ColumnMeta
     protected ColumnMeta(Connection C, ResultSet RS)
       throws Exception
       {
-        // System.out.println(JDBCHelper.printResultSet(RS));
         _SrcSchema = RS.getString("TABLE_SCHEM");
         _SrcTable = RS.getString("TABLE_NAME");
         _NameOriginal = RS.getString("COLUMN_NAME");
         _Name = _NameOriginal.toLowerCase();
         _Nullable = RS.getInt("NULLABLE");
         _Size = RS.getInt("COLUMN_SIZE");
-        // if(_Name.equals("a11"))
-        // System.out.println(JDBCHelper.printResultSet(RS));
         _Precision = RS.getInt("COLUMN_SIZE");
         _Scale = RS.getInt("DECIMAL_DIGITS");
         _TypeName = RS.getString("TYPE_NAME");
         _Type = RS.getInt("DATA_TYPE");
         _Descr = RS.getString("REMARKS");
         _Default = RS.getString("COLUMN_DEF");
+//        if (_NameOriginal.startsWith("deactivated") == true)
+//          System.out.println(JDBCHelper.printResultSet(RS));
         StringStringPair SSP = C.getTypeMapping(_Type, _Name, _Size, _TypeName);
         _TypeSql = SSP._N;
         _TildaType = ColumnType.parse(SSP._V);
@@ -111,6 +112,6 @@ public class ColumnMeta
 
     public ColumnMeta getTZCol()
       {
-        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+"TZ", false) : null; // : _ParentView.getColumnMeta(_NameOriginal+"TZ");
+        return _ParentTable!=null?_ParentTable.getColumnMeta(_NameOriginal+Convention.getDefaultTzColPostfix(), false) : null;
       }
   }

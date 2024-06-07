@@ -48,7 +48,7 @@ public class IndexTemplate
           _SubQuery = new SubWhereClause(I._SubQuery);
       }
 
-    public boolean Validate(ParserSession PS, Base Parent)
+    public boolean validate(ParserSession PS, Base Parent)
       {
         int Errs = PS.getErrorCount();
         _Parent = Parent;

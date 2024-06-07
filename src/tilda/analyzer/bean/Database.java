@@ -92,7 +92,7 @@ public class Database
           }
       }
 
-    public String GetSchemaListString()
+    public String getSchemaListString()
       {
         return "";
       }
@@ -102,10 +102,10 @@ public class Database
         return _DBMap.get(value);
       }
 
-    public void ValidateAndLoadRules(Connection C, AnalyzerData Data)
+    public void validateAndLoadRules(Connection C, AnalyzerData Data)
     throws Exception
       {
-        Data.ValidateAndLoadRules(C, _TableRuleMap, _RuleMap);
+        Data.validateAndLoadRules(C, _TableRuleMap, _RuleMap);
       }
 
     public Table getTable(String SchemaName, String TableName)

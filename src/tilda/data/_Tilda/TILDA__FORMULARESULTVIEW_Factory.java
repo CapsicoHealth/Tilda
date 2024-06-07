@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.", null, null, null);
+     public final Type_LongPrimitive                FORMULAREFNUM= new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, 100, "The result value.", null, null, null);
+     public final Type_StringPrimitive              VALUE        = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, 100, "The result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, 32000, "The description of the result value.", null, null, null);
+     public final Type_StringPrimitive              DESCRIPTION  = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, 32000, "The description of the result value.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        SCHEMANAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 3/*3*/, 128, "The name of the schema this column is defined in.", null, null, null);
+     public final Type_StringPrimitive              SCHEMANAME   = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 3/*3*/, 128, "The name of the schema this column is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        TABLEVIEWNAME= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName", 4/*4*/, 128, "The name of the primary table/view this column is defined in.", null, null, null);
+     public final Type_StringPrimitive              TABLEVIEWNAME= new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "tableViewName", 4/*4*/, 128, "The name of the primary table/view this column is defined in.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive        COLUMNNAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "columnName"   , 5/*5*/, 128, "The name of the column.", null, null, null);
+     public final Type_StringPrimitive              COLUMNNAME   = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "columnName"   , 5/*5*/, 128, "The name of the column.", null, null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
@@ -291,7 +291,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__2_3.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__2_5.handleFinally(PS, T0, TILDA__FORMULARESULTVIEW_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -321,13 +321,19 @@ Lookup records by the query 'All' over
    public static ListResults<tilda.data.FormulaResultView_Data> runSelect(Connection C, SelectQuery Q, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, start);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
        return RPI._L;
      }
    public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.FormulaResultView_Data> OP, int start, int size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       readMany(C, -7, RPI, null, Q, start, size);
+       if (Q.isFullSelectQuery() == true)
+        readMany(C, -77, RPI, null, Q.toString(), start, size);
+       else
+        readMany(C, -7, RPI, null, Q, start, size);
      }
 
 

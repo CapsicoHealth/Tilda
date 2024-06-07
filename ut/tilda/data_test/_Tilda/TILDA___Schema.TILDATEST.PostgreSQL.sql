@@ -63,7 +63,6 @@ create table if not exists TILDATEST.Testing -- blah blah
   , "desc6"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
   , "tops"         text[]                         -- The blah
   , "tops2"        text[]                         -- The blah
-  , "a1"           INTEGER                        -- The blah
   , "a2"           character                      -- The blah
   , "a2b"          character[]                    -- The blah
   , "a2c"          character[]                    -- The blah
@@ -122,7 +121,6 @@ COMMENT ON COLUMN TILDATEST.Testing."desc5" IS E'The title for a person, i.e., M
 COMMENT ON COLUMN TILDATEST.Testing."desc6" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
 COMMENT ON COLUMN TILDATEST.Testing."tops" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."tops2" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.Testing."a1" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."a2" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."a2b" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."a2c" IS E'The blah';
@@ -172,6 +170,84 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 
+create table if not exists TILDATEST.TestingTimestamps -- blah blah
+ (  "refnum"                             bigint         not null   -- The primary key for this record
+  , "id"                                 varchar(20)    not null   -- Medical system unique enterprise id
+  , "dt1TZ"                              character(5)              -- Generated helper column to hold the time zone ID for 'dt1'.
+  , "dt1"                                timestamptz               -- The blah
+  , "dt1nTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt1n'.
+  , "dt1n"                               timestamptz             DEFAULT statement_timestamp()   -- The blah
+  , "dt1uTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt1u'.
+  , "dt1u"                               timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt1aTZ"                             text[]                    -- Generated helper column to hold the time zone ID for 'dt1a'.
+  , "dt1a"                               timestamptz[]             -- The blah
+  , "rowTZ_TILDATEST_TestingTimestamps"  character(5)              -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.
+  , "dt2"                                timestamptz               -- The blah
+  , "dt2n"                               timestamptz             DEFAULT statement_timestamp()   -- The blah
+  , "dt2u"                               timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt2a"                               timestamptz[]             -- The blah
+  , "dt3TZ"                              character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
+  , "dt3"                                timestamp                 -- The blah
+  , "dt3nTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
+  , "dt3n"                               timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt3uTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
+  , "dt3u"                               timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt3aTZ"                             text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
+  , "dt3a"                               timestamp[]               -- The blah
+  , "dt4"                                timestamp                 -- The blah
+  , "dt4n"                               timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt4u"                               timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt4a"                               timestamp[]               -- The blah
+  , "created"                            timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps)
+  , "lastUpdated"                        timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)
+  , "deleted"                            timestamptz               -- The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)
+  , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_TestingTimestamps_dt1 FOREIGN KEY ("dt1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt1n FOREIGN KEY ("dt1nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt1u FOREIGN KEY ("dt1uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt2 FOREIGN KEY ("rowTZ_TILDATEST_TestingTimestamps") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt3 FOREIGN KEY ("dt3TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt3n FOREIGN KEY ("dt3nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt3u FOREIGN KEY ("dt3uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDATEST.TestingTimestamps IS E'blah blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."id" IS E'Medical system unique enterprise id';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1TZ" IS E'Generated helper column to hold the time zone ID for ''dt1''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1nTZ" IS E'Generated helper column to hold the time zone ID for ''dt1n''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1uTZ" IS E'Generated helper column to hold the time zone ID for ''dt1u''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1aTZ" IS E'Generated helper column to hold the time zone ID for ''dt1a''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps" IS E'Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3TZ" IS E'Generated helper column to hold the time zone ID for ''dt3''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3nTZ" IS E'Generated helper column to hold the time zone ID for ''dt3n''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3uTZ" IS E'Generated helper column to hold the time zone ID for ''dt3u''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3aTZ" IS E'Generated helper column to hold the time zone ID for ''dt3a''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."created" IS E'The timestamp for when the record was created. (TILDATEST.TestingTimestamps)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)';
+CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Id ON TILDATEST.TestingTimestamps ("id");
+-- app-level index only -- CREATE INDEX IF NOT EXISTS TestingTimestamps_AllByName ON TILDATEST.TestingTimestamps ("id" ASC);
+delete from TILDA.Key where "name" = 'TILDATEST.TESTINGTIMESTAMPS';
+insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTINGTIMESTAMPS',(select COALESCE(max("refnum"),0)+1 from TILDATEST.TestingTimestamps), 25000, current_timestamp, current_timestamp);
+
+
+
 create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for publishing (cloned from TILDATEST.Testing)
  (  "refnum"       bigint              not null   -- The primary key for this record
   , "refnum2"      bigint[]            not null   -- The person's primary key
@@ -184,7 +260,6 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , "desc6"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
   , "tops"         text[]                         -- The blah
   , "tops2"        text[]                         -- The blah
-  , "a1"           INTEGER                        -- The blah
   , "a2"           character                      -- The blah
   , "a2b"          character[]                    -- The blah
   , "a2c"          character[]                    -- The blah
@@ -243,7 +318,6 @@ COMMENT ON COLUMN TILDATEST.Testing_Cloned."desc5" IS E'The title for a person, 
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."desc6" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."tops" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."tops2" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.Testing_Cloned."a1" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."a2" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."a2b" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."a2c" IS E'The blah';
@@ -293,6 +367,84 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 
+create table if not exists TILDATEST.TestingTimestamps_Cloned -- blah blah - Ready for publishing (cloned from TILDATEST.TestingTimestamps)
+ (  "refnum"                                    bigint         not null   -- The primary key for this record
+  , "id"                                        varchar(20)    not null   -- Medical system unique enterprise id
+  , "dt1TZ"                                     character(5)              -- Generated helper column to hold the time zone ID for 'dt1'.
+  , "dt1"                                       timestamptz               -- The blah
+  , "dt1nTZ"                                    character(5)              -- Generated helper column to hold the time zone ID for 'dt1n'.
+  , "dt1n"                                      timestamptz             DEFAULT statement_timestamp()   -- The blah
+  , "dt1uTZ"                                    character(5)              -- Generated helper column to hold the time zone ID for 'dt1u'.
+  , "dt1u"                                      timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt1aTZ"                                    text[]                    -- Generated helper column to hold the time zone ID for 'dt1a'.
+  , "dt1a"                                      timestamptz[]             -- The blah
+  , "rowTZ_TILDATEST_TestingTimestamps_Cloned"  character(5)              -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.
+  , "dt2"                                       timestamptz               -- The blah
+  , "dt2n"                                      timestamptz             DEFAULT statement_timestamp()   -- The blah
+  , "dt2u"                                      timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt2a"                                      timestamptz[]             -- The blah
+  , "dt3TZ"                                     character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
+  , "dt3"                                       timestamp                 -- The blah
+  , "dt3nTZ"                                    character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
+  , "dt3n"                                      timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt3uTZ"                                    character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
+  , "dt3u"                                      timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt3aTZ"                                    text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
+  , "dt3a"                                      timestamp[]               -- The blah
+  , "dt4"                                       timestamp                 -- The blah
+  , "dt4n"                                      timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt4u"                                      timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt4a"                                      timestamp[]               -- The blah
+  , "created"                                   timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)
+  , "lastUpdated"                               timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)
+  , "deleted"                                   timestamptz               -- The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)
+  , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt1 FOREIGN KEY ("dt1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt1n FOREIGN KEY ("dt1nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt1u FOREIGN KEY ("dt1uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt2 FOREIGN KEY ("rowTZ_TILDATEST_TestingTimestamps_Cloned") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt3 FOREIGN KEY ("dt3TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt3n FOREIGN KEY ("dt3nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_Cloned_dt3u FOREIGN KEY ("dt3uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDATEST.TestingTimestamps_Cloned IS E'blah blah - Ready for publishing (cloned from TILDATEST.TestingTimestamps)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."id" IS E'Medical system unique enterprise id';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1TZ" IS E'Generated helper column to hold the time zone ID for ''dt1''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1nTZ" IS E'Generated helper column to hold the time zone ID for ''dt1n''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1uTZ" IS E'Generated helper column to hold the time zone ID for ''dt1u''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1aTZ" IS E'Generated helper column to hold the time zone ID for ''dt1a''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt1a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."rowTZ_TILDATEST_TestingTimestamps_Cloned" IS E'Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps_Cloned row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt2" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt2n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt2u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt2a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3TZ" IS E'Generated helper column to hold the time zone ID for ''dt3''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3nTZ" IS E'Generated helper column to hold the time zone ID for ''dt3n''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3uTZ" IS E'Generated helper column to hold the time zone ID for ''dt3u''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3aTZ" IS E'Generated helper column to hold the time zone ID for ''dt3a''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt3a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt4" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt4n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt4u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt4a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."created" IS E'The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)';
+CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Cloned_Id ON TILDATEST.TestingTimestamps_Cloned ("id");
+-- app-level index only -- CREATE INDEX IF NOT EXISTS TestingTimestamps_Cloned_AllByName ON TILDATEST.TestingTimestamps_Cloned ("id" ASC);
+delete from TILDA.Key where "name" = 'TILDATEST.TESTINGTIMESTAMPS_CLONED';
+insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTINGTIMESTAMPS_CLONED',(select COALESCE(max("refnum"),0)+1 from TILDATEST.TestingTimestamps_Cloned), 25000, current_timestamp, current_timestamp);
+
+
+
 create table if not exists TILDATEST.Testing2Realized -- Realized table for view TILDATEST.Testing2View: A test view to test .* and exclude and block.
  (  "refnum"          bigint                       -- The primary key for this record
   , "name"            varchar(10)                  -- Medical system unique enterprise id
@@ -304,17 +456,11 @@ create table if not exists TILDATEST.Testing2Realized -- Realized table for view
   , "desc4"           text                         -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc5"           text                         -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc6"           text                         -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "a3"              boolean                      -- <B>Not A3</B>: Blah...
   , "bastille"        timestamptz                  -- <B>Bastille Day</B>: Blah...
   , "toto"            timestamptz                  -- <B>Last Updated</B>: Blah...
   , "desc2_Cat1"      double precision             -- <B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.
   , "desc2_Cat2"      double precision             -- <B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
   , "desc2_Cat3"      double precision             -- <B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
-  , "a7_Cat4"         double precision             -- <B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.
-  , "a7_Cat5"         double precision             -- <B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.
-  , "a5_null"         integer                      -- <B>Null a5</B>: Whether a5 is null or not
-  , "a6_null"         integer                      -- <B>Null a6</B>: Whether a6 is null or not
-  , "a7_null"         integer                      -- <B>Null a7</B>: Whether a7 is null or not
  );
 COMMENT ON TABLE TILDATEST.Testing2Realized IS E'Realized table for view TILDATEST.Testing2View: A test view to test .* and exclude and block.';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."refnum" IS E'The primary key for this record';
@@ -327,17 +473,11 @@ COMMENT ON COLUMN TILDATEST.Testing2Realized."desc3" IS E'The title for a person
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc4" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc5" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc6" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDATEST.Testing2Realized."a3" IS E'<B>Not A3</B>: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."bastille" IS E'<B>Bastille Day</B>: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."toto" IS E'<B>Last Updated</B>: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc2_Cat1" IS E'<B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc2_Cat2" IS E'<B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc2_Cat3" IS E'<B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
-COMMENT ON COLUMN TILDATEST.Testing2Realized."a7_Cat4" IS E'<B>a7_Cat4 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.';
-COMMENT ON COLUMN TILDATEST.Testing2Realized."a7_Cat5" IS E'<B>a7_Cat5 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.';
-COMMENT ON COLUMN TILDATEST.Testing2Realized."a5_null" IS E'<B>Null a5</B>: Whether a5 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing2Realized."a6_null" IS E'<B>Null a6</B>: Whether a6 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing2Realized."a7_null" IS E'<B>Null a7</B>: Whether a7 is null or not';
 CREATE UNIQUE INDEX IF NOT EXISTS Testing2Realized_Refnum ON TILDATEST.Testing2Realized ("refnum");
 CREATE INDEX IF NOT EXISTS Testing2Realized_LastUpdated ON TILDATEST.Testing2Realized ("lastUpdated" DESC);
 
@@ -373,12 +513,6 @@ create table if not exists TILDATEST.Testing4Realized -- Realized table for view
   , "desc2_Cat1"   double precision             -- <B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.
   , "desc2_Cat2"   double precision             -- <B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
   , "desc2_Cat3"   double precision             -- <B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
-  , "a7_Cat4"      double precision             -- <B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.
-  , "a7_Cat5"      double precision             -- <B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.
-  , "a5_null"      integer                      -- <B>Null a5</B>: Whether a5 is null or not
-  , "a6_null"      integer                      -- <B>Null a6</B>: Whether a6 is null or not
-  , "a7_null"      integer                      -- <B>Null a7</B>: Whether a7 is null or not
-  , "a3"           boolean                      -- <B>Always True</B>: Blah...
   , "lastUpdated"  timestamptz                  -- <B>Always True</B>: Blah...
  );
 COMMENT ON TABLE TILDATEST.Testing4Realized IS E'Realized table for view TILDATEST.Testing4View: A test view to test .* and exclude and block.';
@@ -395,12 +529,6 @@ COMMENT ON COLUMN TILDATEST.Testing4Realized."toto" IS E'<B>Last Updated</B>: Bl
 COMMENT ON COLUMN TILDATEST.Testing4Realized."desc2_Cat1" IS E'<B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing4Realized."desc2_Cat2" IS E'<B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing4Realized."desc2_Cat3" IS E'<B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
-COMMENT ON COLUMN TILDATEST.Testing4Realized."a7_Cat4" IS E'<B>a7_Cat4 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.';
-COMMENT ON COLUMN TILDATEST.Testing4Realized."a7_Cat5" IS E'<B>a7_Cat5 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.';
-COMMENT ON COLUMN TILDATEST.Testing4Realized."a5_null" IS E'<B>Null a5</B>: Whether a5 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing4Realized."a6_null" IS E'<B>Null a6</B>: Whether a6 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing4Realized."a7_null" IS E'<B>Null a7</B>: Whether a7 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing4Realized."a3" IS E'<B>Always True</B>: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing4Realized."lastUpdated" IS E'<B>Always True</B>: Blah...';
 CREATE UNIQUE INDEX IF NOT EXISTS Testing4Realized_Refnum ON TILDATEST.Testing4Realized ("refnum");
 CREATE INDEX IF NOT EXISTS Testing4Realized_LastUpdated ON TILDATEST.Testing4Realized ("lastUpdated" DESC);
@@ -414,11 +542,11 @@ create or replace view TILDATEST.TestView as
 select TILDATEST.Test."refnum" as "refnum" -- The primary key for this record
      , TILDATEST.Test."name" as "name" -- The name of the test
   from TILDATEST.Test
- where (TILDATEST.Test."deleted" is null)
+ where (TILDATEST.Test."deleted"is null)
 ;
 
 
-COMMENT ON VIEW TILDATEST.TestView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestView as \n-- ''A join of test and user''\nselect TILDATEST.Test."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Test."name" as "name" -- The name of the test\n  from TILDATEST.Test\n where (TILDATEST.Test."deleted" is null)\n;\n\n';
+COMMENT ON VIEW TILDATEST.TestView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestView as \n-- ''A join of test and user''\nselect TILDATEST.Test."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Test."name" as "name" -- The name of the test\n  from TILDATEST.Test\n where (TILDATEST.Test."deleted"is null)\n;\n\n';
 
 COMMENT ON COLUMN TILDATEST.TestView."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDATEST.TestView."name" IS E'The name of the test';
@@ -439,12 +567,12 @@ select TILDATEST.Testing."name" as "name" -- Medical system unique enterprise id
      , first(TILDATEST.Testing."a6" order by TILDATEST.Testing."lastUpdated" ASC) as "a6First" -- The blah
      , last(TILDATEST.Testing."a6" order by TILDATEST.Testing."lastUpdated" ASC) as "a6Last" -- The blah
   from TILDATEST.Testing
- where (TILDATEST.Testing."deleted" is null)
+ where (TILDATEST.Testing."deleted"is null)
      group by 1
 ;
 
 
-COMMENT ON VIEW TILDATEST.TestingView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDATEST.Testing."refnum") as "refnum" -- The primary key for this record\n     , min(coalesce(TILDATEST.Testing."a2", ''AAA'')) filter(where a2 is not null) as "a2Min" -- The blah\n     , max(coalesce(TILDATEST.Testing."a2", ''ZZZ'')) filter(where a2 is not null) as "a2Max" -- The blah\n     , array_agg(trim(TILDATEST.Testing."a9TZ") order by TILDATEST.Testing."lastUpdated" ASC) as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , array_agg(TILDATEST.Testing."a9" order by TILDATEST.Testing."lastUpdated" ASC) as "a9" -- The blah\n     , array_agg(TILDATEST.Testing."a9c") as "a9c" -- The blah\n     , first(TILDATEST.Testing."a6" order by TILDATEST.Testing."lastUpdated" ASC) as "a6First" -- The blah\n     , last(TILDATEST.Testing."a6" order by TILDATEST.Testing."lastUpdated" ASC) as "a6Last" -- The blah\n  from TILDATEST.Testing\n where (TILDATEST.Testing."deleted" is null)\n     group by 1\n;\n\n';
+COMMENT ON VIEW TILDATEST.TestingView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDATEST.Testing."refnum") as "refnum" -- The primary key for this record\n     , min(coalesce(TILDATEST.Testing."a2", ''AAA'')) filter(where a2 is not null) as "a2Min" -- The blah\n     , max(coalesce(TILDATEST.Testing."a2", ''ZZZ'')) filter(where a2 is not null) as "a2Max" -- The blah\n     , array_agg(trim(TILDATEST.Testing."a9TZ") order by TILDATEST.Testing."lastUpdated" ASC) as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , array_agg(TILDATEST.Testing."a9" order by TILDATEST.Testing."lastUpdated" ASC) as "a9" -- The blah\n     , array_agg(TILDATEST.Testing."a9c") as "a9c" -- The blah\n     , first(TILDATEST.Testing."a6" order by TILDATEST.Testing."lastUpdated" ASC) as "a6First" -- The blah\n     , last(TILDATEST.Testing."a6" order by TILDATEST.Testing."lastUpdated" ASC) as "a6Last" -- The blah\n  from TILDATEST.Testing\n where (TILDATEST.Testing."deleted"is null)\n     group by 1\n;\n\n';
 
 COMMENT ON COLUMN TILDATEST.TestingView."name" IS E'Medical system unique enterprise id';
 COMMENT ON COLUMN TILDATEST.TestingView."refnum" IS E'The primary key for this record';
@@ -455,6 +583,58 @@ COMMENT ON COLUMN TILDATEST.TestingView."a9" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a9c" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a6First" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingView."a6Last" IS E'The blah';
+
+
+
+
+-- DDL META DATA VERSION 2021-09-02
+create or replace view TILDATEST.TestingTimestampsView as 
+-- 'A test view to test aggregates.'
+select TILDATEST.TestingTimestamps."id" as "id" -- Medical system unique enterprise id
+     , max(TILDATEST.TestingTimestamps."dt1") as "dt1_max" -- The blah
+     , max(TILDATEST.TestingTimestamps."dt2") as "dt2_max" -- The blah
+     , first(trim(TILDATEST.TestingTimestamps."dt1TZ") order by TILDATEST.TestingTimestamps."dt1" ASC) as "dt1_firstTZ" -- Generated helper column to hold the time zone ID for 'dt1_first'.
+     , first(TILDATEST.TestingTimestamps."dt1" order by TILDATEST.TestingTimestamps."dt1" ASC) as "dt1_first" -- The blah
+     , first(trim(TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps") order by TILDATEST.TestingTimestamps."dt2" ASC) as "rowTZ_TILDATEST_TestingTimestamps_FIRST_dt2" -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.
+     , first(TILDATEST.TestingTimestamps."dt2" order by TILDATEST.TestingTimestamps."dt2" ASC) as "dt2_first" -- The blah
+     , first(trim(TILDATEST.TestingTimestamps."dt3TZ") order by TILDATEST.TestingTimestamps."dt3" ASC) as "dt3_firstTZ" -- Generated helper column to hold the time zone ID for 'dt3_first'.
+     , first(TILDATEST.TestingTimestamps."dt3" order by TILDATEST.TestingTimestamps."dt3" ASC) as "dt3_first" -- The blah
+     , first(trim(TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps") order by TILDATEST.TestingTimestamps."dt4" ASC) as "rowTZ_TILDATEST_TestingTimestamps_FIRST_dt4" -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.
+     , first(TILDATEST.TestingTimestamps."dt4" order by TILDATEST.TestingTimestamps."dt4" ASC) as "dt4_first" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt1") as "dt1_cnt" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt2") as "dt2_cnt" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt3") as "dt3_cnt" -- The blah
+     , count(TILDATEST.TestingTimestamps."dt4") as "dt4_cnt" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt1"::VARCHAR) as "dt1_arr" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt2"::VARCHAR) as "dt2_arr" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt3"::VARCHAR) as "dt3_arr" -- The blah
+     , array_agg(TILDATEST.TestingTimestamps."dt4"::VARCHAR) as "dt4_arr" -- The blah
+  from TILDATEST.TestingTimestamps
+     group by 1
+;
+
+
+COMMENT ON VIEW TILDATEST.TestingTimestampsView IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.TestingTimestampsView as \n-- ''A test view to test aggregates.''\nselect TILDATEST.TestingTimestamps."id" as "id" -- Medical system unique enterprise id\n     , max(TILDATEST.TestingTimestamps."dt1") as "dt1_max" -- The blah\n     , max(TILDATEST.TestingTimestamps."dt2") as "dt2_max" -- The blah\n     , first(trim(TILDATEST.TestingTimestamps."dt1TZ") order by TILDATEST.TestingTimestamps."dt1" ASC) as "dt1_firstTZ" -- Generated helper column to hold the time zone ID for ''dt1_first''.\n     , first(TILDATEST.TestingTimestamps."dt1" order by TILDATEST.TestingTimestamps."dt1" ASC) as "dt1_first" -- The blah\n     , first(trim(TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps") order by TILDATEST.TestingTimestamps."dt2" ASC) as "rowTZ_TILDATEST_TestingTimestamps_FIRST_dt2" -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.\n     , first(TILDATEST.TestingTimestamps."dt2" order by TILDATEST.TestingTimestamps."dt2" ASC) as "dt2_first" -- The blah\n     , first(trim(TILDATEST.TestingTimestamps."dt3TZ") order by TILDATEST.TestingTimestamps."dt3" ASC) as "dt3_firstTZ" -- Generated helper column to hold the time zone ID for ''dt3_first''.\n     , first(TILDATEST.TestingTimestamps."dt3" order by TILDATEST.TestingTimestamps."dt3" ASC) as "dt3_first" -- The blah\n     , first(trim(TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps") order by TILDATEST.TestingTimestamps."dt4" ASC) as "rowTZ_TILDATEST_TestingTimestamps_FIRST_dt4" -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.\n     , first(TILDATEST.TestingTimestamps."dt4" order by TILDATEST.TestingTimestamps."dt4" ASC) as "dt4_first" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt1") as "dt1_cnt" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt2") as "dt2_cnt" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt3") as "dt3_cnt" -- The blah\n     , count(TILDATEST.TestingTimestamps."dt4") as "dt4_cnt" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt1"::VARCHAR) as "dt1_arr" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt2"::VARCHAR) as "dt2_arr" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt3"::VARCHAR) as "dt3_arr" -- The blah\n     , array_agg(TILDATEST.TestingTimestamps."dt4"::VARCHAR) as "dt4_arr" -- The blah\n  from TILDATEST.TestingTimestamps\n     group by 1\n;\n\n';
+
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."id" IS E'Medical system unique enterprise id';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_max" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_max" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_firstTZ" IS E'Generated helper column to hold the time zone ID for ''dt1_first''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_first" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."rowTZ_TILDATEST_TestingTimestamps_FIRST_dt2" IS E'Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt2_first.';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_first" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_firstTZ" IS E'Generated helper column to hold the time zone ID for ''dt3_first''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_first" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."rowTZ_TILDATEST_TestingTimestamps_FIRST_dt4" IS E'Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestampsView row level: dt4_first.';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt4_first" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt4_cnt" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt1_arr" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt2_arr" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt3_arr" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestampsView."dt4_arr" IS E'The blah';
 
 
 
@@ -473,8 +653,6 @@ select /*DoFormulasSuperView*/
      , "desc5" -- COLUMN
      , "desc6" -- COLUMN
      -- Blah...
-     , (NOT a3)::boolean as "a3"
-     -- Blah...
      , ('1789-07-14')::timestamptz as "bastille"
      -- Blah...
      , ('2018-08-10')::timestamptz as "toto"
@@ -484,16 +662,6 @@ select /*DoFormulasSuperView*/
      , (case when "desc2"  in ('x', 'y', 'z') then 1 else 0 end)::double precision as "desc2_Cat2"
      -- This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
      , (case when "desc2"  in ('x', 'y', 'z') then 1 else 0 end)::double precision as "desc2_Cat3"
-     -- This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.
-     , (case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end)::double precision as "a7_Cat4"
-     -- This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.
-     , (case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end)::double precision as "a7_Cat5"
-     -- Whether a5 is null or not
-     , (case when a5 is null then 1 when a5 is not null then 0 end)::integer as "a5_null"
-     -- Whether a6 is null or not
-     , (case when a6 is null then 1 when a6 is not null then 0 end)::integer as "a6_null"
-     -- Whether a7 is null or not
-     , (case when a7 is null then 1 when a7 is not null then 0 end)::integer as "a7_null"
 
  from (
 -- 'A test view to test .* and exclude and block.'
@@ -508,10 +676,10 @@ select TILDATEST.Testing."refnum" as "refnum" -- The primary key for this record
      , TILDATEST.Testing."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...
      , TILDATEST.Testing."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...
   from TILDATEST.Testing
- where (TILDATEST.Testing."deleted" is null)
+ where (TILDATEST.Testing."deleted"is null)
 
       ) as T
--- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA ,"a7_Cat4" -- FORMULA ,"a7_Cat5" -- FORMULA ,"a5_null" -- FORMULA ,"a6_null" -- FORMULA ,"a7_null" -- FORMULA
+-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA
 ;
 
 
@@ -533,7 +701,7 @@ BEGIN
   startDt:= clock_timestamp();
   TRUNCATE TILDATEST.Testing2Realized;
   insertStartDt:= clock_timestamp();
-  INSERT INTO TILDATEST.Testing2Realized ("refnum", "name", "lastUpdated", "xxxLastUpdated", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "a3", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null")
+  INSERT INTO TILDATEST.Testing2Realized ("refnum", "name", "lastUpdated", "xxxLastUpdated", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3")
      SELECT /*genRealizedColumnList*/"refnum" -- COLUMN
           ,"name" -- COLUMN
           ,"lastUpdated" -- COLUMN
@@ -545,17 +713,11 @@ BEGIN
           ,"desc4" -- COLUMN
           ,"desc5" -- COLUMN
           ,"desc6" -- COLUMN
-          ,"a3" -- FORMULA
           ,"bastille" -- FORMULA
           ,"toto" -- FORMULA
           ,"desc2_Cat1" -- FORMULA
           ,"desc2_Cat2" -- FORMULA
           ,"desc2_Cat3" -- FORMULA
-          ,"a7_Cat4" -- FORMULA
-          ,"a7_Cat5" -- FORMULA
-          ,"a5_null" -- FORMULA
-          ,"a6_null" -- FORMULA
-          ,"a7_null" -- FORMULA
      FROM TILDATEST.Testing2View;
   GET DIAGNOSTICS insertRowCount = ROW_COUNT;
   insertEndDt:= clock_timestamp();
@@ -578,7 +740,7 @@ LANGUAGE PLPGSQL;
 
 -- SELECT TILDATEST.Refill_Testing2Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!
 
-COMMENT ON VIEW TILDATEST.Testing2View IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.Testing2View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n     , "lastUpdated" -- COLUMN\n     , "xxxLastUpdated" -- COLUMN\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n     -- Blah...\n     , (NOT a3)::boolean as "a3"\n     -- Blah...\n     , (''1789-07-14'')::timestamptz as "bastille"\n     -- Blah...\n     , (''2018-08-10'')::timestamptz as "toto"\n     -- This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.\n     , (case when "desc2"  in (''a'', ''b'', ''c'') then 1 else 0 end)::double precision as "desc2_Cat1"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat2"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat3"\n     -- This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.\n     , (case when a7 >= 0.0 and a7 < 10.0 then 1 else 0 end)::double precision as "a7_Cat4"\n     -- This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.\n     , (case when a7 >= 10.0 and a7 < 20.0 then 1 else 0 end)::double precision as "a7_Cat5"\n     -- Whether a5 is null or not\n     , (case when a5 is null then 1 when a5 is not null then 0 end)::integer as "a5_null"\n     -- Whether a6 is null or not\n     , (case when a6 is null then 1 when a6 is not null then 0 end)::integer as "a6_null"\n     -- Whether a7 is null or not\n     , (case when a7 is null then 1 when a7 is not null then 0 end)::integer as "a7_null"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDATEST.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDATEST.Testing."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing)\n     , TILDATEST.Testing."lastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing)\n     , TILDATEST.Testing."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n  from TILDATEST.Testing\n where (TILDATEST.Testing."deleted" is null)\n\n      ) as T\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA ,"a7_Cat4" -- FORMULA ,"a7_Cat5" -- FORMULA ,"a5_null" -- FORMULA ,"a6_null" -- FORMULA ,"a7_null" -- FORMULA\n;\n\n\nDROP FUNCTION IF EXISTS TILDATEST.Refill_Testing2Realized();\nCREATE OR REPLACE FUNCTION TILDATEST.Refill_Testing2Realized()\n RETURNS boolean AS $$\ndeclare\n  startDt        timestamptz;\n  insertStartDt  timestamptz;\n  insertEndDt    timestamptz;\n  deleteStartDt  timestamptz;\n  deleteEndDt    timestamptz;\n  analyzeStartDt timestamptz;\n  analyzeEndDt   timestamptz;\n  endDt          timestamptz;\n  insertRowCount bigint;\n  deleteRowCount bigint;\nBEGIN\n  startDt:= clock_timestamp();\n  TRUNCATE TILDATEST.Testing2Realized;\n  insertStartDt:= clock_timestamp();\n  INSERT INTO TILDATEST.Testing2Realized ("refnum", "name", "lastUpdated", "xxxLastUpdated", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "a3", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          ,"lastUpdated" -- COLUMN\n          ,"xxxLastUpdated" -- COLUMN\n          -- "created" -- VIEW-EXCLUDED\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          ,"a3" -- FORMULA\n          ,"bastille" -- FORMULA\n          ,"toto" -- FORMULA\n          ,"desc2_Cat1" -- FORMULA\n          ,"desc2_Cat2" -- FORMULA\n          ,"desc2_Cat3" -- FORMULA\n          ,"a7_Cat4" -- FORMULA\n          ,"a7_Cat5" -- FORMULA\n          ,"a5_null" -- FORMULA\n          ,"a6_null" -- FORMULA\n          ,"a7_null" -- FORMULA\n     FROM TILDATEST.Testing2View;\n  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n  insertEndDt:= clock_timestamp();\n  analyzeStartDt:= clock_timestamp();\n  ANALYZE TILDATEST.Testing2Realized;\n  analyzeEndDt:= clock_timestamp ( );\n  endDt:= clock_timestamp();\n\n  INSERT INTO TILDA.RefillPerf("schemaName", "objectName", "startTimeTZ", "startTime", "endTimeTZ", "endTime", "timeInsertSec", "timeDeleteSec", "timeAnalyzeSec", "timeTotalSec", "insertCount", "deleteCount")\n                        VALUES(''TILDATEST'', ''Testing2Realized'', ''UTC'', startDt, ''UTC'', endDt\n                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n                                         , COALESCE(insertRowCount, 0)\n                                         , COALESCE(deleteRowCount, 0));\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDATEST.Refill_Testing2Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n';
+COMMENT ON VIEW TILDATEST.Testing2View IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.Testing2View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n     , "lastUpdated" -- COLUMN\n     , "xxxLastUpdated" -- COLUMN\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n     -- Blah...\n     , (''1789-07-14'')::timestamptz as "bastille"\n     -- Blah...\n     , (''2018-08-10'')::timestamptz as "toto"\n     -- This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.\n     , (case when "desc2"  in (''a'', ''b'', ''c'') then 1 else 0 end)::double precision as "desc2_Cat1"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat2"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat3"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDATEST.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDATEST.Testing."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing)\n     , TILDATEST.Testing."lastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing)\n     , TILDATEST.Testing."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n  from TILDATEST.Testing\n where (TILDATEST.Testing."deleted"is null)\n\n      ) as T\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA\n;\n\n\nDROP FUNCTION IF EXISTS TILDATEST.Refill_Testing2Realized();\nCREATE OR REPLACE FUNCTION TILDATEST.Refill_Testing2Realized()\n RETURNS boolean AS $$\ndeclare\n  startDt        timestamptz;\n  insertStartDt  timestamptz;\n  insertEndDt    timestamptz;\n  deleteStartDt  timestamptz;\n  deleteEndDt    timestamptz;\n  analyzeStartDt timestamptz;\n  analyzeEndDt   timestamptz;\n  endDt          timestamptz;\n  insertRowCount bigint;\n  deleteRowCount bigint;\nBEGIN\n  startDt:= clock_timestamp();\n  TRUNCATE TILDATEST.Testing2Realized;\n  insertStartDt:= clock_timestamp();\n  INSERT INTO TILDATEST.Testing2Realized ("refnum", "name", "lastUpdated", "xxxLastUpdated", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          ,"lastUpdated" -- COLUMN\n          ,"xxxLastUpdated" -- COLUMN\n          -- "created" -- VIEW-EXCLUDED\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          ,"bastille" -- FORMULA\n          ,"toto" -- FORMULA\n          ,"desc2_Cat1" -- FORMULA\n          ,"desc2_Cat2" -- FORMULA\n          ,"desc2_Cat3" -- FORMULA\n     FROM TILDATEST.Testing2View;\n  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n  insertEndDt:= clock_timestamp();\n  analyzeStartDt:= clock_timestamp();\n  ANALYZE TILDATEST.Testing2Realized;\n  analyzeEndDt:= clock_timestamp ( );\n  endDt:= clock_timestamp();\n\n  INSERT INTO TILDA.RefillPerf("schemaName", "objectName", "startTimeTZ", "startTime", "endTimeTZ", "endTime", "timeInsertSec", "timeDeleteSec", "timeAnalyzeSec", "timeTotalSec", "insertCount", "deleteCount")\n                        VALUES(''TILDATEST'', ''Testing2Realized'', ''UTC'', startDt, ''UTC'', endDt\n                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n                                         , COALESCE(insertRowCount, 0)\n                                         , COALESCE(deleteRowCount, 0));\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDATEST.Refill_Testing2Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n';
 
 COMMENT ON COLUMN TILDATEST.Testing2View."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDATEST.Testing2View."name" IS E'Medical system unique enterprise id';
@@ -590,17 +752,11 @@ COMMENT ON COLUMN TILDATEST.Testing2View."desc3" IS E'The title for a person, i.
 COMMENT ON COLUMN TILDATEST.Testing2View."desc4" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
 COMMENT ON COLUMN TILDATEST.Testing2View."desc5" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
 COMMENT ON COLUMN TILDATEST.Testing2View."desc6" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDATEST.Testing2View."a3" IS E'The calculated formula: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing2View."bastille" IS E'The calculated formula: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing2View."toto" IS E'The calculated formula: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing2View."desc2_Cat1" IS E'The calculated formula: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing2View."desc2_Cat2" IS E'The calculated formula: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing2View."desc2_Cat3" IS E'The calculated formula: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
-COMMENT ON COLUMN TILDATEST.Testing2View."a7_Cat4" IS E'The calculated formula: This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.';
-COMMENT ON COLUMN TILDATEST.Testing2View."a7_Cat5" IS E'The calculated formula: This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.';
-COMMENT ON COLUMN TILDATEST.Testing2View."a5_null" IS E'The calculated formula: Whether a5 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing2View."a6_null" IS E'The calculated formula: Whether a6 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing2View."a7_null" IS E'The calculated formula: Whether a7 is null or not';
 
 
 
@@ -693,19 +849,11 @@ select /*DoFormulasSuperView*/
      , "desc4" -- COLUMN
      , "desc5" -- COLUMN
      , "desc6" -- COLUMN
---     "a3"  BLOCKED
      , "bastille" -- COLUMN
      , "toto" -- COLUMN
      , "desc2_Cat1" -- COLUMN
      , "desc2_Cat2" -- COLUMN
      , "desc2_Cat3" -- COLUMN
-     , "a7_Cat4" -- COLUMN
-     , "a7_Cat5" -- COLUMN
-     , "a5_null" -- COLUMN
-     , "a6_null" -- COLUMN
-     , "a7_null" -- COLUMN
-     -- Blah...
-     , (NOT "a3" OR A3)::boolean as "a3"
      -- Blah...
      , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"
 
@@ -721,21 +869,15 @@ select TILDATEST.Testing2View."refnum" as "refnum" -- The primary key for this r
      , TILDATEST.Testing2View."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...
      , TILDATEST.Testing2View."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...
      , TILDATEST.Testing2View."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...
-     , TILDATEST.Testing2View."a3" as "a3" -- <B>Not A3</B>: Blah... -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)
      , TILDATEST.Testing2View."bastille" as "bastille" -- <B>Bastille Day</B>: Blah...
      , TILDATEST.Testing2View."toto" as "toto" -- <B>Last Updated</B>: Blah...
      , TILDATEST.Testing2View."desc2_Cat1" as "desc2_Cat1" -- <B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2View.
      , TILDATEST.Testing2View."desc2_Cat2" as "desc2_Cat2" -- <B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
      , TILDATEST.Testing2View."desc2_Cat3" as "desc2_Cat3" -- <B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.
-     , TILDATEST.Testing2View."a7_Cat4" as "a7_Cat4" -- <B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.
-     , TILDATEST.Testing2View."a7_Cat5" as "a7_Cat5" -- <B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.
-     , TILDATEST.Testing2View."a5_null" as "a5_null" -- <B>Null a5</B>: Whether a5 is null or not
-     , TILDATEST.Testing2View."a6_null" as "a6_null" -- <B>Null a6</B>: Whether a6 is null or not
-     , TILDATEST.Testing2View."a7_null" as "a7_null" -- <B>Null a7</B>: Whether a7 is null or not
   from TILDATEST.Testing2View
 
       ) as T
--- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA
+-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"lastUpdated" -- FORMULA
 ;
 
 create or replace view TILDATMP.TILDATEST_Testing4View_R as 
@@ -750,19 +892,11 @@ select /*DoFormulasSuperView*/
      , "desc4" -- COLUMN
      , "desc5" -- COLUMN
      , "desc6" -- COLUMN
---     "a3"  BLOCKED
      , "bastille" -- COLUMN
      , "toto" -- COLUMN
      , "desc2_Cat1" -- COLUMN
      , "desc2_Cat2" -- COLUMN
      , "desc2_Cat3" -- COLUMN
-     , "a7_Cat4" -- COLUMN
-     , "a7_Cat5" -- COLUMN
-     , "a5_null" -- COLUMN
-     , "a6_null" -- COLUMN
-     , "a7_null" -- COLUMN
-     -- Blah...
-     , (NOT "a3" OR A3)::boolean as "a3"
      -- Blah...
      , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"
 
@@ -778,21 +912,15 @@ select TILDATEST.Testing2Realized."refnum" as "refnum" -- The primary key for th
      , TILDATEST.Testing2Realized."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...
      , TILDATEST.Testing2Realized."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...
      , TILDATEST.Testing2Realized."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...
-     , TILDATEST.Testing2Realized."a3" as "a3" -- <B>Not A3</B>: Blah... -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)
      , TILDATEST.Testing2Realized."bastille" as "bastille" -- <B>Bastille Day</B>: Blah...
      , TILDATEST.Testing2Realized."toto" as "toto" -- <B>Last Updated</B>: Blah...
      , TILDATEST.Testing2Realized."desc2_Cat1" as "desc2_Cat1" -- <B>desc2_Cat1 Title</B>: This formula checks whether the column 'desc2' contains the values 'a', 'b', 'c' for the View TILDATEST.Testing2Realized.
      , TILDATEST.Testing2Realized."desc2_Cat2" as "desc2_Cat2" -- <B>desc2_Cat2 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2Realized.
      , TILDATEST.Testing2Realized."desc2_Cat3" as "desc2_Cat3" -- <B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2Realized.
-     , TILDATEST.Testing2Realized."a7_Cat4" as "a7_Cat4" -- <B>a7_Cat4 Title</B>: This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.
-     , TILDATEST.Testing2Realized."a7_Cat5" as "a7_Cat5" -- <B>a7_Cat5 Title</B>: This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.
-     , TILDATEST.Testing2Realized."a5_null" as "a5_null" -- <B>Null a5</B>: Whether a5 is null or not
-     , TILDATEST.Testing2Realized."a6_null" as "a6_null" -- <B>Null a6</B>: Whether a6 is null or not
-     , TILDATEST.Testing2Realized."a7_null" as "a7_null" -- <B>Null a7</B>: Whether a7 is null or not
   from TILDATEST.Testing2Realized
 
       ) as T
--- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA
+-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"lastUpdated" -- FORMULA
 ;
 
 
@@ -814,7 +942,7 @@ BEGIN
   startDt:= clock_timestamp();
   TRUNCATE TILDATEST.Testing4Realized;
   insertStartDt:= clock_timestamp();
-  INSERT INTO TILDATEST.Testing4Realized ("refnum", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a3", "lastUpdated")
+  INSERT INTO TILDATEST.Testing4Realized ("refnum", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "lastUpdated")
      SELECT /*genRealizedColumnList*/"refnum" -- COLUMN
           ,"name" -- COLUMN
           -- "lastUpdated" -- BLOCKED
@@ -825,18 +953,11 @@ BEGIN
           ,"desc4" -- COLUMN
           ,"desc5" -- COLUMN
           ,"desc6" -- COLUMN
-          -- "a3" -- BLOCKED
           ,"bastille" -- COLUMN
           ,"toto" -- COLUMN
           ,"desc2_Cat1" -- COLUMN
           ,"desc2_Cat2" -- COLUMN
           ,"desc2_Cat3" -- COLUMN
-          ,"a7_Cat4" -- COLUMN
-          ,"a7_Cat5" -- COLUMN
-          ,"a5_null" -- COLUMN
-          ,"a6_null" -- COLUMN
-          ,"a7_null" -- COLUMN
-          ,"a3" -- FORMULA
           ,"lastUpdated" -- FORMULA
      FROM TILDATMP.TILDATEST_Testing4View_R;
   GET DIAGNOSTICS insertRowCount = ROW_COUNT;
@@ -860,7 +981,7 @@ LANGUAGE PLPGSQL;
 
 -- SELECT TILDATEST.Refill_Testing4Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!
 
-COMMENT ON VIEW TILDATEST.Testing4View IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.Testing4View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n--     "lastUpdated"  BLOCKED\n--     "xxxLastUpdated"  BLOCKED\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n--     "a3"  BLOCKED\n     , "bastille" -- COLUMN\n     , "toto" -- COLUMN\n     , "desc2_Cat1" -- COLUMN\n     , "desc2_Cat2" -- COLUMN\n     , "desc2_Cat3" -- COLUMN\n     , "a7_Cat4" -- COLUMN\n     , "a7_Cat5" -- COLUMN\n     , "a5_null" -- COLUMN\n     , "a6_null" -- COLUMN\n     , "a7_null" -- COLUMN\n     -- Blah...\n     , (NOT "a3" OR A3)::boolean as "a3"\n     -- Blah...\n     , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDATEST.Testing2View."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Testing2View."name" as "name" -- Medical system unique enterprise id\n     , TILDATEST.Testing2View."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2View."xxxLastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2View."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."a3" as "a3" -- <B>Not A3</B>: Blah... -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2View."bastille" as "bastille" -- <B>Bastille Day</B>: Blah...\n     , TILDATEST.Testing2View."toto" as "toto" -- <B>Last Updated</B>: Blah...\n     , TILDATEST.Testing2View."desc2_Cat1" as "desc2_Cat1" -- <B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.\n     , TILDATEST.Testing2View."desc2_Cat2" as "desc2_Cat2" -- <B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , TILDATEST.Testing2View."desc2_Cat3" as "desc2_Cat3" -- <B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , TILDATEST.Testing2View."a7_Cat4" as "a7_Cat4" -- <B>a7_Cat4 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.\n     , TILDATEST.Testing2View."a7_Cat5" as "a7_Cat5" -- <B>a7_Cat5 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.\n     , TILDATEST.Testing2View."a5_null" as "a5_null" -- <B>Null a5</B>: Whether a5 is null or not\n     , TILDATEST.Testing2View."a6_null" as "a6_null" -- <B>Null a6</B>: Whether a6 is null or not\n     , TILDATEST.Testing2View."a7_null" as "a7_null" -- <B>Null a7</B>: Whether a7 is null or not\n  from TILDATEST.Testing2View\n\n      ) as T\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA\n;\n\ncreate or replace view TILDATMP.TILDATEST_Testing4View_R as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n--     "lastUpdated"  BLOCKED\n--     "xxxLastUpdated"  BLOCKED\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n--     "a3"  BLOCKED\n     , "bastille" -- COLUMN\n     , "toto" -- COLUMN\n     , "desc2_Cat1" -- COLUMN\n     , "desc2_Cat2" -- COLUMN\n     , "desc2_Cat3" -- COLUMN\n     , "a7_Cat4" -- COLUMN\n     , "a7_Cat5" -- COLUMN\n     , "a5_null" -- COLUMN\n     , "a6_null" -- COLUMN\n     , "a7_null" -- COLUMN\n     -- Blah...\n     , (NOT "a3" OR A3)::boolean as "a3"\n     -- Blah...\n     , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDATEST.Testing2Realized."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Testing2Realized."name" as "name" -- Medical system unique enterprise id\n     , TILDATEST.Testing2Realized."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2Realized."xxxLastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2Realized."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."a3" as "a3" -- <B>Not A3</B>: Blah... -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2Realized."bastille" as "bastille" -- <B>Bastille Day</B>: Blah...\n     , TILDATEST.Testing2Realized."toto" as "toto" -- <B>Last Updated</B>: Blah...\n     , TILDATEST.Testing2Realized."desc2_Cat1" as "desc2_Cat1" -- <B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2Realized.\n     , TILDATEST.Testing2Realized."desc2_Cat2" as "desc2_Cat2" -- <B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2Realized.\n     , TILDATEST.Testing2Realized."desc2_Cat3" as "desc2_Cat3" -- <B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2Realized.\n     , TILDATEST.Testing2Realized."a7_Cat4" as "a7_Cat4" -- <B>a7_Cat4 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.\n     , TILDATEST.Testing2Realized."a7_Cat5" as "a7_Cat5" -- <B>a7_Cat5 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.\n     , TILDATEST.Testing2Realized."a5_null" as "a5_null" -- <B>Null a5</B>: Whether a5 is null or not\n     , TILDATEST.Testing2Realized."a6_null" as "a6_null" -- <B>Null a6</B>: Whether a6 is null or not\n     , TILDATEST.Testing2Realized."a7_null" as "a7_null" -- <B>Null a7</B>: Whether a7 is null or not\n  from TILDATEST.Testing2Realized\n\n      ) as T\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA\n;\n\n\nDROP FUNCTION IF EXISTS TILDATEST.Refill_Testing4Realized();\nCREATE OR REPLACE FUNCTION TILDATEST.Refill_Testing4Realized()\n RETURNS boolean AS $$\ndeclare\n  startDt        timestamptz;\n  insertStartDt  timestamptz;\n  insertEndDt    timestamptz;\n  deleteStartDt  timestamptz;\n  deleteEndDt    timestamptz;\n  analyzeStartDt timestamptz;\n  analyzeEndDt   timestamptz;\n  endDt          timestamptz;\n  insertRowCount bigint;\n  deleteRowCount bigint;\nBEGIN\n  startDt:= clock_timestamp();\n  TRUNCATE TILDATEST.Testing4Realized;\n  insertStartDt:= clock_timestamp();\n  INSERT INTO TILDATEST.Testing4Realized ("refnum", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a3", "lastUpdated")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          -- "lastUpdated" -- BLOCKED\n          -- "xxxLastUpdated" -- BLOCKED\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          -- "a3" -- BLOCKED\n          ,"bastille" -- COLUMN\n          ,"toto" -- COLUMN\n          ,"desc2_Cat1" -- COLUMN\n          ,"desc2_Cat2" -- COLUMN\n          ,"desc2_Cat3" -- COLUMN\n          ,"a7_Cat4" -- COLUMN\n          ,"a7_Cat5" -- COLUMN\n          ,"a5_null" -- COLUMN\n          ,"a6_null" -- COLUMN\n          ,"a7_null" -- COLUMN\n          ,"a3" -- FORMULA\n          ,"lastUpdated" -- FORMULA\n     FROM TILDATMP.TILDATEST_Testing4View_R;\n  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n  insertEndDt:= clock_timestamp();\n  analyzeStartDt:= clock_timestamp();\n  ANALYZE TILDATEST.Testing4Realized;\n  analyzeEndDt:= clock_timestamp ( );\n  endDt:= clock_timestamp();\n\n  INSERT INTO TILDA.RefillPerf("schemaName", "objectName", "startTimeTZ", "startTime", "endTimeTZ", "endTime", "timeInsertSec", "timeDeleteSec", "timeAnalyzeSec", "timeTotalSec", "insertCount", "deleteCount")\n                        VALUES(''TILDATEST'', ''Testing4Realized'', ''UTC'', startDt, ''UTC'', endDt\n                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n                                         , COALESCE(insertRowCount, 0)\n                                         , COALESCE(deleteRowCount, 0));\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDATEST.Refill_Testing4Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n';
+COMMENT ON VIEW TILDATEST.Testing4View IS E'-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDATEST.Testing4View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n--     "lastUpdated"  BLOCKED\n--     "xxxLastUpdated"  BLOCKED\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n     , "bastille" -- COLUMN\n     , "toto" -- COLUMN\n     , "desc2_Cat1" -- COLUMN\n     , "desc2_Cat2" -- COLUMN\n     , "desc2_Cat3" -- COLUMN\n     -- Blah...\n     , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDATEST.Testing2View."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Testing2View."name" as "name" -- Medical system unique enterprise id\n     , TILDATEST.Testing2View."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2View."xxxLastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2View."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2View."bastille" as "bastille" -- <B>Bastille Day</B>: Blah...\n     , TILDATEST.Testing2View."toto" as "toto" -- <B>Last Updated</B>: Blah...\n     , TILDATEST.Testing2View."desc2_Cat1" as "desc2_Cat1" -- <B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.\n     , TILDATEST.Testing2View."desc2_Cat2" as "desc2_Cat2" -- <B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n     , TILDATEST.Testing2View."desc2_Cat3" as "desc2_Cat3" -- <B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.\n  from TILDATEST.Testing2View\n\n      ) as T\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"lastUpdated" -- FORMULA\n;\n\ncreate or replace view TILDATMP.TILDATEST_Testing4View_R as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n--     "lastUpdated"  BLOCKED\n--     "xxxLastUpdated"  BLOCKED\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n     , "bastille" -- COLUMN\n     , "toto" -- COLUMN\n     , "desc2_Cat1" -- COLUMN\n     , "desc2_Cat2" -- COLUMN\n     , "desc2_Cat3" -- COLUMN\n     -- Blah...\n     , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDATEST.Testing2Realized."refnum" as "refnum" -- The primary key for this record\n     , TILDATEST.Testing2Realized."name" as "name" -- Medical system unique enterprise id\n     , TILDATEST.Testing2Realized."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2Realized."xxxLastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDATEST.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDATEST.Testing2Realized."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDATEST.Testing2Realized."bastille" as "bastille" -- <B>Bastille Day</B>: Blah...\n     , TILDATEST.Testing2Realized."toto" as "toto" -- <B>Last Updated</B>: Blah...\n     , TILDATEST.Testing2Realized."desc2_Cat1" as "desc2_Cat1" -- <B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2Realized.\n     , TILDATEST.Testing2Realized."desc2_Cat2" as "desc2_Cat2" -- <B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2Realized.\n     , TILDATEST.Testing2Realized."desc2_Cat3" as "desc2_Cat3" -- <B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2Realized.\n  from TILDATEST.Testing2Realized\n\n      ) as T\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"lastUpdated" -- FORMULA\n;\n\n\nDROP FUNCTION IF EXISTS TILDATEST.Refill_Testing4Realized();\nCREATE OR REPLACE FUNCTION TILDATEST.Refill_Testing4Realized()\n RETURNS boolean AS $$\ndeclare\n  startDt        timestamptz;\n  insertStartDt  timestamptz;\n  insertEndDt    timestamptz;\n  deleteStartDt  timestamptz;\n  deleteEndDt    timestamptz;\n  analyzeStartDt timestamptz;\n  analyzeEndDt   timestamptz;\n  endDt          timestamptz;\n  insertRowCount bigint;\n  deleteRowCount bigint;\nBEGIN\n  startDt:= clock_timestamp();\n  TRUNCATE TILDATEST.Testing4Realized;\n  insertStartDt:= clock_timestamp();\n  INSERT INTO TILDATEST.Testing4Realized ("refnum", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "lastUpdated")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          -- "lastUpdated" -- BLOCKED\n          -- "xxxLastUpdated" -- BLOCKED\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          ,"bastille" -- COLUMN\n          ,"toto" -- COLUMN\n          ,"desc2_Cat1" -- COLUMN\n          ,"desc2_Cat2" -- COLUMN\n          ,"desc2_Cat3" -- COLUMN\n          ,"lastUpdated" -- FORMULA\n     FROM TILDATMP.TILDATEST_Testing4View_R;\n  GET DIAGNOSTICS insertRowCount = ROW_COUNT;\n  insertEndDt:= clock_timestamp();\n  analyzeStartDt:= clock_timestamp();\n  ANALYZE TILDATEST.Testing4Realized;\n  analyzeEndDt:= clock_timestamp ( );\n  endDt:= clock_timestamp();\n\n  INSERT INTO TILDA.RefillPerf("schemaName", "objectName", "startTimeTZ", "startTime", "endTimeTZ", "endTime", "timeInsertSec", "timeDeleteSec", "timeAnalyzeSec", "timeTotalSec", "insertCount", "deleteCount")\n                        VALUES(''TILDATEST'', ''Testing4Realized'', ''UTC'', startDt, ''UTC'', endDt\n                                         , COALESCE(EXTRACT(EPOCH FROM insertEndDt-insertStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM deleteEndDt-deleteStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM analyzeEndDt-analyzeStartDt), 0)\n                                         , COALESCE(EXTRACT(EPOCH FROM endDt-startDt), 0)\n                                         , COALESCE(insertRowCount, 0)\n                                         , COALESCE(deleteRowCount, 0));\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDATEST.Refill_Testing4Realized(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n';
 
 COMMENT ON COLUMN TILDATEST.Testing4View."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDATEST.Testing4View."name" IS E'Medical system unique enterprise id';
@@ -875,12 +996,6 @@ COMMENT ON COLUMN TILDATEST.Testing4View."toto" IS E'<B>Last Updated</B>: Blah..
 COMMENT ON COLUMN TILDATEST.Testing4View."desc2_Cat1" IS E'<B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing4View."desc2_Cat2" IS E'<B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing4View."desc2_Cat3" IS E'<B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
-COMMENT ON COLUMN TILDATEST.Testing4View."a7_Cat4" IS E'<B>a7_Cat4 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.';
-COMMENT ON COLUMN TILDATEST.Testing4View."a7_Cat5" IS E'<B>a7_Cat5 Title</B>: This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.';
-COMMENT ON COLUMN TILDATEST.Testing4View."a5_null" IS E'<B>Null a5</B>: Whether a5 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing4View."a6_null" IS E'<B>Null a6</B>: Whether a6 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing4View."a7_null" IS E'<B>Null a7</B>: Whether a7 is null or not';
-COMMENT ON COLUMN TILDATEST.Testing4View."a3" IS E'The calculated formula: Blah...';
 COMMENT ON COLUMN TILDATEST.Testing4View."lastUpdated" IS E'The calculated formula: Blah...';
 
 
