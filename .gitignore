@@ -15,3 +15,10 @@
 /ut/log4j2.xml.SAVED
 /ut/tilda.config.json
 /ut/tilda.config.json.SAVED
+
+*.DS_Store
+**/capsico.*.log
+**/log4j2.xml
+**/tilda.config.json
+**/WebBasics.config.json
+
