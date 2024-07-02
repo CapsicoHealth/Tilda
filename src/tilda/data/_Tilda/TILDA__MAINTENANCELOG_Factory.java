@@ -342,17 +342,17 @@ This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DESCR      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "descr"      , 11/*11*/, 2048, "The name of the maintenance resource to track.", null, null, null);
+     public final Type_StringPrimitiveNull          DESCR      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "descr"      , 11/*11*/, 32000, "The name of the maintenance resource to track.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

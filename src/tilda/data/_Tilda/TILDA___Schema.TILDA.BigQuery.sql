@@ -12,9 +12,8 @@ create table if not exists TILDA.ZoneInfo -- blah blah
   , `created`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.ZoneInfo)")
   , `lastUpdated`    TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.ZoneInfo)")
   , `deleted`        TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.ZoneInfo)")
-  -- PRIMARY KEY(`id`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_ZoneInfo_deactivated FOREIGN KEY (`deactivatedTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`id`) NOT ENFORCED
+  , FOREIGN KEY (`deactivatedTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah");
 -- Indices are not supported for this database, so logical definition only
@@ -32,7 +31,7 @@ create table if not exists TILDA.Key -- The table to keep track of unique keys a
   , `created`         TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created.")
   , `lastUpdated`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated.")
   , `deleted`         TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted.")
-  -- PRIMARY KEY(`refnum`)
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="The table to keep track of unique keys across distributed objects/tables");
 -- Indices are not supported for this database, so logical definition only
@@ -61,7 +60,7 @@ create table if not exists TILDA.Catalog -- Master catalog information
   , `created`             TIMESTAMP     DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.Catalog)")
   , `lastUpdated`         TIMESTAMP     DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.Catalog)")
   , `deleted`             TIMESTAMP                OPTIONS(description="The timestamp for when the record was deleted. (TILDA.Catalog)")
-  -- PRIMARY KEY(`refnum`)
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Master catalog information");
 -- Indices are not supported for this database, so logical definition only
@@ -78,9 +77,8 @@ create table if not exists TILDA.CatalogFormulaResult -- Master formula result i
   , `created`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.CatalogFormulaResult)")
   , `lastUpdated`    TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.CatalogFormulaResult)")
   , `deleted`        TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.CatalogFormulaResult)")
-  -- PRIMARY KEY(`formulaRefnum`, `value`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_CatalogFormulaResult_Formula FOREIGN KEY (`formulaRefnum`) REFERENCES TILDA.Catalog ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`formulaRefnum`, `value`) NOT ENFORCED
+  , FOREIGN KEY (`formulaRefnum`) REFERENCES TILDA.Catalog(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)");
 
@@ -102,11 +100,9 @@ create table if not exists TILDA.MaintenanceLog -- Maintenance information
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.MaintenanceLog)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.MaintenanceLog)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.MaintenanceLog)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_MaintenanceLog_startTime FOREIGN KEY (`startTimeTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_MaintenanceLog_endTime FOREIGN KEY (`endTimeTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`startTimeTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`endTimeTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="Maintenance information");
 -- Indices are not supported for this database, so logical definition only
@@ -147,11 +143,9 @@ create table if not exists TILDA.TransPerf -- Performance logs for the Tilda fra
   , `created`                 TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.TransPerf)")
   , `lastUpdated`             TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.TransPerf)")
   , `deleted`                 TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.TransPerf)")
-  -- PRIMARY KEY(`startPeriod`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TransPerf_startPeriod FOREIGN KEY (`startPeriodTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_TransPerf_endPeriod FOREIGN KEY (`endPeriodTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`startPeriod`) NOT ENFORCED
+  , FOREIGN KEY (`startPeriodTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`endPeriodTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="Performance logs for the Tilda framework");
 
@@ -174,11 +168,9 @@ create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Re
   , `created`         TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.RefillPerf)")
   , `lastUpdated`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.RefillPerf)")
   , `deleted`         TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.RefillPerf)")
-  -- PRIMARY KEY(`schemaName`, `objectName`, `startTime`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_RefillPerf_startTime FOREIGN KEY (`startTimeTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_RefillPerf_endTime FOREIGN KEY (`endTimeTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`schemaName`, `objectName`, `startTime`) NOT ENFORCED
+  , FOREIGN KEY (`startTimeTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`endTimeTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="Performance logs for the Tilda Refills");
 -- Indices are not supported for this database, so logical definition only
@@ -214,7 +206,7 @@ create table if not exists TILDA.Connection -- Tilda DB Connections Configuratio
   , `created`      TIMESTAMP     DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.Connection)")
   , `lastUpdated`  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.Connection)")
   , `deleted`      TIMESTAMP                OPTIONS(description="The timestamp for when the record was deleted. (TILDA.Connection)")
-  -- PRIMARY KEY(`id`)
+  , PRIMARY KEY(`id`) NOT ENFORCED
  )
 OPTIONS (description="Tilda DB Connections Configurations.");
 -- Indices are not supported for this database, so logical definition only
@@ -240,7 +232,7 @@ create table if not exists TILDA.Job -- Jobs details
   , `created`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.Job)")
   , `lastUpdated`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.Job)")
   , `deleted`      TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.Job)")
-  -- PRIMARY KEY(`refnum`)
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Jobs details");
 -- Indices are not supported for this database, so logical definition only
@@ -267,9 +259,8 @@ create table if not exists TILDA.JobPart -- Job part details
   , `created`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.JobPart)")
   , `lastUpdated`   TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.JobPart)")
   , `deleted`       TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.JobPart)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_JobPart_Job FOREIGN KEY (`jobRefnum`) REFERENCES TILDA.Job ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`jobRefnum`) REFERENCES TILDA.Job(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Job part details");
 -- Indices are not supported for this database, so logical definition only
@@ -288,11 +279,9 @@ create table if not exists TILDA.JobPartMessage -- Job part message details
   , `created`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.JobPartMessage)")
   , `lastUpdated`    TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.JobPartMessage)")
   , `deleted`        TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.JobPartMessage)")
-  -- PRIMARY KEY(`refnum`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_JobPartMessage_Job FOREIGN KEY (`jobRefnum`) REFERENCES TILDA.Job ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_JobPartMessage_JobPart FOREIGN KEY (`jobPartRefnum`) REFERENCES TILDA.JobPart ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`jobRefnum`) REFERENCES TILDA.Job(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`jobPartRefnum`) REFERENCES TILDA.JobPart(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Job part message details");
 -- Indices are not supported for this database, so logical definition only
@@ -323,11 +312,9 @@ create table if not exists TILDA.ObjectPerf -- Performance logs for the Tilda fr
   , `created`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.ObjectPerf)")
   , `lastUpdated`    TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.ObjectPerf)")
   , `deleted`        TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.ObjectPerf)")
-  -- PRIMARY KEY(`schemaName`, `objectName`, `startPeriod`)
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_ObjectPerf_startPeriod FOREIGN KEY (`startPeriodTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_ObjectPerf_endPeriod FOREIGN KEY (`endPeriodTZ`) REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , PRIMARY KEY(`schemaName`, `objectName`, `startPeriod`) NOT ENFORCED
+  , FOREIGN KEY (`startPeriodTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`endPeriodTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="Performance logs for the Tilda framework");
 -- Indices are not supported for this database, so logical definition only
@@ -380,7 +367,7 @@ create table if not exists TILDA.DateDim -- The Date dimension, capturing pre-ca
   , `created`         TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDA.DateDim)")
   , `lastUpdated`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDA.DateDim)")
   , `deleted`         TIMESTAMP            OPTIONS(description="The timestamp for when the record was deleted. (TILDA.DateDim)")
-  -- PRIMARY KEY(`dt`)
+  , PRIMARY KEY(`dt`) NOT ENFORCED
  )
 OPTIONS (description="The Date dimension, capturing pre-calculated metrics on dates");
 
@@ -390,12 +377,9 @@ create table if not exists TILDA.DateLimitDim -- A single row for min, max and i
  (  `invalidDate`  DATE  not null  OPTIONS(description="The invalid date, e.g., '1111-11-11'.")
   , `minDate`      DATE  not null  OPTIONS(description="The min date included in the DIM")
   , `maxDate`      DATE  not null  OPTIONS(description="The max date included in the DIM")
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_DateLimitDim_InvalidDt FOREIGN KEY (`invalidDate`) REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_DateLimitDim_MinDt FOREIGN KEY (`minDate`) REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
-  -- FK not supported in BQ
-  -- , CONSTRAINT fk_DateLimitDim_MaxDt FOREIGN KEY (`maxDate`) REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
+  , FOREIGN KEY (`invalidDate`) REFERENCES TILDA.DateDim(`dt`) NOT ENFORCED
+  , FOREIGN KEY (`minDate`) REFERENCES TILDA.DateDim(`dt`) NOT ENFORCED
+  , FOREIGN KEY (`maxDate`) REFERENCES TILDA.DateDim(`dt`) NOT ENFORCED
  )
 OPTIONS (description="A single row for min, max and invalid dates for the Date_Dim");
 -- Indices are not supported for this database, so logical definition only
@@ -432,25 +416,25 @@ select TILDA.Job.`refnum` as `jobRefnum` -- The primary key for this record
      , TILDA.Job.`name` as `jobName` -- Name
      , TILDA.Job.`type` as `jobType` -- Job type
      , TILDA.Job.`userId` as `jobUserId` -- Job user Id
-     , TILDA.Job.`dataStartTZ` as `jobDataStartTZ` -- Generated helper column to hold the time zone ID for 'dataStart'.
+     , TILDA.Job.`dataStartTZ` as `jobDataStartTZ` -- Generated helper column to hold the time zone ID for 'jobDataStart'.
      , TILDA.Job.`dataStart` as `jobDataStart` -- StartTime
-     , TILDA.Job.`dataEndTZ` as `jobDataEndTZ` -- Generated helper column to hold the time zone ID for 'dataEnd'.
+     , TILDA.Job.`dataEndTZ` as `jobDataEndTZ` -- Generated helper column to hold the time zone ID for 'jobDataEnd'.
      , TILDA.Job.`dataEnd` as `jobDataEnd` -- StartTime
-     , TILDA.Job.`startTZ` as `jobStartTZ` -- Generated helper column to hold the time zone ID for 'start'.
+     , TILDA.Job.`startTZ` as `jobStartTZ` -- Generated helper column to hold the time zone ID for 'jobStart'.
      , TILDA.Job.`start` as `jobStart` -- StartTime
-     , TILDA.Job.`endTZ` as `jobEndTZ` -- Generated helper column to hold the time zone ID for 'end'.
+     , TILDA.Job.`endTZ` as `jobEndTZ` -- Generated helper column to hold the time zone ID for 'jobEnd'.
      , TILDA.Job.`end` as `jobEnd` -- EndTime
      , TILDA.Job.`status` as `jobStatus` -- Status
      , TILDA.Job.`msg` as `jobMsg` -- Message details
      , TILDA.JobPart.`name` as `jobPartName` -- Job part name
      , TILDA.JobPart.`type` as `jobPartType` -- Job part type
-     , TILDA.JobPart.`dataStartTZ` as `jobPartDataStartTZ` -- Generated helper column to hold the time zone ID for 'dataStart'.
+     , TILDA.JobPart.`dataStartTZ` as `jobPartDataStartTZ` -- Generated helper column to hold the time zone ID for 'jobPartDataStart'.
      , TILDA.JobPart.`dataStart` as `jobPartDataStart` -- Job part data start
-     , TILDA.JobPart.`dataEndTZ` as `jobPartDataEndTZ` -- Generated helper column to hold the time zone ID for 'dataEnd'.
+     , TILDA.JobPart.`dataEndTZ` as `jobPartDataEndTZ` -- Generated helper column to hold the time zone ID for 'jobPartDataEnd'.
      , TILDA.JobPart.`dataEnd` as `jobPartDataEnd` -- Job part data end
-     , TILDA.JobPart.`startTZ` as `jobPartStartTZ` -- Generated helper column to hold the time zone ID for 'start'.
+     , TILDA.JobPart.`startTZ` as `jobPartStartTZ` -- Generated helper column to hold the time zone ID for 'jobPartStart'.
      , TILDA.JobPart.`start` as `jobPartStart` -- Job part execution start
-     , TILDA.JobPart.`endTZ` as `jobPartEndTZ` -- Generated helper column to hold the time zone ID for 'end'.
+     , TILDA.JobPart.`endTZ` as `jobPartEndTZ` -- Generated helper column to hold the time zone ID for 'jobPartEnd'.
      , TILDA.JobPart.`end` as `jobPartEnd` -- Job part execution end
      , TILDA.JobPart.`recordsCount` as `jobPartRecordsCount` -- count of database or file or ... records.
      , TILDA.JobPart.`status` as `jobPartStatus` -- Status flag, i.e., success=true and failure-false
@@ -462,7 +446,7 @@ select TILDA.Job.`refnum` as `jobRefnum` -- The primary key for this record
 ;
 
 
-ALTER VIEW TILDA.JobView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDA.JobView as \n-- ''A view of the job data.''\nselect TILDA.Job.`refnum` as `jobRefnum` -- The primary key for this record\n     , TILDA.Job.`name` as `jobName` -- Name\n     , TILDA.Job.`type` as `jobType` -- Job type\n     , TILDA.Job.`userId` as `jobUserId` -- Job user Id\n     , TILDA.Job.`dataStartTZ` as `jobDataStartTZ` -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.Job.`dataStart` as `jobDataStart` -- StartTime\n     , TILDA.Job.`dataEndTZ` as `jobDataEndTZ` -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.Job.`dataEnd` as `jobDataEnd` -- StartTime\n     , TILDA.Job.`startTZ` as `jobStartTZ` -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.Job.`start` as `jobStart` -- StartTime\n     , TILDA.Job.`endTZ` as `jobEndTZ` -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.Job.`end` as `jobEnd` -- EndTime\n     , TILDA.Job.`status` as `jobStatus` -- Status\n     , TILDA.Job.`msg` as `jobMsg` -- Message details\n     , TILDA.JobPart.`name` as `jobPartName` -- Job part name\n     , TILDA.JobPart.`type` as `jobPartType` -- Job part type\n     , TILDA.JobPart.`dataStartTZ` as `jobPartDataStartTZ` -- Generated helper column to hold the time zone ID for ''dataStart''.\n     , TILDA.JobPart.`dataStart` as `jobPartDataStart` -- Job part data start\n     , TILDA.JobPart.`dataEndTZ` as `jobPartDataEndTZ` -- Generated helper column to hold the time zone ID for ''dataEnd''.\n     , TILDA.JobPart.`dataEnd` as `jobPartDataEnd` -- Job part data end\n     , TILDA.JobPart.`startTZ` as `jobPartStartTZ` -- Generated helper column to hold the time zone ID for ''start''.\n     , TILDA.JobPart.`start` as `jobPartStart` -- Job part execution start\n     , TILDA.JobPart.`endTZ` as `jobPartEndTZ` -- Generated helper column to hold the time zone ID for ''end''.\n     , TILDA.JobPart.`end` as `jobPartEnd` -- Job part execution end\n     , TILDA.JobPart.`recordsCount` as `jobPartRecordsCount` -- count of database or file or ... records.\n     , TILDA.JobPart.`status` as `jobPartStatus` -- Status flag, i.e., success=true and failure-false\n     , TILDA.JobPartMessage.`notify` as `jobPartNotify` -- Notification flag\n     , TILDA.JobPartMessage.`msg` as `jobPartMessage` -- Message details\n  from TILDA.Job\n     left  join TILDA.JobPart on TILDA.JobPart.`jobRefnum` = TILDA.Job.`refnum`\n     left  join TILDA.JobPartMessage on TILDA.JobPartMessage.`jobPartRefnum` = TILDA.JobPart.`refnum`\n;\n\n');
+ALTER VIEW TILDA.JobView set OPTIONS(description='-- DDL META DATA VERSION 2021-09-02\ncreate or replace view TILDA.JobView as \n-- ''A view of the job data.''\nselect TILDA.Job.`refnum` as `jobRefnum` -- The primary key for this record\n     , TILDA.Job.`name` as `jobName` -- Name\n     , TILDA.Job.`type` as `jobType` -- Job type\n     , TILDA.Job.`userId` as `jobUserId` -- Job user Id\n     , TILDA.Job.`dataStartTZ` as `jobDataStartTZ` -- Generated helper column to hold the time zone ID for ''jobDataStart''.\n     , TILDA.Job.`dataStart` as `jobDataStart` -- StartTime\n     , TILDA.Job.`dataEndTZ` as `jobDataEndTZ` -- Generated helper column to hold the time zone ID for ''jobDataEnd''.\n     , TILDA.Job.`dataEnd` as `jobDataEnd` -- StartTime\n     , TILDA.Job.`startTZ` as `jobStartTZ` -- Generated helper column to hold the time zone ID for ''jobStart''.\n     , TILDA.Job.`start` as `jobStart` -- StartTime\n     , TILDA.Job.`endTZ` as `jobEndTZ` -- Generated helper column to hold the time zone ID for ''jobEnd''.\n     , TILDA.Job.`end` as `jobEnd` -- EndTime\n     , TILDA.Job.`status` as `jobStatus` -- Status\n     , TILDA.Job.`msg` as `jobMsg` -- Message details\n     , TILDA.JobPart.`name` as `jobPartName` -- Job part name\n     , TILDA.JobPart.`type` as `jobPartType` -- Job part type\n     , TILDA.JobPart.`dataStartTZ` as `jobPartDataStartTZ` -- Generated helper column to hold the time zone ID for ''jobPartDataStart''.\n     , TILDA.JobPart.`dataStart` as `jobPartDataStart` -- Job part data start\n     , TILDA.JobPart.`dataEndTZ` as `jobPartDataEndTZ` -- Generated helper column to hold the time zone ID for ''jobPartDataEnd''.\n     , TILDA.JobPart.`dataEnd` as `jobPartDataEnd` -- Job part data end\n     , TILDA.JobPart.`startTZ` as `jobPartStartTZ` -- Generated helper column to hold the time zone ID for ''jobPartStart''.\n     , TILDA.JobPart.`start` as `jobPartStart` -- Job part execution start\n     , TILDA.JobPart.`endTZ` as `jobPartEndTZ` -- Generated helper column to hold the time zone ID for ''jobPartEnd''.\n     , TILDA.JobPart.`end` as `jobPartEnd` -- Job part execution end\n     , TILDA.JobPart.`recordsCount` as `jobPartRecordsCount` -- count of database or file or ... records.\n     , TILDA.JobPart.`status` as `jobPartStatus` -- Status flag, i.e., success=true and failure-false\n     , TILDA.JobPartMessage.`notify` as `jobPartNotify` -- Notification flag\n     , TILDA.JobPartMessage.`msg` as `jobPartMessage` -- Message details\n  from TILDA.Job\n     left  join TILDA.JobPart on TILDA.JobPart.`jobRefnum` = TILDA.Job.`refnum`\n     left  join TILDA.JobPartMessage on TILDA.JobPartMessage.`jobPartRefnum` = TILDA.JobPart.`refnum`\n;\n\n');
 
 
 

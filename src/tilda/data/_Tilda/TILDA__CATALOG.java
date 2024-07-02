@@ -2306,7 +2306,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__CATALOG_Factory.COLS.REFERENCEDCOLUMNS._Mask);
           if (_referencedColumns == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _referencedColumns = new ArrayList<String>();
            }
           else
@@ -2512,7 +2511,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__CATALOG_Factory.COLS.REFERENCEDFORMULAS._Mask);
           if (_referencedFormulas == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _referencedFormulas = new ArrayList<String>();
            }
           else

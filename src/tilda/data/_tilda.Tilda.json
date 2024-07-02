@@ -200,7 +200,7 @@
         ,{ "name":"startTime"  , "type":"DATETIME"       , "nullable":false, "description":"The timestamp for when the refill started."        }
         ,{ "name":"endTime"    , "type":"DATETIME"       , "nullable":true , "description":"The timestamp for when the refill ended."          }
         ,{ "name":"statement"  , "type":"STRING(8388608)", "nullable":true , "description":"The value of the maintenance resource to track."  }
-        ,{ "name":"descr"      , "type":"STRING(2048)"   , "nullable":true , "description":"The name of the maintenance resource to track."   }
+        ,{ "name":"descr"      , "type":"STRING(32000)"  , "nullable":true , "description":"The name of the maintenance resource to track."   }
        ]
      ,"primary": { "autogen": true }
      ,"indices":[

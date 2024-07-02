@@ -221,7 +221,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='MaintenanceLog-descr_DIV' class='columns'>descr</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(2048)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3071,10 +3071,10 @@ This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -3093,10 +3093,10 @@ This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -3115,10 +3115,10 @@ This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -3137,10 +3137,10 @@ This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -3154,8 +3154,8 @@ This is the setter for:<BR>
         {
           setNullDescr();
         }
-       else if (v.length() > 2048)
-        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.descr: the size "+v.length()+" is larger than the max allowed of 2048: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
+       else if (v.length() > 32000)
+        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.descr: the size "+v.length()+" is larger than the max allowed of 32000: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
        else if (v.equals(_descr) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
@@ -3176,10 +3176,10 @@ This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -3206,10 +3206,10 @@ This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>descr of type String</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the maintenance resource to track.</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type varchar(2048)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.descr of type text</TD></TR>
   <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.descr</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>2048</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>

@@ -1171,7 +1171,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           if (_schemas == null)
            {
-             // GOTTA Check if we are setting a null ROWTZ but there are still row timestamps that are not null
              _schemas = new ArrayList<String>();
            }
           else
