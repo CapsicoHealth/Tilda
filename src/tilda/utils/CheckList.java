@@ -28,7 +28,6 @@ import tilda.interfaces.JSONable;
 import tilda.utils.json.JSONUtil;
 
 /**
- * <A href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</A>
  * 
  * @author ldh
  *

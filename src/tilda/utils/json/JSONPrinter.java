@@ -145,7 +145,7 @@ public class JSONPrinter
         _Elements.add(new ElementLongArray(Name, Val));
         return this;
       }
-
+    
     public JSONPrinter addElement(String Name, double Val)
       {
         _Elements.add(new ElementDouble(Name, Val));

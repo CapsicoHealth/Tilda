@@ -196,6 +196,53 @@ public abstract class QueryHelper
         return selectColumnBase(Str.toString());
       }
 
+    protected void appendConcat(StringBuilder str, String sep, ColumnDefinition col, String coalesce)
+      {
+        if (col != null)
+          {
+            _Columns.add(col);
+            str.append("||");
+            if (TextUtil.isNullOrEmpty(sep) == false)
+              TextUtil.escapeSingleQuoteForSQL(str, sep);
+            boolean coal = TextUtil.isNullOrEmpty(coalesce) == false;
+            if (coal == true)
+              str.append("coalesce(");
+            col.getFullColumnVarForSelect(_C, str);
+            if (coal == true)
+              {
+                str.append(", ");
+                TextUtil.escapeSingleQuoteForSQL(str, coalesce);
+                str.append(")");
+              }
+          }
+      }
+
+    public final QueryHelper selectColumnConcat(ColumnDefinition col1, String sep2, ColumnDefinition col2, String coalesce)
+    throws Exception
+      {
+        return selectColumnConcat(col1, sep2, col2, null, null, null, null, coalesce);
+      }
+
+    public final QueryHelper selectColumnConcat(ColumnDefinition col1, String sep2, ColumnDefinition col2, String sep3, ColumnDefinition col3, String coalesce)
+    throws Exception
+      {
+        return selectColumnConcat(col1, sep2, col2, sep3, col3, null, null, coalesce);
+      }
+
+    public final QueryHelper selectColumnConcat(ColumnDefinition col1, String sep2, ColumnDefinition col2, String sep3, ColumnDefinition col3, String sep4, ColumnDefinition col4, String coalesce)
+    throws Exception
+      {
+        _Columns.add(col1);
+        StringBuilder str = new StringBuilder();
+        col1.getFullColumnVarForSelect(_C, str);
+        appendConcat(str, sep2, col2, coalesce);
+        appendConcat(str, sep3, col3, coalesce);
+        appendConcat(str, sep4, col4, coalesce);
+
+        return selectColumnBase(str.toString());
+      }
+
+
     public final QueryHelper selectDistinctColumn(ColumnDefinition Col)
     throws Exception
       {
@@ -974,6 +1021,31 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper in(Type_StringCollection Col, String V, boolean not, boolean caseInsensitive)
+    throws Exception
+      {
+        if (TextUtil.isNullOrEmpty(V) == true)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
+
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, caseInsensitive == true ? V.toUpperCase() : V);
+        _QueryStr.append(", ");
+        if (caseInsensitive == true)
+         _QueryStr.append("upper(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (caseInsensitive == true)
+          _QueryStr.append("::text)::text[]");
+        _QueryStr.append(")");
+        return this;
+      }
+    
     public QueryHelper in(Type_StringCollection Col, String[] V)
     throws Exception
       {
@@ -1693,15 +1765,30 @@ public abstract class QueryHelper
     protected QueryHelper colOpBase(ColumnDefinition Col, String coalesceValStr, Op O, String ValStr)
     throws Exception
       {
+        return colOpBase(Col, coalesceValStr, O, ValStr, false);
+      }
+    protected QueryHelper colOpBase(ColumnDefinition Col, String coalesceValStr, Op O, String ValStr, boolean caseInsensitive)
+    throws Exception
+      {
         if (_WherePos == -1)
           where();
 
+        if (caseInsensitive == true)
+          _QueryStr.append("lower(");
+          
         if (coalesceValStr != null)
           _QueryStr.append("coalesce(");
+        
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        
         if (coalesceValStr != null)
           _QueryStr.append(", ").append(coalesceValStr).append(")");
-        opValBase(O, ValStr);
+        if (caseInsensitive == true)
+          _QueryStr.append(")");
+        
+        
+        opValBase(O, ValStr!=null&&caseInsensitive==true?ValStr.toLowerCase():ValStr);
+        
         return this;
       }
 
@@ -1710,18 +1797,24 @@ public abstract class QueryHelper
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col EQUALS value
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper equals(Type_StringPrimitive Col, String coalesceVal, String V)
+    public QueryHelper equals(Type_StringPrimitive Col, String coalesceVal, String V, boolean caseInsensitive)
     throws Exception
       {
-        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.EQUALS, V == null ? V : TextUtil.escapeSingleQuoteForSQL(V));
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.EQUALS, V==null?null:TextUtil.escapeSingleQuoteForSQL(V), caseInsensitive);
       }
 
     public QueryHelper equals(Type_StringPrimitive Col, String V)
     throws Exception
       {
-        return equals(Col, null, V);
+        return equals(Col, null, V, false);
       }
 
+    public QueryHelper equals(Type_StringPrimitive Col, String V, boolean caseInsensitive)
+    throws Exception
+      {
+        return equals(Col, null, V, caseInsensitive);
+      }
+    
     public QueryHelper equals(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {
@@ -1799,6 +1892,7 @@ public abstract class QueryHelper
       {
         return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toString(), Op.EQUALS, Double.toString(V));
       }
+
     public QueryHelper equals(Type_DoublePrimitive Col, double V)
     throws Exception
       {
@@ -1810,6 +1904,7 @@ public abstract class QueryHelper
       {
         return colOpBase(Col, DateTimeUtil.printDateTimeForSQLQuoted(coalesceVal), Op.EQUALS, DateTimeUtil.printDateTimeForSQLQuoted(V));
       }
+
     public QueryHelper equals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
     throws Exception
       {
@@ -1822,6 +1917,7 @@ public abstract class QueryHelper
       {
         return colOpBase(Col, DateTimeUtil.printDateForSQLQuoted(coalesceVal), Op.EQUALS, DateTimeUtil.printDateForSQLQuoted(V));
       }
+
     public QueryHelper equals(Type_DatePrimitive Col, LocalDate LDT)
     throws Exception
       {
@@ -1969,7 +2065,7 @@ public abstract class QueryHelper
       }
 
 
-    
+
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <= value
@@ -2105,9 +2201,9 @@ public abstract class QueryHelper
       {
         return lte(Col, null, LDT);
       }
-    
-    
-    
+
+
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col > value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2242,9 +2338,9 @@ public abstract class QueryHelper
       {
         return gt(Col, null, LDT);
       }
-    
-    
-    
+
+
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col >= value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2367,7 +2463,7 @@ public abstract class QueryHelper
       {
         return gte(Col, null, ZDT);
       }
-    
+
     public QueryHelper gte(Type_DatePrimitive Col, LocalDate coalesceVal, LocalDate V)
     throws Exception
       {
@@ -2379,9 +2475,9 @@ public abstract class QueryHelper
       {
         return gte(Col, null, LDT);
       }
-  
-    
-    
+
+
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <> value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2504,9 +2600,9 @@ public abstract class QueryHelper
       {
         return notEquals(Col, null, LDT);
       }
-  
-    
-    
+
+
+
 
 
 

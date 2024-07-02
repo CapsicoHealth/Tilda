@@ -496,6 +496,7 @@ public class FileUtil
 
     /**
      * Reads a whole CSV file in memory. Do not use for large files obviously!
+     * 
      * @param fileName
      * @return
      */
@@ -552,14 +553,23 @@ public class FileUtil
 
         // We are looking for the bq key file, ad only one file
         File P = new File(path);
+        if (P.exists() == false)
+          throw new IOException("services credentials key file not found because folder '" + path + " cannot be found.");
         File K = null;
         int i = 0;
         for (File F : P.listFiles())
-          if (F.isFile() == true && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key." + appName + ".json") == true)
-            {
-              ++i;
-              K = F;
-            }
+          {
+//            LOG.debug("Looking at credential file candidate "+F.getAbsolutePath());
+//            LOG.debug("   F.isFile(): "+F.isFile());
+//            LOG.debug("   F.getName(): "+F.getName());
+//            LOG.debug("   F.getName().startsWith(\""+dataProjectName+"\"+\".\"): "+F.getName().startsWith(dataProjectName + "."));
+//            LOG.debug("   F.getName().endsWith(\".key.\""+ appName+"\".json\"): "+F.getName().endsWith(".key." + appName + ".json"));
+            if (F.isFile() == true && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key." + appName + ".json") == true)
+              {
+                ++i;
+                K = F;
+              }
+          }
         if (i == 0)
           {
             LOG.error("The services credentials key file '" + dataProjectName + ".*.key." + appName + ".json' not found in '" + path + "'.");
