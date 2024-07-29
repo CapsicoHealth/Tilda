@@ -1022,12 +1022,17 @@ public class JSONUtil
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
     throws Exception
       {
+        print(Out, elementName, JsonExportName, firstElement, Obj, Header, true);
+      }
+    
+    public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header, boolean fullObject)
+    throws Exception
+      {
         Out.write(Header);
         print(Out, elementName, firstElement);
         if (Obj == null)
           Out.write(" null ");
-        else
-          Obj.toJSON(Out, JsonExportName, "", true);
+        Obj.toJSON(Out, JsonExportName, "", fullObject);
       }
 
     public static void print(Writer Out, String elementName, boolean firstElement, String[][] Values, String Header)

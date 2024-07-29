@@ -80,9 +80,17 @@ public class JSONPrinter
     protected Deque<String>    _NestingStack = new ArrayDeque<String>();
     protected final boolean    _array;
 
+    public JSONPrinter addElementAttributes(JSONable Obj, String JsonExportName)
+      {
+        return addElement(null, Obj, JsonExportName, false);
+      }
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
-        _Elements.add(new ElementObj(Name, Obj, JsonExportName));
+        return addElement(Name, Obj, JsonExportName, true);
+      }
+    public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName, boolean fullObject)
+      {
+        _Elements.add(new ElementObj(Name, Obj, JsonExportName, fullObject));
         return this;
       }
 
@@ -264,9 +272,9 @@ public class JSONPrinter
     public void print(Writer Out, String perfMessage)
     throws Exception
       {
-        JSONUtil.startOK(Out, _array==true?'[':'{', perfMessage);
+        JSONUtil.startOK(Out, ' ', perfMessage);
         printRaw(Out);
-        JSONUtil.end(Out, _array==true?']':'}');
+        JSONUtil.end(Out, ' ');
       }
     public void print(Writer Out)
     throws Exception
@@ -274,22 +282,6 @@ public class JSONPrinter
         print(Out, null);
       }
     
-    public void printRawObj(Writer Out)
-    throws Exception
-      {
-        Out.append("{\n");
-        printRaw(Out);
-        Out.append("\n}");
-      }
-
-    public void printRawArray(Writer Out)
-    throws Exception
-      {
-        Out.append("[\n");
-        printRaw(Out);
-        Out.append("\n]");
-      }
-
     public void printRaw(Writer Out)
     throws Exception
       {
@@ -297,6 +289,7 @@ public class JSONPrinter
         Deque<Boolean> _FirstElementStatusStack = new ArrayDeque<Boolean>();
         _FirstElementStatusStack.push(true);
         int level = 0;
+        Out.append(_array == true ? "[\n" : "{\n");
         for (ElementDef e : _Elements)
           {
             boolean first = _FirstElementStatusStack.peek();
@@ -317,6 +310,7 @@ public class JSONPrinter
                 --level;
               }
           }
+        Out.append(_array == true ? "\n]" : "\n}");
       }
 
   }
