@@ -28,9 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
-import tilda.enums.TZMode;
 import tilda.parsing.ParserSession;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;

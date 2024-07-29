@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.lang.AutoCloseable;
 
 import com.google.cloud.bigquery.TableDataWriteChannel;
 
-public class BQWriter extends Writer
+public class BQWriter extends Writer implements AutoCloseable
   {
     public BQWriter(TableDataWriteChannel Out)
       {

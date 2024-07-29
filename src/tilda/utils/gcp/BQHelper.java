@@ -189,13 +189,21 @@ public class BQHelper
         return job.isDone() == true ? job : null;
       }
 
+    public static final int _DEFAULT_MAX_RESULTS = 25_000;
+    
     public static JobResults runQuery(BigQuery bq, String q)
       {
-        return runQuery(bq, q, 10_100l);
+        return runQuery(bq, q, false, _DEFAULT_MAX_RESULTS);
       }
 
-    public static JobResults runQuery(BigQuery bq, String q, long maxQueryResults)
+    public static JobResults runQuery(BigQuery bq, String q, boolean returnJobAlways)
       {
+        return runQuery(bq, q, returnJobAlways, _DEFAULT_MAX_RESULTS);
+      }
+    
+    public static JobResults runQuery(BigQuery bq, String q, boolean returnJobAlways, long maxQueryResults)
+      {
+        Job job = null;
         try
           {
             long ts = System.nanoTime();
@@ -203,7 +211,7 @@ public class BQHelper
             QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(q).setUseLegacySql(false).setMaxResults(maxQueryResults).build();
             JobId jobId = JobId.newBuilder().build();
             JobInfo jobInfo = JobInfo.newBuilder(queryConfig).setJobId(jobId).build();
-            Job job = bq.create(jobInfo);
+            job = bq.create(jobInfo);
             List<String> errMessages = new ArrayList<String>();
             if (JobHelper.completeJob(job, errMessages) != null)
               {
@@ -214,12 +222,17 @@ public class BQHelper
                     return new JobResults(job, results);
                   }
               }
+            // was there a failure?
+            if (errMessages.isEmpty() == false)
+             throw new Exception(TextUtil.print(errMessages, "\n"));
+            // just no results
+            return returnJobAlways == false ? null : new JobResults(job, (TableResult) null);
           }
         catch (Exception E)
           {
             LOG.error("Cannot execute BigQuery query:\n", E);
+            return returnJobAlways == false ? null : new JobResults(job, E.getMessage());
           }
-        return null;
       }
 
     public static Job launchQuery(BigQuery bq, String q)
