@@ -213,6 +213,7 @@ public class MailUtil
             
 
             // Send message
+            LOG.debug("Sending message...");
             Transport.send(m);
             LOG.debug("Sent message successfully.");
             return true;
