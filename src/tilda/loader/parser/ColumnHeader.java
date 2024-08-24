@@ -36,6 +36,7 @@ public class ColumnHeader
     @SerializedName("sum"                  ) public boolean   _Sum = false ;
     @SerializedName("constant"             ) public String    _Constant;
     @SerializedName("defaultValue"         ) public String    _DefaultValue;
+    @SerializedName("coaleaseCol"          ) public String    _CoalesceCol;
     
     public void validate()
     throws Exception

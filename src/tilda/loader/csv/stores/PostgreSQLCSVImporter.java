@@ -132,9 +132,25 @@ public class PostgreSQLCSVImporter extends CSVImporter
                               colVal = null;
                           }
 
-                        if (record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(c.toLowerCase())._Nullable != 1))
+                        if (record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal)==true && DBColumns.get(c.toLowerCase())._Nullable != 1))
                           {
-                            if (columnMap.get(c)._DefaultValue != null)
+                            // Check coalesce col first
+                            if (columnMap.get(c)._CoalesceCol != null)
+                              {
+                                ColumnHeader coalesceCol = columnMap.get(columnMap.get(c)._CoalesceCol);
+                                if (coalesceCol == null)
+                                 throw new Exception("Column '"+c+"' defines a coalesce column '"+columnMap.get(c)._CoalesceCol+"' which cannot be found.");
+                                colVal = record.get(coalesceCol._Header);
+                                if (TextUtil.isNullOrEmpty(colVal)==true) // if the value of the coalesce col is null
+                                 {
+                                   // default to the column's default value first
+                                   if (columnMap.get(c)._DefaultValue != null)
+                                    colVal = columnMap.get(c)._DefaultValue;
+                                   else if (coalesceCol._DefaultValue != null) // else the default value of the coalesce col
+                                     colVal = coalesceCol._DefaultValue;
+                                 }
+                              }
+                            else if (columnMap.get(c)._DefaultValue != null)
                               colVal = columnMap.get(c)._DefaultValue;
                             else if (DBColumns.get(c.toLowerCase())._Nullable != 1)
                               {
