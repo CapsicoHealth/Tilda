@@ -56,10 +56,10 @@ public class History
 
         if (_Validated != null)
           {
-            LOG.info("Tilda Object '" + _ParentObject.getFullName() + "' history info has already been validated.");
+//            LOG.info("Tilda Object '" + _ParentObject.getFullName() + "' history info has already been validated.");
             return _Validated;
           }
-        LOG.info("Validating Tilda Object '" + _ParentObject.getFullName() + "' history info.");
+//        LOG.info("Validating Tilda Object '" + _ParentObject.getFullName() + "' history info.");
 
         if (_ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' with a " + _ParentObject.getLifecycle().name() + " lifecycle setting is defining a History configuration. Only NORMAL tables that can be updated can have a history.");

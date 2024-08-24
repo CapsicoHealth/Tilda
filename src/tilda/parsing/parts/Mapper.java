@@ -49,7 +49,7 @@ public class Mapper
       {
         int Errs = PS.getErrorCount();
         _ParentSchema = ParentSchema;
-        LOG.debug("  Validating Mapper " + _Name + ".");
+//        LOG.debug("  Validating Mapper " + _Name + ".");
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)

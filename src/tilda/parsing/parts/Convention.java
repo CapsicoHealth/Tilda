@@ -61,10 +61,10 @@ public class Convention
 
         if (_Validated != null)
           {
-            LOG.info("Tilda Schema '" + _ParentSchema.getFullName() + "' convention info has already been validated.");
+            //LOG.info("Tilda Schema '" + _ParentSchema.getFullName() + "' convention info has already been validated.");
             return _Validated;
           }
-        LOG.info("Validating Tilda Schema '" + _ParentSchema.getFullName() + "' convention info.");
+        //LOG.info("Validating Tilda Schema '" + _ParentSchema.getFullName() + "' convention info.");
 
         int Errs = PS.getErrorCount();
         

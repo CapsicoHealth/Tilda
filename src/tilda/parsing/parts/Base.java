@@ -180,7 +180,7 @@ public abstract class Base
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an " + _TildaType.name() + " without a name.");
 
         _OriginalName = _Name;
-        LOG.debug("  Validating " + _TildaType.name() + " " + getFullName() + ".");
+//        LOG.debug("  Validating " + _TildaType.name() + " " + getFullName() + ".");
 
         if (_Name.length() > PS._CGSql.getMaxTableNameSize())
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");

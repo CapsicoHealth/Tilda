@@ -49,7 +49,7 @@ public class Enumeration
       {
         int Errs = PS.getErrorCount();
         _ParentSchema = ParentSchema;
-        LOG.debug("  Validating Enumeration " + _Name + ".");
+//        LOG.debug("  Validating Enumeration " + _Name + ".");
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
