@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -44,6 +45,9 @@ import javax.swing.text.rtf.RTFEditorKit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.jsoup.Jsoup;
 
 public class TextUtil
@@ -312,7 +316,7 @@ public class TextUtil
       {
         escapeSomethingWithSlash(x, '\'', str, "'", "'", false);
       }
-    
+
     public static final void escapeAllQuotesWithSlash(StringBuilder x, String str)
       {
         escapeAllQuotesWithSlash(x, str, "\"", "\"");
@@ -336,7 +340,7 @@ public class TextUtil
       {
         escapeSomethingWithSlash(x, '`', str, "`", "`", false);
       }
-    
+
     private static final void escapeSomethingWithSlash(StringBuilder x, char something, String str, String before, String end, boolean doubleEscape)
       {
         escapeSomethingWithSomething(x, something, doubleEscape ? "\\\\\\" : "\\", str, before, end);
@@ -607,7 +611,7 @@ public class TextUtil
         return Index;
       }
 
-    
+
     /**
      * Returns whether A contains Val (strict equal case sensitive or not based on IgnoreCase).
      * 
@@ -621,7 +625,7 @@ public class TextUtil
       {
         return findElement(A, val, ignoreCase, start) >= 0;
       }
-    
+
     /**
      * Returns the index in A that matched the value of Val (strict equal case sensitive or not based on IgnoreCase).
      * If no match is found, returns -1;
@@ -799,20 +803,20 @@ public class TextUtil
         return true;
       }
 
-/*
-    public static boolean isAllJavaIdentifier(String Str)
-      {
-        if (Str == null)
-          return true;
-        for (int i = 0; i < Str.length(); ++i)
-          {
-            char c = Str.charAt(i);
-            if (Character.isJavaIdentifierPart(c) == false)
-              return false;
-          }
-        return true;
-      }
-*/
+    /*
+     * public static boolean isAllJavaIdentifier(String Str)
+     * {
+     * if (Str == null)
+     * return true;
+     * for (int i = 0; i < Str.length(); ++i)
+     * {
+     * char c = Str.charAt(i);
+     * if (Character.isJavaIdentifierPart(c) == false)
+     * return false;
+     * }
+     * return true;
+     * }
+     */
     public static boolean isJavaIdentifier(String Str)
       {
         if (Str == null || Str.length() == 0 || Character.isJavaIdentifierStart(Str.charAt(0)) == false)
@@ -838,7 +842,7 @@ public class TextUtil
           }
         return true;
       }
-    
+
     public static String processTextToHTMLParagraphs(String Text, String StyleClass)
       {
         Text = Text.replace("<br>", "</P><P class='" + StyleClass + "'>");
@@ -1071,7 +1075,7 @@ public class TextUtil
       {
         print(strArray, ", ", s);
       }
-    
+
     public static void print(String[] strArray, String separator, StringBuilder s)
       {
         if (strArray == null)
@@ -1326,15 +1330,26 @@ public class TextUtil
         for (int i = 0; i < Str.length(); ++i)
           {
             char c = Str.charAt(i);
-            switch(c)
-             {
-               case '<': s.append("&lt;"); break;
-               case '&': s.append("&amp;"); break;
-               case '>': s.append("&gt;"); break;
-               case '"': s.append("&quot;"); break;
-               case '\'': s.append("&apos;"); break;
-               default: s.append(c);
-             }
+            switch (c)
+              {
+                case '<':
+                  s.append("&lt;");
+                  break;
+                case '&':
+                  s.append("&amp;");
+                  break;
+                case '>':
+                  s.append("&gt;");
+                  break;
+                case '"':
+                  s.append("&quot;");
+                  break;
+                case '\'':
+                  s.append("&apos;");
+                  break;
+                default:
+                  s.append(c);
+              }
           }
         return s.toString();
       }
@@ -1404,6 +1419,7 @@ public class TextUtil
 
     /**
      * Passthrough method that uses the JSoup API to extract the Text from an HTML document
+     * 
      * @param html the html document
      * @param normalized whether normalized or non-normalized text content should be returned (as per the JSoup API)
      * @return the text contents from the HTML documentation.
@@ -1413,6 +1429,31 @@ public class TextUtil
         return isNullOrEmpty(html) == true ? html : normalized ? Jsoup.parse(html).text() : Jsoup.parse(html).wholeText();
       }
 
+
+    public static final String PDF2TXT(String filePath)
+    throws Exception
+      {
+        File F = new File(filePath);
+        return PDF2TXT(F);
+      }
+    
+    public static final String PDF2TXT(File F) throws Exception
+      {
+        try (PDDocument document = Loader.loadPDF(F))
+          {
+            //Instantiate PDFTextStripper class
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            //Retrieving text from PDF document
+            return pdfStripper.getText(document);
+          }
+        catch (Exception E)
+          {
+            LOG.error("Cannot extract text from PDF '"+F.getCanonicalPath()+"'\n", E);
+            throw E;
+          }
+      }
+
+    
     public static final String streamToString(InputStream In)
     throws IOException
       {
@@ -1558,6 +1599,7 @@ public class TextUtil
 
     /**
      * Returns true if any element in A matches an indexOf query on Str
+     * 
      * @param Str
      * @param A
      * @return
@@ -1722,6 +1764,7 @@ public class TextUtil
      * If both [last] and [first] are null or empty, a null string is returned. If one of them is null or empty, the output
      * is adapted as necessary, i.e., "[title] CAPITALIZED([first]) UPPER(FIRST_CHAR([middle]))." or "[title] <UPPER[last]] UPPER(FIRST_CHAR([middle])).".
      * The [title] and [middle] parts are omitted if null or empty.
+     * 
      * @param Title
      * @param Last
      * @param First
@@ -1736,8 +1779,7 @@ public class TextUtil
         Middle = isNullOrEmpty(Middle) ? "" : " " + Character.toUpperCase(Middle.trim().charAt(0)) + ".";
 
         return Last == null && First == null ? null
-                                             : Title + (Last==null ? "" : (Last + (First == null ? "" : ", "))) + (First==null ? "" : First) + Middle
-               ;
+        : Title + (Last == null ? "" : (Last + (First == null ? "" : ", "))) + (First == null ? "" : First) + Middle;
       }
 
     public static final String maskName(String Last, String First, long RefNum)
@@ -1867,11 +1909,12 @@ public class TextUtil
 
 
     public static final String printSQLIn(String Start, String CommaSeparatedList, String End)
-     {
-       StringBuilder str = new StringBuilder();
-       printSQLIn(str, Start, CommaSeparatedList, End);
-       return str.toString();
-     }
+      {
+        StringBuilder str = new StringBuilder();
+        printSQLIn(str, Start, CommaSeparatedList, End);
+        return str.toString();
+      }
+
     public static final boolean printSQLIn(StringBuilder Str, String Start, String CommaSeparatedList, String End)
       {
         String[] Parts = split(CommaSeparatedList, "\\s*,\\s*");
@@ -2054,6 +2097,7 @@ public class TextUtil
 
     /**
      * Returns a new Iterator on a list where all incoming values have been replaced by the mask
+     * 
      * @param <T>
      * @param I
      * @param val
