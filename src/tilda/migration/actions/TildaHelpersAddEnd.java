@@ -16,7 +16,6 @@
 
 package tilda.migration.actions;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,10 +24,8 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.MaintenanceLog_Data;
 import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
-import tilda.db.QueryDetails;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
-import tilda.utils.DateTimeUtil;
 
 public class TildaHelpersAddEnd extends MigrationAction
   {

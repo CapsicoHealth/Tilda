@@ -33,7 +33,6 @@ import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
-import tilda.parsing.parts.Convention;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;

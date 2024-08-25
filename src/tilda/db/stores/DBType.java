@@ -18,7 +18,6 @@ package tilda.db.stores;
 
 import java.sql.Array;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;

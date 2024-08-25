@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.enums.AggregateType;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -1926,6 +1925,13 @@ public class TildaData implements CodeGenTildaData
 
         boolean rowTZ = false;
         for (Column C : O._Columns)
+          if (C != null && C._FCT.isOCC() == true)
+            {
+              Out.println("      String OCCLocalZone = ZoneId.systemDefault().getId();");
+              break;
+            }
+
+        for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
               String Mask = Helper.getRuntimeMask(C);
@@ -1998,8 +2004,10 @@ public class TildaData implements CodeGenTildaData
                           Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTimes((" + (C.isSet() == true ? "Set<" : "List<") + "java.sql.Timestamp>) JDBCHelper.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), " + C.isSet() + "), null);");
                         else
                          {
+                           if (C.getName().equals("hour") == true)
+                             LOG.debug("XXX");
                            //Out.print("/* name:"+C.getName()+", agg:"+C._Aggregate+", type:"+C.getType()+", tzMode:"+C._TzMode+", FCT:"+C._FCT+"*/");
-                           Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), " + (C._FCT.isManaged() == true || C._Aggregate != null ? "null" : "_" + C.getTZName()) + ");");
+                           Out.print(Header+"_" + C.getName() + Pad + " = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), " + (C._FCT.isOCC() ? "OCCLocalZone" : C._FCT.isManaged() == true || C._Aggregate != null ? "null" : "_" + C.getTZName()) + ");");
                          }
                       }
                     break;

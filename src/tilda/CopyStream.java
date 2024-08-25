@@ -1,5 +1,7 @@
 package tilda;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -8,11 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Struct;
-import java.io.FileWriter;
-import java.io.StringReader;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
+
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 

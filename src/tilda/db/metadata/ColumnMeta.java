@@ -19,7 +19,6 @@ package tilda.db.metadata;
 import java.sql.ResultSet;
 
 import tilda.db.Connection;
-import tilda.db.JDBCHelper;
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Convention;
 import tilda.utils.pairs.StringStringPair;

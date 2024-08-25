@@ -21,7 +21,6 @@ import java.util.List;
 
 import tilda.enums.ColumnType;
 import tilda.enums.MultiType;
-import tilda.enums.TZMode;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenDocs;
@@ -34,8 +33,8 @@ import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query.Attribute;
-import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.parsing.parts.SubWhereClause;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 

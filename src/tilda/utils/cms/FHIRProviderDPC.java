@@ -5,29 +5,15 @@
 package tilda.utils.cms;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.healthcare.v1.CloudHealthcare;
-import com.google.api.services.healthcare.v1.CloudHealthcare.Projects.Locations.Datasets.FhirStores.Fhir.Capabilities;
-import com.google.api.services.healthcare.v1.CloudHealthcare.Projects.Locations.Datasets.FhirStores.Fhir.Search;
-import com.google.api.services.healthcare.v1.model.HttpBody;
-import com.google.api.services.healthcare.v1.model.SearchResourcesRequest;
-import com.google.auth.http.HttpCredentialsAdapter;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import tilda.utils.FileUtil;
-import tilda.utils.TextUtil;
 import tilda.utils.fhir.FHIRProvider;
-import tilda.utils.gcp.AuthHelper;
 import tilda.utils.pairs.StringStringPair;
 
 /**

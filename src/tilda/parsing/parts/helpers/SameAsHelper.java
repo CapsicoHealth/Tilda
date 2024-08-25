@@ -21,7 +21,6 @@ import java.util.List;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.parts.Column;
-import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 

@@ -41,7 +41,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import tilda.db.Connection;
 import tilda.db.JDBCHelper;
 import tilda.db.metadata.ColumnMeta;
 import tilda.interfaces.JSONable;
