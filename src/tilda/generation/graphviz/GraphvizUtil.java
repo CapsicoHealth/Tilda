@@ -17,12 +17,15 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.html.DocGen;
+import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Documentation;
@@ -768,7 +771,7 @@ public class GraphvizUtil
 
     private void writeAndGen(String sb, String dotFName, String genFName)
       {
-        JSONParser parser = new JSONParser();
+//        JSONParser parser = new JSONParser();
         // File output = new File("output_"+schema._Name+".dot");
         File output = new File(dotFName);
         PrintWriter printer = null;
@@ -791,9 +794,8 @@ public class GraphvizUtil
             while ((inputStr = streamReader.readLine()) != null)
               responseStrBuilder.append(inputStr);
 
-            java.lang.Object obj = parser.parse(responseStrBuilder.toString());
-            JSONObject jsonObject = (JSONObject) obj;
-            String dotBinaryPath = (String) jsonObject.get("dotBinary");
+            JsonObject obj = JsonParser.parseString(responseStrBuilder.toString()).getAsJsonObject();
+            String dotBinaryPath = obj.get("dotBinary").getAsString();
             if (dotBinaryPath == null)
               {
                 // assume dot file is in path

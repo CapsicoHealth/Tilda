@@ -27,9 +27,9 @@ import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.db.stores.DBType;
@@ -569,7 +569,7 @@ public class View extends Base
                   {
                     Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.capitalizeFirstCharacter(FT._PatternStr.toLowerCase()));
                     Gson gson = new Gson();
-                    for (JSONObject JO : FT._Impls)
+                    for (JsonObject JO : FT._Impls)
                       {
                         PatternObject obj = (PatternObject) gson.fromJson(JO.toString(), patternClass);
                         obj.validate(PS, this);
