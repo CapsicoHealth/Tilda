@@ -1,0 +1,32 @@
+{ "comment":["THIS FILE IS FOR IMPORT PURPOSE. NOTE THAT THE SAME DATA IS AVAILABLE AUTOMATICALLY"
+            ,"IN THE FILE _tilda.Tilda.postgres.helpers-after. Keep those 2 files in sync so that"
+            ,"both IMPORT and regular MIGRATE work the same"
+            ]
+ ,"zones": [
+	    { "id":"UTC"  , "label":"UTC"                , "value":"Etc/UTC"             }
+	   ,{ "id":"Zulu" , "label":"Zulu"               , "value":"Etc/Zulu"            }
+       ,{ "id":"Z"    , "label":"Z"                  , "value":"Z"                   }
+	   ,{ "id":"Green", "label":"Greenwich"          , "value":"Etc/Greenwich"       }
+       ,{ "id":"EUPar", "label":"Europe Paris"       , "value":"Europe/Paris"        }
+	   ,{ "id":"CaNe" , "label":"Canada Newfoundland", "value":"Canada/Newfoundland" }
+	   ,{ "id":"CaAt" , "label":"Canada Atlantic"    , "value":"Canada/Atlantic"     }
+	   ,{ "id":"USEa" , "label":"US Eastern"         , "value":"US/Eastern"          }
+	   ,{ "id":"AmNYC", "label":"US New York City"   , "value":"America/New_York"    }
+	   ,{ "id":"CaEa" , "label":"Canada Eastern"     , "value":"Canada/Eastern"      }
+	   ,{ "id":"USCe" , "label":"US Central"         , "value":"US/Central"          }
+       ,{ "id":"AmChi", "label":"US Chicago"         , "value":"America/Chicago"     }
+	   ,{ "id":"CaCe" , "label":"Canada Central"     , "value":"Canada/Central"      }
+	   ,{ "id":"CaSa" , "label":"Canada Saskatchewan", "value":"Canada/Saskatchewan" }
+	   ,{ "id":"USAr" , "label":"US Arizona"         , "value":"US/Arizona"          }
+	   ,{ "id":"USMo" , "label":"US Mountain"        , "value":"US/Mountain"         }
+       ,{ "id":"AmDen", "label":"US Denver"          , "value":"America/Denver"      }
+	   ,{ "id":"CaMo" , "label":"Canada Mountain"    , "value":"Canada/Mountain"     }
+	   ,{ "id":"USPa" , "label":"US Pacific"         , "value":"US/Pacific"          }
+       ,{ "id":"AmLA" , "label":"Los Angeles"        , "value":"America/Los_Angeles" }
+	   ,{ "id":"CaPa" , "label":"Canada Pacific"     , "value":"Canada/Pacific"      }
+	   ,{ "id":"USAl" , "label":"US Alaska"          , "value":"US/Alaska"           }
+	   ,{ "id":"USHa" , "label":"US Hawaii"          , "value":"US/Hawaii"           }
+	   ,{ "id":"USSa" , "label":"US Samoa"           , "value":"US/Samoa"            }
+       ,{ "id":"AsCa" , "label":"Asia Calcutta"      , "value":"Asia/Calcutta"       }
+  ]
+}
