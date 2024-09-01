@@ -33,13 +33,20 @@ dependencies {
     implementation 'org.apache.commons:commons-text:+'
 
     // Apache
-//    implementation 'org.apache.opennlp:opennlp-tools:2.+'
-//    implementation 'org.apache.opennlp:opennlp-uima:2.+'
+    implementation 'org.apache.opennlp:opennlp-tools:2.+'
+    implementation 'org.apache.opennlp:opennlp-uima:2.+'
     implementation 'org.apache.pdfbox:pdfbox:3.+'
+
+    // Log4J2 and Log4J-1.2 compatibility
+    implementation 'org.apache.logging.log4j:log4j-core:2.+'
+    implementation 'org.apache.logging.log4j:log4j-api:2.+'
+    implementation 'org.apache.logging.log4j:log4j-web:2.+'
+    implementation 'org.apache.logging.log4j:log4j-1.2-api:2.+'
     
     // Jakarta
     implementation 'jakarta.activation:jakarta.activation-api:+'
     implementation 'jakarta.mail:jakarta.mail-api:+'
+    implementation 'jakarta.transaction:jakarta.transaction-api:2.+'
 
     // Google GCP
     implementation platform('com.google.cloud:libraries-bom:26.45.0')
@@ -51,31 +58,65 @@ dependencies {
     implementation 'com.google.apis:google-api-services-healthcare:+'
     implementation 'com.google.code.gson:gson:+'
 
-    // Log4J2 and Log4J-1.2 compatibility
-    implementation 'org.apache.logging.log4j:log4j-core:2.+'
-    implementation 'org.apache.logging.log4j:log4j-api:2.+'
-    implementation 'org.apache.logging.log4j:log4j-web:2.+'
-    implementation 'org.apache.logging.log4j:log4j-1.2-api:2.+'
-
     // Others
     implementation 'org.antlr:antlr4-runtime:4.+'
     implementation 'com.lmax:disruptor:3.+'
     implementation 'org.jsoup:jsoup:1.+'
     implementation 'org.postgresql:postgresql:42.+'
     implementation 'com.googlecode.json-simple:json-simple:1.+'
+//    implementation 'org.slf4j:slf4j-log4j12:2.+'
 //    implementation 'org.quartz-scheduler:quartz:2.3.3'
 //    implementation 'org.quartz-scheduler:quartz-jobs:2.3.3'
 }
 
-task copyDependencies(type: Copy) {
-    println "Copying dependencies to: $buildDir/dependencies"
-    configurations.runtimeClasspath.each { File file ->
-        println file.absolutePath
-    }
-    
-    into "$buildDir/libs/dependencies"
-    from configurations.runtimeClasspath
-}
 
-build.dependsOn copyDependencies
+def dependencyGroups = [
+    [group: 'com.google'          , folder: 'google']
+   ,[group: 'grpc'                , folder: 'google']
+   ,[group: 'io'                  , folder: 'google']
+   ,[group: 'org.codehaus.mojo'   , folder: 'google']
+   ,[group: 'org.checkerframework', folder: 'google']
+   ,[group: 'org.conscrypt'       , folder: 'google']
+   ,[group: 'org.eclipse'         , folder: 'google']
+   ,[group: 'org.hamcrest'        , folder: 'google']
+   ,[group: 'com.fasterxml'       , folder: 'google']
+   ,[group: 'org.threeten'        , folder: 'google']
+
+   ,[group: 'org.apache'          , folder: 'apache']
+   ,[group: 'commons-'            , folder: 'apache']
+   ,[group: 'jakarta'             , folder: 'apache']
+
+   ,[group: ''                    , folder: 'other' ]
+]
+
+task copyDependencies {
+   doLast {
+      // clean folders first
+      for (def dep : dependencyGroups) {
+         def destDir = file("$buildDir/libs/deps/${dep.folder}")
+         delete destDir
+         destDir.mkdirs()
+       }
+      
+      // copy stuff
+      configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+          println artifact
+          for (def dep : dependencyGroups) {
+             if (artifact.moduleVersion.id.group.startsWith(dep.group)) {
+                copy {
+                   from artifact.file
+                   into "$buildDir/libs/deps/$dep.folder"
+                 }
+                break;
+              }
+           }
+       }
+    }
+ }
+
+
+// Add tasks to the build process
+build.dependsOn(copyDependencies)
+
+
 

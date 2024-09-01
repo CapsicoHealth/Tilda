@@ -582,8 +582,7 @@ public class FileUtil
 
     public static String trimExtention(String fileName)
       {
-        int i = fileName.lastIndexOf(".");
-        return i == -1 ? fileName : fileName.substring(0, i);
+        return fileName.replaceFirst("\\.+[^\\.]*$", "");
       }
 
   }
