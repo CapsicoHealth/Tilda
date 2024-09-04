@@ -7,6 +7,7 @@
 	   ,{ "id":"Zulu" , "label":"Zulu"               , "value":"Etc/Zulu"            }
        ,{ "id":"Z"    , "label":"Z"                  , "value":"Z"                   }
 	   ,{ "id":"Green", "label":"Greenwich"          , "value":"Etc/Greenwich"       }
+       ,{ "id":"EULon", "label":"Europe London"      , "value":"Europe/London"       }
        ,{ "id":"EUPar", "label":"Europe Paris"       , "value":"Europe/Paris"        }
 	   ,{ "id":"CaNe" , "label":"Canada Newfoundland", "value":"Canada/Newfoundland" }
 	   ,{ "id":"CaAt" , "label":"Canada Atlantic"    , "value":"Canada/Atlantic"     }

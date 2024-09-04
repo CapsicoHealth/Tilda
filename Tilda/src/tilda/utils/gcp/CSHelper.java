@@ -8,6 +8,7 @@ package tilda.utils.gcp;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -16,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -148,4 +150,11 @@ public class CSHelper
           }
       }
 
+    public static URL genSignedUrl(Storage cs, String bucketName, String fullFileName, String mimeType)
+    throws IOException
+      {
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fullFileName).setContentType(mimeType).build();
+        return cs.signUrl(blobInfo, 60, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+      }
+    
   }
