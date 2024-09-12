@@ -44,7 +44,7 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-1.2-api:2.+'
     
     // Jakarta
-//    implementation 'jakarta.activation:jakarta.activation-api:+'
+    implementation 'jakarta.activation:jakarta.activation-api:+'
 //    implementation 'jakarta.mail:jakarta.mail-api:+'
     implementation 'jakarta.transaction:jakarta.transaction-api:2.+'
     implementation 'org.eclipse.angus:jakarta.mail:2.+'
