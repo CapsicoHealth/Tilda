@@ -907,19 +907,19 @@ public class JSONUtil
      * @param Obj
      * @throws Exception
      */
-    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
-    throws Exception
-      {
-        Out.write("<textarea>\n");
-        response(Out, JsonExportName, Obj);
-        Out.write("</textarea>\n");
-      }
+//    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
+//    throws Exception
+//      {
+//        Out.write("<textarea>\n");
+//        response(Out, JsonExportName, Obj);
+//        Out.write("</textarea>\n");
+//      }
 
-    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
-    throws Exception
-      {
-        responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
-      }
+//    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+//    throws Exception
+//      {
+//        responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
+//      }
 
     public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L, String perfMessage)
     throws Exception

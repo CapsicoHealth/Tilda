@@ -22,6 +22,10 @@ import java.time.ZonedDateTime;
 
 public interface CSVable
   {
+    default String getCSVHeader(String csvExportName) throws Exception
+     {
+       throw new UnsupportedOperationException();
+     }
     public void toCSV(Writer out, String csvExportName) throws Exception;
     public void toCSV(Writer out, String csvExportName, ZonedDateTime lastsync) throws Exception;
   }

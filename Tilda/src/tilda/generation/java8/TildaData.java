@@ -2355,6 +2355,16 @@ public class TildaData implements CodeGenTildaData
 
         if (CSV == true)
           {
+            Out.println("   public String getCSVHeader(String exportName) throws Exception");
+            Out.println("    {");
+            Out.println("      switch (exportName)");
+            Out.println("        { ");
+            for (OutputMap OM : O._OutputMaps)
+              if (OM != null && OM._OutputTypes.contains(OutputFormatType.CSV) == true)
+                Out.println("          case \"" + OM._Name + "\": return " + Helper.getFullAppFactoryClassName(O) + ".getCSVHeader" + OM._Name + "();");
+            Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+exportName+\"' for " + Helper.getFullAppFactoryClassName(O) + "\");");
+            Out.println("        } ");
+            Out.println("    }");
             Out.println("   public void toCSV(java.io.Writer out, String exportName) throws Exception");
             Out.println("    {");
             Out.println("      switch (exportName)");
