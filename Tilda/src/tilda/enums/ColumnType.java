@@ -391,10 +391,24 @@ public enum ColumnType
           }
       }
 
+    /**
+     * Checks for DOUBLE, FLOAT, INTEGER, LONG, SHORT, or NUMERIC;
+     * @return
+     */
     public boolean isNumber()
       {
-        return this == DOUBLE || this == FLOAT || this == INTEGER || this == LONG || this == NUMERIC || this == SHORT;
+        return isNumberStrict() || this == NUMERIC;
       }
+    
+    /**
+     * Checks for DOUBLE, FLOAT, INTEGER, LONG, SHORT, but <B>not</B> NUMERIC;
+     * @return
+     */
+    public boolean isNumberStrict()
+      {
+        return this == DOUBLE || this == FLOAT || this == INTEGER || this == LONG || this == SHORT;
+      }
+
 
 
     public static boolean isNumber(ColumnType Type)

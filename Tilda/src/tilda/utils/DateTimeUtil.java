@@ -53,6 +53,12 @@ public class DateTimeUtil
     public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = newUTC(999, 12, 31, 23, 59, 0, 0);
     public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
 
+    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = newUTC(1111, 11, 11, 0, 0, 0, 0);
+    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1111, 11, 11);
+    
+    public static final Calendar _UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
+    public static final Calendar _LOCAL_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_LOCAL.getId()));    
+
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
       {
         return ZDT != null && ZDT.equals(NOW_PLACEHOLDER_ZDT);
@@ -62,10 +68,6 @@ public class DateTimeUtil
       {
         return D != null && D.equals(NOW_PLACEHOLDER_D);
       }
-
-
-    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = newUTC(1111, 11, 11, 0, 0, 0, 0);
-    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1111, 11, 11);
 
     public static boolean isUndefinedPlaceholder(ZonedDateTime ZDT)
       {
@@ -77,9 +79,6 @@ public class DateTimeUtil
         return D != null && D.equals(UNDEFINED_PLACEHOLDER_D);
       }
 
-
-    public static final Calendar _UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
-    public static final Calendar _LOCAL_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_LOCAL.getId()));
 
     /**
      * Returns a new ZonedDateTime object in the UTC timezone, based on the information provided using

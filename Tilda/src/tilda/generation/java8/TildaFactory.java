@@ -457,7 +457,7 @@ public class TildaFactory implements CodeGenTildaFactory
             else
               Out.print("vals");
             Out.println(", Errors" + (C.isCollection() == true && C._JsonSchema == null ? ")" : "") + ");");
-            Out.println("       if (_" + C.getName() + " != null) Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(_" + C.getName() + ");");
+            Out.println("       if (_" + C.getName() + " != null "+(C.getType().isNumberStrict()==false || C.isCollection() == true ? "" : " && _" + C.getName() + " != SystemValues.EVIL_VALUE")+") Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(_" + C.getName() + ");");
             Out.println();
           }
         Out.println();

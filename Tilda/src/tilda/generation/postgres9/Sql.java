@@ -288,9 +288,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject, null);
             TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject, null);
             if (TI1 == null)
-              throw new Error("Cannot find source table " + C1._ParentObject.getFullName());
+              throw new Error("Cannot find source FK table " + C1._ParentObject.getFullName());
             if (TI2 == null)
-              throw new Error("Cannot find referenced table " + C2._ParentObject.getFullName());
+              throw new Error("Cannot find referenced FK table " + C2._ParentObject.getFullName());
             Str.append(TI1.getFullName() + ".\"" + C1.getName()).append("\" = ").append(TI2.getFullName() + ".\"" + C2.getName() + "\"");
           }
 

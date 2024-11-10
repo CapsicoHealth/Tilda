@@ -1577,12 +1577,20 @@ public class TildaData implements CodeGenTildaData
         Out.println("       if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader");
         Out.println("        {");
         Out.println("          validateDeserialization();");
-        Out.println("          initForCreate();");
         if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
           {
-            Out.println("          // Auto PK");
             Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("          set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+            Out.println("          if (_"+PK.getName()+" != null) // is an update");
+            Out.println("           {");
+            Out.println("             __Changes.andNot(" + Helper.getRuntimeMask(PK) + ");"); // gotta unset refnum as a change.
+            Out.println("             initForLookup(0); // Read/update with PK");
+            Out.println("           }");
+            Out.println("          else // is a create");
+            Out.println("           {");
+            Out.println("             initForCreate();");
+            Out.println("             // Auto PK");
+            Out.println("             set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+            Out.println("           }");
           }
         Out.println("        }");
         Out.println();
