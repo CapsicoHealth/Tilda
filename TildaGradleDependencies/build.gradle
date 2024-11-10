@@ -45,9 +45,27 @@ dependencies {
     
     // Jakarta
     implementation 'jakarta.activation:jakarta.activation-api:+'
-//    implementation 'jakarta.mail:jakarta.mail-api:+'
     implementation 'jakarta.transaction:jakarta.transaction-api:2.+'
     implementation 'org.eclipse.angus:jakarta.mail:2.+'
+//    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.+'
+//    implementation 'jakarta.xml.ws:jakarta.xml.ws-api:3.+'
+//    compileOnly    'jakarta.servlet:jakarta.servlet-api:6.1.0'
+    
+    // Jersey
+//    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:3+'
+//    implementation 'org.glassfish.jersey.inject:jersey-hk2:3+'
+//    implementation 'org.glassfish.jersey.media:jersey-media-jaxb:3.+'
+//    implementation 'org.glassfish.jersey.media:jersey-media-sse:3+'
+//    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:3+'
+//    implementation 'org.glassfish.jersey.media:jersey-media-json-binding:3+'
+
+//    implementation 'org.glassfish.jersey.core:jersey-common:3.+'
+//    implementation 'org.glassfish.jersey.core:jersey-client:3.+'
+//    implementation 'org.glassfish.jersey.core:jersey-server:3.+'
+//    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:3.+'
+//    implementation 'org.glassfish.jersey.containers:jersey-container-servlet-core:3.+'
+//    implementation 'org.glassfish.jersey.inject:jersey-hk2:3+'
+//    implementation 'org.glassfish.hk2:hk2:3+'
 
     // Google GCP
     implementation platform('com.google.cloud:libraries-bom:26.45.0')
@@ -86,6 +104,7 @@ def dependencyGroups = [
    ,[group: 'org.apache'          , folder: 'apache']
    ,[group: 'commons-'            , folder: 'apache']
    ,[group: 'jakarta'             , folder: 'apache']
+//   ,[group: 'org.glassfish'       , folder: 'glassfish']
 
    ,[group: ''                    , folder: 'other' ]
 ]
