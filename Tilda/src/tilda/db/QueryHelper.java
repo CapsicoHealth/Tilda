@@ -187,15 +187,30 @@ public abstract class QueryHelper
         return this;
       }
 
-    public final QueryHelper selectColumn(ColumnDefinition Col)
+    public final QueryHelper selectColumn(ColumnDefinition col)
     throws Exception
       {
-        _Columns.add(Col);
+        _Columns.add(col);
         StringBuilder Str = new StringBuilder();
-        Col.getFullColumnVarForSelect(_C, Str);
+        col.getFullColumnVarForSelect(_C, Str);
         return selectColumnBase(Str.toString());
       }
 
+    public final QueryHelper selectColumns(ColumnDefinition[] cols, boolean distinct)
+    throws Exception
+      {
+        if (distinct == true)
+          _QueryStr.append("distinct ");
+        
+        for (ColumnDefinition col : cols)
+          {
+            _Columns.add(col);
+            selectColumnBase(col.getFullColumnVarForSelect(_C));
+          }
+
+        return this;
+      }
+    
     protected void appendConcat(StringBuilder str, String sep, ColumnDefinition col, String coalesce)
       {
         if (col != null)
@@ -1569,24 +1584,24 @@ public abstract class QueryHelper
 
 
 
-    public QueryHelper in(ColumnDefinition Col, SelectQuery Q)
+    public QueryHelper in(ColumnDefinition col, SelectQuery Q)
     throws Exception
       {
-        return in(Col, Q, false);
+        return in(col, Q, false);
       }
 
-    public QueryHelper in(ColumnDefinition Col, SelectQuery Q, boolean not)
+    public QueryHelper in(ColumnDefinition col, SelectQuery Q, boolean not)
     throws Exception
       {
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + col.getName() + ": " + _QueryStr.toString());
         if (Q._Cardinality != 1)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + ": " + _QueryStr.toString());
 
         if (_WherePos == -1)
           where();
 
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        col.getFullColumnVarForSelect(_C, _QueryStr);
         if (not == true)
           _QueryStr.append(" not ");
         _QueryStr.append(" in (");
@@ -1594,6 +1609,40 @@ public abstract class QueryHelper
         return this;
       }
 
+
+    public QueryHelper in(ColumnDefinition[] cols, SelectQuery Q)
+    throws Exception
+      {
+        return in(cols, Q, false);
+      }
+
+    public QueryHelper in(ColumnDefinition[] cols, SelectQuery Q, boolean not)
+    throws Exception
+      {
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        if (Q._Cardinality != cols.length)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + " not matching the number of columns passed "+cols.length+": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
+
+        _QueryStr.append(" (");
+        int i = 0;
+        for (ColumnDefinition col : cols)
+          {
+            if (i > 0)
+              _QueryStr.append(", ");
+            col.getFullColumnVarForSelect(_C, _QueryStr);
+            ++i;
+          }
+        _QueryStr.append(" )");
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" in (");
+        _QueryStr.append(Q._QueryStr).append(")");
+        return this;
+      }
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
