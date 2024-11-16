@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tilda.enums.FrameworkSourcedType;
+import tilda.generation.java8.Helper;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 
@@ -31,7 +33,7 @@ public class SameAsHelper
         return getRootSameAs(Src) == getRootSameAs(Dest);
       }
     
-    public static Object getRootSameAs(Column C)
+    public static Column getRootSameAs(Column C)
      {
        while (C._SameAs != null)
         C = C._SameAsObj;
@@ -227,6 +229,17 @@ public class SameAsHelper
               break;
           }
         return L;
-      }    
+      }
+    
+    public static String getPathToRootJsonColClass(Column C)
+      {
+        if (C._JsonSchema != null && C._ParentObject._FST != FrameworkSourcedType.NONE && C._SameAsObj != null)
+          {
+            Object rootObj = SameAsHelper.getRootSameAs(C)._ParentObject;
+            return Helper.getFullBaseClassName(rootObj)+".";//+rootObj._AppDataClassName+".";
+          }
+        return "";
+      }
+    
   }
 

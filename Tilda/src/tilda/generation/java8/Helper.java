@@ -463,7 +463,7 @@ public class Helper
         return Str.toString();
       }
 
-    public static void SwitchLookupIdPreparedStatement(PrintWriter Out, GeneratorSession G, Object O, String Lead, boolean UniqueConstraints, boolean Static)
+    public static void SwitchLookupIdPreparedStatement(PrintWriter Out, GeneratorSession G, Object O, String Lead, boolean UniqueConstraints, boolean Static, boolean useWhereSaved)
       {
         String LookupIdStr = (UniqueConstraints == true ? "__" : "") + "LookupId";
         Out.println(Lead + "switch (" + LookupIdStr + ")");
@@ -482,7 +482,7 @@ public class Helper
               {
                 Out.println(Lead + "   case " + LookupId + ": // PK");
                 for (Column C : O._PrimaryKey._ColumnObjs)
-                  PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false);
+                  PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false, useWhereSaved);
                 Out.println(Lead + "     break;");
               }
           }
@@ -494,7 +494,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": // Unique Index '" + I._Name + "'");
                   for (Column C : I._ColumnObjs)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false);
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false, useWhereSaved);
                   Out.println(Lead + "     break;");
                 }
             }
@@ -506,7 +506,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": {  // Index '" + I._Name + "'");
                   for (Column C : I._ColumnObjs)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false);
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false, useWhereSaved);
                   if (I._SubQuery != null && I._SubQuery._Attributes.isEmpty() == false)
                     {
                       String MethodName = "lookupWhere" + I._Name;
@@ -546,7 +546,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": // Unique Query '" + SWC._Name + "'");
                   for (Query.Attribute A : SWC._Attributes)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, A._Col, Static, A._Multi);
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, A._Col, Static, A._Multi, useWhereSaved);
                   Out.println(Lead + "     break;");
                 }
             }
@@ -596,11 +596,14 @@ public class Helper
         Out.println(Lead + " }");
       }
 
-    public static void PrintColumnPreparedStatementSetter(PrintWriter Out, Object O, String Lead, Column C, boolean Static, boolean arrayOverride)
+    public static void PrintColumnPreparedStatementSetter(PrintWriter Out, Object O, String Lead, Column C, boolean Static, boolean arrayOverride, boolean useWhereSaved)
       {
         String Pred = Static == true ? "Obj." : "";
         if (C != null)
           {
+            if (C.isSavedField() == false) // not all columns have "saved" values.
+              useWhereSaved = false;
+            
             String Pad = O._PadderColumnNames.getPad(C.getName());
             Out.print(Lead + "     ");
             if (C._Nullable == true)
@@ -612,9 +615,9 @@ public class Helper
             else if (C.getType() == ColumnType.DATE)
               Out.println("PS.setDate(++i, new java.sql.Date(" + Pred + "_" + C.getName() + ".getYear()-1900, " + Pred + "_" + C.getName() + ".getMonthValue()-1, " + Pred + "_" + C.getName() + ".getDayOfMonth()));");
             else if (C.isCollection() == false)
-              Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
+              Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + (useWhereSaved==true?"__Saved":"") + "_" + C.getName() + Pad + ");");
             else
-              Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, " + Pred + "_" + C.getName() + Pad + ");");
+              Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, " + Pred + (useWhereSaved==true?"__Saved":"") + "_" + C.getName() + Pad + ");");
           }
       }
 
