@@ -36,6 +36,8 @@ public class ViewColumnWrapper extends Column
         _MaskDef = SameAsCol!=null ? SameAsCol._MaskDef : null;
         _Invariant = SameAsCol!=null?SameAsCol._Invariant : false;
         _FCT = SameAsCol != null ? SameAsCol._FCT : VCol._FCT;
+        if (SameAsCol != null && SameAsCol._JsonSchema != null)
+         _JsonSchema = SameAsCol._JsonSchema;
         if (SameAsCol != null && VCol._UseMapper == true && SameAsCol._Mapper != null)
           _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
         if (SameAsCol != null && VCol._UseEnum == true && SameAsCol._Enum != null)
