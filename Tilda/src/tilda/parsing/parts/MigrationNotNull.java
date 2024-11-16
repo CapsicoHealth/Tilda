@@ -96,6 +96,9 @@ public class MigrationNotNull
                           PS.AddError("Migration definition for not nulls of column '" + _Schema.getShortName() + "." + _ObjectName + "." + col + "' of type '" + c.getType() + "' is different from the type of previous columns as '" + type + "'.");
                       }
                   }
+                if (_Columns.isEmpty() == true)
+                 return false;
+
                 _Default = _Default.trim();
                 String match = getColumnName(_Default);
                 if (match == XXX_INALID_DEFAULT_VALUE_XXX)

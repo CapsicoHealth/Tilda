@@ -1052,7 +1052,7 @@ public class Migrator
     throws Exception
       {
         // Default values are a pain because (1) typing, and (2) the DB often rewrites the values. Therefore
-        // we have to some unholy gymnastics here. It's also hard-coded to Postgres knowledge here, which should be
+        // we have to do some unholy gymnastics here. It's also hard-coded to Postgres knowledge here, which should be
         // fixed when going multi-db.
         String defaultValue = Col._DefaultCreateValue == null
         ? null
@@ -1060,6 +1060,22 @@ public class Migrator
         ? ValueHelper.printValueSQL(sqlGen, Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
         : Col._DefaultCreateValue._Value;
         String defaultValueDB = CMeta._Default;
+        defaultValueDB = cleanDefaultValue(Col, defaultValueDB);
+        // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 10 characters so we get '1111-11-11'
+        if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN)
+          if (Col._DefaultCreateValue != null && Col._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true && defaultValueDB != null && defaultValueDB.length() > 9)
+            {
+              defaultValue = defaultValue.substring(0, 10);
+              defaultValueDB = defaultValueDB.substring(0, 10);
+            }
+        defaultValue = cleanDefaultValue(Col, defaultValue);
+        if (defaultValue == null && defaultValueDB != null
+        || defaultValue != null && defaultValue.equalsIgnoreCase(defaultValueDB) == false)
+          Actions.add(new ColumnDefault(Col));
+      }
+
+    protected static String cleanDefaultValue(Column Col, String defaultValueDB)
+      {
         if (defaultValueDB != null)
           {
             // This section seems to be fairly Postgres-specific. This would need to eventually be abstracted away
@@ -1074,17 +1090,12 @@ public class Migrator
                 if (defaultValueDB.endsWith("'") == true)
                   defaultValueDB = defaultValueDB.substring(0, defaultValueDB.length() - 1);
               }
+            if (defaultValueDB.startsWith("(") == true)
+              defaultValueDB = defaultValueDB.substring(1);
+            if (defaultValueDB.endsWith(")") == true)
+              defaultValueDB = defaultValueDB.substring(0, defaultValueDB.length() - 1);
           }
-        // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 10 characters so we get '1111-11-11'
-        if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN)
-          if (Col._DefaultCreateValue != null && Col._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true && defaultValueDB != null && defaultValueDB.length() > 9)
-            {
-              defaultValue = defaultValue.substring(0, 10);
-              defaultValueDB = defaultValueDB.substring(0, 10);
-            }
-        if (defaultValue == null && defaultValueDB != null
-        || defaultValue != null && defaultValue.equals(defaultValueDB) == false)
-          Actions.add(new ColumnDefault(Col));
+        return defaultValueDB;
       }
 
     private static Object CheckForeignKeys(List<Schema> TildaList, List<String> Errors, Object Obj, FKMeta fk)
