@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.db.InitMode;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -152,12 +153,12 @@ public class TildaData implements CodeGenTildaData
             Out.println("   transient String _" + C.getName() + ";");
             if (C.isJSONColumn() == true)
               Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
-            
+
             String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
             if (C.isCollection() == false)
-              Out.println("   " + jsonClassNameRootPath+C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
+              Out.println("   " + jsonClassNameRootPath + C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
             else
-              Out.println("   List<" + jsonClassNameRootPath+C._JsonSchema._TypeName + "> _" + C.getName() + "Obj = new ArrayList<" + jsonClassNameRootPath+C._JsonSchema._TypeName + ">();");
+              Out.println("   List<" + jsonClassNameRootPath + C._JsonSchema._TypeName + "> _" + C.getName() + "Obj = new ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">();");
             if (jsonClassNameRootPath.length() == 0)
               {
                 Out.println("   public static class " + C._JsonSchema._TypeName);
@@ -367,14 +368,14 @@ public class TildaData implements CodeGenTildaData
             String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
             if (C.isCollection() == false)
               {
-                Out.println("   public final " + jsonClassNameRootPath+C._JsonSchema._TypeName + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
+                Out.println("   public final " + jsonClassNameRootPath + C._JsonSchema._TypeName + " get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
                 Out.println("      {");
                 Out.println("        return _" + C.getName() + "Obj;");
                 Out.println("      }");
               }
             else
               {
-                Out.println("   public final List<" + jsonClassNameRootPath+C._JsonSchema._TypeName + "> get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
+                Out.println("   public final List<" + jsonClassNameRootPath + C._JsonSchema._TypeName + "> get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
                 Out.println("      {");
                 Out.println("        return _" + C.getName() + "Obj;");
                 Out.println("      }");
@@ -474,7 +475,7 @@ public class TildaData implements CodeGenTildaData
         String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
         if (C._JsonSchema != null && C.isCollection() == true)
           {
-            Out.println("   protected static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + jsonClassNameRootPath+C._JsonSchema._TypeName + ">>(){}.getType();");
+            Out.println("   protected static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">>(){}.getType();");
             Out.println();
           }
 
@@ -837,9 +838,9 @@ public class TildaData implements CodeGenTildaData
         else
           {
             if (C.isCollection() == true)
-              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(List<" + jsonClassNameRootPath+C._JsonSchema._TypeName + "> v) throws Exception");
+              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(List<" + jsonClassNameRootPath + C._JsonSchema._TypeName + "> v) throws Exception");
             else
-              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "(" + jsonClassNameRootPath+C._JsonSchema._TypeName + " v) throws Exception");
+              Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "(" + jsonClassNameRootPath + C._JsonSchema._TypeName + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
             if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
@@ -1058,7 +1059,63 @@ public class TildaData implements CodeGenTildaData
 
     protected static void genWriteQuery(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   protected String getWriteQuery(Connection C) throws Exception");
+        Out.println();
+        // There is a natural Id for this object that is from a unique index and not from a manual PK (the condition for _HasNaturalIdentity)
+        if (O._HasNaturalIdentity == true)
+          {
+            Out.println("   public final boolean upsert(Connection C) throws Exception");
+            Out.println("     {");
+            Out.println("       return write(C, true);");
+            Out.println("     }");
+            Out.println();
+            Out.println("   /**");
+            Out.println("   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',");
+            Out.println("   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities");
+            Out.println("   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK");
+            Out.println("   * but also an identify over an email address for example. That email address for a given logical user should be");
+            Out.println("   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based");
+            Out.println("   * on dynamic factors that are very likely to be different across systems.");
+            Out.println("   */");
+            Out.println("   protected int getFirstValidLookupBy() throws Exception");
+            Out.println("     {");
+            // // If there is a primary key, it comes first (id=0), but we output the check for the PK if it exists, last.
+            int LookupId = 0;
+            if (O._Indices != null)
+              for (Index I : O._Indices)
+                if (I != null && I._Unique == true)
+                  {
+                    Out.println();
+                    Out.println("       // Testing if cols for unique index " + I._Name + " were set - Id: " + (++LookupId));
+                    Out.print("       if (");
+                    genColumnTestBoolean(Out, I._ColumnObjs);
+                    Out.println(")");
+                    Out.println("        return " + LookupId + ";");
+                  }
+            if (O._PrimaryKey != null && O._PrimaryKey._Autogen == false)
+              {
+                Out.println();
+                Out.println("       // Testing if primary key has been set - Id: 0"); // The primary key would always be the lookup id 0
+                Out.print("       if (");
+                genColumnTestBoolean(Out, O._PrimaryKey._ColumnObjs);
+                Out.println(")");
+                Out.println("        return 0;");
+              }
+            Out.println();
+            Out.println("       return SystemValues.EVIL_VALUE;");
+            Out.println("     }");
+            Out.println();
+            Out.println();
+            Out.println("   protected final void getUpsertQueryPart(Connection C, StringBuilder str) throws Exception");
+            Out.println("     {");
+            Out.println("       __LookupId = getFirstValidLookupBy();");
+            Out.println("       if (__LookupId == SystemValues.EVIL_VALUE)");
+            Out.println("        throw new Exception(\"Object has not been intialized with sufficient data for any natural key to be available for a lookup.\");");
+            Helper.setUpsertConflicts(Out, O, G);
+            Out.println("     }");
+          }
+        Out.println();
+        Out.println();
+        Out.println("   protected String getWriteQuery(Connection C, boolean upsert) throws Exception");
         Out.println("     {");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
         Out.println();
@@ -1189,6 +1246,15 @@ public class TildaData implements CodeGenTildaData
         Out.println("          S.setCharAt(Pos, ' ');");
         Out.println("        }");
         Out.println();
+        if (O._HasNaturalIdentity == true) // There is a natural Id for this object
+          {
+            Out.println("       if (upsert == true)");
+            Out.println("        {");
+            Out.println("          if (__Init != InitMode.CREATE)");
+            Out.println("           throw new Error(\"Cannot call write with upsert=true if the object is not newly created (CREATE mode).\");");
+            Out.println("          getUpsertQueryPart(C, S);");
+            Out.println("        }");
+          }
         Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
@@ -1280,7 +1346,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("       if (__Init == InitMode.CREATE)");
         Out.println("        {");
         Out.println("          __Init = InitMode.WRITTEN;");
-        Out.println("          __LookupId = 0;");
+        Out.println("          if (__LookupId == SystemValues.EVIL_VALUE)");
+        Out.println("            __LookupId = 0;");
         Out.println("        }");
         Out.println("       else");
         Out.println("        {");
@@ -1532,52 +1599,16 @@ public class TildaData implements CodeGenTildaData
             }
       }
 
-    private static void genLookupByCheck(PrintWriter Out, Object O)
-      {
-        Out.println("   /**");
-        Out.println("   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',");
-        Out.println("   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities");
-        Out.println("   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK");
-        Out.println("   * but also an identify over an email address for example. That email address for a given logical user should be");
-        Out.println("   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based");
-        Out.println("   * on dynamic factors that are very likely to be different across systems.");
-        Out.println("   */");
-        Out.println("   protected int getFirstValidLookupBy() throws Exception");
-        Out.println("     {");
-
-        // If there is a primary key, it comes first (id=0), but we output the check for the PK if it exists, last.
-        int LookupId = O._PrimaryKey == null ? -1 : 0;
-        if (O._Indices != null)
-          for (Index I : O._Indices)
-            if (I != null && I._Unique == true)
-              {
-                Out.println();
-                Out.println("       // Testing if cols for unique index " + I._Name + " were set - Id: " + (++LookupId));
-                Out.print("       if (");
-                genColumnTestBoolean(Out, I._ColumnObjs);
-                Out.println(")");
-                Out.println("        return " + LookupId + ";");
-              }
-        if (O._PrimaryKey != null)
-          {
-            Out.println();
-            Out.println("       // Testing if primary key has been set - Id: 0"); // The primary key would always be the lkookip id 0
-            Out.print("       if (");
-            genColumnTestBoolean(Out, O._PrimaryKey._ColumnObjs);
-            Out.println(")");
-            Out.println("        return " + 0 + ";");
-          }
-        Out.println();
-        Out.println("       return SystemValues.EVIL_VALUE;");
-        Out.println("     }");
-      }
-
-
     @Override
     public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
         Out.println("   public final boolean write(Connection C) throws Exception");
+        Out.println("     {");
+        Out.println("       return write(C, false);");
+        Out.println("     }");
+        Out.println();
+        Out.println("   protected final boolean write(Connection C, boolean upsert) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println();
@@ -1622,7 +1653,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("          return false;");
         Out.println("        }");
         Out.println();
-        Out.println("       String Q = getWriteQuery(C);");
+        Out.println("       String Q = getWriteQuery(C, upsert);");
         Out.println();
         Out.println("       java.sql.PreparedStatement PS = null;");
         Out.println("       int count = 0;");
@@ -1632,6 +1663,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("          PS = C.prepareStatement(Q);");
         Out.println("          int i = populatePreparedStatement(C, PS, AllocatedArrays);");
         Out.println();
+
+        Out.println("          if (__Init != InitMode.CREATE)");
         Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", true, false, true);
         Out.println();
         if (G.getSql().needsSavepoint() == true)
@@ -1661,70 +1694,74 @@ public class TildaData implements CodeGenTildaData
         genPostWriteObjectStateUpdate(Out, O);
       }
 
-
-    @Override
-    public void genMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
-    throws Exception
-      {
-        Out.println("   public final boolean upsert(Connection C, boolean updateFirst) throws Exception");
-        Out.println("     {");
-        Out.println("       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory");
-        Out.println("                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader");
-        Out.println("               ;");
-        Out.println("       if (OK == false)");
-        Out.println("        throw new Exception(\"Object has not been instanciated via deserialization or the factory create() method: __Init:\"+__Init+\"; __NewlyCreated:\"+__NewlyCreated+\"; __LookupId: \"+__LookupId+\";\");");
-        Out.println();
-        Out.println("       if (__Init == null && __LookupId==0)  // object deserialized");
-        Out.println("        validateDeserialization();");
-        Out.println();
-        Out.println("       int lookupId = getFirstValidLookupBy();");
-        Out.println("       if (lookupId == SystemValues.EVIL_VALUE)");
-        Out.println("        throw new Exception(\"Object has not been intialized with sufficient data for any natural key to be available for a lookup.\");");
-        Out.println();
-        Out.println("       if (updateFirst == true)");
-        Out.println("        {");
-        Out.println("          initForLookup(lookupId);");
-        Out.println("          if (write(C) == false)");
-        Out.println("           {");
-        Out.println("             initForCreate();");
-        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
-          {
-            Out.println("             // Auto PK");
-            Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("             set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
-          }
-        Out.println("             return write(C);");
-        Out.println("           }");
-        Out.println("        }");
-        Out.println("       else");
-        Out.println("        {");
-        Out.println("          initForCreate();");
-        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
-          {
-            Out.println("          // Auto PK");
-            Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("          set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
-          }
-        Out.println("          if (write(C) == false)");
-        Out.println("           {");
-        Out.println("             initForLookup(lookupId);");
-        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
-          {
-            Out.println("              // Undo auto PK");
-            Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("              __Changes.andNot(" + Helper.getRuntimeMask(PK) + ");");
-          }
-        Out.println("             return write(C);");
-        Out.println("           }");
-        Out.println("        }");
-        Out.println();
-        Out.println("       return true;");
-        Out.println("     }");
-        Out.println();
-        genLookupByCheck(Out, O);
-        Out.println();
-      }
-
+    /*
+     * @Override
+     * public void genMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
+     * throws Exception
+     * {
+     * Out.println("   public final boolean upsert(Connection C, boolean updateFirst) throws Exception");
+     * Out.println("     {");
+     * Out.println("       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory");
+     * Out.println("                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader");
+     * Out.println("               ;");
+     * Out.println("       if (OK == false)");
+     * Out.
+     * println("        throw new Exception(\"Object has not been instanciated via deserialization or the factory create() method: __Init:\"+__Init+\"; __NewlyCreated:\"+__NewlyCreated+\"; __LookupId: \"+__LookupId+\";\");"
+     * );
+     * Out.println();
+     * Out.println("       if (__Init == null && __LookupId==0)  // object deserialized");
+     * Out.println("        validateDeserialization();");
+     * Out.println();
+     * Out.println("       int lookupId = getFirstValidLookupBy();");
+     * Out.println("       if (lookupId == SystemValues.EVIL_VALUE)");
+     * Out.println("        throw new Exception(\"Object has not been intialized with sufficient data for any natural key to be available for a lookup.\");");
+     * Out.println();
+     * Out.println("       if (updateFirst == true)");
+     * Out.println("        {");
+     * Out.println("          initForLookup(lookupId);");
+     * Out.println("          if (write(C) == false)");
+     * Out.println("           {");
+     * Out.println("             initForCreate();");
+     * if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+     * {
+     * Out.println("             // Auto PK");
+     * Column PK = O._PrimaryKey._ColumnObjs.get(0);
+     * Out.println("             set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" +
+     * TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+     * }
+     * Out.println("             return write(C);");
+     * Out.println("           }");
+     * Out.println("        }");
+     * Out.println("       else");
+     * Out.println("        {");
+     * Out.println("          initForCreate();");
+     * if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+     * {
+     * Out.println("          // Auto PK");
+     * Column PK = O._PrimaryKey._ColumnObjs.get(0);
+     * Out.println("          set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" +
+     * TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
+     * }
+     * Out.println("          if (write(C) == false)");
+     * Out.println("           {");
+     * Out.println("             initForLookup(lookupId);");
+     * if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+     * {
+     * Out.println("              // Undo auto PK");
+     * Column PK = O._PrimaryKey._ColumnObjs.get(0);
+     * Out.println("              __Changes.andNot(" + Helper.getRuntimeMask(PK) + ");");
+     * }
+     * Out.println("             return write(C);");
+     * Out.println("           }");
+     * Out.println("        }");
+     * Out.println();
+     * Out.println("       return true;");
+     * Out.println("     }");
+     * Out.println();
+     * // genLookupByCheck(Out, O);
+     * Out.println();
+     * }
+     */
 
     @Override
     public void genMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O, List<Column> CopyToColumns)
@@ -1966,7 +2003,7 @@ public class TildaData implements CodeGenTildaData
                         String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
                         Out.println(Header + " if (_" + C.getName() + " != null)");
                         Out.println(Header + "  {");
-                        Out.println(Header + "    " + jsonClassNameRootPath+C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + jsonClassNameRootPath+C._JsonSchema._TypeName + "[].class);");
+                        Out.println(Header + "    " + jsonClassNameRootPath + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + jsonClassNameRootPath + C._JsonSchema._TypeName + "[].class);");
                         Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
                         Out.println(Header + "  }");
                       }

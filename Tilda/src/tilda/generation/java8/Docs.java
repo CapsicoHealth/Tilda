@@ -355,7 +355,7 @@ public class Docs implements CodeGenDocs
         + "  in memory. Call refresh() to force a select and retrieve all the fields for that record." + SystemValues.NEWLINE
         + Helper.getMultiLineCommentEnd());
       }
-
+/*
     @Override
     public void docMethodUpsert(PrintWriter Out, GeneratorSession G, Object O)
       {
@@ -373,8 +373,8 @@ public class Docs implements CodeGenDocs
         + " refresh() to force a select and retrieve all the fields for that record." + SystemValues.NEWLINE
         + Helper.getMultiLineCommentEnd());
       }
-
-
+*/
+    
     @Override
     public void docMethodLookupByPrimaryKey(PrintWriter Out, GeneratorSession G, PrimaryKey pk)
       {

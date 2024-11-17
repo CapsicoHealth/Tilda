@@ -326,7 +326,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("          if (size < 0 || size > 5000)"); // Gotta switch to cursor mode if getting a lot of data.
         Out.println("           PS.setFetchSize(5000);");
         StringBuilderWriter SBW = new StringBuilderWriter();
-        Helper.SwitchLookupIdPreparedStatement(new PrintWriter(SBW), G, O, "          ", false, true);
+        Helper.SwitchLookupIdPreparedStatement(new PrintWriter(SBW), G, O, "          ", false, true, false);
         if (SBW.getBuilder().indexOf("++i") != -1)
           Out.println("          int i = 0;");
         Out.println(SBW.getBuilder().toString());
@@ -526,7 +526,7 @@ public class TildaFactory implements CodeGenTildaFactory
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
               Out.print("       Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
-              if (C._PrimaryKey == true && I._Parent.getLifecycle() != ObjectLifecycle.READONLY)
+              if ((C._PrimaryKey == true || C.isSavedField() == true) && I._Parent.getLifecycle() != ObjectLifecycle.READONLY)
                 Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
               Out.println();
             }
@@ -972,7 +972,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         {");
         if (G.getSql().needsSavepoint() == true)
           Out.println("           C.setSavepoint();");
-        Out.println("           String Q = L.get(0).getWriteQuery(C);");
+        Out.println("           String Q = L.get(0).getWriteQuery(C, false);");
         Out.println("           PS = C.prepareStatement(Q);");
         Out.println("           int insertCount = 0;");
         Out.println();

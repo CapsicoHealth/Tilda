@@ -469,11 +469,11 @@ public class Generator
             Out.println();
             DG.docMethodWrite(Out, G, O);
             CG.genMethodWrite(Out, G, O);
-            if (O._HasNaturalIdentity == true) // There is a natural Id for this object
-              {
-                DG.docMethodUpsert(Out, G, O);
-                CG.genMethodUpsert(Out, G, O);
-              }
+//            if (O._HasNaturalIdentity == true) // There is a natural Id for this object
+//              {
+//                DG.docMethodUpsert(Out, G, O);
+//                CG.genMethodUpsert(Out, G, O);
+//              }
           }
 
         Out.println();

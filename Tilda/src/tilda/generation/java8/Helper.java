@@ -107,6 +107,11 @@ public class Helper
         return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + "._Mask";
       }
 
+    public static String getRuntimeShortSelectStr(Column C, String strVarName)
+      {
+        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + ".getShortColumnVarForSelect(C, " + strVarName + ")";
+      }
+
     public static String getRuntimeSelectStr(Column C)
       {
         return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + ".getFullColumnVarForSelect(C, S)";
@@ -206,6 +211,67 @@ public class Helper
         Out.println("          default: throw new Exception(\"Invalid LookupId \"+__LookupId+\" found. Cannot prepare statement.\");");
         Out.println("        }");
       }
+
+    public static void setUpsertConflicts(PrintWriter Out, Object O, GeneratorSession G)
+      {
+        // TODO Auto-generated method stub
+        int LookupId = -1;
+        Out.println("       str.append(\"\\nON CONFLICT(\");");
+        Out.println("       switch (__LookupId)");
+        Out.println("        {");
+        // Upserts on PKs make no sense unless they are manual as they may represent an "almost" natural Id
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == false)
+          {
+            ++LookupId;
+            Out.println("          case " + LookupId + ": ");
+            boolean First = true;
+            for (Column C : O._PrimaryKey._ColumnObjs)
+              if (C != null)
+                {
+                  if (First == true)
+                    First = false;
+                  else
+                    Out.println("                str.append(\", \");");
+                  Out.println("                " + getRuntimeShortSelectStr(C, "str") + ";");
+                }
+            Out.println("                break;");
+          }
+        for (Index I : O._Indices)
+          if (I != null && I._Unique == true)
+            {
+              ++LookupId;
+              Out.println("          case " + LookupId + ":");
+              boolean First = true;
+              for (Column C : I._ColumnObjs)
+                if (C != null)
+                  {
+                    if (First == true)
+                      First = false;
+                    else
+                      Out.println("                str.append(\", \");");
+                    if (C._FCT != FrameworkColumnType.OCC_CREATED)
+                      Out.println("                " + getRuntimeShortSelectStr(C, "str") + ";");
+                  }
+              Out.println("             break;");
+            }
+        // Out.println(" case " + SystemValues.EVIL_VALUE + ": if (__Init == InitMode.CREATE) break;");
+        Out.println("          default: throw new Exception(\"Invalid LookupId \"+__LookupId+\" found. Cannot create upsert statement.\");");
+        Out.println("        }");
+        Out.println("       str.append(\") DO UPDATE\\n\");");
+
+
+        Out.println("       boolean first = true;");
+        Out.println("       str.append(\"set \");");
+        for (Column C : O._Columns)
+          if (C != null && C._Mode != ColumnMode.CALCULATED)
+            {
+              String Mask = Helper.getRuntimeMask(C);
+              String Pad = O._PadderColumnNames.getPad(C.getName());
+              if (C._FCT != FrameworkColumnType.OCC_CREATED && C.isPrimaryKey() == false)
+                Out.println("       if (__Changes.intersects(" + Mask + Pad + ") == true) { if (first == true) first = false; else str.append(\"    ,\"); " + getRuntimeShortSelectStr(C, "str") + Pad + "; str.append(\"=EXCLUDED.\"); " + getRuntimeShortSelectStr(C, "str") + Pad + "; str.append(\"\\n\"); }");
+            }
+      }
+
 
     public static String getTimestampDefaultSetter(Column C, ColumnValue V)
     throws Error
@@ -520,7 +586,7 @@ public class Helper
                           String Pad = O._PadderColumnNames.getPad(C.getName());
                           Out.print(Lead + "     ");
                           if (C.getType().isPrimitive() == false)
-                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi==true?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
+                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
                           if (C.getType() == ColumnType.DATETIME)
                             Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                           else if (C.getType() == ColumnType.DATETIME_PLAIN)
@@ -571,7 +637,7 @@ public class Helper
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
                       if (C.getType().isPrimitive() == false || A._Multi == true)
-                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi==true?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
+                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
                       if (C.getType() == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                       else if (C.getType() == ColumnType.DATETIME_PLAIN)
@@ -603,11 +669,11 @@ public class Helper
           {
             if (C.isSavedField() == false) // not all columns have "saved" values.
               useWhereSaved = false;
-            
+
             String Pad = O._PadderColumnNames.getPad(C.getName());
             Out.print(Lead + "     ");
             if (C._Nullable == true)
-              Out.print("if (" + Pred + "isNull" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + (C.isCollection()==true || arrayOverride == true ?"ARRAY":JavaJDBCType.get(C.getType())._JDBCSQLType) + ");  else ");
+              Out.print("if (" + Pred + "isNull" + TextUtil.capitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + (C.isCollection() == true || arrayOverride == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + ");  else ");
             if (C.getType() == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(" + Pred + "_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else if (C.getType() == ColumnType.DATETIME_PLAIN)
@@ -615,9 +681,9 @@ public class Helper
             else if (C.getType() == ColumnType.DATE)
               Out.println("PS.setDate(++i, new java.sql.Date(" + Pred + "_" + C.getName() + ".getYear()-1900, " + Pred + "_" + C.getName() + ".getMonthValue()-1, " + Pred + "_" + C.getName() + ".getDayOfMonth()));");
             else if (C.isCollection() == false)
-              Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + (useWhereSaved==true?"__Saved":"") + "_" + C.getName() + Pad + ");");
+              Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + (useWhereSaved == true ? "__Saved" : "") + "_" + C.getName() + Pad + ");");
             else
-              Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, " + Pred + (useWhereSaved==true?"__Saved":"") + "_" + C.getName() + Pad + ");");
+              Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, " + Pred + (useWhereSaved == true ? "__Saved" : "") + "_" + C.getName() + Pad + ");");
           }
       }
 
@@ -679,9 +745,10 @@ public class Helper
       }
 
     public static String getGetterCode(String colName, String prefix)
-     {
-       return (prefix==null?"":prefix)+"get" + TextUtil.capitalizeFirstCharacter(colName) + "()";
-     }
+      {
+        return (prefix == null ? "" : prefix) + "get" + TextUtil.capitalizeFirstCharacter(colName) + "()";
+      }
+
     public static void JSONExport(PrintWriter Out, Column C)
       {
         boolean nullableCollection = false;
@@ -702,11 +769,11 @@ public class Helper
               }
           }
         if (C.getType() == ColumnType.JSON)
-          Out.println("        JSONUtil.printSubJson(out, \"" + C.getName() + "\", ++i==0, "+Helper.printGetterCode("Obj.", "_" + C.getName(), C.getName(), C.getType(), C.isCollection(), C._MaskDef)+");");
+          Out.println("        JSONUtil.printSubJson(out, \"" + C.getName() + "\", ++i==0, " + Helper.printGetterCode("Obj.", "_" + C.getName(), C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ");");
         else if (C.isCollection() == false)
-          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, "+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+");");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ");");
         else
-          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, "+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+");");
+          Out.println("        JSONUtil.print(out, \"" + C.getName() + "\", ++i==0, " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ");");
         if (nullableCollection == true)
           {
             Out.println("      else if (noNullArrays == true)");
@@ -731,17 +798,18 @@ public class Helper
             || C.getType() == ColumnType.BOOLEAN
            )
         //@formatter:on
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) +");");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, \"\" + " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ");");
         else if (C.isCollection() == true)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "TextUtil.print(" + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ", \",\"));");
         else if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL("+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
-//        else if (C.getType() == ColumnType.DATETIME_PLAIN)
-//          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.parsefromJSONWithoutTZ("+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(" + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + "));");
+        // else if (C.getType() == ColumnType.DATETIME_PLAIN)
+        // Out.println(" TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.parsefromJSONWithoutTZ("+Helper.printGetterCode("Obj.", "get" +
+        // TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
         else if (C.getType() == ColumnType.DATE)
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate("+Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(" + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + "));");
         else
-          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+ ");");
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ");");
         return false;
       }
 
@@ -814,11 +882,10 @@ public class Helper
     public static String printGetterCode(String prefix, String getterStr, String colName, ColumnType type, boolean collection, String maskDef)
       {
         return maskDef == null
-        ? prefix+getterStr
-        : collection == true && type!=ColumnType.DATETIME && type!=ColumnType.DATETIME_PLAIN
-        ? "("+prefix+"__MaskMode==true ? TextUtil.mask(" + prefix+getterStr+", "+ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + ") : "+prefix+getterStr+")"
-        : "("+prefix+"__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix+getterStr) + " : "+prefix+getterStr+")"
-        ;
+        ? prefix + getterStr
+        : collection == true && type != ColumnType.DATETIME && type != ColumnType.DATETIME_PLAIN
+        ? "(" + prefix + "__MaskMode==true ? TextUtil.mask(" + prefix + getterStr + ", " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix + getterStr) + ") : " + prefix + getterStr + ")"
+        : "(" + prefix + "__MaskMode==true ? " + ValueHelper.printValueJava(colName, type, collection, maskDef, prefix + getterStr) + " : " + prefix + getterStr + ")";
       }
 
     protected static String getSystemMappedColumnName(Column col)
@@ -832,5 +899,5 @@ public class Helper
              : col.getName();
         /*@formatter:on*/
       }
-    
+
   }
