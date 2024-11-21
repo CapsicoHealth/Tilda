@@ -220,21 +220,24 @@ public class Helper
         Out.println("       switch (__LookupId)");
         Out.println("        {");
         // Upserts on PKs make no sense unless they are manual as they may represent an "almost" natural Id
-        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == false)
+        if (O._PrimaryKey != null)
           {
             ++LookupId;
-            Out.println("          case " + LookupId + ": ");
-            boolean First = true;
-            for (Column C : O._PrimaryKey._ColumnObjs)
-              if (C != null)
-                {
-                  if (First == true)
-                    First = false;
-                  else
-                    Out.println("                str.append(\", \");");
-                  Out.println("                " + getRuntimeShortSelectStr(C, "str") + ";");
-                }
-            Out.println("                break;");
+            if (O._PrimaryKey._Autogen == false)
+              {
+                Out.println("          case " + LookupId + ": ");
+                boolean First = true;
+                for (Column C : O._PrimaryKey._ColumnObjs)
+                  if (C != null)
+                    {
+                      if (First == true)
+                        First = false;
+                      else
+                        Out.println("                str.append(\", \");");
+                      Out.println("                " + getRuntimeShortSelectStr(C, "str") + ";");
+                    }
+                Out.println("                break;");
+              }
           }
         for (Index I : O._Indices)
           if (I != null && I._Unique == true)
@@ -270,6 +273,10 @@ public class Helper
               if (C._FCT != FrameworkColumnType.OCC_CREATED && C.isPrimaryKey() == false)
                 Out.println("       if (__Changes.intersects(" + Mask + Pad + ") == true) { if (first == true) first = false; else str.append(\"    ,\"); " + getRuntimeShortSelectStr(C, "str") + Pad + "; str.append(\"=EXCLUDED.\"); " + getRuntimeShortSelectStr(C, "str") + Pad + "; str.append(\"\\n\"); }");
             }
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+          {
+            Out.println("       str.append(\"returning \"); "+ getRuntimeShortSelectStr(O._PrimaryKey._ColumnObjs.get(0), "str") + ";");            
+          }
       }
 
 

@@ -1079,7 +1079,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("   protected int getFirstValidLookupBy() throws Exception");
             Out.println("     {");
             // // If there is a primary key, it comes first (id=0), but we output the check for the PK if it exists, last.
-            int LookupId = 0;
+            int LookupId = O._PrimaryKey != null ? 0 : -1;
             if (O._Indices != null)
               for (Index I : O._Indices)
                 if (I != null && I._Unique == true)
@@ -1630,6 +1630,11 @@ public class TildaData implements CodeGenTildaData
             Out.println("             set" + TextUtil.capitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.escapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
             Out.println("           }");
           }
+        else
+          {
+            Out.println("          if (upsert == true)");
+            Out.println("           initForCreate();");
+          }
         Out.println("        }");
         Out.println();
         Out.println("       if (hasChanged() == false)");
@@ -1671,7 +1676,30 @@ public class TildaData implements CodeGenTildaData
           {
             Out.println("          C.setSavepoint();");
           }
-        Out.println("          count = PS.executeUpdate();");
+        // no PK, irrespective of an upsert or not, we do a regular executeUpdate because the "key" or natural identity was provided in the statement.
+        if (O._PrimaryKey == null || O._PrimaryKey._Autogen == false)
+          {
+            Out.println("          count = PS.executeUpdate();");
+          }
+        else
+          {
+            // If it is not an upsert, then it's a plain insert or update
+            Out.println("          if (upsert == false)");
+            Out.println("            count = PS.executeUpdate();");
+            Out.println("          else");
+            // If it is an upsert, we expect a returning value
+            Out.println("           {");
+            Out.println("             PS.execute();");
+            Out.println("             java.sql.ResultSet rs = PS.getResultSet();");
+            Out.println("             if (rs.next() == true)");
+            Out.println("              {");
+            Out.println("                 _"+O._PrimaryKey._ColumnObjs.get(0).getName()+" = rs.getLong(1);");
+            Out.println("                 count = 1;");
+            Out.println("              }");
+            Out.println("             else");
+            Out.println("              count = 0;");
+            Out.println("           }");
+          }
         if (G.getSql().needsSavepoint() == true)
           {
             Out.println("          C.releaseSavepoint(true);");
