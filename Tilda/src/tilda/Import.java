@@ -196,7 +196,7 @@ public class Import
           }
 
         // long T = System.nanoTime();
-        Gson gson = GSONSerializerInitializer.registerSerializers(new GsonBuilder().setPrettyPrinting()).create();
+        Gson gson = GSONSerializerInitializer.newBuilder().setPrettyPrinting().create();
         Importer I = (Importer) gson.fromJson(R, RootClass);
         // TODO OPTIONAL: Print Time taken to read File
         R.close();

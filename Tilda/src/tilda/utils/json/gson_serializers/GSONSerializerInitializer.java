@@ -33,8 +33,18 @@ public class GSONSerializerInitializer
 
         builder.registerTypeAdapter(GSONSerializer_LocalDate._TYPE, new GSONSerializer_LocalDate());
         builder.registerTypeAdapter(GSONSerializer_LocalDateTime._TYPE, new GSONSerializer_LocalDateTime());
+        builder.registerTypeAdapter(GSONSerializer_ZonedDateTime._TYPE, new GSONSerializer_ZonedDateTime());
 
         return builder;
       }
+    
+   /**
+    * Returns a new builder, pre-initialized with custom serializers for LocalData, LocalDateTime and ZonedDateTime
+    * @return
+    */
+   public static GsonBuilder newBuilder()
+    {
+      return GSONSerializerInitializer.registerSerializers(new GsonBuilder());
+    }
 
   }
