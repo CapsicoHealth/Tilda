@@ -1248,12 +1248,8 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         if (O._HasNaturalIdentity == true) // There is a natural Id for this object
           {
-            Out.println("       if (upsert == true)");
-            Out.println("        {");
-            Out.println("          if (__Init != InitMode.CREATE)");
-            Out.println("           throw new Error(\"Cannot call write with upsert=true if the object is not newly created (CREATE mode).\");");
-            Out.println("          getUpsertQueryPart(C, S);");
-            Out.println("        }");
+            Out.println("       if (upsert == true && __Init == InitMode.CREATE)");
+            Out.println("        getUpsertQueryPart(C, S);");
           }
         Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
@@ -1621,6 +1617,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("          if (_" + PK.getName() + " != null) // is an update");
             Out.println("           {");
             Out.println("             __Changes.andNot(" + Helper.getRuntimeMask(PK) + ");"); // gotta unset refnum as a change.
+            Out.println("             __Saved_" + PK.getName() + " = _" + PK.getName()+";");
             Out.println("             initForLookup(0); // Read/update with PK");
             Out.println("           }");
             Out.println("          else // is a create");
@@ -1683,11 +1680,11 @@ public class TildaData implements CodeGenTildaData
           }
         else
           {
-            // If it is not an upsert, then it's a plain insert or update
-            Out.println("          if (upsert == false)");
+            // If it is not an upsert in a create mode, then it's a plain insert or update
+            Out.println("          if (upsert == false || __Init != InitMode.CREATE)");
             Out.println("            count = PS.executeUpdate();");
-            Out.println("          else");
-            // If it is an upsert, we expect a returning value
+            Out.println("          else if (__Init == InitMode.CREATE)");
+            // If it is an upsert in CREATE MODE, we expect a returning value
             Out.println("           {");
             Out.println("             PS.execute();");
             Out.println("             java.sql.ResultSet rs = PS.getResultSet();");
