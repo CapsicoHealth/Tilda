@@ -25,24 +25,33 @@ public class ColumnAlterNull extends MigrationAction
   {
     public ColumnAlterNull(Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
-        _Col = Col;
+        this(Col, null);
       }
 
-    protected Column _Col;
+    public ColumnAlterNull(Column Col, String temporaryDefaultValue)
+      {
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
+        _col = Col;
+        _temporaryDefaultValue = temporaryDefaultValue;        
+      }
+
+    protected Column _col;
+    protected String _temporaryDefaultValue;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableAlterColumnNull(_Col, _Col._DefaultCreateValue == null ? null : _Col._DefaultCreateValue._Value);
+        return C.alterTableAlterColumnNull(_col, _col._DefaultCreateValue == null ? null : _col._DefaultCreateValue._Value, _temporaryDefaultValue);
       }
 
     @Override
     public String getDescription()
       {
-        return "Alter table "+_Col._ParentObject.getFullName()
-              +" alter column "+_Col.getName()
-              +(_Col._Nullable==true?" null":" not null")
-              +(_Col._DefaultCreateValue == null ? "" : " with default '"+_Col._DefaultCreateValue._Value+"'");
+        return "Alter table " + _col._ParentObject.getFullName()
+        + " alter column " + _col.getName()
+        + (_col._Nullable == true ? " null" : " not null")
+        + (_col._DefaultCreateValue == null ? "" : " with default '" + _col._DefaultCreateValue._Value + "'")
+        + (_temporaryDefaultValue == null ? "" : " with one-time migration default '"+_temporaryDefaultValue+"'")
+        ;
       }
   }

@@ -539,7 +539,10 @@ public class Migrator
                           NeedsDdlDependencyManagement = true;
 
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
-                          Actions.add(new ColumnAlterNull(Col));
+                         {
+                           MigrationNotNull mnn = S._Migration==null ? null : S._Migration.getNotNull(Col);
+                           Actions.add(new ColumnAlterNull(Col, mnn == null ? null : mnn._Default));
+                         }
                       }
                   }
                 if (CAM.isEmpty() == false)

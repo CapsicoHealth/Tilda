@@ -275,7 +275,7 @@ public abstract class CommonStoreImpl implements DBType
         if (col._Nullable == false && temporaryDefaultValue != null)
           {
             String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
-            Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + ";";
+            Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + " where \"" + col.getName() + "\" is null;";
             if (com.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
               return false;
             Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ALTER COLUMN \"" + col.getName() + "\" SET NOT NULL;";
@@ -313,28 +313,38 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     @Override
-    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
+    public boolean alterTableAlterColumnNull(Connection con, Column col, String defaultValue, String temporaryDefaultValue)
     throws Exception
       {
-        if (Col._Nullable == false)
+        if (col._Nullable == false)
           {
             if (JDBCHelper.isRehearsal() == false)
               {
-                String Q = "SELECT 1 from " + Col._ParentObject.getShortName() + " where \"" + Col.getName() + "\" IS NULL limit 1";
-                ScalarRP RP = new ScalarRP();
-                int rows = Con.executeSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
-                if (rows > 0)
-                  {
-                    if (DefaultValue == null)
-                      throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-                    Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
-                    Con.executeUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-                  }
+                if (temporaryDefaultValue != null)
+                 {
+                   String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
+                   String Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + " where \"" + col.getName() + "\" is null;";
+                   if (con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
+                     return false;
+                 }
+                else
+                 {
+                   String Q = "SELECT 1 from " + col._ParentObject.getShortName() + " where \"" + col.getName() + "\" IS NULL limit 1";
+                   ScalarRP RP = new ScalarRP();
+                   int rows = con.executeSelect(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q, RP);
+                   if (rows > 0)
+                    {
+                      if (defaultValue == null)
+                        throw new Exception("Cannot alter column '" + col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
+                      Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\" = " + ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), defaultValue) + " where \"" + col.getName() + "\" IS NULL";
+                      con.executeUpdate(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
+                    }
+                 }
               }
           }
 
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
-        return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ALTER COLUMN \"" + col.getName() + "\" " + (col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
+        return con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
       }
 
     @Override

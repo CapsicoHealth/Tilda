@@ -46,6 +46,7 @@ public class ColumnAdd extends MigrationAction
         return "Alter table "+_col._ParentObject.getFullName()+" add column "+_col.getName()
         +(_col._Nullable == false ? " SET NOT NULL" : "")
         +(_col._DefaultCreateValue == null ? "" : " with default '"+_col._DefaultCreateValue._Value+"'")
+        +(_temporaryDefaultValue == null ? "" : " with one-time migration default '"+_temporaryDefaultValue+"'")
         ;
       }
   }

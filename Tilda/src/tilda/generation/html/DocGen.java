@@ -340,7 +340,7 @@ public class DocGen
         String CSS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.css");
         String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
         writer.println(
-        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n"
         + "<title>Master Database Index</title>\n"
         + "<STYLE>\n"
         + CSS

@@ -602,10 +602,10 @@ public final class Connection
         return _DB.alterTableDropColumn(this, Obj, ColumnName);
       }
 
-    public boolean alterTableAlterColumnNull(Column Col, String DefaultValue)
+    public boolean alterTableAlterColumnNull(Column col, String defaultValue, String temporaryDefaultValue)
     throws Exception
       {
-        return _DB.alterTableAlterColumnNull(this, Col, DefaultValue);
+        return _DB.alterTableAlterColumnNull(this, col, defaultValue, temporaryDefaultValue);
       }
 
     public boolean createTable(Object Obj)
