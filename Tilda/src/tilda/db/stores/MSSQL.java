@@ -313,7 +313,7 @@ public class MSSQL implements DBType
 
 
     @Override
-    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
+    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue, String temporaryDefaultValue)
     throws Exception
       {
         throw new UnsupportedOperationException();
