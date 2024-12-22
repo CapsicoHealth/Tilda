@@ -8,7 +8,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v11.0"/>
 	<classpathentry exported="true" kind="lib" path="lib/deps/apache/arrow-format-15.0.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -34,17 +34,17 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-csv-1.11.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-csv-1.12.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-dbcp2-2.12.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-dbcp2-2.13.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-io-2.16.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-io-2.17.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -69,7 +69,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-text-1.12.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-text-1.13.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -99,32 +99,32 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-1.2-api-2.23.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-1.2-api-2.24.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-api-2.23.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-api-2.24.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-core-2.23.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-core-2.24.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-web-2.23.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-web-2.24.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-tools-2.4.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-tools-2.5.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-uima-2.4.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-uima-2.5.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -239,7 +239,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-client-2.6.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-client-2.7.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -249,7 +249,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20240819-2.0.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20241205-2.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -319,12 +319,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-1.44.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-1.45.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-apache-v2-1.44.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-apache-v2-1.45.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -334,7 +334,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-gson-1.44.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-gson-1.45.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -719,7 +719,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/jsoup-1.18.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/jsoup-1.18.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -734,25 +734,14 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/slf4j-api-2.0.13.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/slf4j-api-2.0.16.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/GoogleBigQueryJDBC42.jar">
+	<classpathentry exported="true" kind="lib" path="lib/mssql-jdbc-12.8.1.jre11.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/sqljdbc42.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v11.0">
-		<attributes>
-			<attribute name="module" value="true"/>
-			<attribute name="owner.project.facets" value="#system#;jst.utility"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
