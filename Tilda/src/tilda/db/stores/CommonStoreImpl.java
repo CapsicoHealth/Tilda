@@ -855,10 +855,14 @@ public abstract class CommonStoreImpl implements DBType
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);
             Out.print(" where " + Q._ClauseStatic);
           }
-        Out.println(";");
+        
+        if (IX._NullsNotDistinct == true)
+          Out.print(" NULLS NOT DISTINCT");
+        
+        Out.print(";");
 
         if (IX._Cluster == true)
-          Out.println("ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";");
+          Out.print("ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";");
 
         return OutStr.toString();
       }
@@ -870,7 +874,11 @@ public abstract class CommonStoreImpl implements DBType
         if (supportsIndices() == false)
           return true;
 
-        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
+        String Q = alterTableAddIndexDDL(IX);
+        if (Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q) == false)
+         return false;
+        Q = "COMMENT ON INDEX "+IX._Parent._ParentSchema._Name.toUpperCase()+"."+IX.getName()+" IS E" + TextUtil.escapeSingleQuoteForSQL(Q) + ";";
+        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);        
       }
 
     @Override

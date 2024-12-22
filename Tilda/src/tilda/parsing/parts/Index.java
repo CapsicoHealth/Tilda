@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.db.stores.DBType;
 import tilda.enums.ColumnMode;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
@@ -30,13 +31,14 @@ import tilda.utils.TextUtil;
 public class Index
   {
     /*@formatter:off*/
-    @SerializedName("name"    ) public String         _Name   ;
-    @SerializedName("columns" ) public String[]       _Columns;
-    @SerializedName("cluster" ) public boolean        _Cluster = false;
-    @SerializedName("orderBy" ) public String[]       _OrderBy;
-    @SerializedName("db"      ) public boolean        _Db     = true;
-    @SerializedName("subWhere") public String         _SubWhere;
-    @SerializedName("subQuery") public SubWhereClause _SubQuery;
+    @SerializedName("name"            ) public String         _Name   ;
+    @SerializedName("columns"         ) public String[]       _Columns;
+    @SerializedName("cluster"         ) public boolean        _Cluster = false;
+    @SerializedName("orderBy"         ) public String[]       _OrderBy;
+    @SerializedName("db"              ) public boolean        _Db     = true;
+    @SerializedName("nullsNotDistinct") public boolean        _NullsNotDistinct = false;
+    @SerializedName("subWhere"        ) public String         _SubWhere;
+    @SerializedName("subQuery"        ) public SubWhereClause _SubQuery;
     /*@formatter:on*/
 
     public transient List<Column>  _ColumnObjs  = new ArrayList<Column>();
@@ -150,6 +152,15 @@ public class Index
               PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subQuery, which is not allowed.");
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
               PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
+            boolean nullCol = false;
+            for (Column col : _ColumnObjs)
+              if (col != null && col._Nullable == true)
+                {
+                  nullCol = true;
+                  break;
+                }
+            if (nullCol == false && _NullsNotDistinct == true)
+             PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with no null columns, yet nullsNotDistinct is set to true.");
           }
         
         if (_Cluster == true && _Db == false)
@@ -186,6 +197,16 @@ public class Index
             if (OB._Nulls != null)
               Str.append("|").append(OB._Nulls.name().toLowerCase());
           }
+
+        Str.append(_Cluster==true?"|clustered":"|nonclustered");
+
+
+        // This is not viable right now as the database requires the filter clause and we can't compare it afterwards for migration.
+//        if (_SubQuery != null)
+//         {
+//           Str.append("|").append(_SubWhere);
+//         }
+
         return (_Unique ? "ui|" : "i|") + Str.toString();
       }
 

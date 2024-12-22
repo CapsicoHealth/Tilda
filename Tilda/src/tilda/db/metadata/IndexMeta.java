@@ -23,6 +23,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.JDBCHelper;
+
 public class IndexMeta
   {
     
@@ -32,10 +34,11 @@ public class IndexMeta
     throws Exception
       {
         // see https://learn.microsoft.com/en-us/sql/connect/jdbc/reference/getindexinfo-method-sqlserverdatabasemetadata?view=sql-server-ver16
-        // LOG.debug(JDBCHelper.printResultSet(RS));
+//        LOG.debug(JDBCHelper.printResultSet(RS));
         _Name = RS.getString("INDEX_NAME" );
         _Unique = RS.getBoolean("NON_UNIQUE") == false;
         _Cluster = RS.getInt("TYPE") == 1;
+        _FilterCondition = RS.getString("FILTER_CONDITION");
         _ParentTable = parentTable;
       }
 
@@ -43,6 +46,7 @@ public class IndexMeta
     public final boolean    _Unique;
     public final TableMeta  _ParentTable;    
     public final boolean    _Cluster;
+    public final String     _FilterCondition;
     public final List<IndexColumnMeta> _Columns = new ArrayList<IndexColumnMeta>();
     
     public String getCleanName()
@@ -106,6 +110,12 @@ public class IndexMeta
             Str.append(ICM._Col);
             Str.append("|" + (ICM._Asc == null || ICM._Asc == true ? "asc" : "desc"));
           }
+
+        Str.append(_Cluster==true?"|clustered":"|nonclustered");
+
+        // This is not viable right now as the database requires the filter clause and we can't compare it afterwards for migration.
+//        if (_FilterCondition != null)
+//          Str.append("|").append(_FilterCondition);
 
         return (_Unique ? "u" : "") + "i|" + Str.toString();
       }

@@ -17,6 +17,8 @@
 package tilda;
 
 import java.math.BigDecimal;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -62,11 +64,12 @@ public class DBTest
             // Test2(C);
             // Test3(C);
             // Test4(C);
-             Test5(C);
-//            Test_Batch0(C);
-            //Test_Batch2(C);
-            //Test_Batch1(C);
+            // Test5(C);
+            // Test_Batch0(C);
+            // Test_Batch2(C);
+            // Test_Batch1(C);
             // Test_Batch3(C);
+            testIndex(C);
           }
         catch (Exception E)
           {
@@ -83,6 +86,23 @@ public class DBTest
               catch (SQLException E)
                 {
                 }
+          }
+      }
+
+    protected static void testIndex(Connection C)
+    throws SQLException
+      {
+        DatabaseMetaData meta = C.getMetaData();
+        ResultSet RS = meta.getIndexInfo(null, null, "test_xxx", false, true);
+        while (RS.next() == true)
+          {
+            int count = RS.getMetaData().getColumnCount();            
+            for (int i = 1; i <= count; ++i)
+              {
+                String Name = RS.getMetaData().getColumnName(i);
+                String Val = RS.getString(i);
+                System.out.println("   - "+Name+": "+Val);
+              }
           }
       }
 
@@ -132,7 +152,7 @@ public class DBTest
                 LogUtil.setLogLevel(Level.ERROR);
               }
             if (i == 5)
-             LogUtil.setLogLevel(Level.ERROR);
+              LogUtil.setLogLevel(Level.ERROR);
           }
         LogUtil.resetLogLevel();
         C.commit();
@@ -249,14 +269,14 @@ public class DBTest
         Lb.add(false);
         D.setA3b(Lb);
 
-//        D.setA1(777);
+        // D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
 
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
 
-//        D.setNullA1();
+        // D.setNullA1();
         D.setNullA2();
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
@@ -288,9 +308,9 @@ public class DBTest
           throw new Exception("Bad stuff!");
         C.commit();
 
-//        D = Testing_Factory.lookupByPrimaryKey(D.getRefnum());
-//        if (D.read(C) == false)
-//          throw new Exception("Bad stuff!");
+        // D = Testing_Factory.lookupByPrimaryKey(D.getRefnum());
+        // if (D.read(C) == false)
+        // throw new Exception("Bad stuff!");
         LOG.debug("A9: " + D.getA9());
         LOG.debug("A9b: " + TextUtil.print(D.getA9b()));
         LOG.debug("A9bTZ: " + TextUtil.print(D.getA9bTZ()));
@@ -306,79 +326,79 @@ public class DBTest
 
         D.setA11(new BigDecimal(1111.1234));
         if (D.write(C) == false)
-          throw new Exception("Bad stuff!");      
-        
-        
-        
+          throw new Exception("Bad stuff!");
+
+
+
         List<BigDecimal> a11b = new ArrayList<BigDecimal>();
         a11b.add(new BigDecimal(123.568));
         a11b.add(new BigDecimal(123.689));
         a11b.add(new BigDecimal(123.899));
         D.setA11b(a11b);
         if (D.write(C) == false)
-          throw new Exception("Bad stuff!");      
-        
-        
+          throw new Exception("Bad stuff!");
+
+
         D.setA11c(new BigDecimal(1111.0000));
         if (D.write(C) == false)
-          throw new Exception("Bad stuff!");      
-        
-        //D.setA11c(new BigDecimal(1111111111.0000)); //Errors
-        
+          throw new Exception("Bad stuff!");
+
+        // D.setA11c(new BigDecimal(1111111111.0000)); //Errors
+
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
-              
+
         D.setNullA12();
         D.setNullA12b();
         if (D.write(C) == false)
-          throw new Exception("Bad stuff!");      
-        
+          throw new Exception("Bad stuff!");
+
         D.setA12((short) 123);
-        
+
         List<Short> a12b = new ArrayList<Short>();
         a12b.add((short) 123456789);
         a12b.add((short) 3654);
-        a12b.add((short) 1234567345);      
-        
-        //"{-13035,-6026,177}"
-        
+        a12b.add((short) 1234567345);
+
+        // "{-13035,-6026,177}"
+
         D.setA12b(a12b);
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
-        
-        
-        D.setA13(new UUID(0l, 0l));    
+
+
+        D.setA13(new UUID(0l, 0l));
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
-        
+
         D.setNullA13();
         LOG.debug("A13: " + D.getA13());
         if (D.write(C) == false)
           throw new Exception("Bad stuff!");
-        
-//        D.setA13(UUID.fromString("1234"));    
-//        if (D.write(C) == false)
-//          throw new Exception("Bad stuff!");
-        
+
+        // D.setA13(UUID.fromString("1234"));
+        // if (D.write(C) == false)
+        // throw new Exception("Bad stuff!");
+
         List<UUID> a13b = new ArrayList<UUID>();
         a13b.add(new UUID(1l, 1l));
         a13b.add(new UUID(2l, 3l));
-        a13b.add(new UUID(3l, 3l));      
-        
-        //"{-13035,-6026,177}"
-        
+        a13b.add(new UUID(3l, 3l));
+
+        // "{-13035,-6026,177}"
+
         D.setA13b(a13b);
         if (D.write(C) == false)
-          throw new Exception("Bad stuff!");    
-        C.commit();   
-        
+          throw new Exception("Bad stuff!");
+        C.commit();
+
         LOG.debug("A11: " + TextUtil.print(D.getA11().toString(), "Bad"));
         LOG.debug("A12: " + D.getA12());
-     
+
         D = Testing_Factory.lookupByPrimaryKey(D.getRefnum());
         if (D.read(C) == false)
           throw new Exception("Bad stuff!");
-        
+
       }
 
     private static void Test4(Connection C)
@@ -426,7 +446,7 @@ public class DBTest
           throw new Exception("Bad stuff!");
         C.commit();
 
-//        D.setA1(777);
+        // D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
         if (D.write(C) == false)
@@ -565,7 +585,7 @@ public class DBTest
          * CK.rollback();
          */
       }
-    
+
     private static void Test6(Connection C)
     throws Exception
       {
@@ -577,7 +597,7 @@ public class DBTest
         LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
         // Creates the shell data object for write
         TransPerf_Data TP = TransPerf_Factory.create(ZDTStart, ZDTEnd);
-        // Writes the object. Was just created, so it's an INSERT. 
+        // Writes the object. Was just created, so it's an INSERT.
         if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         // Creates a shell data object for read
@@ -589,7 +609,7 @@ public class DBTest
         // This is not an object obtained through a create, so it's assumed to exist and will be an UPDATE
         if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
-        
+
         // In many cases, you (1) pretty much know the object exists, or (2) want to update an object
         // directly and are OK if it fails because the object doesn't exist. In this case, you save
         // a select compared to above.
@@ -598,9 +618,9 @@ public class DBTest
         // This is not an object obtained through a create, so it's assumed to exist and will be an UPDATE
         if (TP.write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
-        
+
         LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));
         LOG.debug("End   (DB): " + DateTimeUtil.printDateTime(TP.getEndPeriod()));
       }
-    
+
   }

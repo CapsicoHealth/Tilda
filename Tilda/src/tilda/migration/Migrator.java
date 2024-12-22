@@ -984,8 +984,10 @@ public class Migrator
             boolean Found = false;
             String Sig = IX.getSignature();
 
+//            LOG.debug("Checking Index: '"+Sig+"'");
             for (IndexMeta ix : TMeta._Indices.values())
               {
+  //              LOG.debug("    - against index: '"+ix.getSignature()+"'");
                 if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
                   {
                     String Sig1 = ix.getSignature();
