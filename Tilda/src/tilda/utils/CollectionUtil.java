@@ -19,6 +19,7 @@ package tilda.utils;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -722,5 +723,17 @@ public class CollectionUtil
           if (I.next() != null)
             return false;
         return true;
+      }
+
+    public static void sort(List<String[]> vals, int i)
+      {
+        Collections.sort(vals, new Comparator<String[]>() {
+
+          @Override
+          public int compare(String[] o1, String[] o2)
+            {
+              return o1[i].compareTo(o2[i]);
+            }
+        });
       }
   }

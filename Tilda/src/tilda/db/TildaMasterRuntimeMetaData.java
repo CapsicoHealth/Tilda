@@ -94,7 +94,7 @@ public class TildaMasterRuntimeMetaData
           {
             throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
           }
-
+        
         if (Obj._Mode == ObjectMode.NORMAL || Obj._Mode == ObjectMode.CODE_ONLY)
          {
            TildaObjectMetaData OMD = new TildaObjectMetaData(PackageName, Obj, warnings);

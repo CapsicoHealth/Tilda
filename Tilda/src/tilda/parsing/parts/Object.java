@@ -49,7 +49,7 @@ public class Object extends Base
     /*@formatter:off*/
     @SerializedName("occ"      ) public boolean           _OCC        = true;
     @SerializedName("tzFk"     ) public Boolean           _TZFK       = true;
-    @SerializedName("tzMode"   ) public String            _TzModeStr;
+    @SerializedName("tzMode"   ) public String            _TzModeStr  ;
     @SerializedName("etl"      ) public boolean           _ETL        = false;
     @SerializedName("lc"       ) public String            _LCStr      ;
     @SerializedName("cloneFrom") public ClonerFrom        _CloneFrom  ;
@@ -60,7 +60,7 @@ public class Object extends Base
     @SerializedName("foreign"  ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"  ) public List<Index>       _Indices    = new ArrayList<Index     >();
     @SerializedName("http"     ) public HttpMapping[]     _Http       = { };
-    @SerializedName("history"  ) public History           _History;
+    @SerializedName("history"  ) public History           _History    ;
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;

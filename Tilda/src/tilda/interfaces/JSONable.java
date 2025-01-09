@@ -23,7 +23,22 @@ import java.time.ZonedDateTime;
 
 public interface JSONable
   {
-    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject) throws Exception;
-    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, boolean noNullArrays) throws Exception;
-    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, ZonedDateTime lastsync) throws Exception;
+    // public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject) throws Exception;
+    // public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, ZonedDateTime lastsync) throws Exception;
+
+    public void toJSON(Writer out, String jsonExportName, String lead, boolean fullObject, boolean noNullArrays)
+    throws Exception;
+
+    default void toJSON(Writer Out, String JsonExportName, String lead, boolean FullObject)
+    throws Exception
+      {
+        toJSON(Out, JsonExportName, lead, FullObject, false);
+      }
+
+    default void toJSON(Writer Out, String JsonExportName, String lead, boolean FullObject, ZonedDateTime lastsync)
+    throws Exception
+      {
+        throw new Exception("Unknown JSON sync Exporter '" + JsonExportName + "' for " + this.getClass().getName() + ".");
+      }
+
   }
