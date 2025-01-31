@@ -34,6 +34,11 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.cloud.bigquery.Field;
+import com.google.cloud.bigquery.FieldList;
+import com.google.cloud.bigquery.FieldValue;
+import com.google.cloud.bigquery.FieldValueList;
+import com.google.cloud.bigquery.TableResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -602,7 +607,7 @@ public class JSONUtil
         for (String i : a)
           {
             if (flatPrint == false)
-              Out.write("\n"+PaddingUtil.getPad(padding));
+              Out.write("\n" + PaddingUtil.getPad(padding));
             if (First == true)
               {
                 First = false;
@@ -614,7 +619,7 @@ public class JSONUtil
             printString(Out, i);
           }
         if (flatPrint == false)
-          Out.write("\n"+PaddingUtil.getPad(padding+2));
+          Out.write("\n" + PaddingUtil.getPad(padding + 2));
         Out.write("]");
       }
 
@@ -770,7 +775,7 @@ public class JSONUtil
           {
             String[] arr = new String[val.size()];
             for (int i = 0; i < val.size(); ++i)
-              arr[i] = val.get(i).isJsonNull()==true ? null : val.get(i).getAsJsonPrimitive().getAsString();
+              arr[i] = val.get(i).isJsonNull() == true ? null : val.get(i).getAsJsonPrimitive().getAsString();
             print(out, name, first, arr, padding, flatPrint);
           }
         else if (p.isBoolean() == true)
@@ -907,19 +912,19 @@ public class JSONUtil
      * @param Obj
      * @throws Exception
      */
-//    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
-//    throws Exception
-//      {
-//        Out.write("<textarea>\n");
-//        response(Out, JsonExportName, Obj);
-//        Out.write("</textarea>\n");
-//      }
+    // public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj, String perfMessage)
+    // throws Exception
+    // {
+    // Out.write("<textarea>\n");
+    // response(Out, JsonExportName, Obj);
+    // Out.write("</textarea>\n");
+    // }
 
-//    public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
-//    throws Exception
-//      {
-//        responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
-//      }
+    // public static void responseDojoMultipartConfig(Writer Out, String JsonExportName, JSONable Obj)
+    // throws Exception
+    // {
+    // responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
+    // }
 
     public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L, String perfMessage)
     throws Exception
@@ -1023,7 +1028,7 @@ public class JSONUtil
       {
         print(Out, elementName, JsonExportName, firstElement, Obj, Header, true);
       }
-    
+
     public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header, boolean fullObject)
     throws Exception
       {
@@ -1032,7 +1037,7 @@ public class JSONUtil
         if (Obj == null)
           Out.write(" null ");
         else
-         Obj.toJSON(Out, JsonExportName, "", fullObject);
+          Obj.toJSON(Out, JsonExportName, "", fullObject);
       }
 
     public static void print(Writer Out, String elementName, boolean firstElement, String[][] Values, String Header)
@@ -1418,6 +1423,94 @@ public class JSONUtil
             default:
               throw new Exception("Unhandle switch case for '" + cm._TildaType.name() + "'.");
           }
+      }
+
+    public static void print(Writer out, TableResult results, String header)
+    throws Exception
+      {
+        FieldList FL = results.getSchema().getFields();
+        boolean first = true;
+        for (FieldValueList row : results.iterateAll())
+          {
+            if (first == true)
+              {
+                first = false;
+                out.append(header + " {");
+                header += ",{";
+              }
+            else
+              out.append(header);
+
+            print(out, row, FL);
+            out.append(" }\n");
+          }
+      }
+
+    public static void print(Writer out, FieldValueList row, FieldList FL)
+    throws Exception
+      {
+        boolean first = true;
+        for (Field f : FL)
+          {
+            if (first == true)
+              first = false;
+            else
+              out.append(", ");
+            print(out, f, row.get(f.getName()));
+          }
+      }
+
+
+    public static void print(Writer out, Field f, FieldValue val)
+    throws Exception
+      {
+        if (val.isNull() == true)
+          {
+            print(out, f.getName(), true, (String) null);
+            return;
+          }
+
+        switch (f.getType().getStandardType())
+          {
+            case STRING:
+              print(out, f.getName(), true, val.getStringValue());
+              break;
+            case BOOL:
+              print(out, f.getName(), true, val.getBooleanValue());
+              break;
+            case INT64:
+              print(out, f.getName(), true, val.getLongValue());
+              break;
+            case BIGNUMERIC:
+            case NUMERIC:
+              print(out, f.getName(), true, val.getNumericValue());
+              break;
+            case FLOAT64:
+              print(out, f.getName(), true, val.getDoubleValue());
+              break;
+            case DATE:
+              print(out, f.getName(), true, DateTimeUtil.newUTC(val.getTimestampValue()));
+              break;
+            default:
+              throw new Exception("Unhandle switch case for '" + f.getType().getStandardType() + "'.");
+          }
+      }
+
+    public static String[] getElementOrArray(JsonObject jsonValues, String name)
+      {
+        String[] arr = null;
+        JsonElement j = jsonValues.get(name);
+        if (j.isJsonArray() == true)
+         {
+           JsonArray ja = j.getAsJsonArray();
+           arr = new String[ja.size()];
+           for (int i = 0; i < ja.size(); ++i)
+             arr[i] = ja.get(i).getAsString();
+         }
+        else
+          arr = new String[] { j.getAsString() };
+        
+        return arr;
       }
 
   }

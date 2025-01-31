@@ -9,6 +9,8 @@ insert into TILDA.ZoneInfo ("id", "label", "value", "deactivatedTZ", "deactivate
          ,('Z'    , 'Z'                  , 'Z'                  , null, null, current_timestamp, current_timestamp)
          ,('Green', 'Greenwich'          , 'Etc/Greenwich'      , null, null, current_timestamp, current_timestamp)
          ,('EUPar', 'Europe Paris'       , 'Europe/Paris'       , null, null, current_timestamp, current_timestamp)
+         ,('EUBer', 'Europe Berlin'      , 'Europe/Berlin'      , null, null, current_timestamp, current_timestamp)
+         ,('EUAms', 'Europe Amsterdam'   , 'Europe/Amsterdam'   , null, null, current_timestamp, current_timestamp)
          ,('CaNe' , 'Canada Newfoundland', 'Canada/Newfoundland', null, null, current_timestamp, current_timestamp)
          ,('CaAt' , 'Canada Atlantic'    , 'Canada/Atlantic'    , null, null, current_timestamp, current_timestamp)
          ,('USEa' , 'US Eastern'         , 'US/Eastern'         , null, null, current_timestamp, current_timestamp)

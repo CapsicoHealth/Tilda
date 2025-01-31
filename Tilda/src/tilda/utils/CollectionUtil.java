@@ -630,10 +630,25 @@ public class CollectionUtil
       {
         return L == null ? null : L.toArray(new String[L.size()]);
       }
-
     public static String[][] toDoubleStringArray(Collection<String[]> L)
       {
         return L == null ? null : L.toArray(new String[L.size()][]);
+      }
+    public static Integer[] toIntArray(Collection<Integer> L)
+      {
+        return L == null ? null : L.toArray(new Integer[L.size()]);
+      }
+    public static Long[] toLongArray(Collection<Long> L)
+      {
+        return L == null ? null : L.toArray(new Long[L.size()]);
+      }
+    public static Float[] toFloatArray(Collection<Float> L)
+      {
+        return L == null ? null : L.toArray(new Float[L.size()]);
+      }
+    public static Double[] toDoubleArray(Collection<Double> L)
+      {
+        return L == null ? null : L.toArray(new Double[L.size()]);
       }
 
     public static void append(List<String> L, Iterator<String> I)
@@ -735,5 +750,30 @@ public class CollectionUtil
               return o1[i].compareTo(o2[i]);
             }
         });
+      }
+
+    public static boolean in(String v, String[] values)
+      {
+        if (values != null)
+          for (String x : values)
+            if (v.equals(x) == true)
+             return true;
+        return false;
+      }
+    public static boolean in(int v, int[] values)
+      {
+        if (values != null)
+          for (int x : values)
+            if (v == x)
+             return true;
+        return false;
+      }
+    public static boolean in(long v, long[] values)
+      {
+        if (values != null)
+          for (long x : values)
+            if (v == x)
+             return true;
+        return false;
       }
   }

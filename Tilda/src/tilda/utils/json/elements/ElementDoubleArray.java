@@ -2,6 +2,7 @@ package tilda.utils.json.elements;
 
 import java.io.Writer;
 
+import tilda.utils.CollectionUtil;
 import tilda.utils.json.JSONUtil;
 
 public class ElementDoubleArray implements ElementDef
@@ -10,6 +11,11 @@ public class ElementDoubleArray implements ElementDef
       {
         _Name = Name;
         _Val = Val;
+      }
+    public ElementDoubleArray(String Name, Double[] Val)
+      {
+        _Name = Name;
+        _Val = CollectionUtil.toPrimitiveArray(Val);
       }
 
     protected final String _Name;

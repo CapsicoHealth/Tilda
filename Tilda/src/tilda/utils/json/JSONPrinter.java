@@ -165,6 +165,11 @@ public class JSONPrinter
         _Elements.add(new ElementDoubleArray(Name, Val));
         return this;
       }
+    public JSONPrinter addElement(String Name, Double[] Val)
+      {
+        _Elements.add(new ElementDoubleArray(Name, Val));
+        return this;
+      }
 
     public JSONPrinter addElement(String Name, ZonedDateTime Val)
       {

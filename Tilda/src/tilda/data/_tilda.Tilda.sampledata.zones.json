@@ -9,6 +9,8 @@
 	   ,{ "id":"Green", "label":"Greenwich"          , "value":"Etc/Greenwich"       }
        ,{ "id":"EULon", "label":"Europe London"      , "value":"Europe/London"       }
        ,{ "id":"EUPar", "label":"Europe Paris"       , "value":"Europe/Paris"        }
+       ,{ "id":"EUBer", "label":"Europe Berlin"      , "value":"Europe/Berlin"       }
+       ,{ "id":"EUAms", "label":"Europe Amsterdam"   , "value":"Europe/Amsterdam"    }
 	   ,{ "id":"CaNe" , "label":"Canada Newfoundland", "value":"Canada/Newfoundland" }
 	   ,{ "id":"CaAt" , "label":"Canada Atlantic"    , "value":"Canada/Atlantic"     }
 	   ,{ "id":"USEa" , "label":"US Eastern"         , "value":"US/Eastern"          }

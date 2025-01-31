@@ -266,7 +266,7 @@ public class Reverse
                   {
                     if (++indexColNum != 0)
                       str.append(", ");
-                    str.append(TextUtil.escapeDoubleQuoteWithSlash(IndexCol._Col + (I._Unique == true ? "" : IndexCol._Asc == true ? " ASC" : " DESC")));
+                    str.append(TextUtil.escapeDoubleQuoteWithSlash(IndexCol._Col + (I._Unique == true ? "" : IndexCol._Asc == Boolean.TRUE ? " ASC" : " DESC")));
                   }
                 str.append("] }\n");
               }

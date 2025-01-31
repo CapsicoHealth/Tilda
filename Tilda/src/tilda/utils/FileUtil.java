@@ -437,6 +437,20 @@ public class FileUtil
           }
       }
 
+    public static String getFileOfResourceContentsNoThrow(String Name)
+      {
+        try (BufferedReader R = getReaderFromFileOrResource(Name))
+          {
+            if (R == null)
+              return null;
+            return readToString(R);
+          }
+        catch (Exception E)
+          {
+            return null;
+          }
+      }
+
     public static String getFileOfResourceContents(File F)
     throws IOException
       {
@@ -559,11 +573,11 @@ public class FileUtil
         int i = 0;
         for (File F : P.listFiles())
           {
-//            LOG.debug("Looking at credential file candidate "+F.getAbsolutePath());
-//            LOG.debug("   F.isFile(): "+F.isFile());
-//            LOG.debug("   F.getName(): "+F.getName());
-//            LOG.debug("   F.getName().startsWith(\""+dataProjectName+"\"+\".\"): "+F.getName().startsWith(dataProjectName + "."));
-//            LOG.debug("   F.getName().endsWith(\".key.\""+ appName+"\".json\"): "+F.getName().endsWith(".key." + appName + ".json"));
+            // LOG.debug("Looking at credential file candidate "+F.getAbsolutePath());
+            // LOG.debug(" F.isFile(): "+F.isFile());
+            // LOG.debug(" F.getName(): "+F.getName());
+            // LOG.debug(" F.getName().startsWith(\""+dataProjectName+"\"+\".\"): "+F.getName().startsWith(dataProjectName + "."));
+            // LOG.debug(" F.getName().endsWith(\".key.\""+ appName+"\".json\"): "+F.getName().endsWith(".key." + appName + ".json"));
             if (F.isFile() == true && F.getName().startsWith(dataProjectName + ".") == true && F.getName().endsWith(".key." + appName + ".json") == true)
               {
                 ++i;
