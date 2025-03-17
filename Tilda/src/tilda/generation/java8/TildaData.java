@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.InitMode;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -793,6 +792,11 @@ public class TildaData implements CodeGenTildaData
                 Out.println("       long T0 = System.nanoTime();");
                 if (C._Mode != ColumnMode.CALCULATED)
                   {
+                    if (C.isCollection() == true)
+                      {
+                        Out.println("       if (_" + C.getName() + " == null)");
+                        Out.println("        _" + C.getName() + " = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                      }
                     if (C.needsTZ() == true)
                       {
                         Out.println("       int i = _" + C.getName() + ".indexOf(v);");
@@ -1617,7 +1621,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("          if (_" + PK.getName() + " != null) // is an update");
             Out.println("           {");
             Out.println("             __Changes.andNot(" + Helper.getRuntimeMask(PK) + ");"); // gotta unset refnum as a change.
-            Out.println("             __Saved_" + PK.getName() + " = _" + PK.getName()+";");
+            Out.println("             __Saved_" + PK.getName() + " = _" + PK.getName() + ";");
             Out.println("             initForLookup(0); // Read/update with PK");
             Out.println("           }");
             Out.println("          else // is a create");
@@ -1690,7 +1694,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("             java.sql.ResultSet rs = PS.getResultSet();");
             Out.println("             if (rs.next() == true)");
             Out.println("              {");
-            Out.println("                 _"+O._PrimaryKey._ColumnObjs.get(0).getName()+" = rs.getLong(1);");
+            Out.println("                 _" + O._PrimaryKey._ColumnObjs.get(0).getName() + " = rs.getLong(1);");
             Out.println("                 count = 1;");
             Out.println("              }");
             Out.println("             else");
