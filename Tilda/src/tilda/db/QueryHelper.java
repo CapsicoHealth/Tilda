@@ -768,6 +768,40 @@ public abstract class QueryHelper
         return equals(Col2);
       }
 
+    /**
+     * Sets Col1 to preValue||Col2
+     * @param Col1
+     * @param preValue
+     * @param Col2
+     * @return
+     * @throws Exception
+     */
+    public QueryHelper set(Type_StringPrimitive Col1, String preValue, Type_StringPrimitive Col2)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+    
+    /**
+     * Sets Col1 to Col2||postValue
+     * 
+     * @param Col1
+     * @param Col2
+     * @param postValue
+     * @return
+     * @throws Exception
+     */
+    public QueryHelper set(Type_StringPrimitive Col1, Type_StringPrimitive Col2, String postValue)
+    throws Exception
+      {
+        setColumn(Col1);
+        equals(Col2);
+        _QueryStr.append(" || ");
+        TextUtil.escapeSingleQuoteForSQL(_QueryStr, postValue);
+        return this;
+      }
+    
     public QueryHelper set(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {

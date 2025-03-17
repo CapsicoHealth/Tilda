@@ -66,7 +66,8 @@ public class ViewPivot
         _VC = new ViewColumn();
         _VC._FormulaOnly = true; // the folded pivot columns shouldn't not be output in the final result.
         _VC._SameAs = _ColumnName;
-        _VC.validate(PS, _ParentView);
+        if (_VC.validate(PS, _ParentView) == false)
+         return false;
 
         Set<String> AggregateNames = new HashSet<String>();
         for (int i = 0; i < _Aggregates.size(); ++i)

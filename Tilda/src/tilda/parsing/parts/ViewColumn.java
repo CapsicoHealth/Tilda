@@ -209,7 +209,7 @@ public class ViewColumn
           {
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
-              return false;
+             return false;
             if (_FCT != FrameworkColumnType.PIVOT)
               _FCT = _SameAsObj._FCT;
             _SameAsView = _SameAsObj._ParentObject._ParentSchema.getView(_SameAsObj._ParentObject._Name);
