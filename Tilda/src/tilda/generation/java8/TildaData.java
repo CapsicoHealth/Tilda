@@ -158,12 +158,14 @@ public class TildaData implements CodeGenTildaData
               Out.println("   " + jsonClassNameRootPath + C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
             else
               Out.println("   List<" + jsonClassNameRootPath + C._JsonSchema._TypeName + "> _" + C.getName() + "Obj = new ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">();");
-            if (jsonClassNameRootPath.length() == 0)
+            if (jsonClassNameRootPath.length() == 0 && C._JsonSchema._reusedJsonFieldTypeColummn == null)
               {
+                Out.println("   /** "+ C._JsonSchema._Descr +"*/");
                 Out.println("   public static class " + C._JsonSchema._TypeName);
                 Out.println("    {");
                 for (JsonField f : C._JsonSchema._Fields)
                   {
+                    Out.println("      /**"+f._Description+"*/");
                     Out.println("      @SerializedName(\"" + f._Name + "\") public " + JavaJDBCType.getJsonFieldType(f) + " _" + f._Name + ";");
                   }
                 Out.println("      public String validate()");
@@ -472,7 +474,7 @@ public class TildaData implements CodeGenTildaData
         String Mask = Helper.getRuntimeMask(C);
         String Visibility = Helper.getVisibility(C, true);
         String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
-        if (C._JsonSchema != null && C.isCollection() == true)
+        if (C._JsonSchema != null && C.isCollection() == true && C._JsonSchema._reusedJsonFieldTypeColummn == null)
           {
             Out.println("   protected static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">>(){}.getType();");
             Out.println();

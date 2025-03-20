@@ -34,6 +34,8 @@ public class JsonSchema
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
 
+    transient public Column _reusedJsonFieldTypeColummn;
+
     public JsonSchema(JsonSchema js)
       {
         _TypeName = js._TypeName;
@@ -58,16 +60,34 @@ public class JsonSchema
             Success = false;
           }
 
-        if (_Fields == null || _Fields.length == 0)
+        _reusedJsonFieldTypeColummn = getReusedJsonFieldTypeColumn(C, _TypeName);
+        if (_reusedJsonFieldTypeColummn != null)
           {
-            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema without any fields.");
+            if (TextUtil.isNullOrEmpty(_Descr) == true)
+             _Descr = _reusedJsonFieldTypeColummn._JsonSchema._Descr;
+              
+            if (_Fields != null && _Fields.length > 0)
+              {
+                PS.AddError("Column '" + C.getFullName() + "' is reusing jsonSchema '" + _TypeName + "' and cannot re-define fields.");
+                Success = false;
+              }
+          }
+        else if (_Fields == null || _Fields.length == 0)
+          {
+            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema '" + _TypeName + "' without any fields.");
             Success = false;
           }
+        else
+          for (JsonField f : _Fields)
+            if (f != null && f.validate(PS, C) == false)
+              Success = false;
 
-        for (JsonField f : _Fields)
-          if (f != null && f.validate(PS, C) == false)
+        if (TextUtil.isNullOrEmpty(_Descr) == true)
+          {
+            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema '" + _TypeName + "' without a description.");
             Success = false;
-
+          }
+        
         if (Success == true)
           {
             if (_Validation != null && _Validation.validate(PS, C) == false)
@@ -75,6 +95,18 @@ public class JsonSchema
           }
 
         return Success;
+      }
+
+    protected static Column getReusedJsonFieldTypeColumn(Column col, String typeName)
+      {
+        for (Column c : col._ParentObject._Columns)
+          {
+            if (c == col)
+             break;
+            if (c != col && c._JsonSchema != null && c._JsonSchema._TypeName.equals(typeName) == true)
+              return c;
+          }
+        return null;
       }
   }
 
