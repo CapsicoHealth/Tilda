@@ -81,7 +81,7 @@ public class ZoneInfo_Factory extends tilda.data._Tilda.TILDA__ZONEINFO_Factory
     public static void reloadInitData(Connection C)
     throws Exception
       {
-        Importer I = Import.getFileImporter(null, "tilda/data/_tilda.Tilda.sampledata.zones.json");
+        Importer I = Import.getFileImporter("tilda/data/_tilda.Tilda.sampledata.zones.json", null, null);
         Import.process(I, C);
         initMappings(C);
       }

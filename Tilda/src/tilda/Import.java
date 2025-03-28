@@ -19,8 +19,8 @@ package tilda;
 import java.io.Reader;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +28,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
@@ -44,10 +43,11 @@ public class Import
 
     public static void main(String[] args)
       {
+        List<ParamSet> params = validateParams(args);
         Connection C = null;
-        ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
-        validateParams(arguments);
 
+        LOG.info("\n*************************************************************************************************************************************");
+        printUsageHint();
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
@@ -58,26 +58,18 @@ public class Import
             long timeTaken = System.nanoTime();
             int RecordsCount = 0;
 
-            for (int i = 0; i < arguments.size(); i += 4)
+            for (ParamSet ps : params)
               {
-                if ("-f".equals(arguments.get(i)))
+                Importer I = getFileImporter(ps._fileName, ps._schema, ps._importer);
+                Iterator<String> iterator = ConnectionPool.getConnectionListFromParam(ps._connection);
+                // Loop connectionIds and run Import
+                while (iterator.hasNext())
                   {
-                    currentFile = arguments.get(i + 1);
-                    Importer I = getFileImporter(null, currentFile);
-                    Iterator<String> iterator = ConnectionPool.getConnectionListFromParam(arguments.get(i + 3));
-                    // Loop connectionIds and run Import
-                    while (iterator.hasNext())
-                      {
-                        C = ConnectionPool.get(iterator.next());
-                        RecordsCount += process(I, C);
-                        C.commit();
-                        C.close();
-                        C = null;
-                      }
-                  }
-                else
-                  {
-                    throw new Exception("Cannot find a -f parameter starting the command line");
+                    C = ConnectionPool.get(iterator.next());
+                    RecordsCount += process(I, C);
+                    C.commit();
+                    C.close();
+                    C = null;
                   }
               }
 
@@ -113,32 +105,110 @@ public class Import
         LOG.info("Import completed.");
       }
 
-    private static void validateParams(ArrayList<String> arguments)
+    private static class ParamSet
       {
-        if (arguments.size() % 4 != 0)
-          {
-            printUsageHint();
-            System.exit(-1);
-          }
+        protected static Pattern _P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.([a-zA-Z][_\\-a-zA-Z0-9]*)\\.([^\\.]+)\\.json\\z");
 
-        for (int i = 0; i < arguments.size();)
+        public String            _fileName;
+        public String            _schema;
+        public String            _importer;
+        public String            _connection;
+
+        public int getNextParamSet(String[] args, int i)
           {
-            if (!"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i + 1))
-            || !"-c".equals(arguments.get(i + 2)) || TextUtil.isNullOrEmpty(arguments.get(i + 3)))
+            if (i + 4 > args.length)
               {
+                LOG.error("Not finding at least 4 parameters at position '" + i + "', either -f <file_name> -c <connection> or -f <file_name> -s <schema>.<importer> -c <connection>.");
                 printUsageHint();
                 System.exit(-1);
               }
-            i += 4;
+            if (args[i].equals("-f") == false)
+              {
+                LOG.error("Expecting flag -f at position '" + i + "'.");
+                printUsageHint();
+                System.exit(-1);
+              }
+            _fileName = args[i + 1];
+
+            i += 2;
+
+            if (args[i].equals("-s") == true)
+              {
+                if (i + 4 > args.length)
+                  {
+                    LOG.error("Not finding at least 4 parameters at position '" + i + "', for -s <schema>.<importer> -c <connection>.");
+                    printUsageHint();
+                    System.exit(-1);
+                  }
+                String[] parts = args[i + 1].split("\\.");
+                if (parts.length != 2)
+                  {
+                    LOG.error("The attribute -s '" + args[i + 1] + "' doesn't follow the format '<schema>.<importer>' as " + parts.length + " parts were found instead of 2");
+                    printUsageHint();
+                    System.exit(-1);
+                  }
+                _schema = parts[0];
+                _importer = parts[1];
+                i += 2;
+              }
+            else
+              {
+                Matcher M = _P.matcher(_fileName);
+                if (M.find() == false)
+                  {
+                    LOG.error("The argument '" + _fileName + "' is invalid: it should match the format '_tilda.<schema>.<identifier>.<importer>.json'.");
+                    printUsageHint();
+                    System.exit(-1);
+                  }
+                _schema = M.group(1);
+                _importer = M.group(3);
+              }
+
+            if (args[i].equals("-c") == false)
+              {
+                LOG.error("Expecting flag -c at position " + i + ".");
+                printUsageHint();
+                System.exit(-1);
+              }
+
+            _connection = args[i + 1];
+            return i + 2;
           }
+      }
+
+    private static List<ParamSet> validateParams(String[] args)
+      {
+        List<ParamSet> params = new ArrayList<ParamSet>();
+        int i = 0;
+        while (i < args.length)
+          {
+            ParamSet ps = new ParamSet();
+            i = ps.getNextParamSet(args, i);
+            params.add(ps);
+          }
+        return params;
       }
 
     private static void printUsageHint()
       {
         LOG.error("");
         LOG.error("Import utility must be called with parameter(s) in following format:");
-        LOG.error("-f <file_name> -c ( ALL | ALL_TENANTS | <connection_id>) ");
+        LOG.error("   -f <file_name> {-s <schema>.<importer_package> } -c (ALL | ALL_TENANTS | <connection_id>) ");
+        LOG.error("");
+        LOG.error("<file_name> must either follow the pattern '_tilda.<schema>.<identifier>.<importer_package>.json'");
+        LOG.error("where <schema> is the name of the schema for the data being loaded, <identifier> is any filename-compatible");
+        LOG.error("name, and <importer_package> is the name of the importer package. This helps the utility automatically load");
+        LOG.error("the class <schema>.importers.<importer_package>.RootImporter.");
+        LOG.error("");
+        LOG.error("If the filename is instead an arbitrary filename, the additional parameter -s must be supplied to specify");
+        LOG.error("<schema> and <importer_package> information");
+        LOG.error("");
         LOG.error("Ex: -f tilda/data/_tilda.Tilda.sampledata.zones.json -c MAIN,KEYS");
+        LOG.error("    -f tilda/data/some-extra-zones.json -s Tilda.zones -c MAIN,KEYS");
+        LOG.error("");
+        LOG.error("Note that the self-documented filename format is prefered since the name itself contains all the needed");
+        LOG.error("to automtically load the data properly.");
+        LOG.error("");
         LOG.error("*** for Multi Tenant System.");
         LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
         LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
@@ -162,29 +232,32 @@ public class Import
         return Total;
       }
 
-    public static Importer getFileImporter(String OverridePackageName, String ImportFileName)
+    public static Importer getFileImporter(String fileName, String schema, String importer)
     throws Exception
       {
         LOG.info("");
         LOG.info("");
         LOG.info("");
         LOG.info("=======================================================================================================================");
-        LOG.info("== Reading Import file: " + ImportFileName);
+        LOG.info("== Reading Import file: " + fileName);
         LOG.info("=======================================================================================================================");
-        Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
+        Reader R = FileUtil.getReaderFromFileOrResource(fileName);
 
-        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.([a-zA-Z][_\\-a-zA-Z0-9]*)\\.([^\\.]+)\\.json\\z");
-        Matcher M = P.matcher(ImportFileName);
-        if (M.find() == false)
-          throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.<identifier>.'+<samplesPackage>+'.json'.");
-        String SchemaName = M.group(1);
-        String SamplePackageName = OverridePackageName == null ? M.group(3) : OverridePackageName;
+        // This method can be called internally to auto load files, so in case, we need to re-decipher the parts.
+        if (schema == null || importer == null)
+          {
+            Matcher M = ParamSet._P.matcher(fileName);
+            if (M.find() == false)
+              throw new Exception("The argument '" + fileName + "' is invalid: it should match the format '_tilda.<schema>.<identifier>.<importer>.json'.");
+            schema = M.group(1);
+            importer = M.group(3);
+          }
 
-        String SchemaPackage = ConnectionPool.getSchemaPackage(SchemaName);
+        String SchemaPackage = ConnectionPool.getSchemaPackage(schema);
         if (SchemaPackage == null)
-          throw new Exception("The Schema '" + SchemaName + "' cannot be found as defined in the Tilda configuration file.");
+          throw new Exception("The Schema '" + schema + "' cannot be found as defined in the Tilda configuration file.");
 
-        String RootClassName = SchemaPackage + ".importers." + SamplePackageName + ".RootImporter";
+        String RootClassName = SchemaPackage + ".importers." + importer + ".RootImporter";
         Class<?> RootClass = null;
         try
           {
@@ -192,7 +265,7 @@ public class Import
           }
         catch (ClassNotFoundException E)
           {
-            throw new Exception("The root importer class '" + RootClassName + "' as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
+            throw new Exception("The root importer class '" + RootClassName + "' to process file '" + fileName + "' cannot be found in the classpath.");
           }
 
         // long T = System.nanoTime();
