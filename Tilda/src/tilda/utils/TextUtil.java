@@ -843,6 +843,17 @@ public class TextUtil
         return true;
       }
 
+    /**
+     * Replaces all consecutive non-word character (\W+) with a '_', plus Trim and Lowercase. If the input 
+     * string starts with a digit, the results will not be a fully compliant java identifier though. 
+     * @param txt
+     * @return
+     */
+    public static String toJavaIdentifier(String txt)
+      {
+        return txt.trim().replaceAll("\\W+","_").toLowerCase();
+      }
+
     public static String processTextToHTMLParagraphs(String Text, String StyleClass)
       {
         Text = Text.replace("<br>", "</P><P class='" + StyleClass + "'>");
@@ -1436,24 +1447,25 @@ public class TextUtil
         File F = new File(filePath);
         return PDF2TXT(F);
       }
-    
-    public static final String PDF2TXT(File F) throws Exception
+
+    public static final String PDF2TXT(File F)
+    throws Exception
       {
         try (PDDocument document = Loader.loadPDF(F))
           {
-            //Instantiate PDFTextStripper class
+            // Instantiate PDFTextStripper class
             PDFTextStripper pdfStripper = new PDFTextStripper();
-            //Retrieving text from PDF document
+            // Retrieving text from PDF document
             return pdfStripper.getText(document);
           }
         catch (Exception E)
           {
-            LOG.error("Cannot extract text from PDF '"+F.getCanonicalPath()+"'\n", E);
+            LOG.error("Cannot extract text from PDF '" + F.getCanonicalPath() + "'\n", E);
             throw E;
           }
       }
 
-    
+
     public static final String streamToString(InputStream In)
     throws IOException
       {

@@ -30,6 +30,8 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import tilda.utils.DurationUtil;
+
 public class CSHelper
   {
 
@@ -51,7 +53,10 @@ public class CSHelper
     public static Storage getStorage(String dataProjectName)
     throws FileNotFoundException, IOException
       {
-        return StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
+        long nanoTime = System.nanoTime();
+        Storage s =  StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
+        LOG.debug("Time to get a GCS storage object: "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-nanoTime));
+        return s;
       }
 
     public static Storage getStorage(String envVariable, String dataProjectName)
@@ -153,8 +158,11 @@ public class CSHelper
     public static URL genSignedUrl(Storage cs, String bucketName, String fullFileName, String mimeType)
     throws IOException
       {
+        long nanoTime = System.nanoTime();
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fullFileName).setContentType(mimeType).build();
-        return cs.signUrl(blobInfo, 60, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+        URL url = cs.signUrl(blobInfo, 60, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+        LOG.debug("Time to get a GCS signed link for a document: "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-nanoTime));
+        return url;
       }
     
   }
