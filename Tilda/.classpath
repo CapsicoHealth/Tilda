@@ -794,11 +794,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/jcl-over-slf4j-2.0.3.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/other/jcommander-1.78.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
