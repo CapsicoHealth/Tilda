@@ -16,6 +16,9 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
 //    jcenter()
     mavenCentral()
+    maven {
+        url "https://build.shibboleth.net/nexus/content/repositories/releases/"  // Shibboleth release repository
+    }
 //    google()
 }
 
@@ -42,6 +45,10 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-api:2.+'
     implementation 'org.apache.logging.log4j:log4j-web:2.+'
     implementation 'org.apache.logging.log4j:log4j-1.2-api:2.+'
+//    implementation 'org.apache.logging.log4j:log4j-slf4j18-impl:2.+'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.+'
+    implementation 'org.slf4j:slf4j-api:2.+'
+    
     
     // Jakarta
     implementation 'jakarta.activation:jakarta.activation-api:+'
@@ -86,6 +93,25 @@ dependencies {
 //    implementation 'org.slf4j:slf4j-log4j12:2.+'
 //    implementation 'org.quartz-scheduler:quartz:2.3.3'
 //    implementation 'org.quartz-scheduler:quartz-jobs:2.3.3'
+
+    // pac4j
+    implementation 'org.pac4j:pac4j-core:5.+'
+    implementation 'org.pac4j:pac4j-saml:5.+'
+    implementation 'org.pac4j:javaee-pac4j:8.+'
+
+    // XML libraries needed for SAML
+    implementation 'org.opensaml:opensaml-core:4.+'                // Core OpenSAML functionality
+    implementation 'org.opensaml:opensaml-saml-api:4.+'            // API for SAML objects and metadata
+    implementation 'org.opensaml:opensaml-saml-impl:4.+'           // SAML implementation
+    implementation 'org.opensaml:opensaml-security-impl:4.+'       // Security-related features
+    implementation 'org.opensaml:opensaml-xmlsec-impl:4.+'         // XML signature and encryption
+    
+//    configurations.all {
+//        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+//        exclude group: 'org.slf4j', module: 'slf4j-jdk14'
+//        exclude group: 'ch.qos.logback', module: 'logback-classic'
+//    }
+    
 }
 
 
@@ -104,7 +130,12 @@ def dependencyGroups = [
    ,[group: 'org.apache'          , folder: 'apache']
    ,[group: 'commons-'            , folder: 'apache']
    ,[group: 'jakarta'             , folder: 'apache']
+   ,[group: 'org.slf4j'           , folder: 'apache']
+  
 //   ,[group: 'org.glassfish'       , folder: 'glassfish']
+
+   ,[group: 'org.pac4j'           , folder: 'security']
+   ,[group: 'org.opensaml'        , folder: 'security']
 
    ,[group: ''                    , folder: 'other' ]
 ]

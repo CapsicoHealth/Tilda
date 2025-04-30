@@ -33,7 +33,7 @@ public class TextUtilTest
     public static void main(String[] args)
       {
 //        Test_SimplifyName();
-//        Test_SearchReplace();
+        Test_SearchReplace();
 //        test_EscapeXML();
 //        Test2();
 //        Test3();
@@ -42,8 +42,8 @@ public class TextUtilTest
 //          Test_FindLikeElement();
 //          Test_Perf_endsWith_vs_charAt();
 //          Test_isNullOrEmpty();
-          testcharAt();
-          testExpressionRewrite();
+//          testcharAt();
+//          testExpressionRewrite();
       }
     
     private static void testcharAt()

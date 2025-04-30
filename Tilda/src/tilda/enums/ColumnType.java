@@ -185,10 +185,13 @@ public enum ColumnType
       }
 
 //@formatter:off
-    protected static String[][] _ALIASES = {{"BIGINT"     , "LONG"    }
+    protected static String[][] _ALIASES = {{"INT"        , "INTEGER" }
+                                           ,{"BIGINT"     , "LONG"    }
                                            ,{"SMALLINT"   , "SHORT"   }
+                                           ,{"CHARACTER"  , "CHAR"    }
                                            ,{"VARCHAR"    , "STRING"  }
                                            ,{"TEXT"       , "STRING"  }
+                                           ,{"BOOL"       , "BOOLEAN" }
 // Because we want to automate the way date-times are handled uniformly, these aliases break the 
 //encapsulation and shouldn't be used. modeTZ is the way.
 //                                           ,{"TIMESTAMPTZ", "DATETIME"}
