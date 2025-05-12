@@ -34,11 +34,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-collections-3.2.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-csv-1.14.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -79,7 +74,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/fontbox-3.0.4.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/fontbox-3.0.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -89,7 +84,27 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/httpclient5-5.3.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/httpclient5-cache-5.3.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/apache/httpcore-4.4.16.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/httpcore5-5.2.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/httpcore5-h2-5.2.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -104,7 +119,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/jcl-over-slf4j-2.0.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/jcl-over-slf4j-2.0.17.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -120,11 +135,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-core-2.24.3.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-slf4j18-impl-2.18.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -149,12 +159,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-3.0.4.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-3.0.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-io-3.0.4.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-io-3.0.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -164,12 +174,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/velocity-engine-core-2.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/velocity-engine-core-2.4.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/xmlsec-2.3.4.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/xmlsec-3.0.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -244,12 +254,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/failureaccess-1.0.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/findbugs-annotations-3.0.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/failureaccess-1.0.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -289,7 +294,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20250327-2.0.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20250409-2.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -509,7 +514,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/guava-33.3.1-jre.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/guava-33.4.6-jre.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -524,22 +529,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-annotations-2.17.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-annotations-2.18.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-core-2.17.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-core-2.18.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-databind-2.17.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-databind-2.18.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-datatype-jsr310-2.17.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-datatype-jsr310-2.18.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -564,7 +569,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/metrics-core-4.2.25.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/metrics-core-4.2.26.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/metrics-json-4.2.26.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -749,27 +759,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcpkix-jdk18on-1.72.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcpkix-jdk18on-1.78.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcprov-jdk15on-1.67.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcprov-jdk18on-1.78.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcprov-jdk18on-1.72.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcutil-jdk18on-1.78.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/bcutil-jdk18on-1.72.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/cryptacular-1.2.5.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/cryptacular-1.2.7.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -779,12 +784,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/jakarta.json-1.1.6.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/java-support-8.4.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/jakarta.json-2.0.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -794,22 +794,17 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/jcommander-1.78.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/joda-time-2.12.1.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/other/json-20240303.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/jsoup-1.19.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/jsoup-1.20.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/jspecify-1.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -819,152 +814,202 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/lombok-1.18.32.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/other/postgresql-42.7.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/slf4j-api-2.0.17.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/shib-networking-9.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-beans-5.3.24.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/shib-security-9.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-core-5.3.24.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/shib-support-9.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-jcl-5.3.24.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/shib-velocity-9.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-jdbc-5.3.24.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-beans-6.2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-orm-5.3.24.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-core-6.2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-tx-5.3.24.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-jcl-6.2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/xmlsectool-3.0.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-jdbc-6.2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/javaee-pac4j-8.0.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-orm-6.2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-core-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/spring-tx-6.2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-messaging-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-core-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-messaging-impl-4.2.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-core-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-profile-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-messaging-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-profile-impl-4.2.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-messaging-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-saml-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-profile-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-saml-impl-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-profile-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-security-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-saml-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-security-impl-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-saml-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-soap-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-security-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-soap-impl-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-security-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-storage-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-soap-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-storage-impl-4.2.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-soap-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-xmlsec-api-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-storage-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-xmlsec-impl-4.3.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-storage-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-core-6.0.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-xmlsec-api-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-javaee-6.0.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/opensaml-xmlsec-impl-5.1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-saml-5.7.7.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-core-6.1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-saml-6.1.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/mssql-jdbc-12.8.1.jre11.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/jakartaee-pac4j-8.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-jakartaee-6.1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-collections4-4.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-compress-1.27.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/poi-5.4.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/poi-ooxml-5.4.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/poi-ooxml-lite-5.4.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/xmlbeans-5.3.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/curvesapi-1.08.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/SparseBitSet-1.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>

@@ -39,6 +39,9 @@ dependencies {
     implementation 'org.apache.opennlp:opennlp-tools:2.+'
     implementation 'org.apache.opennlp:opennlp-uima:2.+'
     implementation 'org.apache.pdfbox:pdfbox:3.+'
+    implementation 'org.apache.poi:poi:5.+'
+    implementation 'org.apache.poi:poi-ooxml:5.+'
+    
 
     // Log4J2 and Log4J-1.2 compatibility
     implementation 'org.apache.logging.log4j:log4j-core:2.+'
@@ -95,16 +98,17 @@ dependencies {
 //    implementation 'org.quartz-scheduler:quartz-jobs:2.3.3'
 
     // pac4j
-    implementation 'org.pac4j:pac4j-core:5.+'
-    implementation 'org.pac4j:pac4j-saml:5.+'
-    implementation 'org.pac4j:javaee-pac4j:8.+'
+    implementation 'org.pac4j:pac4j-core:6.1.2'
+    implementation 'org.pac4j:pac4j-saml:6.1.2'
+    implementation 'org.pac4j:pac4j-jakartaee:6.1.2'
+    implementation 'org.pac4j:jakartaee-pac4j:8.+' 
 
     // XML libraries needed for SAML
-    implementation 'org.opensaml:opensaml-core:4.+'                // Core OpenSAML functionality
-    implementation 'org.opensaml:opensaml-saml-api:4.+'            // API for SAML objects and metadata
-    implementation 'org.opensaml:opensaml-saml-impl:4.+'           // SAML implementation
-    implementation 'org.opensaml:opensaml-security-impl:4.+'       // Security-related features
-    implementation 'org.opensaml:opensaml-xmlsec-impl:4.+'         // XML signature and encryption
+//    implementation 'org.opensaml:opensaml-core:4.1.1'                // Core OpenSAML functionality
+//    implementation 'org.opensaml:opensaml-saml-api:4.1.1'            // API for SAML objects and metadata
+//    implementation 'org.opensaml:opensaml-saml-impl:4.1.1'           // SAML implementation
+//    implementation 'org.opensaml:opensaml-security-impl:4.1.1'       // Security-related features
+//    implementation 'org.opensaml:opensaml-xmlsec-impl:4.1.1'         // XML signature and encryption
     
 //    configurations.all {
 //        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
@@ -113,6 +117,8 @@ dependencies {
 //    }
     
 }
+
+
 
 
 def dependencyGroups = [
