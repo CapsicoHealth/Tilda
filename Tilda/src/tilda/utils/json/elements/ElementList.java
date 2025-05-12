@@ -2,14 +2,14 @@ package tilda.utils.json.elements;
 
 import java.io.Writer;
 import java.time.ZonedDateTime;
-import java.util.List;
+import java.util.Collection;
 
 import tilda.interfaces.JSONable;
 import tilda.utils.json.JSONUtil;
 
 public class ElementList implements ElementDef
   {
-    public ElementList(String Name, List<? extends JSONable> Val, String JsonExportName)
+    public ElementList(String Name, Collection<? extends JSONable> Val, String JsonExportName)
       {
         _Name = Name;
         _Val = Val;
@@ -24,10 +24,10 @@ public class ElementList implements ElementDef
     // _SyncToken = SyncToken;
     // }
 
-    protected final String                   _Name;
-    protected final List<? extends JSONable> _Val;
-    protected final String                   _JsonExportName;
-    protected final ZonedDateTime            _SyncToken;
+    protected final String                         _Name;
+    protected final Collection<? extends JSONable> _Val;
+    protected final String                         _JsonExportName;
+    protected final ZonedDateTime                  _SyncToken;
 
     @Override
     public void print(Writer Out, boolean FirstElement, String Header)

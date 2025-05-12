@@ -21,14 +21,17 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
+import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.json.elements.ArrayElementEnd;
@@ -84,26 +87,57 @@ public class JSONPrinter
       {
         return addElement(null, Obj, JsonExportName, false);
       }
+
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
         return addElement(Name, Obj, JsonExportName, true);
       }
+
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName, boolean fullObject)
       {
         _Elements.add(new ElementObj(Name, Obj, JsonExportName, fullObject));
         return this;
       }
 
-    public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName)
+    public JSONPrinter addElement(String Name, Collection<? extends JSONable> L, String JsonExportName)
       {
         _Elements.add(new ElementList(Name, L, JsonExportName));
         return this;
       }
 
-    public JSONPrinter addElement(String Name, List<? extends JSONable> L)
+    public JSONPrinter addElement(String Name, Collection<? extends JSONable> L)
       {
         return addElement(Name, L, "");
       }
+
+    public void addMapArrays(String name, Map<String, List<String>> m, String keyFieldName, String valuesFieldName)
+    throws Exception
+      {
+        addArrayStart(name);
+        for (String key : m.keySet())
+          {
+            addArrayElementStart();
+            addElement(keyFieldName, key);
+            addElement(valuesFieldName, CollectionUtil.toStringArray(m.get(key)));
+            addArrayElementClose();
+          }
+        addArrayClose(name);
+      }
+
+    public void addMap(String name, Map<String, List<? extends JSONable>> m, String keyFieldName, String valuesFieldName)
+    throws Exception
+      {
+        addArrayStart(name);
+        for (String key : m.keySet())
+          {
+            addArrayElementStart();
+            addElement(keyFieldName, key);
+            addElement(valuesFieldName, m.get(key));
+            addArrayElementClose();
+          }
+        addArrayClose(name);
+      }
+    
 
     // public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName, ZonedDateTime SyncToken)
     // {
@@ -153,7 +187,7 @@ public class JSONPrinter
         _Elements.add(new ElementLongArray(Name, Val));
         return this;
       }
-    
+
     public JSONPrinter addElement(String Name, double Val)
       {
         _Elements.add(new ElementDouble(Name, Val));
@@ -165,6 +199,7 @@ public class JSONPrinter
         _Elements.add(new ElementDoubleArray(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, Double[] Val)
       {
         _Elements.add(new ElementDoubleArray(Name, Val));
@@ -281,12 +316,13 @@ public class JSONPrinter
         printRaw(Out);
         JSONUtil.end(Out, ' ');
       }
+
     public void print(Writer Out)
     throws Exception
       {
         print(Out, null);
       }
-    
+
     public void printRaw(Writer Out)
     throws Exception
       {
@@ -298,7 +334,7 @@ public class JSONPrinter
         for (ElementDef e : _Elements)
           {
             boolean first = _FirstElementStatusStack.peek();
-            e.print(Out, first, PaddingUtil.getPad(level*2));
+            e.print(Out, first, PaddingUtil.getPad(level * 2));
             if (first == true)
               {
                 _FirstElementStatusStack.pop();
@@ -317,5 +353,4 @@ public class JSONPrinter
           }
         Out.append(_array == true ? "\n]" : "\n}");
       }
-
   }

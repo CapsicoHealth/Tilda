@@ -926,7 +926,7 @@ public class JSONUtil
     // responseDojoMultipartConfig(Out, JsonExportName, Obj, null);
     // }
 
-    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L, String perfMessage)
+    public static void response(Writer Out, String JsonExportName, Collection<? extends JSONable> L, String perfMessage)
     throws Exception
       {
         Out.write("{\"code\":");
@@ -973,13 +973,13 @@ public class JSONUtil
         return new Gson().fromJson(R, JsonObject.class);
       }
 
-    public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header)
+    public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, Collection<? extends JSONable> L, String Header)
     throws Exception
       {
         print(Out, elementName, JsonExportName, firstElement, L, Header, null);
       }
 
-    public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header, ZonedDateTime lastSync)
+    public static void print(Writer Out, String elementName, String JsonExportName, boolean firstElement, Collection<? extends JSONable> L, String Header, ZonedDateTime lastSync)
     throws Exception
       {
         Out.write(Header);
@@ -987,7 +987,7 @@ public class JSONUtil
         print(Out, JsonExportName, L, Header, null);
       }
 
-    public static void print(Writer Out, String JsonExportName, List<? extends JSONable> L, String Header, ZonedDateTime lastSync)
+    public static void print(Writer Out, String JsonExportName, Collection<? extends JSONable> L, String Header, ZonedDateTime lastSync)
     throws Exception
       {
         if (L == null)

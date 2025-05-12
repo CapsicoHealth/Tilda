@@ -16,8 +16,11 @@
 
 package tilda.utils;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.KeyStore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -79,7 +82,7 @@ public class EncryptionUtil
         try
           {
             MessageDigest md5 = MessageDigest.getInstance(shaAlgo);
-            byte[] digest = md5.digest((TextUtil.print(salt,"")+plainText).getBytes("UTF-8"));
+            byte[] digest = md5.digest((TextUtil.print(salt, "") + plainText).getBytes("UTF-8"));
             return digest;
           }
         catch (Exception e)
@@ -148,7 +151,7 @@ public class EncryptionUtil
             return null;
           }
       }
-    
+
 
     public static String hmacSHA1(String plaintext, String key)
     throws Exception
@@ -171,5 +174,28 @@ public class EncryptionUtil
         mac.init(signingKey);
         byte[] rawHmac = Base64.getEncoder().encode(mac.doFinal(plaintext.getBytes("UTF-8")));
         return new String(rawHmac, "UTF-8");
-      }  
+      }
+
+    /**
+     * Check if a given password is correct for a given keystore. Assumes the file has been validated,
+     * otherwise this method will still return false but not because the password is invalid, but because
+     * the keystore file cannot be found.
+     * @param keystorePath
+     * @param keystorePassword
+     * @return
+     */
+    public static boolean isKeystorePasswordValid(String keystorePath, String keystorePassword)
+      {
+        try (FileInputStream fis = new FileInputStream(keystorePath))
+          {
+            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keystore.load(fis, keystorePassword.toCharArray());
+            return true; // Password is valid
+          }
+        catch (Exception e)
+          {
+            return false; // Password is invalid or keystore cannot be loaded
+          }
+      }
+
   }
