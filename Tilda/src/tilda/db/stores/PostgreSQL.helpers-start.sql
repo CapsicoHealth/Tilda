@@ -329,6 +329,27 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
 
+-----------------------------------------------------------------
+-- hoursBetween, minutesBetween and secondsBetween
+CREATE OR REPLACE FUNCTION TILDA.secondsBetween(ts1 timestamptz, ts2 timestamptz)
+  RETURNS integer
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+'SELECT EXTRACT(EPOCH FROM $2 - $1);';
+COMMENT ON FUNCTION TILDA.secondsBetween(timestamptz, timestamptz) IS 'Computes the number of seconds between 2 dates ''start'' and ''end''.';
+
+CREATE OR REPLACE FUNCTION TILDA.minutesBetween(ts1 timestamptz, ts2 timestamptz)
+  RETURNS float
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+'SELECT EXTRACT(EPOCH FROM $2 - $1) / 60.0;';
+COMMENT ON FUNCTION TILDA.minutesBetween(timestamptz, timestamptz) IS 'Computes the number of (fractional) minutes between 2 dates ''start'' and ''end''.';
+
+CREATE OR REPLACE FUNCTION TILDA.hoursBetween(ts1 timestamptz, ts2 timestamptz)
+  RETURNS float
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+'SELECT EXTRACT(EPOCH FROM $2 - $1) / 3600.0;';
+COMMENT ON FUNCTION TILDA.hoursBetween(timestamptz, timestamptz) IS 'Computes the number of (fractional) hours between 2 dates ''start'' and ''end''.';
+
+
 ---------------------
 -- daysBetween
 CREATE OR REPLACE FUNCTION TILDA.daysBetween(ts1 timestamptz, ts2 timestamptz, midnight boolean)

@@ -28,6 +28,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -41,10 +43,24 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import tilda.utils.comparators.FileNameComparator;
 
@@ -597,6 +613,33 @@ public class FileUtil
     public static String trimExtention(String fileName)
       {
         return fileName.replaceFirst("\\.+[^\\.]*$", "");
+      }
+
+    /**
+     * This is a heavy operation, as it parses the XML and then re-serializes it.
+     * @param xmlContent
+     * @return
+     * @throws TransformerException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    public static String prettyPrintXML(String xmlContent)
+    throws TransformerException, ParserConfigurationException, SAXException, IOException
+      {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new InputSource(new StringReader(xmlContent)));
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
+        StringBuilderWriter writer = new StringBuilderWriter();
+        transformer.transform(new DOMSource(document), new StreamResult(writer));
+        return writer.toString();
       }
 
   }
