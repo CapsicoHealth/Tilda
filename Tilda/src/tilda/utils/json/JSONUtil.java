@@ -51,6 +51,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.interfaces.JSONable;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
+import tilda.utils.FileUtil;
 import tilda.utils.HttpStatus;
 import tilda.utils.PaddingUtil;
 import tilda.utils.ParseUtil;
@@ -968,6 +969,19 @@ public class JSONUtil
         return new Gson().fromJson(JsonStr.toString(), JsonObject.class);
       }
 
+    public static JsonObject fromJSONFile(String filename)
+      {
+        try (BufferedReader R = FileUtil.getReaderFromFileOrResource(filename))
+          {
+            return fromJSONObj(R);
+          }
+        catch (IOException E)
+          {
+            LOG.error("Failed to read JSON file '" + filename + "' due to: " + E.getMessage(), E);
+            return null;
+          }
+      }
+
     public static JsonObject fromJSONObj(BufferedReader R)
       {
         return new Gson().fromJson(R, JsonObject.class);
@@ -1501,15 +1515,15 @@ public class JSONUtil
         String[] arr = null;
         JsonElement j = jsonValues.get(name);
         if (j.isJsonArray() == true)
-         {
-           JsonArray ja = j.getAsJsonArray();
-           arr = new String[ja.size()];
-           for (int i = 0; i < ja.size(); ++i)
-             arr[i] = ja.get(i).getAsString();
-         }
+          {
+            JsonArray ja = j.getAsJsonArray();
+            arr = new String[ja.size()];
+            for (int i = 0; i < ja.size(); ++i)
+              arr[i] = ja.get(i).getAsString();
+          }
         else
           arr = new String[] { j.getAsString() };
-        
+
         return arr;
       }
 
