@@ -597,10 +597,19 @@ public class Column extends TypeDef
         : VisibilityType.PUBLIC;
       }
 
+    /**
+     * A column is part of a copy operation from one table to its history/clone, or from one row to another in the same table
+     * if:<UL>
+     * <LI> the column is not a primary key
+     * <LI> the column is not a calculated column
+     * <LI> the column is not the automated *TZ column to a matching DATETIMETZ columns (tzCol is true, and tzMode is COLUMN)
+     * </UL>
+     * @return
+     */
     public boolean isCopyToColumn()
       {
         // LDH-NOTE: Why would invariants be excluded? They are write-once-read-many so they should be set to a new copy of an object.
-        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED; // && _Invariant == false;
+        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED && !(_FCT == FrameworkColumnType.TZ && _TzMode == TZMode.COLUMN && _TzCol == true); // && _Invariant == false;
       }
 
     public boolean isSavedField()

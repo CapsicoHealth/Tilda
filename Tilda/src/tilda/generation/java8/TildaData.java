@@ -1875,7 +1875,7 @@ public class TildaData implements CodeGenTildaData
         Out.println(");");
 
         for (Column C : histObj._Columns)
-          if (C != null)
+          if (C != null && C.isCopyToColumn() == true)
             {
               String Mask = Helper.getRuntimeMask(C);
               String Pad = histObj._PadderColumnNames.getPad(C.getName());
@@ -1894,7 +1894,7 @@ public class TildaData implements CodeGenTildaData
               Out.println("       dst.set" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + Pad + "(_" + C.getName() + Pad + ");");
 
               if ((C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN) && C.isJSONColumn() == true)
-                Out.println("       dst.Str_" + C.getName() + " = Str_" + C.getName() + ";");
+                Out.println("       dst.initJson_" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "(Str_" + C.getName() + ");");
             }
         Out.println("       return dst;");
         Out.println("     }");
