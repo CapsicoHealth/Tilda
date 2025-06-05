@@ -44,6 +44,8 @@ public class Migration
         for (int i = 0; i < _Renames.size(); ++i)
           {
             MigrationRename M = _Renames.get(i);
+            if (M == null)
+             continue;
             M.validate(PS, Parent);
             // We have to check for the cloning feature: if we have to rename a column from the source table, we have to rename
             // as well the column for all the clones.
@@ -69,6 +71,8 @@ public class Migration
 
         for (MigrationMove M : _Moves)
           {
+            if (M == null)
+             continue;
             if (M._Objects != null)
               {
                 List<String> L = new ArrayList<String>();
@@ -92,6 +96,9 @@ public class Migration
         for (int i = 0; i < _NotNulls.size(); ++i)
           {
             MigrationNotNull M = _NotNulls.get(i);
+            if (M == null)
+             continue;
+            
             M.validate(PS, Parent);
             // We have to check for the cloning feature: if we are adding a new column to a source table,
             // we also have to add it to the clones.

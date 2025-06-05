@@ -247,6 +247,8 @@ public class ValueHelper
 
     public static boolean isSuported(ColumnType colType)
       {
+        if (colType == null)
+          return false;
         switch (colType)
           {
             case BINARY:
