@@ -47,6 +47,15 @@ sourceSets {
             
             // Start with absolutely minimal set - only classes with no dependencies
             include 'tilda/utils/HttpStatus.java'           // Simple enum, no dependencies
+            include 'tilda/utils/Counter.java'
+            include 'tilda/utils/AnsiUtil.java'
+            include 'tilda/utils/LongWrapper.java'
+        include 'tilda/utils/ClassUtils.java'
+        
+        // Include simple pair classes
+        include 'tilda/utils/pairs/StringStringPair.java'
+        include 'tilda/utils/pairs/StringIntPair.java'
+        include 'tilda/utils/pairs/IntIntPair.java'
             
             // Include basic interfaces with minimal dependencies
             include 'tilda/interfaces/JSONable.java'        // Basic interface
@@ -62,6 +71,12 @@ sourceSets {
             include 'tilda/enums/JoinType.java'
             include 'tilda/enums/MultiType.java'
             include 'tilda/enums/TransactionType.java'
+            include 'tilda/enums/DefaultType.java'
+            include 'tilda/enums/TZMode.java'
+            include 'tilda/enums/MigrationType.java'
+            include 'tilda/enums/SyncStatus.java'
+            include 'tilda/enums/ConventionNaming.java'
+            include 'tilda/enums/OutputFormatType.java'
             include 'tilda/enums/ColumnMode.java'
             include 'tilda/enums/ObjectLifecycle.java'
             include 'tilda/enums/ObjectMode.java'
