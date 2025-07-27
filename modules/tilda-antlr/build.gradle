@@ -1,0 +1,27 @@
+description = 'Tilda ANTLR - Grammar parsing and code generation'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // ANTLR runtime and tools
+    implementation 'org.antlr:antlr4-runtime:4.13.1'
+    implementation 'org.antlr:antlr4:4.13.1'
+}
+
+// Source sets for ANTLR-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src-antlr4']
+        }
+    }
+}
+
+// ANTLR code generation task
+task generateGrammar(type: JavaExec) {
+    group = 'antlr'
+    description = 'Generate ANTLR grammar files'
+    classpath = configurations.runtimeClasspath
+    mainClass = 'org.antlr.v4.Tool'
+    args = ['-visitor', '-package', 'tilda.grammar', 'src/main/antlr4/Tilda.g4']
+}

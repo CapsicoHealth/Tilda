@@ -1,0 +1,81 @@
+description = 'Tilda Migration - Database migration and schema evolution'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // Database modules for migration support
+    // Note: Users should add these dependencies as needed
+    // implementation project(':tilda-postgres')
+    // implementation project(':tilda-sqlserver')
+    // implementation project(':tilda-bigquery')
+}
+
+// Source sets for migration-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/migration/**'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/migration/**'
+        }
+    }
+}
+
+// Create executable JAR for migration utility
+jar {
+    archiveBaseName = 'tilda-migration'
+    manifest {
+        attributes(
+            'Main-Class': 'tilda.migration.Migrator',
+            'Implementation-Title': 'Tilda Migration',
+            'Implementation-Version': project.version
+        )
+    }
+}
+
+// Application plugin for easier migration execution
+apply plugin: 'application'
+mainClassName = 'tilda.migration.Migrator'
+
+// Custom tasks for migration operations
+task migrate(type: JavaExec) {
+    group = 'tilda'
+    description = 'Run Tilda database migrations'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.migration.Migrator'
+    
+    // Allow passing arguments from command line
+    if (project.hasProperty('migrationConfig')) {
+        args project.property('migrationConfig')
+    }
+}
+
+task migrationStatus(type: JavaExec) {
+    group = 'tilda'
+    description = 'Check migration status'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.migration.Migrator'
+    args '--status'
+}
+
+task migrationPlan(type: JavaExec) {
+    group = 'tilda'
+    description = 'Generate migration plan'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.migration.Migrator'
+    args '--plan'
+}
+
+task rollback(type: JavaExec) {
+    group = 'tilda'
+    description = 'Rollback last migration'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.migration.Migrator'
+    args '--rollback'
+}

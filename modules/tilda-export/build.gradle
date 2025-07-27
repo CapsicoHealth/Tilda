@@ -1,0 +1,90 @@
+description = 'Tilda Export - Data export and import utilities'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // Optional database modules for export targets
+    // Note: Users should add these dependencies as needed
+    // implementation project(':tilda-postgres')
+    // implementation project(':tilda-sqlserver')
+    // implementation project(':tilda-bigquery')
+    // implementation project(':tilda-gcp')
+    
+    // CSV processing
+    implementation 'org.apache.commons:commons-csv:1.11.0'
+    
+    // JSON processing
+    implementation 'com.google.code.gson:gson:2.11.0'
+}
+
+// Source sets for export-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/Export.java'
+            include 'tilda/export/**'
+            include 'tilda/data/export/**'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/export/**'
+        }
+    }
+}
+
+// Create executable JAR for export utility
+jar {
+    archiveBaseName = 'tilda-export'
+    manifest {
+        attributes(
+            'Main-Class': 'tilda.Export',
+            'Implementation-Title': 'Tilda Export',
+            'Implementation-Version': project.version
+        )
+    }
+}
+
+// Application plugin for easier export execution
+apply plugin: 'application'
+mainClassName = 'tilda.Export'
+
+// Custom tasks for export operations
+task exportData(type: JavaExec) {
+    group = 'tilda'
+    description = 'Export data using Tilda export utility'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.Export'
+    
+    // Allow passing arguments from command line
+    if (project.hasProperty('exportConfig')) {
+        args project.property('exportConfig')
+    }
+}
+
+task exportToCsv(type: JavaExec) {
+    group = 'tilda'
+    description = 'Export data to CSV format'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.Export'
+    args '--format', 'csv'
+}
+
+task exportToJson(type: JavaExec) {
+    group = 'tilda'
+    description = 'Export data to JSON format'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.Export'
+    args '--format', 'json'
+}
+
+task exportToBigQuery(type: JavaExec) {
+    group = 'tilda'
+    description = 'Export data to BigQuery'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.Export'
+    args '--target', 'bigquery'
+}

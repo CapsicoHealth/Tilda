@@ -1,0 +1,46 @@
+description = 'Tilda GCP - Google Cloud Platform integration'
+
+dependencies {
+    api project(':tilda-core')
+    api project(':tilda-bigquery')
+    
+    // Google Cloud Platform libraries
+    implementation 'com.google.cloud:google-cloud-storage:2.32.1'
+    implementation 'com.google.cloud:google-cloud-pubsub:1.126.1'
+    implementation 'com.google.cloud:google-cloud-language:2.18.0'
+    implementation 'com.google.cloud:google-cloud-aiplatform:3.18.0'
+    
+    // Google API clients
+    implementation 'com.google.api-client:google-api-client:2.2.0'
+    implementation 'com.google.apis:google-api-services-bigquery:v2-rev20240105-2.0.0'
+    implementation 'com.google.apis:google-api-services-storage:v1-rev20240105-2.0.0'
+    implementation 'com.google.apis:google-api-services-healthcare:v1-rev20240429-2.0.0'
+    
+    // Authentication
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.22.0'
+    implementation 'com.google.auth:google-auth-library-credentials:1.22.0'
+}
+
+// Add the existing GCP JAR files as dependencies
+dependencies {
+    implementation fileTree(dir: '../../lib/gcp', include: '*.jar')
+}
+
+// Source sets for GCP-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/gcp/**'
+            include 'tilda/cloud/**'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/gcp/**'
+            include '**/cloud/**'
+        }
+    }
+}

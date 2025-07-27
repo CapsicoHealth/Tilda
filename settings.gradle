@@ -1,0 +1,33 @@
+rootProject.name = 'tilda'
+
+// Core modules
+include 'tilda-core'
+include 'tilda-antlr'
+
+// Database modules
+include 'tilda-postgres'
+include 'tilda-sqlserver'
+include 'tilda-bigquery'
+
+// Cloud modules
+include 'tilda-gcp'
+
+// Web modules
+include 'tilda-web'
+
+// Utility modules
+include 'tilda-cli'
+include 'tilda-export'
+include 'tilda-migration'
+
+// Set project directories
+project(':tilda-core').projectDir = file('modules/tilda-core')
+project(':tilda-antlr').projectDir = file('modules/tilda-antlr')
+project(':tilda-postgres').projectDir = file('modules/tilda-postgres')
+project(':tilda-sqlserver').projectDir = file('modules/tilda-sqlserver')
+project(':tilda-bigquery').projectDir = file('modules/tilda-bigquery')
+project(':tilda-gcp').projectDir = file('modules/tilda-gcp')
+project(':tilda-web').projectDir = file('modules/tilda-web')
+project(':tilda-cli').projectDir = file('modules/tilda-cli')
+project(':tilda-export').projectDir = file('modules/tilda-export')
+project(':tilda-migration').projectDir = file('modules/tilda-migration')

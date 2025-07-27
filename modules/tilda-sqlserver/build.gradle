@@ -1,0 +1,28 @@
+description = 'Tilda SQL Server - Microsoft SQL Server database support'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // SQL Server JDBC driver
+    implementation files('../../lib/sqljdbc42.jar')
+}
+
+// Source sets for SQL Server-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/db/stores/MSSQL.java'
+            include 'tilda/db/processors/MSSQLType.java'
+            include 'tilda/db/processors/MSSQLExporter.java'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/mssql/**'
+            include '**/sqlserver/**'
+        }
+    }
+}

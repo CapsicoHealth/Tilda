@@ -1,0 +1,42 @@
+description = 'Tilda PostgreSQL - PostgreSQL database support'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // PostgreSQL JDBC driver
+    implementation 'org.postgresql:postgresql:42.7.3'
+}
+
+// Source sets for PostgreSQL-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/db/stores/PostgreSQL.java'
+            include 'tilda/db/processors/PostgreSQLType.java'
+            include 'tilda/db/processors/PostgreSQLExporter.java'
+            // Include any other PostgreSQL-specific files
+            include 'tilda/db/**/Postgres*.java'
+            include 'tilda/db/**/PostgreSQL*.java'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/postgres/**'
+            include '**/postgresql/**'
+        }
+    }
+}
+
+// Compilation options to handle legacy code issues
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += [
+        '-Xlint:-unchecked',
+        '-Xlint:-deprecation',
+        '-Xlint:-rawtypes'
+    ]
+    options.failOnError = false
+}

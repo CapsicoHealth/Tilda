@@ -18,6 +18,35 @@
 /tilda-*-dependencies.zip
 
 # -----------------------------------------------------------------------------
+# GRADLE BUILD SYSTEM
+# -----------------------------------------------------------------------------
+# Gradle build directories
+/build/
+**/build/
+/modules/*/build/
+
+# Gradle wrapper files (keep these for reproducible builds)
+# gradle/wrapper/gradle-wrapper.jar
+# gradle/wrapper/gradle-wrapper.properties
+# gradlew
+# gradlew.bat
+
+# Gradle cache and daemon
+.gradle/
+**/gradle-app.setting
+**/gradle.properties.local
+
+# Generated JAR files from modular build
+/modules/*/build/libs/*.jar
+/modules/*/build/classes/
+/modules/*/build/generated/
+/modules/*/build/tmp/
+
+# Gradle test reports
+/modules/*/build/reports/
+/modules/*/build/test-results/
+
+# -----------------------------------------------------------------------------
 # GENERATED TILDA CODE (NEVER COMMIT THESE)
 # -----------------------------------------------------------------------------
 # All _Tilda directories contain auto-generated code
@@ -105,6 +134,12 @@ REAL_WORLD_EXAMPLE.md
 
 # Build scripts (if auto-generated)
 build_standalone.sh
+
+# Modular build system documentation (KEEP THESE - they're important!)
+# MODULAR_BUILD_SYSTEM.md
+# MODULAR_BUILD_STATUS.md
+# PHASE2_PROGRESS_REPORT.md
+# NEXT_STEPS_BASED_ON_FEEDBACK.md
 
 # -----------------------------------------------------------------------------
 # LOGS & TEMPORARY FILES

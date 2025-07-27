@@ -1,0 +1,32 @@
+description = 'Tilda BigQuery - Google BigQuery database support'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // BigQuery JDBC driver
+    implementation files('../../lib/GoogleBigQueryJDBC42.jar')
+    
+    // Google Cloud BigQuery client libraries
+    implementation 'com.google.cloud:google-cloud-bigquery:2.37.0'
+    implementation 'com.google.cloud:google-cloud-bigquerystorage:3.0.1'
+    implementation 'com.google.cloud:google-cloud-bigquerydatatransfer:2.34.0'
+}
+
+// Source sets for BigQuery-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/db/stores/BigQuery.java'
+            include 'tilda/db/processors/BigQueryType.java'
+            include 'tilda/db/processors/BigQueryExporter.java'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/bigquery/**'
+        }
+    }
+}
