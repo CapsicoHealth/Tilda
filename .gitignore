@@ -164,3 +164,5 @@ scripts/*.class
 # 4. The /example/ directory is for demonstration only
 # 5. Always run 'tilda gen' to regenerate code after schema changes
 # =============================================================================
+
+.chat/

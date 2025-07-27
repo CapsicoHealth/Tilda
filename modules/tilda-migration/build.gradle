@@ -3,6 +3,9 @@ description = 'Tilda Migration - Database migration and schema evolution'
 dependencies {
     api project(':tilda-core')
     
+    // External dependencies identified by analyzer
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    
     // Database modules for migration support
     // Note: Users should add these dependencies as needed
     // implementation project(':tilda-postgres')
@@ -15,7 +18,12 @@ sourceSets {
     main {
         java {
             srcDirs = ['../../src']
-            include 'tilda/migration/**'
+            // Core migration classes
+            include 'tilda/Migrate.java'           // Main migration utility
+            
+            // Required dependencies (based on analyzer recommendations)
+            include 'tilda/db/Connection.java'     // Database connection
+            include 'tilda/parsing/parts/Schema.java' // Schema parsing
         }
     }
     
@@ -32,7 +40,7 @@ jar {
     archiveBaseName = 'tilda-migration'
     manifest {
         attributes(
-            'Main-Class': 'tilda.migration.Migrator',
+            'Main-Class': 'tilda.Migrate',
             'Implementation-Title': 'Tilda Migration',
             'Implementation-Version': project.version
         )
@@ -41,7 +49,7 @@ jar {
 
 // Application plugin for easier migration execution
 apply plugin: 'application'
-mainClassName = 'tilda.migration.Migrator'
+mainClassName = 'tilda.Migrate'
 
 // Custom tasks for migration operations
 task migrate(type: JavaExec) {

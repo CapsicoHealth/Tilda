@@ -2,9 +2,23 @@ description = 'Tilda PostgreSQL - PostgreSQL database support'
 
 dependencies {
     api project(':tilda-core')
+    api project(':tilda-antlr')  // Re-enable now that antlr works
     
     // PostgreSQL JDBC driver
     implementation 'org.postgresql:postgresql:42.7.3'
+    
+    // External dependencies needed by included classes
+    implementation 'org.apache.commons:commons-csv:1.10.0'
+    implementation 'com.google.guava:guava:32.1.3-jre'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    
+    // Additional external dependencies identified by analyzer
+    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.json:json:20230618'
+    // Removed Google Cloud dependencies - they're in tilda-gcp module
 }
 
 // Source sets for PostgreSQL-specific code
@@ -12,12 +26,26 @@ sourceSets {
     main {
         java {
             srcDirs = ['../../src']
-            include 'tilda/db/stores/PostgreSQL.java'
-            include 'tilda/db/processors/PostgreSQLType.java'
-            include 'tilda/db/processors/PostgreSQLExporter.java'
-            // Include any other PostgreSQL-specific files
-            include 'tilda/db/**/Postgres*.java'
-            include 'tilda/db/**/PostgreSQL*.java'
+            // Start with Layer 0 classes (no internal dependencies)
+            include 'tilda/enums/DBStringType.java'        // Database string type
+            include 'tilda/enums/DefaultType.java'         // Default type enum
+            include 'tilda/enums/TZMode.java'              // Timezone mode
+            include 'tilda/enums/MigrationType.java'       // Migration type
+            include 'tilda/enums/SyncStatus.java'          // Sync status
+            include 'tilda/enums/ConventionNaming.java'    // Naming convention
+            include 'tilda/enums/OutputFormatType.java'    // Output format
+            
+            // Exclude everything else initially - add incrementally
+            exclude 'tilda/grammar/**'                     // Grammar -> tilda-antlr
+            exclude 'tilda/utils/gcp/**'                   // GCP -> tilda-gcp
+            exclude 'tilda/cloud/**'                       // Cloud -> tilda-gcp
+            exclude 'tilda/utils/fhir/**'                  // FHIR -> separate module
+            exclude 'tilda/servlet/**'                     // Web -> tilda-web
+            exclude 'tilda/web/**'                         // Web -> tilda-web
+            exclude 'tilda/rest/**'                        // REST -> tilda-web
+        }
+        resources {
+            srcDirs = ['../../src']
         }
     }
     
@@ -38,5 +66,5 @@ compileJava {
         '-Xlint:-deprecation',
         '-Xlint:-rawtypes'
     ]
-    options.failOnError = false
+    options.failOnError = true
 }

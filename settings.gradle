@@ -16,6 +16,7 @@ include 'tilda-gcp'
 include 'tilda-web'
 
 // Utility modules
+include 'tilda-utils'
 include 'tilda-cli'
 include 'tilda-export'
 include 'tilda-migration'
@@ -28,6 +29,7 @@ project(':tilda-sqlserver').projectDir = file('modules/tilda-sqlserver')
 project(':tilda-bigquery').projectDir = file('modules/tilda-bigquery')
 project(':tilda-gcp').projectDir = file('modules/tilda-gcp')
 project(':tilda-web').projectDir = file('modules/tilda-web')
+project(':tilda-utils').projectDir = file('modules/tilda-utils')
 project(':tilda-cli').projectDir = file('modules/tilda-cli')
 project(':tilda-export').projectDir = file('modules/tilda-export')
 project(':tilda-migration').projectDir = file('modules/tilda-migration')

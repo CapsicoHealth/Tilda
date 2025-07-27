@@ -10,6 +10,10 @@ dependencies {
     // implementation project(':tilda-sqlserver')
     // implementation project(':tilda-bigquery')
     // implementation project(':tilda-gcp')
+    
+    // External dependencies identified by analyzer
+    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 }
 
 // Source sets for CLI-specific code
@@ -17,9 +21,23 @@ sourceSets {
     main {
         java {
             srcDirs = ['../../src']
-            include 'tilda/Gen.java'
-            include 'tilda/cli/**'
-            include 'tilda/utils/**'
+            // Core CLI classes
+            include 'tilda/Gen.java'               // Main generator class
+            include 'tilda/Export.java'            // Export utility
+            include 'tilda/Import.java'            // Import utility
+            include 'tilda/Migrate.java'           // Migration utility
+            
+            // Required utility dependencies
+            include 'tilda/utils/DurationUtil.java'       // Duration utilities
+            include 'tilda/utils/FileUtil.java'           // File utilities
+            include 'tilda/utils/TextUtil.java'           // Text utilities
+            include 'tilda/utils/SystemValues.java'       // System values
+            include 'tilda/utils/CollectionUtil.java'     // Collection utilities
+            
+            // Required parsing dependencies
+            include 'tilda/parsing/parts/Schema.java'     // Schema parsing
+            include 'tilda/parsing/parts/Object.java'     // Object parsing
+            include 'tilda/parsing/parts/Column.java'     // Column parsing
         }
     }
     
@@ -73,7 +91,7 @@ compileJava {
         '-Xlint:-deprecation',
         '-Xlint:-rawtypes'
     ]
-    options.failOnError = false
+    options.failOnError = true
 }
 
 // Application plugin for easier CLI execution

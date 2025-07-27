@@ -5,6 +5,9 @@ dependencies {
     
     // SQL Server JDBC driver
     implementation files('../../lib/sqljdbc42.jar')
+    
+    // External dependencies identified by analyzer
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 }
 
 // Source sets for SQL Server-specific code
@@ -12,9 +15,15 @@ sourceSets {
     main {
         java {
             srcDirs = ['../../src']
+            // Core SQL Server classes
             include 'tilda/db/stores/MSSQL.java'
             include 'tilda/db/processors/MSSQLType.java'
             include 'tilda/db/processors/MSSQLExporter.java'
+            
+            // Required dependencies (from analyzer)
+            include 'tilda/db/Connection.java'             // Database connection
+            include 'tilda/generation/sqlserver/SQLServerType.java' // SQL Server types
+            include 'tilda/enums/ColumnType.java'          // Column types
         }
     }
     

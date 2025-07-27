@@ -11,7 +11,12 @@ dependencies {
     // implementation project(':tilda-gcp')
     
     // CSV processing
-    implementation 'org.apache.commons:commons-csv:1.11.0'
+    implementation 'org.apache.commons:commons-csv:1.10.0'
+    
+    // External dependencies identified by analyzer
+    implementation 'com.google.cloud:google-cloud-storage:2.32.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'org.postgresql:postgresql:42.6.0'
     
     // JSON processing
     implementation 'com.google.code.gson:gson:2.11.0'
@@ -22,9 +27,15 @@ sourceSets {
     main {
         java {
             srcDirs = ['../../src']
-            include 'tilda/Export.java'
-            include 'tilda/export/**'
-            include 'tilda/data/export/**'
+            // Core export classes
+            include 'tilda/Export.java'            // Main export utility
+            
+            // Required dependencies
+            include 'tilda/db/Connection.java'     // Database connection
+            include 'tilda/utils/FileUtil.java'    // File utilities
+            include 'tilda/utils/TextUtil.java'    // Text utilities
+            include 'tilda/utils/SystemValues.java' // System values
+            include 'tilda/utils/CollectionUtil.java' // Collection utilities
         }
     }
     
