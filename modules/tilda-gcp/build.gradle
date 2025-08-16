@@ -30,20 +30,28 @@ dependencies {
     implementation fileTree(dir: '../../lib/gcp', include: '*.jar')
 }
 
-// Source sets for GCP-specific code
+// Source sets for GCP-specific code - Layer 0 approach
 sourceSets {
     main {
         java {
             srcDirs = ['../../src']
-            // Actual GCP utility classes (start with simplest ones)
-            include 'tilda/utils/gcp/AuthHelper.java'     // GCP authentication helper
-            include 'tilda/utils/gcp/JobResults.java'     // Job results utility
-            include 'tilda/utils/gcp/JobCostDetails.java' // Job cost tracking
+            // Layer 0: Start with classes that have minimal external dependencies
+            include 'tilda/utils/gcp/JobCostDetails.java' // Simple data class, no Tilda dependencies
+            include 'tilda/utils/gcp/JobResults.java'     // Simple wrapper, only Google Cloud deps
             
-            // Required utility dependencies
-            include 'tilda/utils/FileUtil.java'       // File utilities (needed by AuthHelper)
-            include 'tilda/utils/TextUtil.java'       // Text utilities (needed by FileUtil)
-            include 'tilda/utils/SystemValues.java'   // System values (needed by FileUtil)
+            // Layer 1: Add classes with only external dependencies (no internal Tilda deps)
+            include 'tilda/utils/gcp/BQWriter.java'       // BigQuery writer, only Google Cloud deps
+            
+            // Layer 2: Add more complex classes with external dependencies only
+            include 'tilda/utils/gcp/JobHelper.java'      // Job helper, check if it has no internal deps
+            
+            // Exclude complex classes for now (will add incrementally)
+            // exclude 'tilda/utils/gcp/AuthHelper.java'     // Has FileUtil dependencies
+            // exclude 'tilda/utils/gcp/BQHelper.java'       // Complex BigQuery integration
+            // exclude 'tilda/utils/gcp/BQWriter.java'       // Has multiple dependencies
+            // exclude 'tilda/utils/gcp/CSHelper.java'       // Cloud Storage helper
+            // exclude 'tilda/utils/gcp/FHIRProviderCH.java' // FHIR provider
+            // exclude 'tilda/utils/gcp/JobHelper.java'      // Has multiple dependencies
         }
     }
     
