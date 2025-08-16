@@ -60,6 +60,12 @@ public class ViewMeta implements TableViewMeta
       {
         return _ViewName;
       }
+
+    @Override
+    public ColumnMeta getColumn(String name)
+      {
+        return _DBColumns.get(name.toLowerCase());
+      }
     
     
     @Override

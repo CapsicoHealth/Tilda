@@ -69,6 +69,11 @@ public class TableMeta implements TableViewMeta
         return _TableName;
       }
    
+    @Override
+    public ColumnMeta getColumn(String name)
+      {
+        return _ColumnsMap.get(name.toLowerCase());
+      }
 
     public void load(Connection C)
     throws Exception

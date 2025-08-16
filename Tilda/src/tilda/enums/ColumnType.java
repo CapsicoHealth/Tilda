@@ -480,6 +480,8 @@ public enum ColumnType
               return "DATETIME";
             case JSON:
               return "STRING";
+            case VECTOR:
+              return "FLOAT64";
             case BINARY:
             case BITFIELD:
               return "BYTES";

@@ -26,4 +26,5 @@ public interface TableViewMeta
     public String getTableViewName();
     public void load(Connection C) throws Exception;
     public List<ColumnMeta> getColumnMetaList();
+    public ColumnMeta getColumn(String name);
   }

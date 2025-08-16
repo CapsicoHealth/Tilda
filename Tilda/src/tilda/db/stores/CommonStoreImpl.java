@@ -141,6 +141,11 @@ public abstract class CommonStoreImpl implements DBType
                   TypeSql = "UUID";
                   TildaType = ColumnType.UUID;
                 }
+              else if (TypeName != null && TypeName.equalsIgnoreCase("vector") == true)
+                {
+                  TypeSql = "VECTOR";
+                  TildaType = ColumnType.VECTOR;
+                }
               else
                 {
                   TypeSql = "OTHER";

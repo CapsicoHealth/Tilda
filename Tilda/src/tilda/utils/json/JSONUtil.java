@@ -1434,6 +1434,14 @@ public class JSONUtil
                   print(out, elementName, idx == 1, RS.wasNull() == true ? null : v);
                 }
               break;
+            case VECTOR: // all vectors are arrays but come in as strings!
+              if (cm.isArray() == false)
+               throw new Exception("Vector type is not set as an array.");
+              String v_str = RS.getString(idx);
+              if (RS.wasNull() == true)
+               v_str = null;
+              printRawObject(out, elementName, idx == 1, v_str);
+              break;
             default:
               throw new Exception("Unhandle switch case for '" + cm._TildaType.name() + "'.");
           }
