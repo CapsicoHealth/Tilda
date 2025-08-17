@@ -16,28 +16,29 @@ dependencies {
     implementation 'com.google.cloud:google-cloud-bigquerydatatransfer:2.34.0'
 }
 
-// Source sets for BigQuery-specific code
+// Source sets for BigQuery-specific code - Layer 0 approach
 sourceSets {
     main {
         java {
             srcDirs = ['../../src']
-            // Core BigQuery classes
-            include 'tilda/db/stores/BigQuery.java'
-            include 'tilda/db/processors/BigQueryType.java'
-            include 'tilda/db/processors/BigQueryExporter.java'
+            // Layer 0: Start with simple enums and data classes with no internal dependencies
+            include 'tilda/enums/DBStringType.java'        // Basic enum, no dependencies
+            include 'tilda/enums/DefaultType.java'         // Basic enum, no dependencies
+            include 'tilda/enums/TZMode.java'              // Basic enum, no dependencies
             
-            // Required dependencies
-            include 'tilda/db/Connection.java'             // Database connection
-            include 'tilda/enums/ColumnType.java'          // Column types
-            include 'tilda/utils/TextUtil.java'            // Text utilities
-            include 'tilda/utils/CollectionUtil.java'      // Collection utilities
-            include 'tilda/utils/PaddingTracker.java'      // Padding utilities
-            include 'tilda/utils/ParseUtil.java'           // Parse utilities
-            include 'tilda/utils/DateTimeUtil.java'        // DateTime utilities
-            include 'tilda/utils/SystemValues.java'        // System values
+            // Layer 1: Add more basic enums with no internal dependencies
+            include 'tilda/enums/MigrationType.java'       // Migration enum, no dependencies
+            include 'tilda/enums/SyncStatus.java'          // Sync status enum, no dependencies
+            include 'tilda/enums/ConventionNaming.java'    // Naming convention enum, no dependencies
             
-            // Add generation classes for BigQuery
-            include 'tilda/generation/bigquery/BigQueryType.java'  // BigQuery type mapping
+            // Exclude complex classes for now (will add incrementally)
+            // exclude 'tilda/db/stores/BigQuery.java'           // Has many dependencies
+            // exclude 'tilda/db/processors/BigQueryType.java'   // Has dependencies
+            // exclude 'tilda/db/processors/BigQueryExporter.java' // Has dependencies
+            // exclude 'tilda/db/Connection.java'                // Has many dependencies
+            // exclude 'tilda/enums/ColumnType.java'             // Has dependencies
+            // exclude 'tilda/utils/TextUtil.java'               // Has dependencies
+            // exclude 'tilda/generation/bigquery/BigQueryType.java' // Has dependencies
         }
     }
     
