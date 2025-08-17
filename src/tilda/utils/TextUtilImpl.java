@@ -53,7 +53,7 @@ public class TextUtilImpl implements ITextUtil
   @Override
   public String print(Collection<String> values)
   {
-    return TextUtil.print(values);
+    return TextUtil.print(values.iterator());
   }
   
   @Override
@@ -71,6 +71,20 @@ public class TextUtilImpl implements ITextUtil
   @Override
   public boolean isValidIdentifier(String name)
   {
-    return TextUtil.isValidIdentifier(name);
+    // Simple identifier validation - alphanumeric + underscore, starting with letter/underscore
+    if (name == null || name.isEmpty())
+      return false;
+    
+    char first = name.charAt(0);
+    if (!Character.isLetter(first) && first != '_')
+      return false;
+      
+    for (int i = 1; i < name.length(); i++)
+      {
+        char c = name.charAt(i);
+        if (!Character.isLetterOrDigit(c) && c != '_')
+          return false;
+      }
+    return true;
   }
 }
