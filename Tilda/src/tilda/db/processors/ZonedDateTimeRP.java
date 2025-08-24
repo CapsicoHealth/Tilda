@@ -18,9 +18,9 @@ package tilda.db.processors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
-
-import tilda.utils.DateTimeUtil;
 
 
 public class ZonedDateTimeRP implements RecordProcessor
@@ -36,7 +36,9 @@ public class ZonedDateTimeRP implements RecordProcessor
     public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
-        _ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(1, DateTimeUtil._UTC_CALENDAR), null);
+        OffsetDateTime odt = RS.getObject(1, OffsetDateTime.class);
+        _ZDT = odt.atZoneSameInstant(ZoneId.systemDefault());
+//        _ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(1, DateTimeUtil._UTC_CALENDAR), null);
         return true;
       }
 

@@ -45,19 +45,19 @@ import tilda.enums.TimeSeriesType;
 
 public class DateTimeUtil
   {
-    protected static final Logger     LOG                 = LogManager.getLogger(JDBCHelper.class.getName());
+    protected static final Logger     LOG                       = LogManager.getLogger(JDBCHelper.class.getName());
 
-    public static final ZoneId        _UTC                = ZoneId.of("Etc/UTC");
-    public static final ZoneId        _LOCAL              = ZoneId.systemDefault();
+    public static final ZoneId        _UTC                      = ZoneId.of("Etc/UTC");
+    public static final ZoneId        _LOCAL                    = ZoneId.systemDefault();
 
-    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = newUTC(999, 12, 31, 23, 59, 0, 0);
-    public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
+    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT       = newUTC(999, 12, 31, 23, 59, 0, 0);
+    public static final LocalDate     NOW_PLACEHOLDER_D         = LocalDate.of(999, 12, 31);
 
     public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = newUTC(1111, 11, 11, 0, 0, 0, 0);
     public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1111, 11, 11);
-    
-    public static final Calendar _UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
-    public static final Calendar _LOCAL_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_LOCAL.getId()));    
+
+    public static final Calendar      _UTC_CALENDAR             = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
+    public static final Calendar      _LOCAL_CALENDAR           = Calendar.getInstance(java.util.TimeZone.getTimeZone(_LOCAL.getId()));
 
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
       {
@@ -566,7 +566,7 @@ public class DateTimeUtil
       {
         ZoneId ZI = ZoneStr == null || ZoneStr.equals("null") == true ? _UTC : ZoneId.of(ZoneStr);
         return T == null ? null : T.toLocalDateTime().atZone(ZI);
-//        return T == null ? null : ZonedDateTime.ofInstant(T.toInstant(), _UTC).withZoneSameLocal(ZI);
+        // return T == null ? null : ZonedDateTime.ofInstant(T.toInstant(), _UTC).withZoneSameLocal(ZI);
       }
 
     public static ZonedDateTime toZonedDateTime(LocalDate dt, String zoneStr)
@@ -693,6 +693,18 @@ public class DateTimeUtil
         return Period.between(BirthDate.toLocalDate(), When.toLocalDate()).getYears();
       }
 
+    public static boolean isNowBetween(ZonedDateTime start, ZonedDateTime end)
+      {
+        ZonedDateTime now = ZonedDateTime.now();
+        return (start==null || start.isBefore(now) == true) && (end==null || now.isBefore(end) == true);
+      }
+
+    public static boolean isTodayBetween(LocalDate start, LocalDate end)
+      {
+        LocalDate now = LocalDate.now();
+        return (start==null || start.compareTo(now) <= 0) && (end==null || now.compareTo(end) <= 0);
+      }
+    
     public static int computeDaysToNow(ZonedDateTime Start)
       {
         return computeDays(Start, ZonedDateTime.now());
