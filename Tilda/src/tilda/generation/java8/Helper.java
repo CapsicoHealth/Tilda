@@ -454,6 +454,8 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": // Unique Index '" + I._Name + "'");
                   Out.println(Lead + "      S.append(\" where (\"); " + PrintWhereClause(G, I._ColumnObjs, I._SubQuery) + " S.append(\")\");");
+                  if (I._SubQuery != null)
+                    Out.println(Lead + "      S.append(\" and (\"); " + PrintWhereClause(G, null, I._SubQuery) + " S.append(\")\");");
                   Out.println(Lead + "      break;");
                 }
             }

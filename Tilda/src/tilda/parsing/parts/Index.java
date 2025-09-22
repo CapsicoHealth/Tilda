@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.db.stores.DBType;
 import tilda.enums.ColumnMode;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
@@ -41,8 +40,8 @@ public class Index
     @SerializedName("subQuery"        ) public SubWhereClause _SubQuery;
     /*@formatter:on*/
 
-    public transient List<Column>  _ColumnObjs  = new ArrayList<Column>();
-    public transient List<OrderBy> _OrderByObjs = new ArrayList<OrderBy>();
+    public transient List<Column>  _ColumnObjs       = new ArrayList<Column>();
+    public transient List<OrderBy> _OrderByObjs      = new ArrayList<OrderBy>();
     public transient boolean       _Unique;
     public transient String[]      _LALColumns;
 
@@ -123,35 +122,9 @@ public class Index
         if (_Unique == false)
           {
             _OrderByObjs = OrderBy.processOrderBys(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", _Parent, _OrderBy, false);
-
-            if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
-              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
-            else
-              {
-                if (_SubWhere != null)
-                  _SubQuery = new SubWhereClause(_SubWhere);
-
-                if (_SubQuery != null)
-                  {
-                    if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
-                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
-                    if (_SubQuery._From.length != 0)
-                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"From\" clause: this is not allowed in an Index SubQuery.");
-                    for (Query SubWhere : _SubQuery._Wheres)
-                      {
-                        if (SubWhere._Clause.contains("?"))
-                          PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
-                      }
-                    _SubQuery.validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
-                  }
-              }
           }
         else
           {
-            if (_SubQuery != null)
-              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subQuery, which is not allowed.");
-            if (TextUtil.isNullOrEmpty(_SubWhere) == false)
-              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
             boolean nullCol = false;
             for (Column col : _ColumnObjs)
               if (col != null && col._Nullable == true)
@@ -160,11 +133,34 @@ public class Index
                   break;
                 }
             if (nullCol == false && _NullsNotDistinct == true)
-             PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with no null columns, yet nullsNotDistinct is set to true.");
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with no null columns, yet nullsNotDistinct is set to true.");
           }
-        
+
+        if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
+        else
+          {
+            if (_SubWhere != null)
+              _SubQuery = new SubWhereClause(_SubWhere);
+
+            if (_SubQuery != null)
+              {
+                if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
+                  PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
+                if (_SubQuery._From.length != 0)
+                  PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"From\" clause: this is not allowed in an Index SubQuery.");
+                for (Query SubWhere : _SubQuery._Wheres)
+                  {
+                    if (SubWhere._Clause.contains("?"))
+                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
+                  }
+                _SubQuery.validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
+              }
+          }
+
+
         if (_Cluster == true && _Db == false)
-         PS.AddError("Object '" + _Parent.getFullName() + "' is defining a non-database index '" + _Name + "' as clustered. Only database indices can be made clustered.");
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining a non-database index '" + _Name + "' as clustered. Only database indices can be made clustered.");
 
         if (_Cluster == true && _SubQuery != null)
           PS.AddError("Object '" + _Parent.getFullName() + "' is defining a cluster index '" + _Name + "' that is also partial: partial indices (i.e., with a where clause, cannot be clustered).");
@@ -198,14 +194,14 @@ public class Index
               Str.append("|").append(OB._Nulls.name().toLowerCase());
           }
 
-        Str.append(_Cluster==true?"|clustered":"|nonclustered");
+        Str.append(_Cluster == true ? "|clustered" : "|nonclustered");
 
 
         // This is not viable right now as the database requires the filter clause and we can't compare it afterwards for migration.
-//        if (_SubQuery != null)
-//         {
-//           Str.append("|").append(_SubWhere);
-//         }
+        // if (_SubQuery != null)
+        // {
+        // Str.append("|").append(_SubWhere);
+        // }
 
         return (_Unique ? "ui|" : "i|") + Str.toString();
       }

@@ -504,6 +504,8 @@ public class TildaFactory implements CodeGenTildaFactory
       {
         if (I._Unique == false)
           throw new Error("ERROR: called genMethodLookupByUniqueIndex with a non-Unique Index");
+        
+        Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());        
 
         Out.print("   static public " + Helper.getFullAppDataClassName(I._Parent) + " lookupBy" + I._Name + "(");
         boolean First = true;
@@ -531,6 +533,7 @@ public class TildaFactory implements CodeGenTildaFactory
               Out.println();
             }
         Out.println();
+        handlePartialIndexQhereClause(Out, q, "lookupWhere" + I._Name);
         Out.println("       return (" + Helper.getFullAppDataClassName(I._Parent) + ") Obj;");
         Out.println("     }");
       }
@@ -567,6 +570,12 @@ public class TildaFactory implements CodeGenTildaFactory
               Out.println("       Obj.set" + TextUtil.capitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
             }
         Out.println();
+        handlePartialIndexQhereClause(Out, q, MethodName);
+      }
+
+
+    protected static void handlePartialIndexQhereClause(PrintWriter Out, Query q, String MethodName)
+      {
         if (q != null && q._Attributes.isEmpty() == false)
           {
             Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
