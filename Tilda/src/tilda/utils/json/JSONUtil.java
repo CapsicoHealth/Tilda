@@ -242,8 +242,19 @@ public class JSONUtil
     public static void print(Writer Out, String Name, boolean FirstElement, BigDecimal v)
     throws IOException
       {
+        print(Out, Name, FirstElement, v, -1);
+      }
+
+    public static void print(Writer Out, String Name, boolean FirstElement, BigDecimal v, int decimals)
+    throws IOException
+      {
         print(Out, Name, FirstElement);
-        printString(Out, v.toString());
+        if (v == null)
+          {
+            Out.write("null");
+            return;
+          }
+        printString(Out, decimals < 0 ? v.toString() : v.setScale(decimals).toString());
       }
 
     public static void print(Writer Out, String Name, boolean FirstElement, boolean[] a)
@@ -1436,10 +1447,10 @@ public class JSONUtil
               break;
             case VECTOR: // all vectors are arrays but come in as strings!
               if (cm.isArray() == false)
-               throw new Exception("Vector type is not set as an array.");
+                throw new Exception("Vector type is not set as an array.");
               String v_str = RS.getString(idx);
               if (RS.wasNull() == true)
-               v_str = null;
+                v_str = null;
               printRawObject(out, elementName, idx == 1, v_str);
               break;
             default:
@@ -1530,7 +1541,8 @@ public class JSONUtil
               arr[i] = ja.get(i).getAsString();
           }
         else
-          arr = new String[] { j.getAsString() };
+          arr = new String[] { j.getAsString()
+          };
 
         return arr;
       }

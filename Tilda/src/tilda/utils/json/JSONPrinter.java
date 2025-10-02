@@ -17,6 +17,7 @@
 package tilda.utils.json;
 
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
@@ -25,7 +26,9 @@ import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,6 +41,7 @@ import tilda.utils.json.elements.ArrayElementEnd;
 import tilda.utils.json.elements.ArrayElementStart;
 import tilda.utils.json.elements.ElementArrayEnd;
 import tilda.utils.json.elements.ElementArrayStart;
+import tilda.utils.json.elements.ElementBigDecimal;
 import tilda.utils.json.elements.ElementBoolean;
 import tilda.utils.json.elements.ElementBooleanArray;
 import tilda.utils.json.elements.ElementDef;
@@ -56,6 +60,7 @@ import tilda.utils.json.elements.ElementRaw;
 import tilda.utils.json.elements.ElementString;
 import tilda.utils.json.elements.ElementStringArray;
 import tilda.utils.json.elements.ElementStringArrayDouble;
+import tilda.utils.json.elements.ElementUUID;
 import tilda.utils.json.elements.ElementZonedDateTime;
 import tilda.utils.json.elements.ElementZonedDateTimeArray;
 
@@ -137,7 +142,7 @@ public class JSONPrinter
           }
         addArrayClose(name);
       }
-    
+
 
     // public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName, ZonedDateTime SyncToken)
     // {
@@ -203,6 +208,23 @@ public class JSONPrinter
     public JSONPrinter addElement(String Name, Double[] Val)
       {
         _Elements.add(new ElementDoubleArray(Name, Val));
+        return this;
+      }
+
+    public JSONPrinter addElement(String Name, BigDecimal Val)
+      {
+        _Elements.add(new ElementBigDecimal(Name, Val));
+        return this;
+      }
+    public JSONPrinter addElement(String Name, BigDecimal Val, int decimals)
+      {
+        _Elements.add(new ElementBigDecimal(Name, Val, decimals));
+        return this;
+      }
+
+    public JSONPrinter addElement(String Name, UUID Val)
+      {
+        _Elements.add(new ElementUUID(Name, Val));
         return this;
       }
 
@@ -352,5 +374,13 @@ public class JSONPrinter
               }
           }
         Out.append(_array == true ? "\n]" : "\n}");
+      }
+
+    public String printRaw()
+    throws Exception
+      {
+        StringBuilderWriter sb = new StringBuilderWriter();
+        printRaw(sb);
+        return sb.toString();
       }
   }
