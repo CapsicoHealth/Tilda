@@ -17,7 +17,6 @@
 package tilda.utils;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
@@ -52,9 +51,18 @@ public class EncryptionUtil
      */
     public static String hash(String plaintext, String salt)
       {
-        return hashStr(plaintext, salt, "SHA-512");
+        return hash512Str(plaintext, salt);
       }
 
+    public static String hash512Str(String plaintext, String salt)
+      {
+        return hashStr(plaintext, salt, "SHA-512");
+      }
+    public static String hash256Str(String plaintext, String salt)
+      {
+        return hashStr(plaintext, salt, "SHA-256");
+      }
+    
     /**
      * Returns a byte array for a SHA-256 digest derived from plaintext. This is meant primarily to be used
      * as a key to an AES256 encryption algorithm.<BR>
@@ -81,8 +89,8 @@ public class EncryptionUtil
           return null;
         try
           {
-            MessageDigest md5 = MessageDigest.getInstance(shaAlgo);
-            byte[] digest = md5.digest((TextUtil.print(salt, "") + plainText).getBytes("UTF-8"));
+            MessageDigest md = MessageDigest.getInstance(shaAlgo);
+            byte[] digest = md.digest((TextUtil.print(salt, "") + plainText).getBytes("UTF-8"));
             return digest;
           }
         catch (Exception e)
