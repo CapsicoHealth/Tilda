@@ -59,6 +59,11 @@ public class DateTimeUtil
     public static final Calendar      _UTC_CALENDAR             = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
     public static final Calendar      _LOCAL_CALENDAR           = Calendar.getInstance(java.util.TimeZone.getTimeZone(_LOCAL.getId()));
 
+    public static final long          NANOS_PER_SECOND          = 1_000_000_000L;
+    public static final long          SECONDS_PER_MINUTE        = 60L;
+    public static final long          MINUTES_PER_HOUR          = 60L;
+    public static final long          HOURS_PER_DAY             = 24L;
+
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
       {
         return ZDT != null && ZDT.equals(NOW_PLACEHOLDER_ZDT);
@@ -614,6 +619,11 @@ public class DateTimeUtil
         return L;
       }
 
+    public static LocalDate toLocalDate(ZonedDateTime zdt)
+      {
+        return zdt == null ? null : zdt.toLocalDate();
+      }
+
     public static LocalDate toLocalDate(java.sql.Date D)
       {
         // LOG.debug("y: "+D.getYear()+"; m: "+D.getMonth()+"; d: "+D.getDate());
@@ -696,15 +706,15 @@ public class DateTimeUtil
     public static boolean isNowBetween(ZonedDateTime start, ZonedDateTime end)
       {
         ZonedDateTime now = ZonedDateTime.now();
-        return (start==null || start.isBefore(now) == true) && (end==null || now.isBefore(end) == true);
+        return (start == null || start.isBefore(now) == true) && (end == null || now.isBefore(end) == true);
       }
 
     public static boolean isTodayBetween(LocalDate start, LocalDate end)
       {
         LocalDate now = LocalDate.now();
-        return (start==null || start.compareTo(now) <= 0) && (end==null || now.compareTo(end) <= 0);
+        return (start == null || start.compareTo(now) <= 0) && (end == null || now.compareTo(end) <= 0);
       }
-    
+
     public static int computeDaysToNow(ZonedDateTime Start)
       {
         return computeDays(Start, ZonedDateTime.now());
@@ -740,12 +750,81 @@ public class DateTimeUtil
      */
     public static int daysBetween(LocalDate Start, LocalDate End, boolean midnight)
       {
-        if (Start == null || End == null || Start.compareTo(End) > 0)
+        if (Start == null || End == null || Start.isAfter(End) == true)
           return -1;
         int days = (int) ChronoUnit.DAYS.between(Start, End);
         if (midnight == false)
           ++days;
         return days;
+      }
+
+    /**
+     * Compute the number of hours between two dates, truncated to hour (floor). So for example, between
+     * 2015-02-10 10:15 and 2015-02-10 11:14, the result is 0, whereas between
+     * 2015-02-10 10:15 and 2015-02-10 11:15, the result is 1.
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
+    public static int hoursBetween(ZonedDateTime start, ZonedDateTime end)
+      {
+        if (start == null || end == null || start.isAfter(end) == true)
+          return -1;
+
+        return (int) ChronoUnit.HOURS.between(start, end);
+      }
+
+    /**
+     * Compute the number of hours between two dates, with fractional precision.
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
+    public static double hoursBetweenFractional(ZonedDateTime start, ZonedDateTime end)
+      {
+        if (start == null || end == null || start.isAfter(end) == true)
+          return -1d; // sentinel
+
+        // Duration accounts for DST / zone offsets correctly.
+        long nanos = ChronoUnit.NANOS.between(start, end);
+        return nanos / ((double)NANOS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR);
+      }
+
+
+    /**
+     * Compute the number of minutes between two dates, truncated to minute (floor). So for example, between
+     * 2015-02-10 10:15:00 and 2015-02-10 11:14:59, the result is 59, whereas between
+     * 2015-02-10 10:15:00 and 2015-02-10 11:15:00, the result is 60.
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
+    public static int minutesBetween(ZonedDateTime start, ZonedDateTime end)
+      {
+        if (start == null || end == null || start.isAfter(end) == true)
+          return -1;
+
+        return (int) ChronoUnit.MINUTES.between(start, end);
+      }
+
+    /**
+     * Compute the number of hours between two dates, with fractional precision.
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
+    public static double minutesBetweenFractional(ZonedDateTime start, ZonedDateTime end)
+      {
+        if (start == null || end == null || start.isAfter(end) == true)
+          return -1d; // sentinel
+
+        // Duration accounts for DST / zone offsets correctly.
+        long nanos = ChronoUnit.NANOS.between(start, end);
+        return nanos / ((double)NANOS_PER_SECOND * SECONDS_PER_MINUTE);
       }
 
 

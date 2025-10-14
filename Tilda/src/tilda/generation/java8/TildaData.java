@@ -126,7 +126,12 @@ public class TildaData implements CodeGenTildaData
           Out.println("   transient boolean  __MaskMode = QueryDetails.getThreadMaskMode();");
         Out.println();
         Out.println("   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }");
+        Out.println("   /** The object has just been newly created, but not written yet. **/");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
+        Out.println("   /** The object has just been read successfully from the database. **/");
+        Out.println("   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }");        
+        Out.println("   /** The object has just been written successfully to the database. **/");
+        Out.println("   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }");        
         Out.println();
         Out.println("   void initForCreate()");
         Out.println("     {");
@@ -2167,9 +2172,6 @@ public class TildaData implements CodeGenTildaData
 
                 }
             }
-        Out.println("     __LookupId = 0;");
-        Out.println("     __Init     = InitMode.READ;");
-        Out.println("     __Changes.clear();");
 
         // LDH-NOTE: Auto fields are written to the database, i.e., they are associated to a column and so will be read already.
         // It is therefore useless to call the auto setters here.
@@ -2183,7 +2185,14 @@ public class TildaData implements CodeGenTildaData
         // }
 
         Out.println();
-        Out.println("     return afterRead(C);");
+        Out.println("     boolean success = afterRead(C);");
+        Out.println("     if (success == true)");
+        Out.println("      {");
+        Out.println("        __LookupId = 0;");
+        Out.println("        __Init     = InitMode.READ;");
+        Out.println("        __Changes.clear();");
+        Out.println("      }");
+        Out.println("     return success;");
         Out.println("   }");
 
         /*

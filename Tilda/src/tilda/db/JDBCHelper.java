@@ -110,6 +110,15 @@ public class JDBCHelper
         return count;
       }
 
+    
+    /**
+     * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
+     */
+    public static int executeSelect(Connection C, String schemaName, String tableName, String q, RecordProcessor RP, int start, int size)
+    throws Exception
+      {
+        return executeSelect(C, schemaName, tableName, q, RP, start, false, size, false, false);
+      }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
