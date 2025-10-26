@@ -37,6 +37,14 @@ public class Executor
         _MaxThreadCount = MaxThreadCount;
         _Executor = Executors.newFixedThreadPool(MaxThreadCount);
       }
+/**
+ * Need Java 21
+ */
+//     public Executor()
+//      {
+//        _MaxThreadCount = -1;
+//        _Executor = Executors.newVirtualThreadPerTaskExecutor();
+//      }
 
     protected List<Exception>      _Exceptions = new ArrayList<Exception>();
     protected List<SimpleRunnable> _Runnables  = new ArrayList<SimpleRunnable>();
@@ -95,11 +103,12 @@ public class Executor
             totalCount+=R._totalCount;
           }
         boolean faster = duration < seqTimeNano;
-        String perf = faster == true ? NumberFormatUtil.printPercentWith1Dec(duration, seqTimeNano) : NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration);
+        String perf = faster == true ? "faster by "+NumberFormatUtil.printWith1Dec(1.0*seqTimeNano/duration)+"x"
+                                     : "slower by "+NumberFormatUtil.printPercentWith1Dec(seqTimeNano, duration)+"%";
         LOG.debug("\n\n*******************************************************************************************\n"
         + "** Executed " + _Runnables.size() + " tasks in " + DurationUtil.printDuration(duration) + " over "+_MaxThreadCount+" threads.\n"
         + (totalCount==0?"":"** Processed "+totalCount+" records (" + DurationUtil.printPerformancePerMinute(duration, totalCount) + " records/min).\n")
-        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " ("+(faster?"slower":"faster")+" by "+perf+"%).\n"
+        + "** Sequential time would have been around " + DurationUtil.printDuration(seqTimeNano) + " ("+perf+".)\n"
         + "*******************************************************************************************\n\n");
         return _Exceptions;
       }

@@ -58,6 +58,23 @@ CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
   IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v ilike ANY(val);';
 
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA RegexMatch() functions
+-----------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION TILDA.RegexMatch(v text[], regex text)
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ~ regex);';
+CREATE OR REPLACE FUNCTION TILDA.RegexMatch(v text[], regex text[])
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ~ ANY(regex));';
+CREATE OR REPLACE FUNCTION TILDA.RegexMatch(v text, regexes text[])
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select v ~ ANY(regexes);';
 
   
 -----------------------------------------------------------------------------------------------------------------
