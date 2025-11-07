@@ -105,6 +105,9 @@ CREATE OR REPLACE  FUNCTION TILDA.TopN(arr ANY TYPE, n INT64) AS (
 );
 
 
+CREATE OR REPLACE FUNCTION `TILDA.DistinctArray`(arr ARRAY<STRING>) RETURNS ARRAY<STRING> AS (
+  (SELECT array_agg(distinct x) from unnest(arr) x)
+);
 
 /*
 with T as (

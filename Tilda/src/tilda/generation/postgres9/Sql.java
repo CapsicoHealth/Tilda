@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -186,7 +187,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         return ", statement_timestamp()::timestamp";
       }
-    
+
     @Override
     public String getFullTableVar(Object O)
       {
@@ -327,11 +328,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         StringBuilder FromList = new StringBuilder();
         boolean[] vals = getFromList(V, FromList, Str, OmmitTZs);
-//        boolean[] vals = getFromList2(V, FromList, Str, OmmitTZs);
+        // boolean[] vals = getFromList2(V, FromList, Str, OmmitTZs);
         boolean hasAggregates = vals[0];
         boolean First = vals[1];
 
-        Str.append("\n  from ").append(FromList); //.append("\n");
+        Str.append("\n  from ").append(FromList); // .append("\n");
 
         if (V._TimeSeries != null)
           {
@@ -647,7 +648,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   {
                     TableRankTracker TI = new TableRankTracker(VC._SameAsObj._ParentObject, 1, VC._As);
                     if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
-                     hasAggregates = true;
+                      hasAggregates = true;
                   }
               }
           }
@@ -1222,6 +1223,43 @@ public class Sql extends PostgreSQL implements CodeGenSql
         : "\n     , " + aggr + "(\"" + VC.getName() + "\"" + (TextUtil.isNullOrEmpty(VC._AggregateAttributes) == true ? "" : ", " + VC._AggregateAttributes) + ") as \"" + VC._Name + "\"";
       }
 
+    // Regex to find content within $$...$$. The DOTALL flag allows '.' to match newlines.
+    // The non-greedy quantifier *? ensures it stops at the first closing "$$".
+    protected static final Pattern _DOLLAR_DOLLAR_REGEX_PATTERN = Pattern.compile("\\$\\$(.*?)\\$\\$", Pattern.DOTALL);
+
+    protected static String escapeDollarDollarPatterns(String str)
+      {
+        Matcher m = _DOLLAR_DOLLAR_REGEX_PATTERN.matcher(str);
+        StringBuffer result = new StringBuffer();
+
+        while (m.find())
+          {
+            // Group 1 contains the text *between* the $$ delimiters.
+            String innerContent = m.group(1);
+
+            // Replace each backslash with a double backslash in the captured content.
+            String escapedInnerContent = innerContent.replace("\\", "\\\\");
+
+            // Reconstruct the full replacement string, including the $$ delimiters.
+            String replacement = "$$" + escapedInnerContent + "$$";
+
+            // Append the processed part to the result buffer.
+            // Matcher.quoteReplacement is used to prevent any special characters
+            // (like '$' or '\') in the replacement string from being interpreted.
+            m.appendReplacement(result, Matcher.quoteReplacement(replacement));
+          }
+        // Append the rest of the string that did not match.
+        m.appendTail(result);
+
+        return result.toString();
+      }
+
+    protected static String escapeDescription(ViewColumn VC)
+      {
+        String descr = TextUtil.isNullOrEmpty(VC._Description) == false ? VC._Description : VC._SameAsObj._Description;
+        return TextUtil.escapeSingleQuoteForSQL(escapeDollarDollarPatterns(descr));
+      }
+
 
     @Override
     public void genDDLComments(PrintWriter OutFinal, View V)
@@ -1231,7 +1269,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         PrintWriter Out = new PrintWriter(Str);
         genDDL(Out, V);
 
-        OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.escapeSingleQuoteForSQL(Str.toString().replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
+        OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.escapeSingleQuoteForSQL(escapeDollarDollarPatterns(Str.toString()).replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         OutFinal.println();
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
@@ -1240,7 +1278,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                                                         // PivotHelper.isPivotAggregate(VC) == true))
               continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
-              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.escapeSingleQuoteForSQL(TextUtil.isNullOrEmpty(VC._Description) == false ? VC._Description : VC._SameAsObj._Description) + ";");
+              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + escapeDescription(VC) + ";");
           }
         for (ViewPivot P : V._Pivots)
           if (P != null)
