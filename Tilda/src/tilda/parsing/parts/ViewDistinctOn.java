@@ -59,8 +59,13 @@ public class ViewDistinctOn
         int offset = 0;
         for (int i = 0; i < _ColumnObjs.size(); ++i)
           {
-            if (ParentView._ViewColumns.get(i)._FCT == FrameworkColumnType.TZ == true)
-              ++offset;
+            ViewColumn vc = ParentView._ViewColumns.get(i+ offset);
+            if (vc._FCT == FrameworkColumnType.TZ || vc._JoinOnly == true)
+              {
+                ++offset;
+                --i;
+                continue;
+              }
             if (_ColumnObjs.get(i)._Name.equalsIgnoreCase(ParentView._ViewColumns.get(i + offset)._Name) == false)
               return PS.AddError("View '" + _ParentView.getFullName() + "' is defining distinctOn with columns not matching the initial columns of the view: expecting '" + ParentView._ViewColumns.get(i + offset)._Name + "' in position " + i + " but got '" + _ColumnObjs.get(i)._Name + "' instead.");
           }
