@@ -3457,7 +3457,9 @@ public abstract class QueryHelper
               }
             else
               _QueryStr.append(" || ' ' || ");
+            _QueryStr.append("coalesce(");
             c.getFullColumnVarForSelect(_C, _QueryStr);
+            _QueryStr.append(",'')");
           }
         if (First == false && caseInsensitive == true)
           _QueryStr.append(")");

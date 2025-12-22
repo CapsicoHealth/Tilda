@@ -157,7 +157,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("   transient String _" + C.getName() + ";");
             if (C.isJSONColumn() == true)
               Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
-
+            
             String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
             if (C.isCollection() == false)
               Out.println("   " + jsonClassNameRootPath + C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
@@ -631,7 +631,7 @@ public class TildaData implements CodeGenTildaData
             else
               {
                 Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
-                Out.println("          _" + C.getName() + "Obj = gson.fromJson(v, LIST_TYPE_" + C._JsonSchema._TypeName + ");");
+                Out.println("          _" + C.getName() + "Obj = gson.fromJson(v, " + Helper.getJsonListType(C) + ");");
                 Out.println("          _" + C.getName() + " = v;");
               }
             Out.println("        }");
@@ -871,7 +871,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("          __Changes.or(" + Mask + ");");
             Out.println("          __Nulls.andNot(" + Mask + ");");
             Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
-            Out.println("          _" + C.getName() + " = gson.toJson(v, LIST_TYPE_" + C._JsonSchema._TypeName + ");");
+            Out.println("          _" + C.getName() + " = gson.toJson(v, " + Helper.getJsonListType(C) + ");");
             Out.println("          _" + C.getName() + "Obj = v;");
             Out.println("        }");
             Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
@@ -1477,7 +1477,7 @@ public class TildaData implements CodeGenTildaData
         if (C._JsonSchema != null)
           {
             Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
-            Out.println("          _" + C.getName() + " = gson.toJson(_" + C.getName() + "Obj, LIST_TYPE_" + C._JsonSchema._TypeName + ");");
+            Out.println("          _" + C.getName() + " = gson.toJson(_" + C.getName() + "Obj, " + Helper.getJsonListType(C) + ");");
           }
         if (C._Mapper != null)
           {

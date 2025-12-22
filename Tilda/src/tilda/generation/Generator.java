@@ -240,6 +240,7 @@ public class Generator
         if (mainDDL == true)
           {
             CG.genDDL(Out, O);
+            Out.println();
             if (CG.supportsIndices() == false && O._Indices.isEmpty() == false)
               Out.println("-- Indices are not supported for this database, so logical definition only");
 
@@ -250,7 +251,10 @@ public class Generator
         if (keysDDL == true)
           {
             if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
-              CG.genKeysManagement(Out, O);
+              {
+                Out.println();
+                CG.genKeysManagement(Out, O);
+              }
           }
       }
 
@@ -454,7 +458,7 @@ public class Generator
               {
                 Column C = O.getColumn(O._ParentSchema.getConventionLastUpdatedName());
                 if (C == null)
-                  throw new Error("The object " + O.getFullName() + " is marked as OCC yet doesn't have the column '"+O._ParentSchema.getConventionLastUpdatedName()+"'");
+                  throw new Error("The object " + O.getFullName() + " is marked as OCC yet doesn't have the column '" + O._ParentSchema.getConventionLastUpdatedName() + "'");
                 Out.println();
                 DG.docMethodTouch(Out, G, C);
                 CG.genMethodTouch(Out, G, C);
@@ -469,11 +473,11 @@ public class Generator
             Out.println();
             DG.docMethodWrite(Out, G, O);
             CG.genMethodWrite(Out, G, O);
-//            if (O._HasNaturalIdentity == true) // There is a natural Id for this object
-//              {
-//                DG.docMethodUpsert(Out, G, O);
-//                CG.genMethodUpsert(Out, G, O);
-//              }
+            // if (O._HasNaturalIdentity == true) // There is a natural Id for this object
+            // {
+            // DG.docMethodUpsert(Out, G, O);
+            // CG.genMethodUpsert(Out, G, O);
+            // }
           }
 
         Out.println();

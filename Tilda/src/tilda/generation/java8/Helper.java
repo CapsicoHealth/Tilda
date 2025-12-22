@@ -909,4 +909,13 @@ public class Helper
         /*@formatter:on*/
       }
 
+    public static String getJsonListType(Column col)
+      {
+        // Same class (could be original definition, or a subsequent reuse) 
+        if (col._JsonSchema._reusedJsonFieldTypeColummn == null || col._ParentObject == col._JsonSchema._reusedJsonFieldTypeColummn._ParentObject)
+         return "LIST_TYPE_"+col._JsonSchema._TypeName;
+        
+        return getFullBaseClassName(col._JsonSchema._reusedJsonFieldTypeColummn._ParentObject)+".LIST_TYPE_"+col._JsonSchema._TypeName;
+      }
+
   }

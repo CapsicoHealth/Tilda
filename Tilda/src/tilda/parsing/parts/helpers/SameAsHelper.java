@@ -32,169 +32,169 @@ public class SameAsHelper
       {
         return getRootSameAs(Src) == getRootSameAs(Dest);
       }
-    
-    public static Column getRootSameAs(Column C)
-     {
-       while (C._SameAs != null)
-        C = C._SameAsObj;
-       return C;
-     }
-    
-    
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'type'
-//     * 
-//     * @return
-//     */
-//    public static String getSameAsRoot_TypeStr(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs.getType() == null && sameAs._SameAsObj != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._TypeStr;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'size'
-//     * 
-//     * @return
-//     */
-//    public static Integer getSameAsRoot_Size(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj._Size == null && sameAs._SameAsObj != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._Size;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'precision'
-//     * 
-//     * @return
-//     */
-//    public static Integer getSameAsRoot_Precision(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj._Precision == null && sameAs._SameAsObj != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._Precision;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'Size'
-//     * 
-//     * @return
-//     */
-//    public static Integer getSameAsRoot_Scale(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj != null && sameAs._SameAsObj._Scale != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._Scale;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'Size'
-//     * 
-//     * @return
-//     */
-//    public static ColumnValue[] getSameAsRoot_ColumnValues(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj != null && sameAs._SameAsObj._Values != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._Values;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'Size'
-//     * 
-//     * @return
-//     */
-//    public static String getSameAsRoot_ProtectStr(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj != null && sameAs._SameAsObj._Protect != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._ProtectStr;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'Size'
-//     * 
-//     * @return
-//     */
-//    public static String getSameAsRoot_ModeStr(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj != null && sameAs._SameAsObj._Mode != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._ModeStr;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'Size'
-//     * 
-//     * @return
-//     */
-//    public static Boolean getSameAsRoot_Nullable(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj != null && sameAs._SameAsObj._Nullable != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._Nullable;
-//      }
-//
-//    /**
-//     * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
-//     * As such, we should possibly walk up the chain and pick the first non null value we find, or the
-//     * first value at the root of the chain, which itself could possibly be null.
-//     * 
-//     * This method retrieves  'Size'
-//     * 
-//     * @return
-//     */
-//    public static String getSameAsRoot_Description(Column col)
-//      {
-//        Column sameAs = col._SameAsObj;
-//        while (sameAs._SameAsObj != null && sameAs._SameAsObj._Description != null)
-//          sameAs = sameAs._SameAsObj;
-//        return sameAs._Description;
-//      }
 
-    
+    public static Column getRootSameAs(Column C)
+      {
+        while (C._SameAs != null)
+          C = C._SameAsObj;
+        return C;
+      }
+
+
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'type'
+    // *
+    // * @return
+    // */
+    // public static String getSameAsRoot_TypeStr(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs.getType() == null && sameAs._SameAsObj != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._TypeStr;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'size'
+    // *
+    // * @return
+    // */
+    // public static Integer getSameAsRoot_Size(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj._Size == null && sameAs._SameAsObj != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._Size;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'precision'
+    // *
+    // * @return
+    // */
+    // public static Integer getSameAsRoot_Precision(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj._Precision == null && sameAs._SameAsObj != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._Precision;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'Size'
+    // *
+    // * @return
+    // */
+    // public static Integer getSameAsRoot_Scale(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj != null && sameAs._SameAsObj._Scale != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._Scale;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'Size'
+    // *
+    // * @return
+    // */
+    // public static ColumnValue[] getSameAsRoot_ColumnValues(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj != null && sameAs._SameAsObj._Values != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._Values;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'Size'
+    // *
+    // * @return
+    // */
+    // public static String getSameAsRoot_ProtectStr(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj != null && sameAs._SameAsObj._Protect != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._ProtectStr;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'Size'
+    // *
+    // * @return
+    // */
+    // public static String getSameAsRoot_ModeStr(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj != null && sameAs._SameAsObj._Mode != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._ModeStr;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'Size'
+    // *
+    // * @return
+    // */
+    // public static Boolean getSameAsRoot_Nullable(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj != null && sameAs._SameAsObj._Nullable != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._Nullable;
+    // }
+    //
+    // /**
+    // * A column can be defined as a sameAs to a "parent" column, itself defined as a sameAs and so on.
+    // * As such, we should possibly walk up the chain and pick the first non null value we find, or the
+    // * first value at the root of the chain, which itself could possibly be null.
+    // *
+    // * This method retrieves 'Size'
+    // *
+    // * @return
+    // */
+    // public static String getSameAsRoot_Description(Column col)
+    // {
+    // Column sameAs = col._SameAsObj;
+    // while (sameAs._SameAsObj != null && sameAs._SameAsObj._Description != null)
+    // sameAs = sameAs._SameAsObj;
+    // return sameAs._Description;
+    // }
+
+
     public static Column getSameAsRoot(ViewColumn vcol)
       {
         // LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
@@ -230,16 +230,23 @@ public class SameAsHelper
           }
         return L;
       }
-    
+
     public static String getPathToRootJsonColClass(Column C)
       {
-        if (C._JsonSchema != null && C._ParentObject._FST != FrameworkSourcedType.NONE && C._SameAsObj != null)
+        if (C._JsonSchema != null)
           {
-            Object rootObj = SameAsHelper.getRootSameAs(C)._ParentObject;
-            return Helper.getFullBaseClassName(rootObj)+".";//+rootObj._AppDataClassName+".";
+            if (C._ParentObject._FST != FrameworkSourcedType.NONE && C._SameAsObj != null)
+              {
+                Object rootObj = SameAsHelper.getRootSameAs(C)._ParentObject;
+                return Helper.getFullBaseClassName(rootObj) + ".";// +rootObj._AppDataClassName+".";
+              }
+
+            // Switch to the actual owner of the referred json type if it wasn't declared locally.
+            if (C._JsonSchema._reusedJsonFieldTypeColummn != null)
+              return Helper.getFullBaseClassName(C._JsonSchema._reusedJsonFieldTypeColummn._ParentObject) + ".";
           }
         return "";
       }
-    
+
   }
 

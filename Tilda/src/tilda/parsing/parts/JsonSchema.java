@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -60,7 +61,12 @@ public class JsonSchema
             Success = false;
           }
 
-        _reusedJsonFieldTypeColummn = getReusedJsonFieldTypeColumn(C, _TypeName);
+            if (_TypeName.endsWith("TourStepAction") == true)
+              Base.LOG.debug("XXX");
+        
+        // With views, the jsonSchema is reused. If "reused" has been set already, don't do it again!
+        if (_reusedJsonFieldTypeColummn == null)
+         _reusedJsonFieldTypeColummn = getReusedJsonFieldTypeColumn(C, _TypeName);
         if (_reusedJsonFieldTypeColummn != null)
           {
             if (TextUtil.isNullOrEmpty(_Descr) == true)
@@ -71,6 +77,10 @@ public class JsonSchema
                 PS.AddError("Column '" + C.getFullName() + "' is reusing jsonSchema '" + _TypeName + "' and cannot re-define fields.");
                 Success = false;
               }
+            // If we are referring to another type in another object in this schema, we need to clean up the json type name itself.
+            String prefix = _reusedJsonFieldTypeColummn._ParentObject.getBaseName()+".";
+            if (_TypeName.startsWith(prefix) == true)
+             _TypeName = _TypeName.substring(prefix.length());
           }
         else if (_Fields == null || _Fields.length == 0)
           {
@@ -101,9 +111,23 @@ public class JsonSchema
       {
         for (Column c : col._ParentObject._Columns)
           {
+            if (c == null)
+             continue;
             if (c == col)
              break;
-            if (c != col && c._JsonSchema != null && c._JsonSchema._TypeName.equals(typeName) == true)
+            if (c != null && c._JsonSchema != null && c._JsonSchema._TypeName.equals(typeName) == true)
+              return c;
+          }
+        for (Object obj : col._ParentObject._ParentSchema._Objects)
+          {
+            if (obj == null || obj._FST != FrameworkSourcedType.NONE)
+             continue;
+            if (obj == col._ParentObject)
+             break;
+            if (typeName.startsWith(obj.getBaseName()+".") == false)
+             continue;
+            for (Column c : obj._Columns)
+             if (c != null && c._JsonSchema != null && typeName.equals(obj.getBaseName()+"."+c._JsonSchema._TypeName) == true)
               return c;
           }
         return null;
