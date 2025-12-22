@@ -830,7 +830,6 @@ public abstract class CommonStoreImpl implements DBType
         if (Gin == true && IX._Unique == true)
           throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
         
-        Out.println();
         if (supportsIndices() == false)
           Out.print("--  ");
         else if (IX._Db == false)
@@ -866,10 +865,10 @@ public abstract class CommonStoreImpl implements DBType
         if (IX._NullsNotDistinct == true)
           Out.print(" NULLS NOT DISTINCT");
         
-        Out.print(";");
+        Out.print(";\n");
 
         if (IX._Cluster == true)
-          Out.print("\nALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";");
+          Out.print("ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";\n");
 
         return OutStr.toString();
       }

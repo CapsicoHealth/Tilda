@@ -16,6 +16,8 @@
 
 package tilda.db.stores;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,9 +35,13 @@ import tilda.enums.DBStringType;
 import tilda.enums.TildaType;
 import tilda.generation.bigquery.BigQueryType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.generation.postgres9.Sql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
+import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
@@ -76,7 +82,7 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public String[] getConnectionNoDataStates()
       {
-//        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
+        // LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
         return _NODATA_SQL_STATES; // "23505".equals(E.getSQLState());
       }
 
@@ -87,7 +93,7 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public String[] getConnectionLockMsgs()
       {
-//        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
+        // LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
         return _LOCK_CONN_ERROR_SUBSTR;
       }
 
@@ -110,7 +116,7 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public String[] getConnectionCancelStates()
       {
-//        LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
+        // LOG.error(AsciiArt.printError(AsciiArt._DEFAULT_LEAD, "UNIMPLEMENTED LOGIC!!!!!"));
         return _CANCEL_SQL_STATES;
       }
 
@@ -143,7 +149,7 @@ public class BigQuery extends CommonStoreImpl
       {
         return false;
       }
-    
+
     @Override
     public boolean supportsArrays()
       {
@@ -167,7 +173,7 @@ public class BigQuery extends CommonStoreImpl
       {
         return false;
       }
-    
+
     @Override
     public char getColumnQuotingStartChar()
       {
@@ -247,8 +253,8 @@ public class BigQuery extends CommonStoreImpl
         return DBStringType.TEXT;
       }
 
-// LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
-    
+    // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
+
     @Override
     public String getColumnType(ColumnType Type, Integer Size, ColumnMode M, boolean isCollection, Integer Precision, Integer Scale)
       {
@@ -258,14 +264,14 @@ public class BigQuery extends CommonStoreImpl
             return isCollection == true ? "ARRAY<STRING>" : "STRING";
           }
 
-        return (Type != ColumnType.JSON && isCollection == true ? "ARRAY<":"")
+        return (Type != ColumnType.JSON && isCollection == true ? "ARRAY<" : "")
         + BigQueryType.get(Type)._SQLType
         + (Type == ColumnType.NUMERIC && Precision != null ? "(" + Precision + (Scale != null ? "," + Scale : "") + ")" : "")
         + (Type != ColumnType.JSON && isCollection == true ? ">" : "");
       }
 
- // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
-    
+    // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
+
     @Override
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride)
       {
@@ -280,7 +286,7 @@ public class BigQuery extends CommonStoreImpl
         if (Type == ColumnType.JSON)
           return "json";
         return isCollection == true ? BigQueryType.get(Type)._SQLArrayType : BigQueryType.get(Type)._SQLType;
-      }    
+      }
 
     @Override
     public String getHelperFunctionsScript(Connection Con, boolean Start)
@@ -296,7 +302,7 @@ public class BigQuery extends CommonStoreImpl
         return null;
       }
 
-    
+
     @Override
     protected ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
     throws Exception
@@ -325,8 +331,8 @@ public class BigQuery extends CommonStoreImpl
     public boolean alterTableComment(Connection con, Object obj)
     throws Exception
       {
-        String Q = "ALTER TABLE " + obj.getShortName() 
-        + "SET OPTIONS (description="+TextUtil.escapeDoubleQuoteWithSlash(obj._Description)+");";
+        String Q = "ALTER TABLE " + obj.getShortName()
+        + "SET OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(obj._Description) + ");";
 
         return con.executeDDL(obj._ParentSchema._Name, obj.getBaseName(), Q);
       }
@@ -335,12 +341,12 @@ public class BigQuery extends CommonStoreImpl
     public boolean alterTableAlterColumnComment(Connection con, Column col)
     throws Exception
       {
-        String Q = "ALTER TABLE " + col._ParentObject.getShortName() 
-                 + "ALTER COLUMN " + getShortColumnVar(col)
-                 + "SET OPTIONS (description="+TextUtil.escapeDoubleQuoteWithSlash(col._Description)+");";
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName()
+        + "ALTER COLUMN " + getShortColumnVar(col)
+        + "SET OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(col._Description) + ");";
         return con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
       }
-    
+
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {
@@ -459,11 +465,65 @@ public class BigQuery extends CommonStoreImpl
       {
         return false;
       }
-    
+
     @Override
     public boolean isCaseSentitiveSchemaTableViewNames()
       {
         return true;
+      }
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        StringWriter OutStr = new StringWriter();
+        PrintWriter Out = new PrintWriter(OutStr);
+        
+        if (IX._Unique == false)
+          {
+            Out.print("-- app-level index only -- Index '"+IX.getName()+"' on "+IX._Parent.getShortName()+"(");
+            Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
+            Out.print(")");
+            if (IX._OrderByObjs.isEmpty() == false)
+              {
+                Out.print(" order by ");
+                boolean First = IX._ColumnObjs.isEmpty();
+                for (OrderBy OB : IX._OrderByObjs)
+                  {
+                    if (OB == null)
+                      continue;
+    
+                    if (First == true)
+                      First = false;
+                    else
+                      Out.print(", ");
+                    Out.print("\"" + OB._Col.getName() + "\" " + OB._Order);
+                    if (OB._Nulls != null)
+                     Out.print(" NULLS " + OB._Nulls);
+                  }
+              }
+          }
+        else
+          {
+            Out.print("-- app-level index only -- ALTER TABLE " + IX._Parent.getShortName() + " ADD CONSTRAINT " + IX.getName() + " UNIQUE (");
+            Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
+            Out.print(") NOT ENFORCED; --  ");
+          }
+        if (IX._SubQuery != null)
+          {
+            Query Q = IX._SubQuery.getQuery(DBType.Postgres);
+            Out.print(" where " + Q._ClauseStatic);
+          }
+        
+        if (IX._NullsNotDistinct == true)
+          Out.print(" NULLS NOT DISTINCT");
+        
+        Out.print("\n");
+
+        if (IX._Cluster == true)
+          Out.print("-- app-level index only -- ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";\n");
+
+        return OutStr.toString();
       }
 
   }
