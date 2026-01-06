@@ -32,7 +32,6 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:+'
     implementation 'commons-logging:commons-logging:+'
     implementation 'org.apache.commons:commons-math3:+'
-    implementation 'org.apache.commons:commons-pool2:+'
     implementation 'org.apache.commons:commons-text:+'
 
     // Apache
@@ -91,6 +90,10 @@ dependencies {
     implementation 'org.antlr:antlr4-runtime:4.+'
     implementation 'com.lmax:disruptor:3.+'
     implementation 'org.jsoup:jsoup:1.+'
+    // crawler4j has a hard dependency on sleepycat which is not available in Maven Central
+    // implementation('edu.uci.ics:crawler4j:4.4.0') {
+    //     exclude group: 'com.sleepycat', module: 'je'
+    // }
     implementation 'org.postgresql:postgresql:42.+'
     implementation 'com.googlecode.json-simple:json-simple:1.+'
 //    implementation 'org.slf4j:slf4j-log4j12:2.+'
