@@ -318,20 +318,43 @@ public class CollectionUtil
 
         if (C == int[].class)
           return toList((int[]) A);
+        if (C == Integer[].class)
+          return toList((Integer[]) A);
+
         if (C == long[].class)
           return toList((long[]) A);
+        if (C == Long[].class)
+          return toList((Long[]) A);
+
         if (C == float[].class)
           return toList((float[]) A);
+        if (C == Float[].class)
+          return toList((Float[]) A);
+        
         if (C == double[].class)
           return toList((double[]) A);
+        if (C == Double[].class)
+          return toList((Double[]) A);
+        
         if (C == boolean[].class)
           return toList((boolean[]) A);
+        if (C == Boolean[].class)
+          return toList((Boolean[]) A);
+        
         if (C == char[].class)
           return toList((char[]) A);
+        if (C == Character[].class)
+          return toList((char[]) A);
+        
         if (C == byte[].class)
           return toList((byte[]) A);
+        if (C == Byte[].class)
+          return toList((Byte[]) A);
+       
         if (C == short[].class)
           return toList((short[]) A);
+        if (C == Short[].class)
+          return toList((Short[]) A);
 
         return toList((Object[]) A);
       }
@@ -445,20 +468,43 @@ public class CollectionUtil
 
         if (C == int[].class)
           return toSet((int[]) A);
+        if (C == Integer[].class)
+          return toSet((Integer[]) A);
+        
         if (C == long[].class)
           return toSet((long[]) A);
+        if (C == Long[].class)
+          return toSet((Long[]) A);
+
         if (C == float[].class)
           return toSet((float[]) A);
+        if (C == Float[].class)
+          return toSet((Float[]) A);
+
         if (C == double[].class)
           return toSet((double[]) A);
+        if (C == Double[].class)
+          return toSet((Double[]) A);
+
         if (C == boolean[].class)
           return toSet((boolean[]) A);
+        if (C == Boolean[].class)
+          return toSet((Boolean[]) A);
+
         if (C == char[].class)
           return toSet((char[]) A);
+        if (C == Character[].class)
+          return toSet((Character[]) A);
+
         if (C == byte[].class)
           return toSet((byte[]) A);
+        if (C == Byte[].class)
+          return toSet((Byte[]) A);
+
         if (C == short[].class)
           return toSet((short[]) A);
+        if (C == Short[].class)
+          return toSet((Short[]) A);
 
         return toSet((Object[]) A);
       }

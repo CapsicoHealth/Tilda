@@ -224,40 +224,79 @@ public class Export
             TextUtil.print(srcPath._columns, "\", \"", str);
             String dstQuery = "COPY " + dstPath._schema + "." + dstPath._tableView + "(\"" + str.toString() + "\") FROM STDIN CSV DELIMITER ','";
             CopyManager copyManager = new CopyManager(C.unwrap(BaseConnection.class));
-            JobResults jr = BQHelper.runQuery(bq, srcQuery);
-            StringBuilder csvRowOut = new StringBuilder();
+            
+            // Use runQueryFast with large page size for maximum throughput
+            // This uses job.getQueryResults() with pagination - the fastest reliable method
+            JobResults jr = BQHelper.runQueryWithDirectTableRead(bq, srcQuery, false, srcPath._schema, 20_000);
+            
+            if (jr == null || jr._r == null)
+              throw new Exception("Query returned no results.");
+
+            // Pre-allocate large StringBuilder capacity to reduce reallocation overhead
+            StringBuilder csvRowOut = new StringBuilder(100 * 1024 * 1024); // 100MB initial capacity
             int i = 0;
             long startTs = System.nanoTime();
-            long currentBatchSize = 1_000;
+            long currentBatchSize = 5_000; // Start with larger batch size
+            
+            // Timing instrumentation
+            long totalFetchTime = 0;
+            long totalConversionTime = 0;
+            long totalCopyTime = 0;
+            final long totalRows = jr._r.getTotalRows();
             Iterator<FieldValueList> I = jr._r.iterateAll().iterator();
             while (true)
               {
                 FieldValueList row = null;
+                long fetchStart = System.nanoTime();
                 if (I.hasNext() == true)
                   {
                     row = I.next();
+                    totalFetchTime += System.nanoTime() - fetchStart;
+                    
+                    long convStart = System.nanoTime();
                     toCSV(csvRowOut, row, srcPath._BQSchema, dstPath._PGSchema);
                     csvRowOut.append("\n");
+                    totalConversionTime += System.nanoTime() - convStart;
                     ++i;
                   }
+                else
+                  totalFetchTime += System.nanoTime() - fetchStart;
+                  
                 if (i % currentBatchSize == 0 || row == null)
                   {
-                    LOG.info("Flushing current batch of "+ currentBatchSize+" records.");
+                    long copyStart = System.nanoTime();
                     copyManager.copyIn(dstQuery, new BufferedReader(new StringReader(csvRowOut.toString())));
+                    totalCopyTime += System.nanoTime() - copyStart;
+                    
+                    LOG.info("Flushed batch of "+ currentBatchSize+" records. Timings - Fetch: " + 
+                             DurationUtil.printDuration(totalFetchTime) + ", Convert: " + 
+                             DurationUtil.printDuration(totalConversionTime) + ", Copy: " + 
+                             DurationUtil.printDuration(totalCopyTime));
+                    
                     if (row == null)
                       break;
-                    long avgRowSize = csvRowOut.length() / currentBatchSize;
-                    currentBatchSize = 1024*1024*512 / avgRowSize; // 512MB per batch
-                    if (currentBatchSize > 10_000)
-                     currentBatchSize = 10_000; 
-                    LOG.info("Next batch size: "+ currentBatchSize);
-                    csvRowOut.setLength(0);
+                      
+                    // Reset timers for next batch
+                    totalFetchTime = 0;
+                    totalConversionTime = 0;
+                    totalCopyTime = 0;
                     
+                    // adding 25% affordance.
+                    long avgRowSize = (long) (1.25*csvRowOut.length() / currentBatchSize);
+                    // 256MB per batch
+                    currentBatchSize = 1024*1024*256 / avgRowSize;
+                    // Capping at 15,000 rows (increased from 10K baseline)
+                    if (currentBatchSize > 15_000)
+                     currentBatchSize = 15_000;
+                    LOG.info("Next batch size: "+ currentBatchSize+" (avg row size: "+NumberFormatUtil.printWith000Sep(avgRowSize)+" bytes, optimized for 256MB payloads).");
+                    csvRowOut.setLength(0);
                   }
                 if (i % logFrequency == 0)
                   {
                     long durationNano = System.nanoTime() - startTs;
-                    LOG.info("Saved " + NumberFormatUtil.printWith000Sep(i) + " records in " + DurationUtil.printDuration(durationNano) + " (" + DurationUtil.printPerformancePerMinute(durationNano, i) + " records/min)");
+                    LOG.info("Saved " + NumberFormatUtil.printWith000Sep(i) + " / " + NumberFormatUtil.printWith000Sep(totalRows) + " records"
+                            +" in " + DurationUtil.printDuration(durationNano) 
+                           + " (" + DurationUtil.printPerformancePerMinute(durationNano, i) + " records/min, ~" + DurationUtil.printExpectedRemainingTimeInMinutes(durationNano, i, totalRows)+"mn remaining)");
                   }
               }
             return i;

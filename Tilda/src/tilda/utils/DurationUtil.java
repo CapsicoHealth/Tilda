@@ -102,8 +102,8 @@ public class DurationUtil
 
     /**
      * Given a length of elapsed time represented in ms, convert to a
-     * user friendly translation into [days] [hours] [minutes] seconds 
-     * (minutes, hours and days only printed if necessary)
+     * user friendly translation into [days] [hours] [minutes] seconds [milliseconds] 
+     * (minutes, hours and days only printed if necessary, and milliseconds only if duration < 1mn)
      */
     public static String printDurationConciseFromMs(long MilliSeconds)
       {
@@ -114,17 +114,22 @@ public class DurationUtil
         int mn = (int) Math.floor(MilliSeconds / (60 * 1000.0));
         MilliSeconds -= mn * 60 * 1000;
         int s = (int) Math.round(MilliSeconds/1000.0);
+        MilliSeconds -= s * 1000;
 
         StringBuilder Str = new StringBuilder();
         if (d != 0)
           Str.append(d).append("d");
         if (h != 0)
           Str.append(Str.length() != 0 ? " " : "").append(h).append("h");
-        if (mn != 0 || Str.length() == 0)
+        if (mn != 0)
           Str.append(Str.length() != 0 ? " " : "").append(mn).append("mn");
         
-        Str.append(Str.length() != 0 ? " " : "").append(s).append("s");
+        if (s != 0 || Str.length() == 0)
+          Str.append(Str.length() != 0 ? " " : "").append(s).append("s");
 
+        if (d == 0 && h == 0 && mn == 0)
+         Str.append(Str.length() != 0 ? " " : "").append(MilliSeconds).append("ms");
+        
         return Str.toString();
       }
     
@@ -149,7 +154,7 @@ public class DurationUtil
         return NumberFormatUtil.printWith2DecAnd000Sep(24 * 60 * 60 * 1000000000.0 * Count / DurationNano);
       }
 
-    public static String printExpectedRemainingTimeInMinutes(long DurationNano, int Count, int Total)
+    public static String printExpectedRemainingTimeInMinutes(long DurationNano, long Count, long Total)
       {
         return NumberFormatUtil.printWith2DecAnd000Sep((Total - Count) / (60 * 1000000000.0 * Count / DurationNano));
       }

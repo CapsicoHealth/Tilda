@@ -410,7 +410,7 @@ public class TildaData implements CodeGenTildaData
         else
           {
             Out.println("   public final " + JavaJDBCType.getFieldTypeBaseClass(C) + "[] get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsArray()");
-            Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[_" + C.getName() + ".size()]); }");
+            Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[0]); }");
             Out.println("   public final Iterator<" + JavaJDBCType.getFieldTypeBaseClass(C) + "> get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()");
             Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".iterator(); }");
             Out.println("   public final int get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "Size()");
