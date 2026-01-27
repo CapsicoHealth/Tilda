@@ -19,8 +19,6 @@ import com.google.cloud.bigquery.BigQuery.DatasetListOption;
 import com.google.cloud.bigquery.BigQuery.TableListOption;
 import com.google.cloud.bigquery.BigQueryException;
 import com.google.cloud.bigquery.BigQueryOptions;
-import com.google.cloud.bigquery.BigQueryResult;
-import com.google.cloud.bigquery.ConnectionSettings;
 import com.google.cloud.bigquery.CopyJobConfiguration;
 import com.google.cloud.bigquery.Dataset;
 import com.google.cloud.bigquery.DatasetInfo;
