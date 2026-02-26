@@ -231,6 +231,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             PadderColumnTypes.track(getColumnType(C));
 
         boolean First = true;
+        Column refnumPK = O._PrimaryKey == null || O._PrimaryKey._ColumnObjs.isEmpty() == true || O._PrimaryKey._Sequence == false ? null : O._PrimaryKey._ColumnObjs.get(0);
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
@@ -240,11 +241,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Out.print("  , ");
               Out.print("\"" + C.getName() + "\"" + O._PadderColumnNames.getPad(C.getName()) + "  " + PadderColumnTypes.pad(getColumnType(C)));
               Out.print(C._Nullable == false ? "  not null" : "          ");
-              if (C._DefaultCreateValue != null)
-                Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
+              if (C == refnumPK)
+               Out.print(" GENERATED ALWAYS AS IDENTITY PRIMARY KEY");
+              else if (C._DefaultCreateValue != null)
+                    Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
               Out.println("   -- " + C._Description);
             }
-        if (O._PrimaryKey != null)
+        if (O._PrimaryKey != null && O._PrimaryKey._Sequence != true)
           {
             Out.print("  , PRIMARY KEY(");
             PrintColumnList(Out, O._PrimaryKey._ColumnObjs);
@@ -1823,10 +1826,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public void genKeysManagement(PrintWriter Out, Object O)
       {
-        Out.println("delete from TILDA.Key where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
-        Out.println("insert into TILDA.Key (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.Key), '"
-        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"" + O._ParentSchema.getConventionPrimaryKeyName() + "\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
-        + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
+        if (O._PrimaryKey != null && O._PrimaryKey._Sequence == true)
+          {
+            Column pk = O._PrimaryKey._ColumnObjs.get(0);
+            Out.println("alter sequence " + O._ParentSchema._Name + ".\"" + O.getBaseName().toLowerCase() + "_" + pk.getName() + "_seq\" CACHE " + O._PrimaryKey._KeyBatch + ";");
+          }
+        else
+          {
+            Out.println("delete from TILDA.Key where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
+            Out.println("insert into TILDA.Key (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.Key), '"
+            + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"" + O._ParentSchema.getConventionPrimaryKeyName() + "\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
+            + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
+          }
       }
 
     public static boolean PrintColumnList(PrintWriter Out, List<Column> Columns)

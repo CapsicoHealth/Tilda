@@ -101,14 +101,6 @@ public class TableMeta implements TableViewMeta
         RS.close();
         MetaPerformance._IndexNano += (System.nanoTime() - TS);
         MetaPerformance._IndexCount += _Indices.size();
-
-        // Loading primary keys
-        TS = System.nanoTime();
-        RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
-        if (RS.next() == true)
-          _PrimaryKey = new PKMeta(RS);
-        MetaPerformance._PKNano += (System.nanoTime() - TS);
-        MetaPerformance._PKCount++;
       }
 
     protected void loadColumns(Connection C, ResultSet RS)

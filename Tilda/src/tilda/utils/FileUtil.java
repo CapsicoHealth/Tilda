@@ -16,8 +16,13 @@
 
 package tilda.utils;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,7 +34,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -37,12 +41,18 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -642,4 +652,69 @@ public class FileUtil
         return writer.toString();
       }
 
+    /**
+     * Decodes a base64 PNG image, scales it to targetW×targetH
+     * and writes it as a JPEG with the quality setting.
+     *
+     * Using standard javax.imageio (JDK built-in) — no extra library needed
+     * for the decode/encode cycle.  For the JPEG write we obtain the first
+     * available JPEG writer and tune its compression quality.
+     */
+    public static void saveJpeg(String b64, String fullFilename, float quality, int targetW, int targetH)
+    throws Exception
+      {
+        byte[]        pngBytes  = Base64.getDecoder().decode(b64);
+        BufferedImage pngImage  = ImageIO.read(new ByteArrayInputStream(pngBytes));
+
+        if (pngImage == null)
+          throw new Exception("Could not decode PNG data returned by DALL-E (file: " + fullFilename + ")");
+
+        if (targetW < 1 && targetH < 1)
+          throw new Exception("At least one of targetW or targetH must be > 0 for file: " + fullFilename);
+        
+        // if either targetH or targetW is < 1, we compute it to keep the original aspect ratio of the PNG image
+        if (targetW < 1)
+          targetW = (int) (pngImage.getWidth() * (targetH / (double) pngImage.getHeight()));
+        else if (targetH < 1)
+          targetH = (int) (pngImage.getHeight() * (targetW / (double) pngImage.getWidth()));
+        
+        BufferedImage output = new BufferedImage(targetW, targetH, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = output.createGraphics();
+        try
+          {
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2.setRenderingHint(RenderingHints.KEY_RENDERING,     RenderingHints.VALUE_RENDER_QUALITY);
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,  RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, targetW, targetH);
+            g2.drawImage(pngImage, 0, 0, targetW, targetH, null);
+          }
+        finally
+          {
+            g2.dispose();
+          }
+
+        // Write as JPEG with tuned quality
+        File outFile = new File(fullFilename);
+        outFile.getParentFile().mkdirs(); // ensure directory exists
+
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpeg");
+        if (writers.hasNext() == false)
+          throw new Exception("No JPEG ImageWriter available in this JVM");
+
+        ImageWriter       writer = writers.next();
+        ImageWriteParam   param  = writer.getDefaultWriteParam();
+        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        param.setCompressionQuality(quality);
+
+        try (FileImageOutputStream fios = new FileImageOutputStream(outFile))
+          {
+            writer.setOutput(fios);
+            writer.write(null, new IIOImage(output, null, null), param);
+          }
+        finally
+          {
+            writer.dispose();
+          }
+      }    
   }

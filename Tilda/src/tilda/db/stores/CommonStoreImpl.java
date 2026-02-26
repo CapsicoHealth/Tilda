@@ -85,12 +85,12 @@ public abstract class CommonStoreImpl implements DBType
 
         return Str.toString();
       }
-    
-    
-    
+
+
+
     protected abstract ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
     throws Exception;
-    
+
     @Override
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
@@ -173,7 +173,7 @@ public abstract class CommonStoreImpl implements DBType
         return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
       }
 
-  
+
 
     @Override
     public boolean createSchema(Connection Con, Schema S)
@@ -326,25 +326,25 @@ public abstract class CommonStoreImpl implements DBType
             if (JDBCHelper.isRehearsal() == false)
               {
                 if (temporaryDefaultValue != null)
-                 {
-                   String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
-                   String Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + " where \"" + col.getName() + "\" is null;";
-                   if (con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
-                     return false;
-                 }
+                  {
+                    String colName = MigrationNotNull.getColumnName(temporaryDefaultValue);
+                    String Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\"=" + (colName != null ? "\"" + colName + "\"" : ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), temporaryDefaultValue)) + " where \"" + col.getName() + "\" is null;";
+                    if (con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q) == false)
+                      return false;
+                  }
                 else
-                 {
-                   String Q = "SELECT 1 from " + col._ParentObject.getShortName() + " where \"" + col.getName() + "\" IS NULL limit 1";
-                   ScalarRP RP = new ScalarRP();
-                   int rows = con.executeSelect(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q, RP);
-                   if (rows > 0)
-                    {
-                      if (defaultValue == null)
-                        throw new Exception("Cannot alter column '" + col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-                      Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\" = " + ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), defaultValue) + " where \"" + col.getName() + "\" IS NULL";
-                      con.executeUpdate(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
-                    }
-                 }
+                  {
+                    String Q = "SELECT 1 from " + col._ParentObject.getShortName() + " where \"" + col.getName() + "\" IS NULL limit 1";
+                    ScalarRP RP = new ScalarRP();
+                    int rows = con.executeSelect(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q, RP);
+                    if (rows > 0)
+                      {
+                        if (defaultValue == null)
+                          throw new Exception("Cannot alter column '" + col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
+                        Q = "UPDATE " + col._ParentObject.getShortName() + " set \"" + col.getName() + "\" = " + ValueHelper.printValueSQL(getSQlCodeGen(), col.getName(), col.getType(), col.isCollection(), defaultValue) + " where \"" + col.getName() + "\" IS NULL";
+                        con.executeUpdate(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
+                      }
+                  }
               }
           }
 
@@ -666,8 +666,8 @@ public abstract class CommonStoreImpl implements DBType
     // as expected, so punting for now.
     // protected static Pattern REQUOTE1 = Pattern.compile("(?<!from\\s*)(?:[a-z_A-Z]\\w+)\\.([a-z_A-Z]\\w+)([^\\w\\.\\(]|\\z)");
 
-    // It is hard to find patterns such as "schema.func(" or "schema.func   (" to eliminate from the quoting logic
-    // So let's first clean that up by removing spaces between  word character and a '.' or a '('.
+    // It is hard to find patterns such as "schema.func(" or "schema.func (" to eliminate from the quoting logic
+    // So let's first clean that up by removing spaces between word character and a '.' or a '('.
     protected static Pattern REQUOTE0 = Pattern.compile("\\.(\\w+)\\s+([\\.|\\(])");
     // Then we look to quote tokens preceded by a '.' but not followed by a '.' or a '('.
     protected static Pattern REQUOTE1 = Pattern.compile("\\.\\s*([a-z_A-Z]\\w*\\b)([^\\.\\(]|\\z)");
@@ -754,7 +754,7 @@ public abstract class CommonStoreImpl implements DBType
 
         if (oldPK != null)
           {
-            String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
+            String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._PKName + "\";";
             if (Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
               return false;
           }
@@ -765,6 +765,47 @@ public abstract class CommonStoreImpl implements DBType
           }
         return true;
       }
+
+    @Override
+    public boolean alterTableSwitchTablePKType(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        if (supportsForeignKeys() == false)
+          return true;
+
+        String pkColName = Obj._PrimaryKey._ColumnObjs.get(0).getName();
+        String q = null;
+        if (Obj._PrimaryKey._Sequence == true) // adding identity to the PK
+         q = """
+             
+             ALTER TABLE %s ALTER COLUMN "%s" ADD GENERATED ALWAYS AS IDENTITY;
+             SELECT setval(
+                pg_get_serial_sequence('%s', '%s'),
+                COALESCE((SELECT COALESCE(MAX("%s"),0)+1 FROM %s), 0)
+               );
+             """.formatted(Obj.getShortName(), pkColName, Obj.getShortName().toLowerCase(), pkColName, pkColName, Obj.getShortName());
+        else // removing the identity to the PK
+         q = """
+         
+             ALTER TABLE %s ALTER COLUMN "%s" DROP IDENTITY IF EXISTS;
+             DROP SEQUENCE IF EXISTS %s.%s_seq;
+             delete from TILDA.Key where "name" = '%s';
+             insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated")
+                  values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), '%s',(select COALESCE(max("%s"),0)+1 from %s), %d, current_timestamp, current_timestamp);
+             """.formatted(Obj.getShortName()
+                         , pkColName
+                         , Obj._ParentSchema._Name
+                         , Obj.getShortName().toLowerCase()+"_"+pkColName
+                         , Obj.getShortName().toUpperCase()
+                         , Obj.getShortName().toUpperCase()
+                         , pkColName
+                         , Obj.getShortName()
+                         , Obj._PrimaryKey._KeyBatch
+                         );
+        
+        return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), q);
+      }
+
 
     @Override
     public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
@@ -829,7 +870,7 @@ public abstract class CommonStoreImpl implements DBType
             Gin = false;
         if (Gin == true && IX._Unique == true)
           throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
-        
+
         if (supportsIndices() == false)
           Out.print("--  ");
         else if (IX._Db == false)
@@ -861,10 +902,10 @@ public abstract class CommonStoreImpl implements DBType
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);
             Out.print(" where " + Q._ClauseStatic);
           }
-        
+
         if (IX._NullsNotDistinct == true)
           Out.print(" NULLS NOT DISTINCT");
-        
+
         Out.print(";\n");
 
         if (IX._Cluster == true)
@@ -882,9 +923,9 @@ public abstract class CommonStoreImpl implements DBType
 
         String Q = alterTableAddIndexDDL(IX);
         if (Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q) == false)
-         return false;
-        Q = "COMMENT ON INDEX "+IX._Parent._ParentSchema._Name.toUpperCase()+"."+IX.getName()+" IS E" + TextUtil.escapeSingleQuoteForSQL(Q) + ";";
-        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);        
+          return false;
+        Q = "COMMENT ON INDEX " + IX._Parent._ParentSchema._Name.toUpperCase() + "." + IX.getName() + " IS E" + TextUtil.escapeSingleQuoteForSQL(Q) + ";";
+        return Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
       }
 
     @Override

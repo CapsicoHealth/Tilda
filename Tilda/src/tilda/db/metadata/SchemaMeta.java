@@ -46,18 +46,20 @@ public class SchemaMeta
     public void load(Connection C, String TablePattern)
     throws Exception
       {
-        long TS = System.nanoTime();
         DatabaseMetaData meta = C.getMetaData();
 
         Map<String, FKMeta> outFKs = null;
         Map<String, FKMeta> inFKs = null;
-        
         if (C.supportsSuperMetaDataQueries() == true)
          {
            outFKs = loadForeignKeys(meta, _SchemaName, TablePattern, true);
            inFKs = loadForeignKeys(meta, _SchemaName, TablePattern, false);
          }
         Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern);
+        long pkTS = System.nanoTime();
+        Map<String, PKMeta> PKs = PKMeta.loadSchemaPrimaryKeys(C, _SchemaName);
+        MetaPerformance._PKNano += (System.nanoTime() - pkTS);
+        MetaPerformance._PKCount+=PKs.size();
 
         String schemaName = _SchemaName;
         String tablePattern = TablePattern;
@@ -78,6 +80,7 @@ public class SchemaMeta
             String Descr = RS.getString("REMARKS");
             if ("table".equalsIgnoreCase(Type) == true)
               {
+                long TS = System.nanoTime();
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
                 if (C.supportsSuperMetaDataQueries() == false)
                   {
@@ -86,6 +89,7 @@ public class SchemaMeta
                   }
                 setColumns(columns, T);
                 setFKs(inFKs, outFKs, T);
+                setPKs(PKs, T);
                 MetaPerformance._TableNano += (System.nanoTime() - TS);
                 ++MetaPerformance._TableCount;
                 if (_DBTables.get(Name) != null)
@@ -98,6 +102,7 @@ public class SchemaMeta
               }
             else if ("view".equalsIgnoreCase(Type) == true)
               {
+                long TS = System.nanoTime();
                 ViewMeta V = new ViewMeta(_SchemaName, Name, Descr);
                 setColumns(columns, V);
                 ++MetaPerformance._ViewCount;
@@ -110,7 +115,6 @@ public class SchemaMeta
                     // V.load(C);
                   }
               }
-            TS = System.nanoTime();
           }
         RS.close();
       }
@@ -269,6 +273,18 @@ public class SchemaMeta
               T._ForeignKeysOut.put(fk._Name, fk);
             }
       }
+    
+    private static void setPKs(Map<String, PKMeta> pKs, TableMeta t)
+      {
+        for (PKMeta pk : pKs.values())
+          if (pk._TableName.equals(t._TableName) == true)
+            {
+              t._PrimaryKey = pk;
+              return;
+            }
+        return;
+      }
+    
 
     public TableMeta getTableMeta(String TableName)
       {

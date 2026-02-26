@@ -103,6 +103,7 @@ public interface DBType
     public boolean alterTableAlterColumnMulti      (Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)  throws Exception;
     public boolean alterTableAlterColumnStringSize (Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK        (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
+    public boolean alterTableSwitchTablePKType     (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK                (Connection Con, Object Obj, FKMeta FK) throws Exception;
     public boolean alterTableAddFK                 (Connection Con, ForeignKey FK) throws Exception;
     public boolean alterTableDropIndex             (Connection Con, Object Obj, IndexMeta IX) throws Exception;

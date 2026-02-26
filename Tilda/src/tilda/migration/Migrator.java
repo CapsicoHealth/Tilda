@@ -75,6 +75,7 @@ import tilda.migration.actions.TableIndexDropCluster;
 import tilda.migration.actions.TableIndexRename;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
+import tilda.migration.actions.TablePKSwitchType;
 import tilda.migration.actions.TableViewRename;
 import tilda.migration.actions.TableViewSchemaSet;
 import tilda.migration.actions.TildaAclAdd;
@@ -205,7 +206,7 @@ public class Migrator
           {
             String q = I.next();
             if (q.trim().endsWith(";") == false)
-              q = q.trim()+";";
+              q = q.trim() + ";";
             out.println(q);
           }
         out.close();
@@ -517,8 +518,8 @@ public class Migrator
                     ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName(), false);
                     if (CMeta == null)
                       {
-                        MigrationNotNull mnn = S._Migration==null ? null : S._Migration.getNotNull(Col);
-                        Actions.add(new ColumnAdd(Col, mnn==null?null:mnn._Default));
+                        MigrationNotNull mnn = S._Migration == null ? null : S._Migration.getNotNull(Col);
+                        Actions.add(new ColumnAdd(Col, mnn == null ? null : mnn._Default));
                       }
                     else
                       {
@@ -539,10 +540,10 @@ public class Migrator
                           NeedsDdlDependencyManagement = true;
 
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
-                         {
-                           MigrationNotNull mnn = S._Migration==null ? null : S._Migration.getNotNull(Col);
-                           Actions.add(new ColumnAlterNull(Col, mnn == null ? null : mnn._Default));
-                         }
+                          {
+                            MigrationNotNull mnn = S._Migration == null ? null : S._Migration.getNotNull(Col);
+                            Actions.add(new ColumnAlterNull(Col, mnn == null ? null : mnn._Default));
+                          }
                       }
                   }
                 if (CAM.isEmpty() == false)
@@ -582,7 +583,7 @@ public class Migrator
             // No need to migrate unless there is a DB artifact
             if (V._Mode == ObjectMode.CODE_ONLY || V._Mode == ObjectMode.NONE)
               continue;
-            
+
             ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
             if (VMeta == null)
               {
@@ -772,7 +773,7 @@ public class Migrator
                 {
                   handleTableMove(S, DBMeta, Actions, MM, obj);
                   for (Object objCloned : obj._Clones)
-                   handleTableMove(S, DBMeta, Actions, MM, objCloned);                        
+                    handleTableMove(S, DBMeta, Actions, MM, objCloned);
                 }
               for (View v : MM._Views)
                 {
@@ -879,20 +880,27 @@ public class Migrator
     protected static void handleKeys(List<Schema> TildaList, List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta)
     throws Exception
       {
-        if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
+        if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && Obj._PrimaryKey._Sequence == false && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
           Actions.add(new TableKeyCreate(Obj));
         Set<String> DroppedFKs = new HashSet<String>();
-        if (DifferentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
+        if (TMeta._TableName.equalsIgnoreCase("Graph") == true)
+          LOG.debug("xxx");
+        if (differentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
           {
-            for (FKMeta fk : TMeta._ForeignKeysIn.values())
+            if (switchingIdentityType(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
+             Actions.add(new TablePKSwitchType(Obj, TMeta));
+            else
               {
-                Object OtherObj = CheckForeignKeys(TildaList, Errors, Obj, fk);
-                if (OtherObj == null)
-                  continue;
-                Actions.add(new TableFKDrop(OtherObj, fk));
-                DroppedFKs.add(fk.getSignature());
+                for (FKMeta fk : TMeta._ForeignKeysIn.values())
+                  {
+                    Object OtherObj = CheckForeignKeys(TildaList, Errors, Obj, fk);
+                    if (OtherObj == null)
+                      continue;
+                    Actions.add(new TableFKDrop(OtherObj, fk));
+                    DroppedFKs.add(fk.getSignature());
+                  }
+                Actions.add(new TablePKReplace(Obj, TMeta));
               }
-            Actions.add(new TablePKReplace(Obj, TMeta));
           }
 
         // Checking any FK defined in the DB which are not in the Model, so they can be dropped.
@@ -984,10 +992,10 @@ public class Migrator
             boolean Found = false;
             String Sig = IX.getSignature();
 
-//            LOG.debug("Checking Index: '"+Sig+"'");
+            // LOG.debug("Checking Index: '"+Sig+"'");
             for (IndexMeta ix : TMeta._Indices.values())
               {
-  //              LOG.debug("    - against index: '"+ix.getSignature()+"'");
+                // LOG.debug(" - against index: '"+ix.getSignature()+"'");
                 if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
                   {
                     String Sig1 = ix.getSignature();
@@ -1061,7 +1069,7 @@ public class Migrator
         // fixed when going multi-db.
         String defaultValue = Col._DefaultCreateValue == null
         ? null
-        : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME ||  Col.getType() == ColumnType.DATETIME_PLAIN || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
+        : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
         ? ValueHelper.printValueSQL(sqlGen, Col.getName(), Col.getType(), Col.isCollection(), Col._DefaultCreateValue._Value)
         : Col._DefaultCreateValue._Value;
         String defaultValueDB = CMeta._Default;
@@ -1132,7 +1140,7 @@ public class Migrator
         return true;
       }
 
-    private static boolean DifferentPrimaryKeys(PrimaryKey PK1, PKMeta PK2)
+    private static boolean differentPrimaryKeys(PrimaryKey PK1, PKMeta PK2)
       {
         if (PK1 == null && PK2 == null) // No PKs
           return false;
@@ -1143,10 +1151,35 @@ public class Migrator
         if (PK1._Columns.length != PK2._Columns.size()) // Different size PKs
           return true;
 
+        if (PK1._Sequence != PK2._Identity) // Sequence vs non-sequence PKs
+          return true;
+
         for (int i = 0; i < PK1._Columns.length; ++i)
           if (PK1._Columns[i].equals(PK2._Columns.get(i)) == false)
             return true; // different column
 
         return false; // same PKs
       }
+
+    private static boolean switchingIdentityType(PrimaryKey PK1, PKMeta PK2)
+      {
+        if (PK1 == null && PK2 == null) // No PKs
+          return false;
+
+        if (PK1 == null || PK2 == null) // Adding or removing a PK
+          return true;
+
+        if (PK1._Columns.length != PK2._Columns.size()) // Different size PKs
+          return false;
+
+        for (int i = 0; i < PK1._Columns.length; ++i)
+          if (PK1._Columns[i].equals(PK2._Columns.get(i)) == false)
+            return false; // different column
+        
+        if (PK1._Sequence != PK2._Identity) // Sequence vs non-sequence PKs
+          return true;
+
+        return false; // same PKs
+      }
+
   }

@@ -888,6 +888,12 @@ public final class Connection
         return _DB.alterTableReplaceTablePK(this, Obj, OldPK);
       }
 
+    public boolean alterTableSwitchTablePKType(Object Obj, PKMeta OldPK)
+    throws Exception
+      {
+        return _DB.alterTableSwitchTablePKType(this, Obj, OldPK);
+      }
+    
     public boolean alterTableDropFK(Object Obj, FKMeta FK)
     throws Exception
       {

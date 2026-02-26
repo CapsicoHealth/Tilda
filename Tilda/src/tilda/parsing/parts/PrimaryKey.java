@@ -32,6 +32,7 @@ public class PrimaryKey
     @SerializedName("columns"  )  public String[] _Columns;
     @SerializedName("autogen"  )  public Boolean  _Autogen  = Boolean.FALSE;
     @SerializedName("keyBatch" )  public Integer  _KeyBatch;
+    @SerializedName("sequence" )  public Boolean  _Sequence = Boolean.FALSE;
     /*@formatter:on*/
 
     public PrimaryKey()
@@ -43,6 +44,7 @@ public class PrimaryKey
         _Columns = pk._Columns;
         _Autogen = pk._Autogen;
         _KeyBatch = pk._KeyBatch;
+        _Sequence = pk._Sequence;
       }
 
     public transient List<Column> _ColumnObjs = new ArrayList<Column>();
@@ -62,12 +64,15 @@ public class PrimaryKey
         if (_Autogen == true && _Columns != null)
           PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an autogen primary key and also a list of columns. It's either one or the other.");
 
+        if (_Sequence == true && _Autogen == false)
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with sequence true but autogen false. Sequence can only be true if autogen is true.");
+
         if (_Autogen == true)
           {
+            if (_KeyBatch == null)
+             _KeyBatch = 250;
             _Columns = new String[] { obj._ParentSchema.getConventionPrimaryKeyName()
             };
-            if (_KeyBatch == null)
-              _KeyBatch = 250;
           }
         else
           {
@@ -85,8 +90,8 @@ public class PrimaryKey
                 if (C._Nullable == true)
                   PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is nullable.");
                 if (C._Invariant == false)
-                 C._Invariant = true;
-//                  PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
+                  C._Invariant = true;
+                // PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
                 if (C._Mode == ColumnMode.CALCULATED)
                   PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is calculated.");
                 C._PrimaryKey = true;

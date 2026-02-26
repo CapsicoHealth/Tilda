@@ -23,13 +23,12 @@ import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.TableMeta;
 import tilda.migration.MigrationAction;
-import tilda.utils.TextUtil;
 
-public class TablePKReplace extends MigrationAction
+public class TablePKSwitchType extends MigrationAction
   {
-    protected static final Logger LOG = LogManager.getLogger(TablePKReplace.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(TablePKSwitchType.class.getName());
 
-    public TablePKReplace(tilda.parsing.parts.Object Obj, TableMeta TMeta)
+    public TablePKSwitchType(tilda.parsing.parts.Object Obj, TableMeta TMeta)
       {
         super(Obj._ParentSchema._Name, Obj._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypePrimaryKey);
         _Obj = Obj;
@@ -42,22 +41,16 @@ public class TablePKReplace extends MigrationAction
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableReplaceTablePK(_Obj, _TMeta._PrimaryKey);
+        return C.alterTableSwitchTablePKType(_Obj, _TMeta._PrimaryKey);
       }
 
     @Override
     public String getDescription()
       {
-        if (_TMeta._PrimaryKey != null)
-          {
-            if (_Obj._PrimaryKey == null)
-              return "Dropping Table " + _Obj.getFullName() + "'s Primary Key " + _TMeta._PrimaryKey.toString();
-            return "Updating Table " + _Obj.getFullName() + "'s Primary Key from " + _TMeta._PrimaryKey.toString() + " to (" + TextUtil.print(_Obj._PrimaryKey._Columns) + ")";
-          }
+        if (_TMeta._PrimaryKey._Identity == true)
+         return "Removing generated identity for Table " + _Obj.getFullName() + "'s Primary Key.";
 
-        if (_Obj._PrimaryKey == null)
-          return "Not doing anything to Table " + _Obj.getFullName() + "'s Primary Key. Why is this being called?";
-        return "Adding Table " + _Obj.getFullName() + "'s Primary Key (" + TextUtil.print(_Obj._PrimaryKey._Columns) + ")";
+        return "Adding generated identity for table " + _Obj.getFullName() + "'s Primary Key.";
       }
 
 
