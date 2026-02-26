@@ -220,6 +220,7 @@ public class ClonerHelper
 
     public static boolean handleCloneAs(ParserSession PS, Object obj)
       {
+        int clones = 0;
         for (Cloner C : obj._CloneAs)
           {
             if (C.validate(PS, obj) == false)
@@ -233,7 +234,13 @@ public class ClonerHelper
             newObj._Description = C._Description;
             newObj._FST = FrameworkSourcedType.CLONED;
             newObj._SourceObject = obj;
-            obj._ParentSchema._Objects.add(newObj);
+            for (int i = 0; i < obj._ParentSchema._Objects.size(); ++i)
+              if (obj._ParentSchema._Objects.get(i) == obj)
+                {
+                  ++clones;
+                  obj._ParentSchema._Objects.add(i+clones, newObj);
+                  break;
+                }
             obj._Clones.add(newObj);
           }
         return true;
