@@ -31,6 +31,7 @@ public class JsonField extends TypeDef
     @SerializedName("name"       ) public String  _Name       ;
     @SerializedName("nullable"   ) public Boolean _Nullable   ;
     @SerializedName("description") public String  _Description;
+    @SerializedName("jsonSchema" ) public JsonSchema _JsonSchema ;
     /*@formatter:on*/
 
     public JsonField(JsonField jf)

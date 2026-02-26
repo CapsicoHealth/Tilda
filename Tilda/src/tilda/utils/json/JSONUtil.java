@@ -27,6 +27,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -635,6 +636,41 @@ public class JSONUtil
         Out.write("]");
       }
 
+    public static void print(Writer out, String name, boolean first, Iterator<String> a)
+    throws IOException
+      {
+        print(out, name, first, a, 0, true);
+      }
+    public static void print(Writer Out, String Name, boolean FirstElement, Iterator<String> a, int padding, boolean flatPrint)
+    throws IOException
+      {
+        print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        while (a.hasNext() == true)
+          {
+            if (flatPrint == false)
+              Out.write("\n" + PaddingUtil.getPad(padding));
+            if (First == true)
+              {
+                First = false;
+                if (flatPrint == false)
+                  Out.write(" ");
+              }
+            else
+              Out.write(",");
+            printString(Out, a.next());
+          }
+        if (flatPrint == false)
+          Out.write("\n" + PaddingUtil.getPad(padding + 2));
+        Out.write("]");
+      }
+    
     public static void print(Writer Out, String Name, boolean FirstElement, ZonedDateTime[] a)
     throws IOException
       {

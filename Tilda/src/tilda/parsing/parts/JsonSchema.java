@@ -16,6 +16,9 @@
 
 package tilda.parsing.parts;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.FrameworkSourcedType;
@@ -35,7 +38,8 @@ public class JsonSchema
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
 
-    transient public Column _reusedJsonFieldTypeColummn;
+    transient public Column     _parentColumn;
+    transient public JsonSchema _reusedJsonSchema;
 
     public JsonSchema(JsonSchema js)
       {
@@ -55,32 +59,33 @@ public class JsonSchema
       {
         boolean Success = true;
 
+        _parentColumn = C;
+
         if (TextUtil.isNullOrEmpty(_TypeName) == true)
           {
             PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema without a typeName.");
             Success = false;
           }
 
-            if (_TypeName.endsWith("TourStepAction") == true)
-              Base.LOG.debug("XXX");
-        
         // With views, the jsonSchema is reused. If "reused" has been set already, don't do it again!
-        if (_reusedJsonFieldTypeColummn == null)
-         _reusedJsonFieldTypeColummn = getReusedJsonFieldTypeColumn(C, _TypeName);
-        if (_reusedJsonFieldTypeColummn != null)
+        if (_reusedJsonSchema == null)
+          _reusedJsonSchema = getReusedJsonFieldTypeColumn(C, _TypeName);
+        if (_reusedJsonSchema == this)
+          _reusedJsonSchema = null;
+        if (_reusedJsonSchema != null)
           {
             if (TextUtil.isNullOrEmpty(_Descr) == true)
-             _Descr = _reusedJsonFieldTypeColummn._JsonSchema._Descr;
-              
+              _Descr = _reusedJsonSchema._Descr;
+
             if (_Fields != null && _Fields.length > 0)
               {
                 PS.AddError("Column '" + C.getFullName() + "' is reusing jsonSchema '" + _TypeName + "' and cannot re-define fields.");
                 Success = false;
               }
             // If we are referring to another type in another object in this schema, we need to clean up the json type name itself.
-            String prefix = _reusedJsonFieldTypeColummn._ParentObject.getBaseName()+".";
+            String prefix = _reusedJsonSchema._parentColumn._ParentObject.getBaseName() + ".";
             if (_TypeName.startsWith(prefix) == true)
-             _TypeName = _TypeName.substring(prefix.length());
+              _TypeName = _TypeName.substring(prefix.length());
           }
         else if (_Fields == null || _Fields.length == 0)
           {
@@ -88,16 +93,37 @@ public class JsonSchema
             Success = false;
           }
         else
-          for (JsonField f : _Fields)
-            if (f != null && f.validate(PS, C) == false)
-              Success = false;
+          {
+            Set<String> fieldNames = new HashSet<String>();
+            Set<String> jsonSchemaTypeNames = new HashSet<String>();
+            for (JsonField f : _Fields)
+              {
+                if (f != null && f.validate(PS, C) == false)
+                  Success = false;
+                else if (fieldNames.add(f._Name) == false)
+                  {
+                    PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema '" + _TypeName + "' with duplicate field name '" + f._Name + "'.");
+                    Success = false;
+                  }
+                if (f._JsonSchema != null)
+                  {
+                    if (f._JsonSchema.validate(PS, C) == false)
+                      Success = false;
+                    else if (f._JsonSchema._reusedJsonSchema == null && jsonSchemaTypeNames.add(f._JsonSchema._TypeName) == false)
+                      {
+                        PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema '" + _TypeName + "' with duplicate field jsonSchema type name '" + f._JsonSchema._TypeName + "'.");
+                        Success = false;
+                      }
+                  }
+              }
+          }
 
         if (TextUtil.isNullOrEmpty(_Descr) == true)
           {
             PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema '" + _TypeName + "' without a description.");
             Success = false;
           }
-        
+
         if (Success == true)
           {
             if (_Validation != null && _Validation.validate(PS, C) == false)
@@ -107,29 +133,62 @@ public class JsonSchema
         return Success;
       }
 
-    protected static Column getReusedJsonFieldTypeColumn(Column col, String typeName)
+    protected static JsonSchema getReusedJsonFieldTypeColumn(Column col, String typeName)
       {
+        if (col != null && col._JsonSchema != null)
+          {
+            JsonSchema js = checkJsonSchemaTypeName(col._JsonSchema, typeName, true);
+            if (js != null)
+              return js;
+          }
+
         for (Column c : col._ParentObject._Columns)
           {
             if (c == null)
-             continue;
+              continue;
             if (c == col)
-             break;
-            if (c != null && c._JsonSchema != null && c._JsonSchema._TypeName.equals(typeName) == true)
-              return c;
+              break;
+            if (c != null && c._JsonSchema != null)
+              {
+                JsonSchema js = checkJsonSchemaTypeName(c._JsonSchema, typeName, false);
+                if (js != null)
+                  return js;
+              }
+
           }
         for (Object obj : col._ParentObject._ParentSchema._Objects)
           {
             if (obj == null || obj._FST != FrameworkSourcedType.NONE)
-             continue;
+              continue;
             if (obj == col._ParentObject)
-             break;
-            if (typeName.startsWith(obj.getBaseName()+".") == false)
-             continue;
+              break;
+            if (typeName.startsWith(obj.getBaseName() + ".") == false)
+              continue;
             for (Column c : obj._Columns)
-             if (c != null && c._JsonSchema != null && typeName.equals(obj.getBaseName()+"."+c._JsonSchema._TypeName) == true)
-              return c;
+              if (c != null && c._JsonSchema != null)
+                {
+                  JsonSchema js = checkJsonSchemaTypeName(c._JsonSchema, typeName, false);
+                  if (js != null)
+                    return js;
+                }
           }
+        return null;
+      }
+
+    private static JsonSchema checkJsonSchemaTypeName(JsonSchema jsonSchema, String typeName, boolean self)
+      {
+        if (self == false)
+         if (jsonSchema._TypeName.equals(typeName) == true || (jsonSchema._parentColumn != null && typeName.equals(jsonSchema._parentColumn._ParentObject.getBaseName() + "." + jsonSchema._TypeName) == true))
+          return jsonSchema;
+
+        if (jsonSchema._Fields != null)
+          for (JsonField f : jsonSchema._Fields)
+            if (f != null && f._JsonSchema != null)
+              {
+                JsonSchema js = checkJsonSchemaTypeName(f._JsonSchema, typeName, false);
+                if (js != null)
+                  return js;
+              }
         return null;
       }
   }

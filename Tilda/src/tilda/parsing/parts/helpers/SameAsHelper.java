@@ -242,8 +242,8 @@ public class SameAsHelper
               }
 
             // Switch to the actual owner of the referred json type if it wasn't declared locally.
-            if (C._JsonSchema._reusedJsonFieldTypeColummn != null)
-              return Helper.getFullBaseClassName(C._JsonSchema._reusedJsonFieldTypeColummn._ParentObject) + ".";
+            if (C._JsonSchema._reusedJsonSchema != null)
+              return Helper.getFullBaseClassName(C._JsonSchema._reusedJsonSchema._parentColumn._ParentObject) + ".";
           }
         return "";
       }

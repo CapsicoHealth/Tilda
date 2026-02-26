@@ -41,6 +41,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.JsonField;
+import tilda.parsing.parts.JsonSchema;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OutputMap;
 import tilda.parsing.parts.helpers.SameAsHelper;
@@ -129,9 +130,9 @@ public class TildaData implements CodeGenTildaData
         Out.println("   /** The object has just been newly created, but not written yet. **/");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
         Out.println("   /** The object has just been read successfully from the database. **/");
-        Out.println("   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }");        
+        Out.println("   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }");
         Out.println("   /** The object has just been written successfully to the database. **/");
-        Out.println("   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }");        
+        Out.println("   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }");
         Out.println();
         Out.println("   void initForCreate()");
         Out.println("     {");
@@ -157,36 +158,15 @@ public class TildaData implements CodeGenTildaData
             Out.println("   transient String _" + C.getName() + ";");
             if (C.isJSONColumn() == true)
               Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
-            
+
             String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
             if (C.isCollection() == false)
               Out.println("   " + jsonClassNameRootPath + C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
             else
               Out.println("   List<" + jsonClassNameRootPath + C._JsonSchema._TypeName + "> _" + C.getName() + "Obj = new ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">();");
-            if (jsonClassNameRootPath.length() == 0 && C._JsonSchema._reusedJsonFieldTypeColummn == null)
+            if (jsonClassNameRootPath.length() == 0 && C._JsonSchema._reusedJsonSchema == null)
               {
-                Out.println("   /** "+ C._JsonSchema._Descr +"*/");
-                Out.println("   public static class " + C._JsonSchema._TypeName);
-                Out.println("    {");
-                for (JsonField f : C._JsonSchema._Fields)
-                  {
-                    Out.println("      /**"+f._Description+"*/");
-                    Out.println("      @SerializedName(\"" + f._Name + "\") public " + JavaJDBCType.getJsonFieldType(f) + " _" + f._Name + ";");
-                  }
-                Out.println("      public String validate()");
-                Out.println("       {");
-                if (C._JsonSchema._Validation != null && TextUtil.isNullOrEmpty(C._JsonSchema._Validation._JavaCodeGenStr) == false)
-                  {
-                    Out.println("         if (" + C._JsonSchema._Validation._JavaCodeGenStr + ")");
-                    Out.println("          return null;");
-                    Out.println("         return " + TextUtil.escapeDoubleQuoteWithSlash(C._JsonSchema._Validation._Descr) + ";");
-                  }
-                else
-                  {
-                    Out.println("          return null;");
-                  }
-                Out.println("       }");
-                Out.println("    }");
+                genJsonSchemaStaticClass(Out, C._JsonSchema, "   ");
               }
           }
         else if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN)
@@ -226,6 +206,45 @@ public class TildaData implements CodeGenTildaData
               Out.println("   protected " + JavaJDBCType.getFieldTypeBaseClass(C) + " __Saved_" + C.getName() + ";");
           }
 
+      }
+
+    private void genJsonSchemaStaticClass(PrintWriter Out, JsonSchema jsonSchema, String headerPadding)
+      {
+        Out.println(headerPadding + "/** " + jsonSchema._Descr + "*/");
+        Out.println(headerPadding + "public static class " + jsonSchema._TypeName);
+        Out.println(headerPadding + " {");
+        for (JsonField f : jsonSchema._Fields)
+          if (f != null && f._JsonSchema != null && f._JsonSchema._reusedJsonSchema == null)
+            genJsonSchemaStaticClass(Out, f._JsonSchema, headerPadding + "   ");
+        for (JsonField f : jsonSchema._Fields)
+          {
+            Out.println(headerPadding + "   /**" + f._Description + "*/");
+            if (f._JsonSchema != null)
+              {
+                if (f.isCollection() == false)
+                  Out.println(headerPadding + "   @SerializedName(\"" + f._Name + "\") public " + f._JsonSchema._TypeName + " _" + f._Name + "Obj;");
+                else
+                  Out.println(headerPadding + "   @SerializedName(\"" + f._Name + "\") public List<" + f._JsonSchema._TypeName + "> _" + f._Name + "Obj = new ArrayList<" + f._JsonSchema._TypeName + ">();");
+              }
+            else
+              {
+                Out.println(headerPadding + "   @SerializedName(\"" + f._Name + "\") public " + JavaJDBCType.getJsonFieldType(f) + " _" + f._Name + ";");
+              }
+          }
+        Out.println(headerPadding + "   public String validate()");
+        Out.println(headerPadding + "    {");
+        if (jsonSchema._Validation != null && TextUtil.isNullOrEmpty(jsonSchema._Validation._JavaCodeGenStr) == false)
+          {
+            Out.println(headerPadding + "      if (" + jsonSchema._Validation._JavaCodeGenStr + ")");
+            Out.println(headerPadding + "       return null;");
+            Out.println(headerPadding + "      return " + TextUtil.escapeDoubleQuoteWithSlash(jsonSchema._Validation._Descr) + ";");
+          }
+        else
+          {
+            Out.println(headerPadding + "       return null;");
+          }
+        Out.println(headerPadding + "    }");
+        Out.println(headerPadding + " }");
       }
 
     @Override
@@ -481,7 +500,7 @@ public class TildaData implements CodeGenTildaData
         String Mask = Helper.getRuntimeMask(C);
         String Visibility = Helper.getVisibility(C, true);
         String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
-        if (C._JsonSchema != null && C.isCollection() == true && C._JsonSchema._reusedJsonFieldTypeColummn == null)
+        if (C._JsonSchema != null && C.isCollection() == true && C._JsonSchema._reusedJsonSchema == null)
           {
             Out.println("   protected static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">>(){}.getType();");
             Out.println();
@@ -631,7 +650,7 @@ public class TildaData implements CodeGenTildaData
             else
               {
                 Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
-                Out.println("          _" + C.getName() + "Obj = gson.fromJson(v, " + Helper.getJsonListType(C) + ");");
+                Out.println("          _" + C.getName() + "Obj = gson.fromJson(v, " + (C.isCollection() == true ? Helper.getJsonListType(C) : jsonClassNameRootPath + C._JsonSchema._TypeName + ".class") + ");");
                 Out.println("          _" + C.getName() + " = v;");
               }
             Out.println("        }");
@@ -871,11 +890,40 @@ public class TildaData implements CodeGenTildaData
             Out.println("          __Changes.or(" + Mask + ");");
             Out.println("          __Nulls.andNot(" + Mask + ");");
             Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
-            Out.println("          _" + C.getName() + " = gson.toJson(v, " + Helper.getJsonListType(C) + ");");
+            Out.println("          _" + C.getName() + " = gson.toJson(v, " + (C.isCollection() == true ? Helper.getJsonListType(C) : jsonClassNameRootPath + C._JsonSchema._TypeName + ".class") + ");");
             Out.println("          _" + C.getName() + "Obj = v;");
             Out.println("        }");
             Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
             Out.println("     }");
+            Out.println("");
+
+            if (C.isCollection() == false)
+              {
+                Out.println("   " + Visibility + " void set" + TextUtil.capitalizeFirstCharacter(C.getName()) + "(String v) throws Exception");
+                Out.println("     {");
+                Out.println("       long T0 = System.nanoTime();");
+                if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
+                  {
+                    Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)");
+                    Out.println("        throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");
+                  }
+                Out.println("       if (v == null " + (C.isCollection() == true && C._Nullable == true ? " || TextUtil.isNullOrEmpty(v) == true" : "") + ")");
+                if (C._Nullable == true)
+                  Out.println("        setNull" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + "();");
+                else
+                  Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null: it's not nullable.\");");
+                Out.println("       else");
+                Out.println("        {");
+                Out.println("          __Changes.or(" + Mask + ");");
+                Out.println("          __Nulls.andNot(" + Mask + ");");
+                Out.println("          _" + C.getName() + " = v;");
+                Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
+                Out.println("          _" + C.getName() + "Obj = gson.fromJson(_" + C.getName() + ", " + jsonClassNameRootPath + C._JsonSchema._TypeName + ".class);");
+                Out.println("        }");
+                Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
+                Out.println("     }");
+                Out.println("");
+              }
           }
 
         if (C.isJSONColumn() == true && C.getVisibility() != VisibilityType.PUBLIC && C._Invariant == true)
@@ -1476,8 +1524,9 @@ public class TildaData implements CodeGenTildaData
         Out.println("          __Nulls.andNot(" + Mask + ");");
         if (C._JsonSchema != null)
           {
+            String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
             Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
-            Out.println("          _" + C.getName() + " = gson.toJson(_" + C.getName() + "Obj, " + Helper.getJsonListType(C) + ");");
+            Out.println("          _" + C.getName() + " = gson.toJson(_" + C.getName() + "Obj, " + (C.isCollection() == true ? Helper.getJsonListType(C) : jsonClassNameRootPath + C._JsonSchema._TypeName + ".class") + ");");
           }
         if (C._Mapper != null)
           {
@@ -2041,8 +2090,16 @@ public class TildaData implements CodeGenTildaData
                         String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
                         Out.println(Header + " if (_" + C.getName() + " != null)");
                         Out.println(Header + "  {");
-                        Out.println(Header + "    " + jsonClassNameRootPath + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + jsonClassNameRootPath + C._JsonSchema._TypeName + "[].class);");
-                        Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
+                        if (C.isCollection() == true)
+                          {
+                            Out.println(Header + "    " + jsonClassNameRootPath + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + jsonClassNameRootPath + C._JsonSchema._TypeName + "[].class);");
+                            Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
+                          }
+                        else
+                          {
+                            Out.println(Header + "    _" + C.getName() + "Obj = gson.fromJson(_" + C.getName() + ", " + jsonClassNameRootPath + C._JsonSchema._TypeName + ".class);");
+                          }
+
                         Out.println(Header + "  }");
                       }
                     break;
