@@ -233,6 +233,7 @@ public class Object extends Base
                   }
 
                 _PadderColumnNames.track(C.getLogicalName());
+                
                 if (C.validate(PS, this) == true)
                   if (ColumnNames.add(C.getName().toUpperCase()) == false)
                     PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");

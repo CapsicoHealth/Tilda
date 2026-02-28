@@ -784,6 +784,14 @@ public class Column extends TypeDef
         return null;
       }
 
+    
+    public String getJsonSchemaInfo()
+     {
+       if (_JsonSchema == null)
+         return "None";
+       return _JsonSchema._TypeName + ", Reused: " + (_JsonSchema._reusedJsonSchema != null ? _JsonSchema._reusedJsonSchema._parentColumn.getFullName() : "None");
+     }
+    
     public boolean isMasked()
       {
         return _MaskDef != null;

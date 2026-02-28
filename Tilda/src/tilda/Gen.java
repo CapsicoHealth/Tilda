@@ -162,7 +162,7 @@ public class Gen
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
         + "                            " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
-        + "                            " + (SchemaCache.size()-1) + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
+        + "                            " + (SchemaCache.size() - 1) + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
         + "          ======================================================================================");
       }
 

@@ -817,6 +817,8 @@ public class Helper
         // TextUtil.capitalizeFirstCharacter(getSystemMappedColumnName(C)) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef)+"));");
         else if (C.getType() == ColumnType.DATE)
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(" + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + "));");
+        else  if (C.getType() == ColumnType.JSON)
+          Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, Obj._" + C.getName() + ");");
         else
           Out.println("      TextUtil.escapeDoubleQuoteForCSV(Str, " + Helper.printGetterCode("Obj.", "get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "()", C.getName(), C.getType(), C.isCollection(), C._MaskDef) + ");");
         return false;

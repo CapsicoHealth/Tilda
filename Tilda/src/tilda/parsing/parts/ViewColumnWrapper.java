@@ -142,7 +142,7 @@ public class ViewColumnWrapper extends Column
           return _VCol._Type.isList();
         return super.isList();
       }
-
+    
     @Override
     public String toString()
       {

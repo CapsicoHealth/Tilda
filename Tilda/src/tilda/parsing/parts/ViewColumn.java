@@ -190,6 +190,7 @@ public class ViewColumn
           }
         if (_SameAs != null)
          _SameAs = _SameAs.trim();
+        
         return true;
       }
 
@@ -202,7 +203,7 @@ public class ViewColumn
 
         if (FixSameAs(PS) == false)
           return false;
-
+        
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");

@@ -22,6 +22,7 @@ import java.util.Set;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -38,6 +39,7 @@ public class JsonSchema
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
 
+    private transient ValidationStatus _Validated     = ValidationStatus.NONE;
     transient public Column     _parentColumn;
     transient public JsonSchema _reusedJsonSchema;
 
@@ -57,6 +59,9 @@ public class JsonSchema
 
     public boolean validate(ParserSession PS, Column C)
       {
+        if (_Validated != ValidationStatus.NONE)
+          return _Validated == ValidationStatus.SUCCESS;
+
         boolean Success = true;
 
         _parentColumn = C;
@@ -69,9 +74,11 @@ public class JsonSchema
 
         // With views, the jsonSchema is reused. If "reused" has been set already, don't do it again!
         if (_reusedJsonSchema == null)
-          _reusedJsonSchema = getReusedJsonFieldTypeColumn(C, _TypeName);
-        if (_reusedJsonSchema == this)
-          _reusedJsonSchema = null;
+          {
+            _reusedJsonSchema = getReusedJsonFieldTypeColumn(C, _TypeName);
+            if (_reusedJsonSchema == this)
+              _reusedJsonSchema = null;
+          }
         if (_reusedJsonSchema != null)
           {
             if (TextUtil.isNullOrEmpty(_Descr) == true)
@@ -130,9 +137,23 @@ public class JsonSchema
               Success = false;
           }
 
+        _Validated = Success ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
+        
         return Success;
       }
 
+    /**
+     * First, we check if the column itself is already referring to a jsonSchema with the
+     * same type name. This is to allow multiple columns in the same object to refer to the
+     * same jsonSchema without having to declare it on each column. Then, we check the
+     * other columns in the same object, and finally we check the columns in the other
+     * objects in the same schema. We also allow referring to a jsonSchema declared in
+     * another object by prefixing the type name with the object name (e.g. "OtherObject.JsonTypeName").
+     * 
+     * @param col
+     * @param typeName
+     * @return
+     */
     protected static JsonSchema getReusedJsonFieldTypeColumn(Column col, String typeName)
       {
         if (col != null && col._JsonSchema != null)
@@ -178,8 +199,8 @@ public class JsonSchema
     private static JsonSchema checkJsonSchemaTypeName(JsonSchema jsonSchema, String typeName, boolean self)
       {
         if (self == false)
-         if (jsonSchema._TypeName.equals(typeName) == true || (jsonSchema._parentColumn != null && typeName.equals(jsonSchema._parentColumn._ParentObject.getBaseName() + "." + jsonSchema._TypeName) == true))
-          return jsonSchema;
+          if (jsonSchema._TypeName.equals(typeName) == true || (jsonSchema._parentColumn != null && typeName.equals(jsonSchema._parentColumn._ParentObject.getBaseName() + "." + jsonSchema._TypeName) == true))
+            return jsonSchema;
 
         if (jsonSchema._Fields != null)
           for (JsonField f : jsonSchema._Fields)
