@@ -88,21 +88,10 @@ public class PKMeta
     throws Exception
       {
         String q = """
-        SELECT
-             kcu.table_schema,
-             kcu.table_name,
-             tc.constraint_name AS primary_key_name,
-             kcu.column_name,
-             c.is_identity,
-             c.identity_generation
-         FROM information_schema.table_constraints tc
-         JOIN information_schema.key_column_usage kcu
-             ON tc.constraint_schema = kcu.constraint_schema
-             AND tc.constraint_name = kcu.constraint_name
-         JOIN information_schema.columns c
-             ON c.table_schema = kcu.table_schema
-             AND c.table_name = kcu.table_name
-             AND c.column_name = kcu.column_name
+        SELECT kcu.table_schema, kcu.table_name, tc.constraint_name AS primary_key_name, kcu.column_name, c.is_identity, c.identity_generation
+          FROM information_schema.table_constraints tc
+             JOIN information_schema.key_column_usage kcu ON tc.constraint_schema = kcu.constraint_schema AND tc.constraint_name = kcu.constraint_name
+             JOIN information_schema.columns c ON c.table_schema = kcu.table_schema AND c.table_name = kcu.table_name AND c.column_name = kcu.column_name
          WHERE tc.constraint_type = 'PRIMARY KEY'
            AND kcu.table_schema = '%s'
          ORDER BY kcu.table_name, kcu.ordinal_position
