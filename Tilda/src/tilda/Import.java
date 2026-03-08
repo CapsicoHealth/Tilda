@@ -70,7 +70,9 @@ public class Import
                     C.commit();
                     C.close();
                     C = null;
+                    System.gc();
                   }
+                System.gc();
               }
 
             timeTaken = System.nanoTime() - timeTaken;
@@ -226,6 +228,7 @@ public class Import
         LOG.info("=======================================================================================================================");
         long T = System.nanoTime();
         int Total = I.process(C);
+        System.gc();
         T = System.nanoTime() - T;
 
         LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.printPerformancePerMinute(T, Total) + " records/mn).");
