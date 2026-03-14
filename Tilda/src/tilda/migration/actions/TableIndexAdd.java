@@ -19,6 +19,8 @@ package tilda.migration.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+
 import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
@@ -45,7 +47,13 @@ public class TableIndexAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Adding Index "+_IX._Name+"("+_IX.getSignature()+") to table " + _IX._Parent.getFullName();
+        return "Adding Index " + _IX._Name + "(" + _IX.getSignature() + ") to table " + _IX._Parent.getFullName();
+      }
+
+    @Override
+    public String getNormalizedDef()
+      {
+        return new Gson().toJson(_IX);
       }
 
   }

@@ -48,6 +48,7 @@ import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
+import tilda.db.stores.DBType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
@@ -94,6 +95,7 @@ import tilda.parsing.parts.MigrationNotNull;
 import tilda.parsing.parts.MigrationRename;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
+import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
@@ -883,12 +885,10 @@ public class Migrator
         if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && Obj._PrimaryKey._Sequence == false && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
           Actions.add(new TableKeyCreate(Obj));
         Set<String> DroppedFKs = new HashSet<String>();
-        if (TMeta._TableName.equalsIgnoreCase("Graph") == true)
-          LOG.debug("xxx");
         if (differentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
           {
             if (switchingIdentityType(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
-             Actions.add(new TablePKSwitchType(Obj, TMeta));
+              Actions.add(new TablePKSwitchType(Obj, TMeta));
             else
               {
                 for (FKMeta fk : TMeta._ForeignKeysIn.values())
@@ -946,30 +946,65 @@ public class Migrator
         // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
         Set<String> DroppedSignatures = new HashSet<String>(); // Dropped Signatures
 
+
         TableIndexAddCluster TIAC = null;
         TableIndexDropCluster TIDC = null;
         for (Index IX : Obj._Indices)
           {
             if (IX == null || IX._Db == false)
               continue;
+            if (Obj._Name.equalsIgnoreCase("UserPlanSubscription") == true)
+              {
+                if (IX._SubQuery != null)
+                  {
+                    Query Q = IX._SubQuery.getQuery(DBType.Postgres);
+                    LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; " + Q._ClauseStatic);
+                  }
+              }
             // Checking for dropped indices
             for (IndexMeta ix : TMeta._Indices.values())
               {
-                if (IX.getSignature().equals(ix.getSignature())
-                && !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+                if (IX.getSignature().equals(ix.getSignature()))
                   {
-                    if (ix._Unique
-                    && (ix._Name.equals(ix._Name.toLowerCase()) == false
-                    || ix._Name.equalsIgnoreCase(IX.getName()) == false))
-                      // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
-                      DroppedSignatures.add(ix.getSignature());
-                    // catches duplicate signatures by different names in db. First will be renamed below
-                    else if (DroppedSignatures.add(ix.getSignature()) == false)
-                      Actions.add(new TableIndexDrop(Obj, ix));
-                    else if (IX._Cluster == true && ix._Cluster == false) // adding cluster
-                      TIAC = new TableIndexAddCluster(IX);
-                    else if (IX._Cluster == false && ix._Cluster == true) // removing cluster
-                      TIDC = new TableIndexDropCluster(ix);
+                    if (ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey") == false) // not the pk
+                      {
+                        if (Obj._Name.equalsIgnoreCase("UserPlanSubscription") == true)
+                          {
+                            if (TextUtil.isNullOrEmpty(ix._FilterCondition) == false)
+                              LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; " + ix._FilterCondition);
+                          }
+
+                        if (ix._Unique && (ix._Name.equals(ix._Name.toLowerCase()) == false || ix._Name.equalsIgnoreCase(IX.getName()) == false))
+                          // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
+                          DroppedSignatures.add(ix.getSignature());
+                        // catches duplicate signatures by different names in db. First will be renamed below
+                        else if (DroppedSignatures.add(ix.getSignature()) == false)
+                          Actions.add(new TableIndexDrop(Obj, ix));
+                        else if (IX._Cluster == true && ix._Cluster == false) // adding cluster
+                          TIAC = new TableIndexAddCluster(IX);
+                        else if (IX._Cluster == false && ix._Cluster == true) // removing cluster
+                          TIDC = new TableIndexDropCluster(ix);
+/*
+                        else if (changedFilter(IX, ix) == true)
+                          {
+                            if (IX._SubQuery != null)
+                              {
+                                Query Q = IX._SubQuery.getQuery(DBType.Postgres);
+                                LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; " + Q._ClauseStatic);
+                              }
+                            else
+                              LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; NULL");
+
+                            if (TextUtil.isNullOrEmpty(ix._FilterCondition) == false)
+                              LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; " + ix._FilterCondition);
+                            else
+                              LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; NULL");
+
+                            DroppedSignatures.add(ix.getSignature());
+                            Actions.add(new TableIndexDrop(Obj, ix));
+                          }
+*/
+                      }
                   }
               }
           }
@@ -1009,7 +1044,6 @@ public class Migrator
                           {
                             if (TMeta._Indices.containsKey(IX.getName().toLowerCase()))
                               Errors.add("Index " + ix._Name + " is attempting to be renamed to " + IX.getName() + " but an index with that name already exists with a different signature in the database");
-
                             Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
                           }
                         break;
@@ -1029,6 +1063,82 @@ public class Migrator
           }
       }
 
+
+    /**
+     * Collapses runs of whitespace into a single space, but only outside single-quoted string literals,
+     * so that significant whitespace inside literals (e.g. LIKE '%hello world%') is preserved.
+     */
+    private static String normalizeWhitespaceOutsideLiterals(String s)
+      {
+        if (s == null)
+          return null;
+        StringBuilder sb = new StringBuilder(s.length());
+        boolean inLiteral = false;
+        for (int i = 0; i < s.length(); ++i)
+          {
+            char c = s.charAt(i);
+            if (inLiteral)
+              {
+                sb.append(c);
+                if (c == '\'' && (i + 1 >= s.length() || s.charAt(i + 1) != '\''))
+                  inLiteral = false;
+                else if (c == '\'' && i + 1 < s.length() && s.charAt(i + 1) == '\'')
+                  {
+                    // escaped single-quote inside literal ('') - consume both
+                    sb.append(s.charAt(++i));
+                  }
+              }
+            else if (c == '\'')
+              {
+                sb.append(c);
+                inLiteral = true;
+              }
+            else if (Character.isWhitespace(c))
+              {
+                // collapse all whitespace outside literals to nothing
+                // (operators like = < > are unambiguous without surrounding spaces)
+              }
+            else
+              {
+                sb.append(c);
+              }
+          }
+        return sb.toString();
+      }
+
+    /**
+     * Returns false if both indices have a filter and they are equal, of they both are filter-less. Otherwise, either
+     * a filter has changed, or one was added or removed, in which case, we return true.
+     * 
+     * @param IX
+     * @param ix
+     * @return
+     */
+    private static boolean changedFilter(Index IX, IndexMeta ix)
+      {
+        if (TextUtil.isNullOrEmpty(ix._FilterCondition) == true && IX._SubQuery == null)
+          return false;
+
+        if (IX._SubQuery != null)
+          {
+            String whereIX = "(" + IX._SubQuery.getQuery(DBType.Postgres)._ClauseStatic + ")";
+            if (TextUtil.isNullOrEmpty(ix._FilterCondition) == false && TextUtil.isNullOrEmpty(whereIX) == false)
+              {
+                whereIX = normalizeWhitespaceOutsideLiterals(whereIX);
+                String p = IX._Parent.getColumnsRegex().pattern();
+                String filterCondition = ix._FilterCondition.replaceAll(p, IX._Parent.getShortName() + ".\"$1\"");
+                filterCondition = normalizeWhitespaceOutsideLiterals(filterCondition);
+                // The DB may rewrite the filter condition with different whitespace around operators
+                // (e.g., "col=true" vs "col = true"), so we normalize whitespace outside string literals before comparing.
+                // Technically, column names are case-sensitive, but in practice, many databases treat them as
+                // case-insensitive, so we ignore case as well so we are not tripped by a change in case in the 
+                // filter condition, e.g., "IS NULL" vs "is null" etc...
+                if (whereIX.equalsIgnoreCase(filterCondition) == true)
+                  return false;
+              }
+          }
+        return true;
+      }
 
     private static List<MigrationDrops> getDropScripts(Connection C, CodeGenSql SQlCodeGen, Schema s, DatabaseMeta DBMeta)
       {
@@ -1175,7 +1285,7 @@ public class Migrator
         for (int i = 0; i < PK1._Columns.length; ++i)
           if (PK1._Columns[i].equals(PK2._Columns.get(i)) == false)
             return false; // different column
-        
+
         if (PK1._Sequence != PK2._Identity) // Sequence vs non-sequence PKs
           return true;
 

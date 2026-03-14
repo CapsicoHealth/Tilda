@@ -679,6 +679,13 @@ public class View extends Base
 
         _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
       }
+    
+    @Override
+    public Pattern getColumnsRegex()
+      {
+        return _ViewColumnsRegEx;
+      }
+    
 
     public static ViewColumn createTZ(ParserSession PS, ViewColumn VC)
       {

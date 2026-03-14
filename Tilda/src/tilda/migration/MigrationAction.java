@@ -42,6 +42,11 @@ public abstract class MigrationAction
 
     public abstract String getDescription();
 
+    public String getNormalizedDef()
+      {
+        return null;
+      }
+
     public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
     throws Exception
       {

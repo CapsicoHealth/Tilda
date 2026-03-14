@@ -195,6 +195,7 @@ public class Index
           }
 
         Str.append(_Cluster == true ? "|clustered" : "|nonclustered");
+        Str.append(_SubQuery != null ? "|filtered" : "");
 
 
         // This is not viable right now as the database requires the filter clause and we can't compare it afterwards for migration.

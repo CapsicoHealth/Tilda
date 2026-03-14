@@ -16,6 +16,8 @@
 
 package tilda.parsing.parts;
 
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,15 +34,15 @@ public class ViewRealizedWrapper extends Base
         super(TildaType.REALIZED_VIEW);
         _O = O;
         _Name = V.getRealizedTableName(false);
-        _Description = "Realized table for view "+V.getShortName()+": "+ _O._Description;
+        _Description = "Realized table for view " + V.getShortName() + ": " + _O._Description;
         _OriginalName = _Name;
         _ParentSchema = O.getSchema();
       }
 
-    public Object _O;
+    public Object            _O;
 
-    public transient boolean         _Validated         = false;
-    
+    public transient boolean _Validated = false;
+
     protected boolean validate(ParserSession PS, Schema ParentSchema)
       {
         return super.validate(PS, ParentSchema);
@@ -101,4 +103,13 @@ public class ViewRealizedWrapper extends Base
       {
         return _O.getFirstIdentityColumnNames(naturalIdentitiesFirst);
       }
+
+
+    @Override
+    public Pattern getColumnsRegex()
+      {
+        return _O.getColumnsRegex();
+      }
+
+
   }

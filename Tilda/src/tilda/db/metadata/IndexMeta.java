@@ -23,8 +23,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.JDBCHelper;
-
 public class IndexMeta
   {
     
@@ -112,6 +110,7 @@ public class IndexMeta
           }
 
         Str.append(_Cluster==true?"|clustered":"|nonclustered");
+        Str.append(_FilterCondition != null ? "|filtered" : "");
 
         // This is not viable right now as the database requires the filter clause and we can't compare it afterwards for migration.
 //        if (_FilterCondition != null)

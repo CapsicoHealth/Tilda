@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,6 +74,7 @@ public class Object extends Base
     public transient TZMode               _TzMode;
     public transient Object               _HistoryObj   = null;                                        // For tables with history settings
     public transient List<Object>         _Clones       = new ArrayList<Object>();
+    public transient Pattern              _ColumnsRegEx;
 
     public Object()
       {
@@ -233,7 +235,7 @@ public class Object extends Base
                   }
 
                 _PadderColumnNames.track(C.getLogicalName());
-                
+
                 if (C.validate(PS, this) == true)
                   if (ColumnNames.add(C.getName().toUpperCase()) == false)
                     PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID' even though they are treated in a case-sensitive way in the database if the database allows.");
@@ -362,8 +364,24 @@ public class Object extends Base
             setupHistory(PS, parentSchema);
           }
 
+        StringBuilder str = new StringBuilder();
+        for (Column c : _Columns)
+          {
+            if (str.length() != 0)
+              str.append("|");
+            str.append(c.getName()+"|\""+c.getName()+"\"");
+          }
+        _ColumnsRegEx = Pattern.compile("\\b(" + str.toString() + ")\\b");
+
         return _Validated = Errs == PS.getErrorCount();
       }
+
+    @Override
+    public Pattern getColumnsRegex()
+      {
+        return _ColumnsRegEx;
+      }
+
 
     /**
      * To call after parent object has been validated

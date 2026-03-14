@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -388,4 +389,7 @@ public abstract class Base
      * @return
      */
     public abstract String[] getFirstIdentityColumnNames(boolean naturalIdentitiesFirst);
+    
+    public abstract Pattern getColumnsRegex();
+    
   }
