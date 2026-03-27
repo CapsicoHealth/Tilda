@@ -978,26 +978,26 @@ public class Migrator
                           TIAC = new TableIndexAddCluster(IX);
                         else if (IX._Cluster == false && ix._Cluster == true) // removing cluster
                           TIDC = new TableIndexDropCluster(ix);
-/*
-                        else if (changedFilter(IX, ix) == true)
-                          {
-                            if (IX._SubQuery != null)
-                              {
-                                Query Q = IX._SubQuery.getQuery(DBType.Postgres);
-                                LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; " + Q._ClauseStatic);
-                              }
-                            else
-                              LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; NULL");
-
-                            if (TextUtil.isNullOrEmpty(ix._FilterCondition) == false)
-                              LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; " + ix._FilterCondition);
-                            else
-                              LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; NULL");
-
-                            DroppedSignatures.add(ix.getSignature());
-                            Actions.add(new TableIndexDrop(Obj, ix));
-                          }
-*/
+                        /*
+                         * else if (changedFilter(IX, ix) == true)
+                         * {
+                         * if (IX._SubQuery != null)
+                         * {
+                         * Query Q = IX._SubQuery.getQuery(DBType.Postgres);
+                         * LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; " + Q._ClauseStatic);
+                         * }
+                         * else
+                         * LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; NULL");
+                         * 
+                         * if (TextUtil.isNullOrEmpty(ix._FilterCondition) == false)
+                         * LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; " + ix._FilterCondition);
+                         * else
+                         * LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; NULL");
+                         * 
+                         * DroppedSignatures.add(ix.getSignature());
+                         * Actions.add(new TableIndexDrop(Obj, ix));
+                         * }
+                         */
                       }
                   }
               }
@@ -1025,7 +1025,7 @@ public class Migrator
             for (IndexMeta ix : TMeta._Indices.values())
               {
                 // LOG.debug(" - against index: '"+ix.getSignature()+"'");
-                if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+                if (ix._Name.toLowerCase().endsWith("_pkey") == false)
                   {
                     String Sig1 = ix.getSignature();
 
@@ -1053,6 +1053,36 @@ public class Migrator
                 if (IMeta2 != null)
                   Actions.add(new TableIndexDrop(Obj, IMeta2));
                 Actions.add(new TableIndexAdd(IX));
+              }
+          }
+
+        // Clearing out unique indices in the db that are no longer in the model. This is because
+        // unique indices affect the grain of the data. So if an index is no longer in the model,
+        // we want to make sure it's dropped in the database, otherwise, we may end up with a
+        // unique index that is stronger than intended.
+        for (IndexMeta ix : TMeta._Indices.values())
+          {
+//            StringBuilder str = new StringBuilder();
+            if (ix == null || ix._Unique == false || ix._Name.toLowerCase().endsWith("_pkey") == true)
+              continue;
+            if (TMeta._PrimaryKey != null && TMeta._PrimaryKey._PKName.equals(ix._Name) == true)
+              continue;
+//            str.append("   Object  : " + Obj.getShortName()+" / "+(TMeta._PrimaryKey==null?"No PK":TMeta._PrimaryKey._PKName)+ "\n");
+//            str.append("   DB Index: " + ix._Name + " (" + ix.getCleanName() + ") -> " + ix.getSignature()+"\n");
+            boolean found = false;
+            for (Index IX : Obj._Indices)
+              {
+//                str.append("       Model Index: " + IX._Name + " (" + IX.getName() + ") -> " + IX.getSignature()+"\n");
+                if (IX != null && ix.getSignature().equals(IX.getSignature()) == true)
+                  {
+                    found = true;
+                    break;
+                  }
+              }
+            if (found == false)
+              {
+//                LOG.debug("\n"+str.toString());
+                Actions.add(new TableIndexDrop(Obj, ix));
               }
           }
       }
@@ -1125,7 +1155,7 @@ public class Migrator
                 // The DB may rewrite the filter condition with different whitespace around operators
                 // (e.g., "col=true" vs "col = true"), so we normalize whitespace outside string literals before comparing.
                 // Technically, column names are case-sensitive, but in practice, many databases treat them as
-                // case-insensitive, so we ignore case as well so we are not tripped by a change in case in the 
+                // case-insensitive, so we ignore case as well so we are not tripped by a change in case in the
                 // filter condition, e.g., "IS NULL" vs "is null" etc...
                 if (whereIX.equalsIgnoreCase(filterCondition) == true)
                   return false;
