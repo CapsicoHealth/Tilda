@@ -201,7 +201,7 @@ public abstract class QueryHelper
       {
         if (distinct == true)
           _QueryStr.append("distinct ");
-        
+
         for (ColumnDefinition col : cols)
           {
             _Columns.add(col);
@@ -210,18 +210,23 @@ public abstract class QueryHelper
 
         return this;
       }
-    
+
     protected void appendConcat(StringBuilder str, String sep, ColumnDefinition col, String coalesce)
       {
         if (col != null)
           {
             _Columns.add(col);
-            str.append("||");
             if (TextUtil.isNullOrEmpty(sep) == false)
-              TextUtil.escapeSingleQuoteForSQL(str, sep);
+              {
+                str.append("||");
+                TextUtil.escapeSingleQuoteForSQL(str, sep);
+              }
             boolean coal = TextUtil.isNullOrEmpty(coalesce) == false;
             if (coal == true)
-              str.append("coalesce(");
+              {
+                str.append("||");
+                str.append("coalesce(");
+              }
             col.getFullColumnVarForSelect(_C, str);
             if (coal == true)
               {
@@ -770,6 +775,7 @@ public abstract class QueryHelper
 
     /**
      * Sets Col1 to preValue||Col2
+     * 
      * @param Col1
      * @param preValue
      * @param Col2
@@ -782,7 +788,7 @@ public abstract class QueryHelper
         setColumn(Col1);
         return equals(Col2);
       }
-    
+
     /**
      * Sets Col1 to Col2||postValue
      * 
@@ -801,7 +807,7 @@ public abstract class QueryHelper
         TextUtil.escapeSingleQuoteForSQL(_QueryStr, postValue);
         return this;
       }
-    
+
     public QueryHelper set(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
@@ -1087,14 +1093,14 @@ public abstract class QueryHelper
         TextUtil.escapeSingleQuoteForSQL(_QueryStr, caseInsensitive == true ? V.toUpperCase() : V);
         _QueryStr.append(", ");
         if (caseInsensitive == true)
-         _QueryStr.append("upper(");
+          _QueryStr.append("upper(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         if (caseInsensitive == true)
           _QueryStr.append("::text)::text[]");
         _QueryStr.append(")");
         return this;
       }
-    
+
     public QueryHelper in(Type_StringCollection Col, String[] V)
     throws Exception
       {
@@ -1656,7 +1662,7 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
         if (Q._Cardinality != cols.length)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + " not matching the number of columns passed "+cols.length+": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + " not matching the number of columns passed " + cols.length + ": " + _QueryStr.toString());
 
         if (_WherePos == -1)
           where();
@@ -1850,6 +1856,7 @@ public abstract class QueryHelper
       {
         return colOpBase(Col, coalesceValStr, O, ValStr, false);
       }
+
     protected QueryHelper colOpBase(ColumnDefinition Col, String coalesceValStr, Op O, String ValStr, boolean caseInsensitive)
     throws Exception
       {
@@ -1858,20 +1865,20 @@ public abstract class QueryHelper
 
         if (caseInsensitive == true)
           _QueryStr.append("lower(");
-          
+
         if (coalesceValStr != null)
           _QueryStr.append("coalesce(");
-        
+
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        
+
         if (coalesceValStr != null)
           _QueryStr.append(", ").append(coalesceValStr).append(")");
         if (caseInsensitive == true)
           _QueryStr.append(")");
-        
-        
-        opValBase(O, ValStr!=null&&caseInsensitive==true?ValStr.toLowerCase():ValStr);
-        
+
+
+        opValBase(O, ValStr != null && caseInsensitive == true ? ValStr.toLowerCase() : ValStr);
+
         return this;
       }
 
@@ -1883,7 +1890,7 @@ public abstract class QueryHelper
     public QueryHelper equals(Type_StringPrimitive Col, String coalesceVal, String V, boolean caseInsensitive)
     throws Exception
       {
-        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.EQUALS, V==null?null:TextUtil.escapeSingleQuoteForSQL(V), caseInsensitive);
+        return colOpBase(Col, coalesceVal == null ? null : TextUtil.escapeSingleQuoteForSQL(coalesceVal), Op.EQUALS, V == null ? null : TextUtil.escapeSingleQuoteForSQL(V), caseInsensitive);
       }
 
     public QueryHelper equals(Type_StringPrimitive Col, String V)
@@ -1897,7 +1904,7 @@ public abstract class QueryHelper
       {
         return equals(Col, null, V, caseInsensitive);
       }
-    
+
     public QueryHelper equals(Type_CharPrimitive Col, char coalesceVal, char V)
     throws Exception
       {

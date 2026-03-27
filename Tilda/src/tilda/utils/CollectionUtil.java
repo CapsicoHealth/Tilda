@@ -18,12 +18,14 @@ package tilda.utils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -330,27 +332,27 @@ public class CollectionUtil
           return toList((float[]) A);
         if (C == Float[].class)
           return toList((Float[]) A);
-        
+
         if (C == double[].class)
           return toList((double[]) A);
         if (C == Double[].class)
           return toList((Double[]) A);
-        
+
         if (C == boolean[].class)
           return toList((boolean[]) A);
         if (C == Boolean[].class)
           return toList((Boolean[]) A);
-        
+
         if (C == char[].class)
           return toList((char[]) A);
         if (C == Character[].class)
           return toList((char[]) A);
-        
+
         if (C == byte[].class)
           return toList((byte[]) A);
         if (C == Byte[].class)
           return toList((Byte[]) A);
-       
+
         if (C == short[].class)
           return toList((short[]) A);
         if (C == Short[].class)
@@ -470,7 +472,7 @@ public class CollectionUtil
           return toSet((int[]) A);
         if (C == Integer[].class)
           return toSet((Integer[]) A);
-        
+
         if (C == long[].class)
           return toSet((long[]) A);
         if (C == Long[].class)
@@ -676,22 +678,27 @@ public class CollectionUtil
       {
         return L == null ? null : L.toArray(new String[L.size()]);
       }
+
     public static String[][] toDoubleStringArray(Collection<String[]> L)
       {
         return L == null ? null : L.toArray(new String[L.size()][]);
       }
+
     public static Integer[] toIntArray(Collection<Integer> L)
       {
         return L == null ? null : L.toArray(new Integer[L.size()]);
       }
+
     public static Long[] toLongArray(Collection<Long> L)
       {
         return L == null ? null : L.toArray(new Long[L.size()]);
       }
+
     public static Float[] toFloatArray(Collection<Float> L)
       {
         return L == null ? null : L.toArray(new Float[L.size()]);
       }
+
     public static Double[] toDoubleArray(Collection<Double> L)
       {
         return L == null ? null : L.toArray(new Double[L.size()]);
@@ -769,8 +776,9 @@ public class CollectionUtil
       }
 
     /**
-     * Returns true if the collection is Null, is empty (has no element), or only has NULL elements. Returns false if 
+     * Returns true if the collection is Null, is empty (has no element), or only has NULL elements. Returns false if
      * the collection has at least one not-null element.
+     * 
      * @param C
      * @return
      */
@@ -788,14 +796,15 @@ public class CollectionUtil
 
     public static void sort(List<String[]> vals, int i)
       {
-        Collections.sort(vals, new Comparator<String[]>() {
+        Collections.sort(vals, new Comparator<String[]>()
+          {
 
-          @Override
-          public int compare(String[] o1, String[] o2)
-            {
-              return o1[i].compareTo(o2[i]);
-            }
-        });
+            @Override
+            public int compare(String[] o1, String[] o2)
+              {
+                return o1[i].compareTo(o2[i]);
+              }
+          });
       }
 
     public static boolean in(String v, String[] values)
@@ -803,23 +812,60 @@ public class CollectionUtil
         if (values != null)
           for (String x : values)
             if (v.equals(x) == true)
-             return true;
+              return true;
         return false;
       }
+
     public static boolean in(int v, int[] values)
       {
         if (values != null)
           for (int x : values)
             if (v == x)
-             return true;
+              return true;
         return false;
       }
+
     public static boolean in(long v, long[] values)
       {
         if (values != null)
           for (long x : values)
             if (v == x)
-             return true;
+              return true;
         return false;
+      }
+
+    protected static class SimpleArrayIterator<T> implements Iterator<T>
+      {
+        private final T[] array;
+        private int       index = 0;
+
+        public SimpleArrayIterator(T[] array)
+          {
+            this.array = array;
+          }
+
+        public boolean hasNext()
+          {
+            return index < array.length;
+          }
+
+        public T next()
+          {
+            return array[index++];
+          }
+      }
+
+    /**
+     * Returns an iterator over the elements of the given array. Returns null if the array is null or empty.
+     * Note: this method is not thread-safe, as it returns the same iterator instance for the same array.
+     * This option is cheaper and better performing than doing the usual, for example:
+     * <CODE>Iterator<String> I = arr == null || arr.length == 0 ? null : Arrays.asList(arr).iterator();</CODE>
+     * @param <T>
+     * @param A
+     * @return
+     */
+    public static <T> Iterator<T> getIterator(T[] A)
+      {
+        return A==null || A.length == 0 ? null : new SimpleArrayIterator<T>(A);
       }
   }
