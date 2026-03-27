@@ -968,12 +968,6 @@ public class Migrator
                   {
                     if (ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey") == false) // not the pk
                       {
-                        if (Obj._Name.equalsIgnoreCase("UserPlanSubscription") == true)
-                          {
-                            if (TextUtil.isNullOrEmpty(ix._FilterCondition) == false)
-                              LOG.debug("Index " + ix._Name + "; " + ix.getSignature() + "; " + ix._FilterCondition);
-                          }
-
                         if (ix._Unique && (ix._Name.equals(ix._Name.toLowerCase()) == false || ix._Name.equalsIgnoreCase(IX.getName()) == false))
                           // The actual rename will happen in the next loop, so we just mark the index signature as dropped.
                           DroppedSignatures.add(ix.getSignature());
