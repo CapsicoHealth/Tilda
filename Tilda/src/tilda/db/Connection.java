@@ -432,6 +432,13 @@ public final class Connection
       {
         return executeSelect(SchemaName, TableName, Query, RP, 0, false, -1, false, false);
       }
+    
+    public int executeSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int  Start, int Size)
+    throws Exception
+      {
+        return executeSelect(SchemaName, TableName, Query, RP, Start, false, Size, false, false);
+      }
+    
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
@@ -779,9 +786,9 @@ public final class Connection
           }
       }
 
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        _DB.getColumnType(Str, T, S, M, Collection, Precision, Scale);
+        _DB.getColumnType(Str, T, S, typeModifier, M, Collection, Precision, Scale);
       }
 
 
