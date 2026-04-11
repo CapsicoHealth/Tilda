@@ -32,16 +32,23 @@ import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQLValidator;
 import tilda.types.ColumnDefinition;
 import tilda.types.Nullable;
+import tilda.types.Type_BooleanCollection;
 import tilda.types.Type_BooleanPrimitive;
 import tilda.types.Type_CharCollection;
 import tilda.types.Type_CharPrimitive;
+import tilda.types.Type_DateCollection;
 import tilda.types.Type_DatePrimitive;
+import tilda.types.Type_DatetimeCollection;
 import tilda.types.Type_DatetimePrimitive;
+import tilda.types.Type_DoubleCollection;
 import tilda.types.Type_DoublePrimitive;
+import tilda.types.Type_FloatCollection;
 import tilda.types.Type_FloatPrimitive;
 import tilda.types.Type_IntegerCollection;
 import tilda.types.Type_IntegerPrimitive;
+import tilda.types.Type_LongCollection;
 import tilda.types.Type_LongPrimitive;
+import tilda.types.Type_ShortCollection;
 import tilda.types.Type_ShortPrimitive;
 import tilda.types.Type_StringCollection;
 import tilda.types.Type_StringPrimitive;
@@ -1154,6 +1161,295 @@ public abstract class QueryHelper
         _QueryStr.append("])");
         return this;
       }
+    
+    
+    public QueryHelper in(Type_LongCollection Col, long V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_LongCollection Col, long V, boolean not)
+    throws Exception
+      {
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+
+        if (_WherePos == -1)
+          where();
+
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(").append(V).append(", ");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper in(Type_LongCollection Col, long[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_LongCollection Col, long[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) _QueryStr.append(","); _QueryStr.append(V[i]); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_LongCollection Col, Collection<Long> V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_LongCollection Col, Collection<Long> V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.isEmpty())
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        boolean first = true;
+        for (Long v : V)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_ShortCollection Col, short[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_ShortCollection Col, short[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) _QueryStr.append(","); _QueryStr.append(V[i]); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_ShortCollection Col, Collection<Short> V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_ShortCollection Col, Collection<Short> V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.isEmpty())
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        boolean first = true;
+        for (Short v : V)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_IntegerCollection Col, int[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_IntegerCollection Col, int[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) _QueryStr.append(","); _QueryStr.append(V[i]); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_IntegerCollection Col, Collection<Integer> V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_IntegerCollection Col, Collection<Integer> V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.isEmpty())
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        boolean first = true;
+        for (Integer v : V)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_FloatCollection Col, float[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_FloatCollection Col, float[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) _QueryStr.append(","); _QueryStr.append(V[i]); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_FloatCollection Col, Collection<Float> V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_FloatCollection Col, Collection<Float> V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.isEmpty())
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        boolean first = true;
+        for (Float v : V)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_DoubleCollection Col, double[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_DoubleCollection Col, double[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) _QueryStr.append(","); _QueryStr.append(V[i]); }
+        _QueryStr.append("])");
+        return this;
+      }
+
+    public QueryHelper in(Type_DoubleCollection Col, Collection<Double> V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_DoubleCollection Col, Collection<Double> V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.isEmpty())
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value collection.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.In(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        boolean first = true;
+        for (Double v : V)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("])");
+        return this;
+      }
 
 
     public QueryHelper in(Type_CharPrimitive Col, char[] V)
@@ -1195,6 +1491,71 @@ public abstract class QueryHelper
         return this;
       }
 
+    /**
+     * Shared helper for numeric primitive in() methods. Validates guards, emits coalesce wrapping,
+     * and the "not in (...)" clause. {@code valuesStr} must be a pre-formatted, comma-separated list
+     * of values (no surrounding parentheses).
+     */
+    private QueryHelper inNumericBase(ColumnDefinition Col, String coalesceValStr, boolean not, String valuesStr)
+    throws Exception
+      {
+        if (valuesStr == null || valuesStr.isEmpty())
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
+        if (_WherePos == -1)
+          where();
+        if (coalesceValStr != null)
+          _QueryStr.append("coalesce(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (coalesceValStr != null)
+          _QueryStr.append(", ").append(coalesceValStr).append(")");
+        if (not == true)
+          _QueryStr.append(" not");
+        _QueryStr.append(" in (").append(valuesStr).append(")");
+        return this;
+      }
+
+    private static String numericArrayToStr(short[] V)
+      {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) sb.append(","); sb.append(V[i]); }
+        return sb.toString();
+      }
+
+    private static String numericArrayToStr(int[] V)
+      {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) sb.append(","); sb.append(V[i]); }
+        return sb.toString();
+      }
+
+    private static String numericArrayToStr(long[] V)
+      {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) sb.append(","); sb.append(V[i]); }
+        return sb.toString();
+      }
+
+    private static String numericArrayToStr(float[] V)
+      {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) sb.append(","); sb.append(V[i]); }
+        return sb.toString();
+      }
+
+    private static String numericArrayToStr(double[] V)
+      {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) sb.append(","); sb.append(V[i]); }
+        return sb.toString();
+      }
+
     public QueryHelper in(Type_ShortPrimitive Col, short[] V)
     throws Exception
       {
@@ -1212,30 +1573,7 @@ public abstract class QueryHelper
       {
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
-        if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
-
-        if (_WherePos == -1)
-          where();
-
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        if (not == true)
-          _QueryStr.append(" not ");
-        _QueryStr.append(" in (");
-        for (int i = 0; i < V.length; ++i)
-          {
-            if (i != 0)
-              _QueryStr.append(",");
-            _QueryStr.append(V[i]);
-          }
-        _QueryStr.append(")");
-        return this;
+        return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toString(), not, numericArrayToStr(V));
       }
 
     public QueryHelper in(Type_IntegerPrimitive Col, int[] V)
@@ -1253,32 +1591,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_IntegerPrimitive Col, Integer coalesceVal, int[] V, boolean not)
     throws Exception
       {
-        if (_WherePos == -1)
-          where();
-
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
-        if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
-
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        if (not == true)
-          _QueryStr.append(" not ");
-        _QueryStr.append(" in (");
-        for (int i = 0; i < V.length; ++i)
-          {
-            if (i != 0)
-              _QueryStr.append(",");
-            _QueryStr.append(V[i]);
-          }
-        _QueryStr.append(")");
-        return this;
+        return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toString(), not, numericArrayToStr(V));
       }
 
     public QueryHelper in(Type_LongPrimitive Col, long[] V)
@@ -1298,30 +1613,7 @@ public abstract class QueryHelper
       {
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
-        if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
-
-        if (_WherePos == -1)
-          where();
-
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        if (not == true)
-          _QueryStr.append(" not ");
-        _QueryStr.append(" in (");
-        for (int i = 0; i < V.length; ++i)
-          {
-            if (i != 0)
-              _QueryStr.append(",");
-            _QueryStr.append(V[i]);
-          }
-        _QueryStr.append(")");
-        return this;
+        return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toString(), not, numericArrayToStr(V));
       }
 
     public QueryHelper in(Type_FloatPrimitive Col, float[] V)
@@ -1341,30 +1633,7 @@ public abstract class QueryHelper
       {
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
-        if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
-
-        if (_WherePos == -1)
-          where();
-
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        if (not == true)
-          _QueryStr.append(" not ");
-        _QueryStr.append(" in (");
-        for (int i = 0; i < V.length; ++i)
-          {
-            if (i != 0)
-              _QueryStr.append(",");
-            _QueryStr.append(V[i]);
-          }
-        _QueryStr.append(")");
-        return this;
+        return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toString(), not, numericArrayToStr(V));
       }
 
     public QueryHelper in(Type_DoublePrimitive Col, double[] V)
@@ -1376,7 +1645,7 @@ public abstract class QueryHelper
     public QueryHelper in(Type_DoublePrimitive Col, double[] V, boolean not)
     throws Exception
       {
-        return in(Col, null, V, false);
+        return in(Col, null, V, not);  // BUG FIX: was erroneously passing false instead of not
       }
 
     public QueryHelper in(Type_DoublePrimitive Col, Double coalesceVal, double[] V, boolean not)
@@ -1384,30 +1653,7 @@ public abstract class QueryHelper
       {
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
-        if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
-
-        if (_WherePos == -1)
-          where();
-
-        if (coalesceVal != null)
-          _QueryStr.append("coalesce(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        if (coalesceVal != null)
-          {
-            _QueryStr.append(", ").append(coalesceVal).append(")");
-          }
-        if (not == true)
-          _QueryStr.append(" not ");
-        _QueryStr.append(" in (");
-        for (int i = 0; i < V.length; ++i)
-          {
-            if (i != 0)
-              _QueryStr.append(",");
-            _QueryStr.append(V[i]);
-          }
-        _QueryStr.append(")");
-        return this;
+        return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toString(), not, numericArrayToStr(V));
       }
 
     public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] V)
@@ -3630,6 +3876,293 @@ public abstract class QueryHelper
             else
               _QueryStr.append(",");
             _QueryStr.append("'").append(v).append("'");
+          }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_CharCollection Col, Collection<Character> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Character v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append("'").append(v).append("'"); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_IntegerCollection Col, Collection<Integer> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Integer v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_LongCollection Col, long v)
+      {
+        _QueryStr.append(v);
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_LongCollection Col, long[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (long v : Vals)
+          { if (First) First = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_LongCollection Col, Collection<Long> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Long v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_ShortCollection Col, short v)
+      {
+        _QueryStr.append(v);
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_ShortCollection Col, short[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (short v : Vals)
+          { if (First) First = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_ShortCollection Col, Collection<Short> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Short v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_FloatCollection Col, float v)
+      {
+        _QueryStr.append(v);
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_FloatCollection Col, float[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (float v : Vals)
+          { if (First) First = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_FloatCollection Col, Collection<Float> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Float v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_DoubleCollection Col, double v)
+      {
+        _QueryStr.append(v);
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_DoubleCollection Col, double[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (double v : Vals)
+          { if (First) First = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_DoubleCollection Col, Collection<Double> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Double v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_BooleanCollection Col, boolean v)
+      {
+        _QueryStr.append(v);
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_BooleanCollection Col, boolean[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (boolean v : Vals)
+          { if (First) First = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_BooleanCollection Col, Collection<Boolean> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (Boolean v : Vals)
+          { if (first) first = false; else _QueryStr.append(","); _QueryStr.append(v); }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_DateCollection Col, LocalDate v)
+      {
+        _QueryStr.append("'").append(DateTimeUtil.printDateForSQL(v)).append("'");
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_DateCollection Col, LocalDate[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (LocalDate v : Vals)
+          {
+            if (First) First = false; else _QueryStr.append(",");
+            _QueryStr.append("'").append(DateTimeUtil.printDateForSQL(v)).append("'");
+          }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_DateCollection Col, Collection<LocalDate> Vals)
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (LocalDate v : Vals)
+          {
+            if (first) first = false; else _QueryStr.append(",");
+            _QueryStr.append("'").append(DateTimeUtil.printDateForSQL(v)).append("'");
+          }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_DatetimeCollection Col, ZonedDateTime v)
+      {
+        _QueryStr.append("'").append(DateTimeUtil.printDateTimeForSQL(v)).append("'");
+        _QueryStr.append(" = any(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
+        return this;
+      }
+
+    public QueryHelper any(Type_DatetimeCollection Col, ZonedDateTime[] Vals)
+    throws Exception
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean First = true;
+        for (ZonedDateTime v : Vals)
+          {
+            if (First) First = false; else _QueryStr.append(",");
+            if (DateTimeUtil.isNowPlaceholder(v)) _QueryStr.append(_C.getCurrentTimestampStr());
+            else _QueryStr.append("'").append(DateTimeUtil.printDateTimeForSQL(v)).append("'");
+          }
+        _QueryStr.append("]");
+        return this;
+      }
+
+    public QueryHelper any(Type_DatetimeCollection Col, Collection<ZonedDateTime> Vals)
+    throws Exception
+      {
+        if (Vals == null)
+          return this;
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(" && ARRAY[");
+        boolean first = true;
+        for (ZonedDateTime v : Vals)
+          {
+            if (first) first = false; else _QueryStr.append(",");
+            if (DateTimeUtil.isNowPlaceholder(v)) _QueryStr.append(_C.getCurrentTimestampStr());
+            else _QueryStr.append("'").append(DateTimeUtil.printDateTimeForSQL(v)).append("'");
           }
         _QueryStr.append("]");
         return this;
