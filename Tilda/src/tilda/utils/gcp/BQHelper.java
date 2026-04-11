@@ -457,12 +457,15 @@ public class BQHelper
       }
 
     public static Schema getBQSchemaFromMeta(TableViewMeta tvm)
+    throws Exception
       {
         // StringBuilder str = new StringBuilder();
         List<Field> fieldsList = new ArrayList<Field>();
         List<ColumnMeta> cols = tvm.getColumnMetaList();
         for (ColumnMeta col : cols)
           {
+            if (col._TildaType == null)
+              throw new Exception("Column '" + col._SrcSchema+"."+col._SrcTable+"."+ col._Name + "' of type '" + col._Type + "' doesn't have a TildaType!");
             Field F = Field.newBuilder(col._NameOriginal, StandardSQLTypeName.valueOf(col._TildaType.getBigQueryType()))
             .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.NULLABLE : Field.Mode.REQUIRED)
             .setDescription(col._Descr)
@@ -755,10 +758,10 @@ public class BQHelper
      * 3. Avoiding JSON serialization overhead (uses binary formats like Avro/Parquet)
      * 
      * ARCHITECTURE:
-     * ┌──────────┐  Export Job   ┌─────┐  Stream    ┌────────────┐
+     * ┌──────────┐ Export Job ┌─────┐ Stream ┌────────────┐
      * │ BigQuery │ ──────────────>│ GCS │ ─────────> │ PostgreSQL │
-     * │  Table   │  (Compressed)  │Avro │ (Direct)   │   COPY     │
-     * └──────────┘    ~5-10min    └─────┘  ~5-10min  └────────────┘
+     * │ Table │ (Compressed) │Avro │ (Direct) │ COPY │
+     * └──────────┘ ~5-10min └─────┘ ~5-10min └────────────┘
      * 
      * EXPECTED PERFORMANCE (for your 3M row × 15KB use case):
      * - Total data: ~45GB
@@ -769,26 +772,27 @@ public class BQHelper
      * 
      * IMPLEMENTATION PLAN:
      * 1. Export table to GCS as compressed Avro:
-     *    - Use BigQuery's ExtractJobConfiguration
-     *    - Format: Avro (best for streaming, includes schema)
-     *    - Compression: SNAPPY (fast decompression)
-     *    - Pattern: gs://bucket/export-*.avro
+     * - Use BigQuery's ExtractJobConfiguration
+     * - Format: Avro (best for streaming, includes schema)
+     * - Compression: SNAPPY (fast decompression)
+     * - Pattern: gs://bucket/export-*.avro
      * 
      * 2. Stream from GCS with Apache Avro reader:
-     *    - Use Google Cloud Storage client library
-     *    - Stream download (no local disk needed for huge files)
-     *    - Parse Avro records on-the-fly
+     * - Use Google Cloud Storage client library
+     * - Stream download (no local disk needed for huge files)
+     * - Parse Avro records on-the-fly
      * 
      * 3. Convert to CSV and feed to PostgreSQL COPY:
-     *    - Convert Avro GenericRecord → CSV format
-     *    - Use PipedInputStream/PipedOutputStream for zero-copy streaming
-     *    - Feed directly to CopyManager.copyIn()
+     * - Convert Avro GenericRecord → CSV format
+     * - Use PipedInputStream/PipedOutputStream for zero-copy streaming
+     * - Feed directly to CopyManager.copyIn()
      * 
      * 4. Cleanup:
-     *    - Delete GCS files after successful transfer
-     *    - Or keep for retry/audit purposes
+     * - Delete GCS files after successful transfer
+     * - Or keep for retry/audit purposes
      * 
      * REQUIRED DEPENDENCIES (add to pom.xml when implementing):
+     * 
      * <pre>
      * <!-- Apache Avro for reading BigQuery export format -->
      * <dependency>
@@ -806,20 +810,20 @@ public class BQHelper
      * </pre>
      * 
      * EXAMPLE USAGE (when implemented):
+     * 
      * <pre>
      * GCSExportConfig config = new GCSExportConfig()
-     *   .setBucket("my-temp-bucket")
-     *   .setPrefix("exports/")
-     *   .setCleanupAfter(true);
+     * .setBucket("my-temp-bucket")
+     * .setPrefix("exports/")
+     * .setCleanupAfter(true);
      * 
      * // This would stream directly from BQ → GCS → PostgreSQL
      * int rowsExported = BQHelper.exportTableViaGCS(
-     *   bq, 
-     *   "project.dataset.table",
-     *   postgresConnection,
-     *   "schema.table",
-     *   config
-     * );
+     * bq,
+     * "project.dataset.table",
+     * postgresConnection,
+     * "schema.table",
+     * config);
      * 
      * // Expected: 150K-200K rows/min for large tables with embeddings
      * </pre>
@@ -847,11 +851,11 @@ public class BQHelper
      */
     // TODO: Implement this method for 10-20x performance improvement
     // public static Iterator<FieldValueList> exportTableViaGCS(
-    //     BigQuery bq, 
-    //     String sourceTable,
-    //     GCSExportConfig gcsConfig) throws Exception
-    //   {
-    //     throw new UnsupportedOperationException("Not yet implemented - see method documentation for implementation plan");
-    //   }
+    // BigQuery bq,
+    // String sourceTable,
+    // GCSExportConfig gcsConfig) throws Exception
+    // {
+    // throw new UnsupportedOperationException("Not yet implemented - see method documentation for implementation plan");
+    // }
 
   }
