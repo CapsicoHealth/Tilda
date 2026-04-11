@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -52,7 +53,7 @@ public class Object extends Base
     @SerializedName("tzFk"     ) public Boolean           _TZFK       = true;
     @SerializedName("tzMode"   ) public String            _TzModeStr  ;
     @SerializedName("etl"      ) public boolean           _ETL        = false;
-    @SerializedName("lc"       ) public String            _LCStr      ;
+    @SerializedName("lc"       ) public String            _LCStr      ; // life-cycle
     @SerializedName("cloneFrom") public ClonerFrom        _CloneFrom  ;
     @SerializedName("cloneAs"  ) public Cloner[]          _CloneAs    ;
     @SerializedName("columns"  ) public List<Column>      _Columns    = new ArrayList<Column    >();
@@ -317,6 +318,21 @@ public class Object extends Base
                   clusterIndex = I;
               }
           }
+        for (Column C : _Columns)
+          {
+            if (C.getType() != ColumnType.VECTOR)
+              continue;
+            boolean inIndex = false;
+            for (Index I : _Indices)
+              for (Column col : I._ColumnObjs)
+                if (col == C)
+                  {
+                    inIndex = true;
+                    break;
+                  }
+            if (inIndex == false)
+              PS.AddError("Object '" + getFullName() + "' is defining a vector column  '" + C.getName() + "' without definint ANY index over it. Indices are required for vector columns.");
+          }
 
         // Pick up LC from Schema conventions if present and local value is empty.
         if (TextUtil.isNullOrEmpty(_LCStr) == true && parentSchema._Conventions != null && parentSchema._Conventions._DefaultLC != null)
@@ -353,6 +369,8 @@ public class Object extends Base
 
         _HasNaturalIdentity = _HasUniqueIndex == true || _PrimaryKey != null && _PrimaryKey._Autogen == false;
 
+
+
         // LDH-NOTE: We have to validate queries, mappings, masks and history here, because the whole parent object
         // only finishes being validated at this time.
         super.validateQueries(PS, Names);
@@ -369,7 +387,7 @@ public class Object extends Base
           {
             if (str.length() != 0)
               str.append("|");
-            str.append(c.getName()+"|\""+c.getName()+"\"");
+            str.append(c.getName() + "|\"" + c.getName() + "\"");
           }
         _ColumnsRegEx = Pattern.compile("\\b(" + str.toString() + ")\\b");
 

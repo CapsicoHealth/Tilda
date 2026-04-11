@@ -256,12 +256,19 @@ public class BigQuery extends CommonStoreImpl
     // LDH-NOTE: What is the difference between getColumnType and getColumnTypeRaw????
 
     @Override
-    public String getColumnType(ColumnType Type, Integer Size, ColumnMode M, boolean isCollection, Integer Precision, Integer Scale)
+    public String getColumnType(ColumnType Type, Integer Size, String typeModifier, ColumnMode M, boolean isCollection, Integer Precision, Integer Scale)
       {
-        if (Type == ColumnType.STRING && M != ColumnMode.CALCULATED)
+        if (M != ColumnMode.CALCULATED)
           {
-            DBStringType ST = Size == null ? null : getDBStringType(Size);
-            return isCollection == true ? "ARRAY<STRING>" : "STRING";
+            if (Type == ColumnType.STRING)
+              {
+                DBStringType ST = Size == null ? null : getDBStringType(Size);
+                return isCollection == true ? "ARRAY<STRING>" : "STRING";
+              }
+            else if (Type == ColumnType.VECTOR)
+              {
+                return "ARRAY<FLOAT64>";
+              }
           }
 
         return (Type != ColumnType.JSON && isCollection == true ? "ARRAY<" : "")
@@ -287,6 +294,7 @@ public class BigQuery extends CommonStoreImpl
           return "json";
         return isCollection == true ? BigQueryType.get(Type)._SQLArrayType : BigQueryType.get(Type)._SQLType;
       }
+
 
     @Override
     public String getHelperFunctionsScript(Connection Con, boolean Start)
@@ -473,16 +481,30 @@ public class BigQuery extends CommonStoreImpl
       }
 
     @Override
+    public String alterTableAddIndexUsingDDL(Index IX)
+    throws Exception
+      {
+        return null;
+      }
+
+    @Override
+    public String alterTableAddIndexWithDDL(Index IX)
+    throws Exception
+      {
+        return null;
+      }
+
+    @Override
     public String alterTableAddIndexDDL(Index IX)
     throws Exception
       {
         StringWriter OutStr = new StringWriter();
         PrintWriter Out = new PrintWriter(OutStr);
-        
+
         if (IX._Unique == false)
           {
-            Out.print("-- app-level index only -- Index '"+IX.getName()+"' on "+IX._Parent.getShortName()+"(");
-            Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
+            Out.print("-- app-level index only -- Index '" + IX.getName() + "' on " + IX._Parent.getShortName() + "(");
+            Sql.PrintColumnList(Out, IX._ColumnObjs, IX._IndexColumnModifiers);
             Out.print(")");
             if (IX._OrderByObjs.isEmpty() == false)
               {
@@ -492,21 +514,21 @@ public class BigQuery extends CommonStoreImpl
                   {
                     if (OB == null)
                       continue;
-    
+
                     if (First == true)
                       First = false;
                     else
                       Out.print(", ");
                     Out.print("\"" + OB._Col.getName() + "\" " + OB._Order);
                     if (OB._Nulls != null)
-                     Out.print(" NULLS " + OB._Nulls);
+                      Out.print(" NULLS " + OB._Nulls);
                   }
               }
           }
         else
           {
             Out.print("-- app-level index only -- ALTER TABLE " + IX._Parent.getShortName() + " ADD CONSTRAINT " + IX.getName() + " UNIQUE (");
-            Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
+            Sql.PrintColumnList(Out, IX._ColumnObjs, IX._IndexColumnModifiers);
             Out.print(") NOT ENFORCED; --  ");
           }
         if (IX._SubQuery != null)
@@ -514,10 +536,10 @@ public class BigQuery extends CommonStoreImpl
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);
             Out.print(" where " + Q._ClauseStatic);
           }
-        
+
         if (IX._NullsNotDistinct == true)
           Out.print(" NULLS NOT DISTINCT");
-        
+
         Out.print("\n");
 
         if (IX._Cluster == true)

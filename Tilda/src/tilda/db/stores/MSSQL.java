@@ -70,18 +70,19 @@ public class MSSQL implements DBType
       }
 
     protected static final String[] _NODATA_SQL_STATES = { "23505"
-    };    
+    };
+
     @Override
     public String[] getConnectionNoDataStates()
       {
         return _NODATA_SQL_STATES;
       }
-    
-//    @Override
-//    public boolean isErrNoData(SQLException E)
-//      {
-//        return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
-//      }
+
+    // @Override
+    // public boolean isErrNoData(SQLException E)
+    // {
+    // return E.getSQLState().equals("23000") || E.getErrorCode() == 2601;
+    // }
 
 
     @Override
@@ -89,7 +90,7 @@ public class MSSQL implements DBType
       {
         return "current_timestamp";
       }
-    
+
     @Override
     public String getCurrentDateTimeStr()
       {
@@ -102,7 +103,7 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public ZonedDateTime getCurrentTimestamp(Connection con)
     throws Exception
@@ -117,12 +118,13 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
-    
+
+
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = {
         "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed", "connection has been closed"
     };
+
     @Override
     public String[] getConnectionLockMsgs()
       {
@@ -276,7 +278,7 @@ public class MSSQL implements DBType
       {
         if (Collection == true)
           return "nvarchar(max)";
-        
+
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           {
             DBStringType DBT = getDBStringType(S);
@@ -332,7 +334,7 @@ public class MSSQL implements DBType
     throws Exception
       {
         throw new UnsupportedOperationException();
-      }    
+      }
 
     @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
@@ -345,8 +347,8 @@ public class MSSQL implements DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
       {
         throw new UnsupportedOperationException();
-      }  
-    
+      }
+
     @Override
     public boolean alterTableAlterColumnMulti(Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
       {
@@ -438,7 +440,7 @@ public class MSSQL implements DBType
             /*@formatter:on*/
           }
         if (TildaType == null)
-         LOG.warn("Found a map for SQL Type "+Type+" for column "+Name+"("+TypeName+"), but couldn't resolve to a TildaType.");
+          LOG.warn("Found a map for SQL Type " + Type + " for column " + Name + "(" + TypeName + "), but couldn't resolve to a TildaType.");
         return new StringStringPair(TypeSql, TildaType == null ? TypeName : TildaType.name());
       }
 
@@ -459,9 +461,9 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        throw new UnsupportedOperationException();        
+        throw new UnsupportedOperationException();
       }
 
     @Override
@@ -472,77 +474,77 @@ public class MSSQL implements DBType
         TextUtil.escapeSingleQuoteForSQL(Str, val, true);
         PS.setString(i, Str.toString());
       }
-/*
-    @Override
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        String Str = RS.getString(i);
-        if (Str == null)
-          return null;
+    /*
+     * @Override
+     * public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
+     * throws Exception
+     * {
+     * String Str = RS.getString(i);
+     * if (Str == null)
+     * return null;
+     * 
+     * String[] parts = Str.split("\\s*',\\s*'\\s*");
+     * if (parts == null || parts.length == 0)
+     * return null;
+     * 
+     * // Remove the leading and trailing " in the entire string sequence.
+     * if (TextUtil.isNullOrEmpty(parts[0]) == false)
+     * {
+     * parts[0] = parts[0].substring(1);
+     * }
+     * if (TextUtil.isNullOrEmpty(parts[parts.length - 1]) == false)
+     * {
+     * parts[parts.length - 1] = parts[parts.length - 1].substring(0, parts[parts.length - 1].length() - 1);
+     * }
+     * 
+     * // Convert String[] to proper type and collection.
+     * return Type.parse(isSet, parts);
+     * }
+     * 
+     * @Override
+     * public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
+     * throws Exception
+     * {
+     * String Str = RS.getString(colName);
+     * if (Str == null)
+     * return null;
+     * 
+     * String[] parts = Str.split("\\s*',\\s*'\\s*");
+     * if (parts == null || parts.length == 0)
+     * return null;
+     * 
+     * // Remove the leading and trailing " in the entire string sequence.
+     * if (TextUtil.isNullOrEmpty(parts[0]) == false)
+     * {
+     * parts[0] = parts[0].substring(1);
+     * }
+     * if (TextUtil.isNullOrEmpty(parts[parts.length - 1]) == false)
+     * {
+     * parts[parts.length - 1] = parts[parts.length - 1].substring(0, parts[parts.length - 1].length() - 1);
+     * }
+     * 
+     * // Convert String[] to proper type and collection.
+     * return Type.parse(isSet, parts);
+     * }
+     */
 
-        String[] parts = Str.split("\\s*',\\s*'\\s*");
-        if (parts == null || parts.length == 0)
-          return null;
-
-        // Remove the leading and trailing " in the entire string sequence.
-        if (TextUtil.isNullOrEmpty(parts[0]) == false)
-          {
-            parts[0] = parts[0].substring(1);
-          }
-        if (TextUtil.isNullOrEmpty(parts[parts.length - 1]) == false)
-          {
-            parts[parts.length - 1] = parts[parts.length - 1].substring(0, parts[parts.length - 1].length() - 1);
-          }
-
-        // Convert String[] to proper type and collection.
-        return Type.parse(isSet, parts);
-      }
-
-    @Override
-    public Collection<?> getArray(ResultSet RS, String colName, ColumnType Type, boolean isSet)
-    throws Exception
-      {
-        String Str = RS.getString(colName);
-        if (Str == null)
-          return null;
-
-        String[] parts = Str.split("\\s*',\\s*'\\s*");
-        if (parts == null || parts.length == 0)
-          return null;
-
-        // Remove the leading and trailing " in the entire string sequence.
-        if (TextUtil.isNullOrEmpty(parts[0]) == false)
-          {
-            parts[0] = parts[0].substring(1);
-          }
-        if (TextUtil.isNullOrEmpty(parts[parts.length - 1]) == false)
-          {
-            parts[parts.length - 1] = parts[parts.length - 1].substring(0, parts[parts.length - 1].length() - 1);
-          }
-
-        // Convert String[] to proper type and collection.
-        return Type.parse(isSet, parts);
-      }
-*/
-
-/*
-    @Override
-    public void setJson(PreparedStatement PS, int i, String jsonValue)
-    throws Exception
-      {
-        // TODO Auto-generated method stub
-
-      }
-
-    @Override
-    public String getJson(ResultSet RS, int i)
-    throws Exception
-      {
-        // TODO Auto-generated method stub
-        return null;
-      }
-*/
+    /*
+     * @Override
+     * public void setJson(PreparedStatement PS, int i, String jsonValue)
+     * throws Exception
+     * {
+     * // TODO Auto-generated method stub
+     * 
+     * }
+     * 
+     * @Override
+     * public String getJson(ResultSet RS, int i)
+     * throws Exception
+     * {
+     * // TODO Auto-generated method stub
+     * return null;
+     * }
+     */
 
     @Override
     public String getJsonParametrizedQueryPlaceHolder()
@@ -621,7 +623,7 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
     throws Exception
@@ -649,7 +651,7 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
     throws Exception
@@ -669,10 +671,25 @@ public class MSSQL implements DBType
       {
         return 63;
       }
+
     @Override
     public int getMaxTableNameSize()
       {
         return 63;
+      }
+
+    @Override
+    public String alterTableAddIndexUsingDDL(Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public String alterTableAddIndexWithDDL(Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
       }
 
     @Override
@@ -681,7 +698,7 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
     throws Exception
@@ -873,5 +890,12 @@ public class MSSQL implements DBType
         return false;
       }
 
-    
+    @Override
+    public boolean alterTableSwitchTablePKType(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
   }

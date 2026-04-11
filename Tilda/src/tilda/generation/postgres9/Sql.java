@@ -96,13 +96,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getColumnType(Column C)
       {
-        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
+        return getColumnType(C.getType(), C._Size, C.getTypeModifier(), C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
     public String getColumnType(Column C, ColumnType AggregateType)
       {
-        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
+        return getColumnType(AggregateType, C._Size, C.getTypeModifier(), C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
@@ -235,16 +235,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
+              if (C.getType() == ColumnType.VECTOR)
+                {
+                  if (TextUtil.isNullOrEmpty(C.getTypeModifier()) == false)
+                    {
+                      if (TextUtil.findElement(VECTOR_TYPES, C.getTypeModifier(), true, 0) < 0)
+                        throw new Exception("Column " + C.getFullName() + " defines an invalid type '" + C.getType() + "' which has an unrecognized vector type modifier '" + C.getTypeModifier() + "'. Valid modifiers are: " + TextUtil.print(VECTOR_TYPES));
+                    }
+                }
+
               if (First == true)
                 First = false;
               else
                 Out.print("  , ");
+
               Out.print("\"" + C.getName() + "\"" + O._PadderColumnNames.getPad(C.getName()) + "  " + PadderColumnTypes.pad(getColumnType(C)));
               Out.print(C._Nullable == false ? "  not null" : "          ");
               if (C == refnumPK)
-               Out.print(" GENERATED ALWAYS AS IDENTITY PRIMARY KEY");
+                Out.print(" GENERATED ALWAYS AS IDENTITY PRIMARY KEY");
               else if (C._DefaultCreateValue != null)
-                    Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
+                Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
               Out.println("   -- " + C._Description);
             }
         if (O._PrimaryKey != null && O._PrimaryKey._Sequence != true)
@@ -1085,7 +1095,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            String FormulaType = getColumnType(F.getType(), 8192, null, F.isCollection(), F._Precision, F._Scale);
+            String FormulaType = getColumnType(F.getType(), 8192, null, null, F.isCollection(), F._Precision, F._Scale);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
             if (First == true)
               First = false;
@@ -1206,7 +1216,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           Expr = "coalesce(" + Expr + ", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";
 
         if (VC._Type != null)
-          Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
+          Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, VC._Type.getTypeModifier(), ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
 
         return "\n     , " + Expr + " as \"" + VC.getName() + "\"";
       }
@@ -1645,7 +1655,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (Formula F2 : ParentView._Formulas)
                   if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                     {
-                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, F2.isCollection(), F2._Precision, F2._Scale);
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, null, F2.isCollection(), F2._Precision, F2._Scale);
                       M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                       break;
                     }
@@ -1845,6 +1855,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return PrintColumnList(Out, Columns, null);
       }
 
+
     /**
      * Prints a comma-separated list of columns, for example for an index or an FK.
      * 
@@ -1853,7 +1864,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
      * @param LALs For indices, the list of columns marked as LAL-enabled (Left-Anchor-Like for efficient search such as like 'abc%').
      * @return
      */
-    public static boolean PrintColumnList(PrintWriter Out, List<Column> Columns, String[] LALs)
+    public static boolean PrintColumnList(PrintWriter Out, List<Column> Columns, Map<String, String> indexColumnModifiers)
       {
         boolean First = true;
         for (Column C : Columns)
@@ -1865,8 +1876,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               Out.print(", ");
             Out.print("\"" + C.getName() + "\"");
-            if (LALs != null && TextUtil.findElement(LALs, C.getName(), false, 0) != -1)
+            String columnIndexModifier = indexColumnModifiers == null ? null : indexColumnModifiers.get(C.getName());
+            if ("lal".equals(columnIndexModifier) == true)
               Out.print(" text_pattern_ops");
+            else if (C.getType() == ColumnType.VECTOR)
+              {
+                String operatorClass="vector_cosine_ops"; // default
+                if (TextUtil.isNullOrEmpty(columnIndexModifier) == false)
+                  {
+                    Matcher m = _PATTERN_VECTOR_INDEX.matcher(columnIndexModifier);
+                    if (m.find() == true)
+                      {
+                        String operator = m.group(2);
+                        if (TextUtil.isNullOrEmpty(operator) == false)
+                          operatorClass = operator;
+                      }
+                    Out.print(" "+operatorClass);
+                  }
+              }
           }
         return First != true;
       }

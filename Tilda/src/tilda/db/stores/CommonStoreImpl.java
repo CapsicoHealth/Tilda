@@ -265,7 +265,7 @@ public abstract class CommonStoreImpl implements DBType
                   throw new Exception("Cannot add new 'not null' column '" + col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
               }
           }
-        String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ADD COLUMN \"" + col.getName() + "\" " + getColumnType(col.getType(), col._Size, col._Mode, col.isCollection(), col._Precision, col._Scale);
+        String Q = "ALTER TABLE " + col._ParentObject.getShortName() + " ADD COLUMN \"" + col.getName() + "\" " + getColumnType(col.getType(), col._Size, col.getTypeModifier(), col._Mode, col.isCollection(), col._Precision, col._Scale);
         if (col._Nullable == false && temporaryDefaultValue == null)
           {
             Q += " not null";
@@ -355,22 +355,22 @@ public abstract class CommonStoreImpl implements DBType
     @Override
     public String getColumnType(Column C)
       {
-        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
+        return getColumnType(C.getType(), C._Size, C.getTypeModifier(), C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
     public String getColumnType(Column C, ColumnType AggregateType)
       {
-        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection(), C._Precision, C._Scale);
+        return getColumnType(AggregateType, C._Size, C.getTypeModifier(), C._Mode, C.isCollection(), C._Precision, C._Scale);
       }
 
     @Override
-    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        Str.append(getColumnType(T, S, M, Collection, Precision, Scale));
+        Str.append(getColumnType(T, S, typeModifier, M, Collection, Precision, Scale));
       }
 
-    public abstract String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
+    public abstract String getColumnType(ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
 
 
     @Override
@@ -425,7 +425,7 @@ public abstract class CommonStoreImpl implements DBType
         // Using = " USING rtrim(\"" + Col.getName() + "\")";
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
 
-        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + Using + ";";
+        + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + Using + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
 
       }
@@ -435,7 +435,7 @@ public abstract class CommonStoreImpl implements DBType
     throws Exception
       {
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
-        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
+        + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
@@ -452,8 +452,8 @@ public abstract class CommonStoreImpl implements DBType
             || Col.getType() == ColumnType.BOOLEAN || Col.getType() == ColumnType.UUID)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
 
                 boolean res = Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
                 if (Col.getType() != ColumnType.DATETIME || res == false)
@@ -492,14 +492,14 @@ public abstract class CommonStoreImpl implements DBType
          */
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
 
-        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         // going to boolean, must use a more elaborate expression to convert
         if (Col.getType() == ColumnType.BOOLEAN)
           Q += " USING (case when \"" + Col.getName() + "\"=0 then true when \"" + Col.getName() + "\" is null then null else false end)";
         else if (ColMeta._TildaType == ColumnType.BOOLEAN)
-          Q += " USING \"" + Col.getName() + "\"::INTEGER::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
+          Q += " USING \"" + Col.getName() + "\"::INTEGER::" + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
         else
-          Q += " USING \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
+          Q += " USING \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ";";
 
         return Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
 
@@ -539,8 +539,8 @@ public abstract class CommonStoreImpl implements DBType
                 //@formatter:on
                   {
                     Q += " ALTER COLUMN \"" + CMP._Col.getName()
-                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale)
-                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + "),";
+                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col.getTypeModifier(), CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale)
+                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col.getTypeModifier(), CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + "),";
 
                     // For datetime columns, we have to deal with the TZ column as well.
                     if (CMP._Col.getType() == ColumnType.DATETIME && CMP._Col.needsTZ() == true)
@@ -564,14 +564,14 @@ public abstract class CommonStoreImpl implements DBType
                   }
 
                 Q += " ALTER COLUMN \"" + CMP._Col.getName()
-                + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale);
+                + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col.getTypeModifier(), CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale);
                 // going to boolean, must use a more elaborate expression to convert
                 if (CMP._Col.getType() == ColumnType.BOOLEAN)
                   Q += " USING (case when \"" + CMP._Col.getName() + "\"=0 then true when \"" + CMP._Col.getName() + "\" is null then null else false end),";
                 else if (CMP._CMeta._TildaType == ColumnType.BOOLEAN)
-                  Q += " USING \"" + CMP._Col.getName() + "\"::INTEGER::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
+                  Q += " USING \"" + CMP._Col.getName() + "\"::INTEGER::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col.getTypeModifier(), CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
                 else
-                  Q += " USING \"" + CMP._Col.getName() + "\"::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
+                  Q += " USING \"" + CMP._Col.getName() + "\"::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col.getTypeModifier(), CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + ",";
               }
           }
 
@@ -611,7 +611,7 @@ public abstract class CommonStoreImpl implements DBType
             // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
             // Using = " USING rtrim(\"" + CMP._Col.getName() + "\")";
             Q += " ALTER COLUMN \"" + CMP._Col.getName() + "\" TYPE "
-            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + Using + ",";
+            + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col.getTypeModifier(), CMP._Col._Mode, CMP._Col.isCollection(), CMP._Col._Precision, CMP._Col._Scale) + Using + ",";
           }
 
         Q = Q.substring(0, Q.length() - 1) + ";";
@@ -776,33 +776,24 @@ public abstract class CommonStoreImpl implements DBType
         String pkColName = Obj._PrimaryKey._ColumnObjs.get(0).getName();
         String q = null;
         if (Obj._PrimaryKey._Sequence == true) // adding identity to the PK
-         q = """
-             
-             ALTER TABLE %s ALTER COLUMN "%s" ADD GENERATED ALWAYS AS IDENTITY;
-             SELECT setval(
-                pg_get_serial_sequence('%s', '%s'),
-                COALESCE((SELECT COALESCE(MAX("%s"),0)+1 FROM %s), 0)
-               );
-             """.formatted(Obj.getShortName(), pkColName, Obj.getShortName().toLowerCase(), pkColName, pkColName, Obj.getShortName());
+          q = """
+
+          ALTER TABLE %s ALTER COLUMN "%s" ADD GENERATED ALWAYS AS IDENTITY;
+          SELECT setval(
+             pg_get_serial_sequence('%s', '%s'),
+             COALESCE((SELECT COALESCE(MAX("%s"),0)+1 FROM %s), 0)
+            );
+          """.formatted(Obj.getShortName(), pkColName, Obj.getShortName().toLowerCase(), pkColName, pkColName, Obj.getShortName());
         else // removing the identity to the PK
-         q = """
-         
-             ALTER TABLE %s ALTER COLUMN "%s" DROP IDENTITY IF EXISTS;
-             DROP SEQUENCE IF EXISTS %s.%s_seq;
-             delete from TILDA.Key where "name" = '%s';
-             insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated")
-                  values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), '%s',(select COALESCE(max("%s"),0)+1 from %s), %d, current_timestamp, current_timestamp);
-             """.formatted(Obj.getShortName()
-                         , pkColName
-                         , Obj._ParentSchema._Name
-                         , Obj.getShortName().toLowerCase()+"_"+pkColName
-                         , Obj.getShortName().toUpperCase()
-                         , Obj.getShortName().toUpperCase()
-                         , pkColName
-                         , Obj.getShortName()
-                         , Obj._PrimaryKey._KeyBatch
-                         );
-        
+          q = """
+
+          ALTER TABLE %s ALTER COLUMN "%s" DROP IDENTITY IF EXISTS;
+          DROP SEQUENCE IF EXISTS %s.%s_seq;
+          delete from TILDA.Key where "name" = '%s';
+          insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated")
+               values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), '%s',(select COALESCE(max("%s"),0)+1 from %s), %d, current_timestamp, current_timestamp);
+          """.formatted(Obj.getShortName(), pkColName, Obj._ParentSchema._Name, Obj.getShortName().toLowerCase() + "_" + pkColName, Obj.getShortName().toUpperCase(), Obj.getShortName().toUpperCase(), pkColName, Obj.getShortName(), Obj._PrimaryKey._KeyBatch);
+
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), q);
       }
 
@@ -854,31 +845,22 @@ public abstract class CommonStoreImpl implements DBType
         return Con.executeDDL(IX._ParentTable._SchemaName, IX._ParentTable._TableName, "ALTER TABLE " + IX._ParentTable.getFullNameFormatted() + " SET WITHOUT CLUSTER;");
       }
 
-
     @Override
     public String alterTableAddIndexDDL(Index IX)
     throws Exception
       {
         StringWriter OutStr = new StringWriter();
         PrintWriter Out = new PrintWriter(OutStr);
-        boolean Gin = true;
-        for (Column C : IX._ColumnObjs)
-          if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
-            Gin = false;
-        for (OrderBy OB : IX._OrderByObjs)
-          if (OB._Col.getType() != ColumnType.JSON && (OB._Col.getType() != ColumnType.STRING || OB._Col.isCollection() == false))
-            Gin = false;
-        if (Gin == true && IX._Unique == true)
-          throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
 
         if (supportsIndices() == false)
           Out.print("--  ");
         else if (IX._Db == false)
           Out.print("-- app-level index only -- ");
 
-        Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
+        String usingClause = alterTableAddIndexUsingDDL(IX);
+        Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + (usingClause == null ? "" : usingClause) + " (");
         if (IX._ColumnObjs.isEmpty() == false)
-          Sql.PrintColumnList(Out, IX._ColumnObjs, IX._LALColumns);
+          Sql.PrintColumnList(Out, IX._ColumnObjs, IX._IndexColumnModifiers);
         if (IX._OrderByObjs.isEmpty() == false)
           {
             boolean First = IX._ColumnObjs.isEmpty();
@@ -891,12 +873,17 @@ public abstract class CommonStoreImpl implements DBType
                   First = false;
                 else
                   Out.print(", ");
-                Out.print("\"" + OB._Col.getName() + "\" " + (Gin ? "" : OB._Order));
+                Out.print("\"" + OB._Col.getName() + "\" " + (usingClause == null ? "" : OB._Order));
                 if (OB._Nulls != null)
                   Out.print(" NULLS " + OB._Nulls);
               }
           }
         Out.print(")");
+
+        String withClause = alterTableAddIndexWithDDL(IX);
+        if (TextUtil.isNullOrEmpty(withClause) == false)
+          Out.print(withClause);
+        
         if (IX._SubQuery != null)
           {
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);

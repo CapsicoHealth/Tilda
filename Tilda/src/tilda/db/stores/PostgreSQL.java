@@ -18,6 +18,8 @@ package tilda.db.stores;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,11 +35,15 @@ import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Schema;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
+import tilda.utils.ParseUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class PostgreSQL extends CommonStoreImpl
@@ -95,13 +101,13 @@ public class PostgreSQL extends CommonStoreImpl
       {
         return "statement_timestamp()";
       }
-    
+
     @Override
     public String getCurrentDateTimeStr()
       {
         return "(statement_timestamp() at time zone 'utc')::timestamp";
       }
-    
+
 
     @Override
     public String getCurrentDateStr()
@@ -268,15 +274,25 @@ public class PostgreSQL extends CommonStoreImpl
         : DBStringType.TEXT;
       }
 
-    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
+    protected static String[] VECTOR_TYPES = new String[] { "vector", "halfvec", "bit", "sparsevec"
+    };
+
+    public String getColumnType(ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
+        if (M != ColumnMode.CALCULATED)
           {
-            DBStringType ST = S == null ? null : getDBStringType(S);
-            return Collection == true ? "text[]"
-            : ST == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
-            : ST == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
-            : "text";
+            if (T == ColumnType.STRING)
+              {
+                DBStringType ST = S == null ? null : getDBStringType(S);
+                return Collection == true ? "text[]"
+                : ST == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
+                : ST == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
+                : "text";
+              }
+            else if (T == ColumnType.VECTOR)
+              {
+                return (TextUtil.isNullOrEmpty(typeModifier) == true ? "vector" : typeModifier) + "(" + (S == null ? 768 : S) + ")";
+              }
           }
 
         return PostgresType.get(T)._SQLType
@@ -520,6 +536,103 @@ public class PostgreSQL extends CommonStoreImpl
     public boolean isCaseSentitiveSchemaTableViewNames()
       {
         return false;
+      }
+
+    public static final Pattern  _PATTERN_VECTOR_INDEX = Pattern.compile("\\(\\s*type\\s*=\\s*(\\w+)\\s*;\\s*operator\\s*=\\s*(\\w+)\\s*;(\\s*lists\\s*=\\s*(\\d+)\\s*;)?\\s*\\)");
+
+    public static final String[] VECTOR_INDEX_TYPES    = new String[] { "ivfflat", "hnsw"
+    };
+    public static final String[] VECTOR_OPERATOR_TYPES = new String[] { "vector_l2_ops", "vector_ip_ops", "vector_cosine_ops"
+    };
+
+    @Override
+    public String alterTableAddIndexUsingDDL(Index IX)
+    throws Exception
+      {
+        boolean gin = true;
+        Column vectorColumn = null;
+        for (Column C : IX._ColumnObjs)
+          {
+            if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
+              gin = false;
+            if (C.getType() == ColumnType.VECTOR)
+              vectorColumn = C;
+          }
+        for (OrderBy OB : IX._OrderByObjs)
+          if (OB._Col.getType() != ColumnType.JSON && (OB._Col.getType() != ColumnType.STRING || OB._Col.isCollection() == false))
+            gin = false;
+        if (gin == true && IX._Unique == true)
+          throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
+
+        if (gin == true)
+          return " USING gin";
+
+        if (vectorColumn != null)
+          {
+            String indexColumnModifier = IX._IndexColumnModifiers.get(vectorColumn.getName());
+            if (TextUtil.isNullOrEmpty(indexColumnModifier) == false)
+              {
+                Matcher M = _PATTERN_VECTOR_INDEX.matcher(indexColumnModifier);
+                if (M.matches() == true)
+                  {
+                    String type = M.group(1);
+                    if (TextUtil.isNullOrEmpty(type) == true)
+                      type = "ivfflat";
+                    else if (TextUtil.findElement(VECTOR_INDEX_TYPES, type, true, 0) < 0)
+                      throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' with type '" + type + "' which is not supported. Supported types are: " + TextUtil.print(VECTOR_INDEX_TYPES));
+                    return " USING " + type;
+                  }
+              }
+            else
+              {
+                return " USING ivfflat";
+              }
+          }
+
+        return null;
+      }
+
+    public String alterTableAddIndexWithDDL(Index IX)
+    throws Exception
+      {
+        for (Column C : IX._ColumnObjs)
+          {
+            if (C.getType() == ColumnType.VECTOR)
+              {
+                String indexColumnModifier = IX._IndexColumnModifiers.get(C.getName());
+                if (TextUtil.isNullOrEmpty(indexColumnModifier) == false)
+                  {
+                    Matcher M = _PATTERN_VECTOR_INDEX.matcher(indexColumnModifier);
+                    if (M.matches() == true)
+                      {
+                        String type = M.group(1);
+                        String lists = M.group(4);
+                        if (TextUtil.isNullOrEmpty(type) == true)
+                          type = "ivfflat";
+                        if (type.equals("ivfflat") == true)
+                          {
+                            if (TextUtil.isNullOrEmpty(lists) == true)
+                              lists = "1000";
+                            else if (ParseUtil.parseInteger(lists, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+                              throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' with lists='" + lists + "' which is not a valid integer.");
+                            return " WITH (lists=" + lists + ")";
+                          }
+                        else if (type.equals("hnsw") == true)
+                          {
+                            if (TextUtil.isNullOrEmpty(lists) == false)
+                              throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' with type='" + type + "' which does not support lists, yet lists='" + lists + "' is defined.");
+                            return " WITH (m=16, ef_construction=200)";
+                          }
+                      }
+                  }
+                else
+                  {
+                    return " WITH (lists=1000)";
+                  }
+              }
+          }
+
+        return null;
       }
 
   }

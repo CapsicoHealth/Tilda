@@ -40,14 +40,15 @@ public class TypeDef
     static final Logger                LOG             = LogManager.getLogger(Mapper.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("type"      ) public String         _TypeStr    ;
-    @SerializedName("size"      ) public Integer        _Size       ;
-    @SerializedName("precision" ) public Integer        _Precision  = 19; // Default values commonly used for Monetary amounts which is a very common use
-    @SerializedName("scale"     ) public Integer        _Scale      =  4; // for numeric. https://stackoverflow.com/questions/224462/storing-money-in-a-decimal-column-what-precision-and-scale
+    @SerializedName("type"        ) public String         _TypeStr     ;
+    @SerializedName("size"        ) public Integer        _Size        ;
+    @SerializedName("precision"   ) public Integer        _Precision  = 19; // Default values commonly used for Monetary amounts which is a very common use
+    @SerializedName("scale"       ) public Integer        _Scale      =  4; // for numeric. https://stackoverflow.com/questions/224462/storing-money-in-a-decimal-column-what-precision-and-scale
     /*@formatter:on*/
 
     protected transient ColumnType     _Type;
     protected transient MultiType      _TypeCollection = MultiType.NONE;
+    protected transient String         _typeModifier;
 
     private transient ValidationStatus _Validation     = ValidationStatus.NONE;
 
@@ -83,8 +84,9 @@ public class TypeDef
         return _Validation == ValidationStatus.SUCCESS;
       }
 
-    protected static Pattern _P = Pattern.compile("STRING\\s*\\(\\s*(\\d+)\\s*\\)");
-    
+    protected static Pattern  _PATTERN_STRING = Pattern.compile("STRING\\s*\\(\\s*(\\d+)\\s*\\)");
+    protected static Pattern  _PATTERN_VECTOR = Pattern.compile("VECTOR\\s*\\(\\s*(\\d+)(\\s+\\w+)?\\)");
+
     private void validateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional, FrameworkSourcedType FST)
       {
         if (_TypeStr == null)
@@ -106,15 +108,32 @@ public class TypeDef
           }
         else if (_TypeStr.startsWith("STRING(") == true)
           {
-            Matcher m = _P.matcher(_TypeStr);
+            Matcher m = _PATTERN_STRING.matcher(_TypeStr);
             if (m.find() == true)
-             _Size = ParseUtil.parseInteger(m.group(1), SystemValues.EVIL_VALUE);
-            if (_Size == SystemValues.EVIL_VALUE)
-             {
-               PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "' which was thought to be a String+size, e.g. STRING(250), but cannot parse the size value as an integer.");
-               return;
-             }
+              _Size = ParseUtil.parseInteger(m.group(1), SystemValues.EVIL_VALUE);
+            if (_Size == null || _Size == SystemValues.EVIL_VALUE)
+              {
+                PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "' which was thought to be a String+size, e.g. STRING(250), but cannot parse the size value as an integer.");
+                return;
+              }
             BaseType = "STRING";
+          }
+        else if (_TypeStr.startsWith("VECTOR(") == true)
+          {
+            Matcher m = _PATTERN_VECTOR.matcher(_TypeStr);
+            if (m.find() == true)
+              {
+                _Size = ParseUtil.parseInteger(m.group(1), SystemValues.EVIL_VALUE);
+                _typeModifier = m.group(2);
+                if (_typeModifier != null)
+                 _typeModifier = _typeModifier.trim().toLowerCase();
+              }
+            if (_Size == null || _Size == SystemValues.EVIL_VALUE)
+              {
+                PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "' which was thought to be a VECTOR+size, e.g. VECTOR(768), but cannot parse the size value as an integer.");
+                return;
+              }
+            BaseType = "VECTOR";
           }
 
         if ((_Type = ColumnType.parse(BaseType)) == null || (FST == FrameworkSourcedType.NONE && _Type._InternalOnly == true))
@@ -132,7 +151,7 @@ public class TypeDef
               }
             if (_Type.isCollectionCompatible(_TypeCollection) == false)
               {
-                PS.AddError(What + "is defined as a '" + _Type + "' which is not supported as a "+_TypeCollection.name()+".");
+                PS.AddError(What + "is defined as a '" + _Type + "' which is not supported as a " + _TypeCollection.name() + ".");
                 return;
               }
           }
@@ -154,6 +173,10 @@ public class TypeDef
                 else if (_Size < 2)
                   PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a size >= 2.");
               }
+          }
+        else if (_Type == ColumnType.VECTOR)
+          {
+            // need this empty if statement to avoid the final else that blocks any types with sizes that are not strings.       
           }
         else if (_Type == ColumnType.NUMERIC)
           {
@@ -272,20 +295,24 @@ public class TypeDef
         return _Type;
       }
 
+    public String getTypeModifier()
+      {
+        return _typeModifier;
+      }
+    
     public MultiType getTypeCollection()
       {
         return _TypeCollection;
       }
-    
+
     @Override
     public String toString()
-     {
-       return _Type==null?"NULL_TYPE"
-             :_Type.name()+(isList() ? "[]"
-                           :isSet() ? "{}"
-                           :_Type == ColumnType.STRING ? "("+_Size+")"
-                           : ""
-                           );
-                           
-     }
+      {
+        return _Type == null ? "NULL_TYPE"
+        : _Type.name() + (isList() ? "[]"
+        : isSet() ? "{}"
+        : _Type == ColumnType.STRING ? "(" + _Size + ")"
+        : "");
+
+      }
   }

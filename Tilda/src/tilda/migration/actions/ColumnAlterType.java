@@ -32,7 +32,7 @@ public class ColumnAlterType extends MigrationAction
         _Col = Col;
         _CMeta = CMeta;
         StringBuilder Str = new StringBuilder();
-        C.getColumnType(Str, Col.getType(), Col._Size, Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
+        C.getColumnType(Str, Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         _ColTypeStr = Str.toString();
       }
 

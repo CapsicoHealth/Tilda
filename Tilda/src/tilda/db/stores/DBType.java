@@ -108,6 +108,8 @@ public interface DBType
     public boolean alterTableAddFK                 (Connection Con, ForeignKey FK) throws Exception;
     public boolean alterTableDropIndex             (Connection Con, Object Obj, IndexMeta IX) throws Exception;
     public String  alterTableAddIndexDDL           (Index IX) throws Exception;
+    public String  alterTableAddIndexUsingDDL      (Index IX) throws Exception;
+    public String  alterTableAddIndexWithDDL       (Index IX) throws Exception;
     public boolean alterTableAddIndex              (Connection Con, Index IX) throws Exception;
     public boolean alterTableIndexDropCluster      (Connection Con, IndexMeta IX) throws Exception;
     public boolean alterTableIndexAddCluster       (Connection Con, Index IX) throws Exception;
@@ -144,7 +146,7 @@ public interface DBType
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
     public String           getColumnType(Column C);
     public String           getColumnType(Column C, ColumnType AggregateType);
-    public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
+    public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale);
     public String           getColumnTypeRaw(Column C, boolean MultiOverride);
     public String           getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
     public void             setArray(Connection Con, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;

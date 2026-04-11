@@ -918,7 +918,7 @@ public class Sql extends BigQuery implements CodeGenSql
           {
             if (F == null)
               continue;
-            String FormulaType = getColumnType(F.getType(), 8192, null, F.isCollection(), F._Precision, F._Scale);
+            String FormulaType = getColumnType(F.getType(), 8192, null, null, F.isCollection(), F._Precision, F._Scale);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
             if (First == true)
               First = false;
@@ -1049,7 +1049,7 @@ public class Sql extends BigQuery implements CodeGenSql
           Expr = "coalesce(" + Expr + ", " + ValueHelper.printValueSQL(getSQlCodeGen(), VC.getName(), VC.getType(), VC.isCollection(), VC._Coalesce) + ")";
 
         if (VC._Type != null)
-          Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
+          Expr = "(" + Expr + ")::" + getColumnType(VC._Type.getType(), VC._Type._Size, VC._Type.getTypeModifier(), ColumnMode.NORMAL, VC._Type.isCollection(), VC._Precision, VC._Scale);
 
         return "\n     , " + Expr + " as " + getShortColumnVar(VC.getName());
       }
@@ -1139,7 +1139,7 @@ public class Sql extends BigQuery implements CodeGenSql
                 for (Formula F2 : ParentView._Formulas)
                   if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                     {
-                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, F2.isCollection(), F2._Precision, F2._Scale);
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, null, F2.isCollection(), F2._Precision, F2._Scale);
                       M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                       break;
                     }

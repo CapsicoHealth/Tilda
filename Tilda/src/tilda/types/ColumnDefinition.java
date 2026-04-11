@@ -119,15 +119,15 @@ public class ColumnDefinition implements JSONable
       }
 
 
-    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
+    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
-        C.getColumnType(Str, T, S, M, Collection, Precision, Scale);
+        C.getColumnType(Str, T, S, typeModifier, M, Collection, Precision, Scale);
       }
 
-    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
+    public String getColumnType(Connection C, ColumnType T, Integer S, String typeModifier, ColumnMode M, boolean Collection, Integer Precision, Integer Scale)
       {
         StringBuilder Str = new StringBuilder();
-        getColumnType(C, Str, T, S, M, Collection, Precision, Scale);
+        getColumnType(C, Str, T, S, typeModifier, M, Collection, Precision, Scale);
         return Str.toString();
       }
 

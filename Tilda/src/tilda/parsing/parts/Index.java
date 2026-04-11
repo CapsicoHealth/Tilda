@@ -18,13 +18,16 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class Index
@@ -40,12 +43,12 @@ public class Index
     @SerializedName("subQuery"        ) public SubWhereClause _SubQuery;
     /*@formatter:on*/
 
-    public transient List<Column>  _ColumnObjs       = new ArrayList<Column>();
-    public transient List<OrderBy> _OrderByObjs      = new ArrayList<OrderBy>();
-    public transient boolean       _Unique;
-    public transient String[]      _LALColumns;
+    public transient List<Column>        _ColumnObjs           = new ArrayList<Column>();
+    public transient List<OrderBy>       _OrderByObjs          = new ArrayList<OrderBy>();
+    public transient boolean             _Unique;
+    public transient Map<String, String> _IndexColumnModifiers = new java.util.HashMap<String, String>();
 
-    public transient Base          _Parent;
+    public transient Base                _Parent;
 
     public Index()
       {
@@ -66,6 +69,9 @@ public class Index
       {
         return TextUtil.print(_Parent._Prefix, _Parent._OriginalName) + "_" + _Name;
       }
+
+    protected static Pattern _PATTERN_INDEX_COLUMN = Pattern.compile("(\\w+)(.*)");
+    protected static Pattern _PATTERN_INDEX_COLUMN_MODIFIERS = Pattern.compile("\\((\\s*\\w+\\s*=\\s*\\w+\\s*;)+\\s*\\)");
 
     public boolean validate(ParserSession PS, Base Parent)
       {
@@ -88,17 +94,40 @@ public class Index
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
 
-        List<String> LALs = new ArrayList<String>();
         if (_Columns != null)
           for (int i = 0; i < _Columns.length; ++i)
             {
-              if (_Columns[i] != null && _Columns[i].toLowerCase().endsWith(" lal") == true)
+              Matcher m = _PATTERN_INDEX_COLUMN.matcher(_Columns[i]);
+              if (m.find() == true)
                 {
-                  _Columns[i] = _Columns[i].substring(0, _Columns[i].length() - " lal".length());
-                  LALs.add(_Columns[i]);
+                  String columnName = m.group(1);
+                  String indexModifier = m.group(2);
+                  if (columnName != null)
+                    _Columns[i] = columnName.trim();
+                  if (TextUtil.isNullOrEmpty(indexModifier) == false)
+                    {
+                      indexModifier = indexModifier.trim().toLowerCase();
+                      _IndexColumnModifiers.put(_Columns[i], indexModifier);
+                      if (indexModifier.equals("lal") == true)
+                        {
+                          Column col = Parent.getColumn(_Columns[i]);
+                          if (col != null)
+                            {
+                              if (col.getType() != ColumnType.STRING)
+                                PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + _Columns[i] + "' as a LAL (left-anchored like, which would trigger a text index), but it's not a string column.");
+                            }
+                        }
+                      else // must be a generic modifier
+                        {
+                          m = _PATTERN_INDEX_COLUMN_MODIFIERS.matcher(indexModifier);
+                          if (m.find() == false)
+                           PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + _Columns[i] + "' with modifiers '" + indexModifier + "' that cannot be parsed as '(modifierName=modifierValue;modifierName2=modifierValue2;...)'.");
+                        }
+                    }
                 }
+              else
+                PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + _Columns[i] + "' which cannot be parsed as '<columnName> <indexModifier>?', e.g., 'someColumn', 'someColulm lal' or 'someColumn cosine'.");
             }
-        _LALColumns = CollectionUtil.toStringArray(LALs);
 
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor()
           {
@@ -118,6 +147,22 @@ public class Index
                 return true;
               }
           });
+
+        int vectorColumns = 0;
+        for (Column C : _ColumnObjs)
+          {
+            if (C.getType() == ColumnType.VECTOR)
+              {
+                if (++vectorColumns > 1)
+                  PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with more than one vector column: this is not allowed as vector columns are not supported in multi-column indices.");
+                // Vector indices are never UNIQUE, but we infer unique automatically if there is no orderBy,
+                // so we have to switch here.
+                if (_Unique == true)
+                  _Unique = false;
+              }
+          }
+        if (vectorColumns > 0 && _ColumnObjs.size() != vectorColumns)
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a vector column and non-vector columns: this is not allowed as vector columns are not supported in multi-column indices.");
 
         if (_Unique == false)
           {
