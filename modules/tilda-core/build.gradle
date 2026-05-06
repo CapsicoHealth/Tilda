@@ -1,0 +1,233 @@
+description = 'Tilda Core - Base classes, utilities, and data access layer'
+
+dependencies {
+    // External dependencies identified by analyzer
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    // Database connection pooling
+    implementation 'org.apache.commons:commons-dbcp2:2.12.0'
+    implementation 'org.apache.commons:commons-pool2:2.12.0'
+    
+    // CSV processing
+    implementation 'org.apache.commons:commons-csv:1.11.0'
+    
+    // Math utilities
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+    
+    // HTML parsing
+    implementation 'org.jsoup:jsoup:1.17.2'
+    
+    // High-performance logging
+    implementation 'com.lmax:disruptor:3.4.4'
+    implementation 'org.apache.logging.log4j:log4j-web:2.23.1'
+    
+    // Scheduling
+    implementation 'org.quartz-scheduler:quartz:2.3.2'
+    implementation 'org.quartz-scheduler:quartz-jobs:2.3.2'
+    
+    // Email support
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.3'
+    implementation 'jakarta.activation:jakarta.activation-api:2.1.3'
+    
+    // NLP (optional - can be moved to separate module)
+    implementation 'org.apache.opennlp:opennlp-tools:1.9.4'
+    implementation 'org.apache.opennlp:opennlp-uima:1.9.4'
+    
+    // Temporary: Add missing dependencies that cause compilation errors
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation files('../../lib/sqljdbc42.jar')
+    implementation files('../../lib/GoogleBigQueryJDBC42.jar')
+    
+    // Add all GCP dependencies temporarily to resolve compilation
+    implementation fileTree(dir: '../../lib/gcp', include: '*.jar')
+}
+
+// Source sets for the existing code structure
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            
+            // Start with absolutely minimal set - only classes with no dependencies
+            include 'tilda/utils/HttpStatus.java'           // Simple enum, no dependencies
+            include 'tilda/utils/LongWrapper.java'
+            include 'tilda/utils/ValidationHelperLite.java'
+            include 'tilda/utils/TextUtilCore.java'
+            include 'tilda/utils/ParserSessionCore.java'
+            // Utility classes moved to tilda-utils: Counter, AnsiUtil, ClassUtils, CompareUtil
+        // Removed duplicate - now excluded due to dependencies
+        include 'tilda/utils/LogUtil.java'
+        // Removed duplicates that are now excluded due to dependencies
+        // Removed duplicates - these are included below in the verified section
+        // === TRULY DEPENDENCY-FREE CLASSES ===
+        // UTILS: Only classes with no internal Tilda dependencies
+        // AnsiUtil, AsciiArt, ClassUtils, CompareUtil, Counter moved to tilda-utils
+        include 'tilda/utils/DateTimeZone.java'
+        // include 'tilda/utils/DurationUtil.java'     // EXCLUDED: depends on NumberFormatUtil
+        // include 'tilda/utils/EncryptionUtil.java'   // EXCLUDED: depends on TextUtil
+        include 'tilda/utils/Graph.java'
+        // include 'tilda/utils/HTMLFilter.java'       // EXCLUDED: depends on TextUtil
+        include 'tilda/utils/HttpStatus.java'
+        include 'tilda/utils/LogUtil.java'
+        include 'tilda/utils/LongWrapper.java'
+        // include 'tilda/utils/MailUtil.java'         // EXCLUDED: depends on TextUtil
+        // include 'tilda/utils/NumberFormatUtil.java' // EXCLUDED: depends on PaddingUtil
+        // include 'tilda/utils/PaddingTracker.java'   // EXCLUDED: depends on PaddingUtil
+        // include 'tilda/utils/PaddingUtil.java'      // EXCLUDED: depends on SystemValues
+        // include 'tilda/utils/RandomUtil.java'       // EXCLUDED: depends on SystemValues
+        // include 'tilda/utils/SystemValues.java'     // EXCLUDED: depends on DateTimeUtil
+        
+        // === POSTGRESQL DEPENDENCIES - DEFERRED ===
+        // TextUtil and FileUtil have too many dependencies to include in core
+        // Will create minimal versions in tilda-postgres module instead
+        include 'tilda/utils/comparators/CaseInsensitiveStringComparator.java'
+        include 'tilda/utils/comparators/FileNameComparator.java'
+        include 'tilda/utils/comparators/ReverseCalendarComparator.java'
+        include 'tilda/utils/comparators/ReverseCaseInsensitiveStringComparator.java'
+        include 'tilda/utils/comparators/ReverseStringComparator.java'
+        include 'tilda/utils/compiler/CompiledCode.java'
+        include 'tilda/utils/compiler/DynamicClassLoader.java'
+        include 'tilda/utils/compiler/ExtendedStandardJavaFileManager.java'
+        include 'tilda/utils/compiler/InMemoryJavaCompiler.java'
+        include 'tilda/utils/compiler/SourceCode.java'
+        // EXCLUDED: FHIR classes depend on external libraries
+        // EXCLUDED: GCP classes depend on AuthHelper
+        include 'tilda/utils/json/elements/ArrayElementStart.java'
+        include 'tilda/utils/json/elements/ElementDef.java'
+        // EXCLUDED: GSON serializers depend on external libraries
+        include 'tilda/utils/pairs/CharStringPair.java'
+        include 'tilda/utils/pairs/IntIntPair.java'
+        include 'tilda/utils/pairs/LongDoublePair.java'
+        include 'tilda/utils/pairs/StringDateDatePair.java'
+        include 'tilda/utils/pairs/StringIntPair.java'
+        include 'tilda/utils/pairs/StringLongPair.java'
+        include 'tilda/utils/pairs/StringStringPair.java'
+        
+        // ENUMS: 25 classes
+        include 'tilda/enums/ColumnMapperMode.java'
+        include 'tilda/enums/ColumnMode.java'
+        include 'tilda/enums/ConventionNaming.java'
+        include 'tilda/enums/DBStringType.java'
+        include 'tilda/enums/DefaultType.java'
+        include 'tilda/enums/FormulaPatternType.java'
+        include 'tilda/enums/FrameworkColumnType.java'
+
+        include 'tilda/enums/FrameworkSourcedType.java'
+        include 'tilda/enums/JoinType.java'
+        include 'tilda/enums/MigrationType.java'
+        include 'tilda/enums/MultiType.java'
+        include 'tilda/enums/NVPSourceType.java'
+        include 'tilda/enums/ObjectLifecycle.java'
+        include 'tilda/enums/ObjectMode.java'
+        include 'tilda/enums/OrderNulls.java'
+        include 'tilda/enums/OrderType.java'
+        include 'tilda/enums/OutputFormatType.java'
+        include 'tilda/enums/ProtectionType.java'
+        include 'tilda/enums/StatementType.java'
+        include 'tilda/enums/TZMode.java'
+        include 'tilda/enums/TildaType.java'
+        include 'tilda/enums/TimeSeriesType.java'
+        include 'tilda/enums/TransactionType.java'
+        include 'tilda/enums/ValidationStatus.java'
+        include 'tilda/enums/VisibilityType.java'
+        
+        // INTERFACES: 5 classes
+        include 'tilda/interfaces/CSVable.java'
+        include 'tilda/interfaces/JSONable.java'
+        include 'tilda/interfaces/OCCObject.java'
+        include 'tilda/interfaces/ITextUtil.java'
+        include 'tilda/interfaces/IParserSession.java'
+        
+        // Additional interfaces (PatternObject excluded - depends on parsing)
+        
+        // Additional enums
+        include 'tilda/enums/SyncStatus.java'
+            
+        // Database classes - basic database infrastructure
+        include 'tilda/db/InitMode.java'
+        include 'tilda/db/ListResults.java'
+        include 'tilda/db/LookupParams.java'
+
+
+            
+        // Exclude complex modules that belong in other modules
+        exclude 'tilda/db/stores/**'        // Database store implementations -> tilda-postgres
+        exclude 'tilda/parsing/**'          // Parser code -> tilda-antlr
+        exclude 'tilda/generation/**'       // Generator code -> separate module
+        exclude 'tilda/loader/**'           // Loader code -> separate module
+        exclude 'tilda/data/**'             // Generated data classes -> runtime
+        exclude 'tilda/grammar/**'          // ANTLR dependencies -> tilda-antlr
+            
+        // Exclude utility modules that belong elsewhere
+        exclude 'tilda/Export.java'         // Export utility -> separate module
+        exclude 'tilda/migration/**'        // Migration code -> separate module
+        exclude 'tilda/Gen.java'            // CLI -> tilda-cli
+        exclude 'tilda/servlet/**'          // Web code -> tilda-web
+        exclude 'tilda/web/**'              // Web code -> tilda-web
+        exclude 'tilda/rest/**'             // Web code -> tilda-web
+        exclude 'tilda/gcp/**'              // GCP code -> tilda-gcp
+        exclude 'tilda/cloud/**'            // Cloud code -> tilda-gcp
+        }
+        resources {
+            srcDirs = ['../../src']
+            include '**/*.properties'
+            include '**/*.xml'
+            include '**/*.json'
+            exclude '**/web/**'
+            exclude '**/servlet/**'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            exclude '**/db/stores/**'
+            exclude '**/web/**'
+            exclude '**/servlet/**'
+            exclude '**/gcp/**'
+            exclude '**/cloud/**'
+        }
+    }
+}
+
+// Compilation options to handle legacy code issues
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += [
+        '-Xlint:-unchecked',     // Suppress unchecked cast warnings
+        '-Xlint:-deprecation',   // Suppress deprecation warnings
+        '-Xlint:-rawtypes',      // Suppress raw types warnings
+        '-Xmaxerrs', '1000'        // Show all errors to understand issues
+    ]
+    options.fork = true
+    options.forkOptions.jvmArgs += ['-Xmx1g']
+    
+    // Enable strict error checking to see compilation issues
+    options.failOnError = true
+    options.warnings = true
+}
+
+// Custom task to copy existing source files to module structure (migration helper)
+task migrateSourceFiles {
+    group = 'migration'
+    description = 'Copy existing source files to modular structure'
+    doLast {
+        println 'This task will help migrate existing source files to the new modular structure'
+        println 'Run this after setting up all modules'
+    }
+}
+
+// Task to check what files are being compiled
+task listSourceFiles {
+    group = 'debug'
+    description = 'List all source files being compiled'
+    doLast {
+        sourceSets.main.java.srcDirs.each { dir ->
+            if (dir.exists()) {
+                println "Source directory: $dir"
+                fileTree(dir).include('**/*.java').each { file ->
+                    println "  - ${file.path}"
+                }
+            }
+        }
+    }
+}

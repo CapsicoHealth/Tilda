@@ -1,0 +1,51 @@
+description = 'Tilda BigQuery - Google BigQuery database support'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // BigQuery JDBC driver
+    implementation files('../../lib/GoogleBigQueryJDBC42.jar')
+    
+    // Google Cloud BigQuery client libraries
+    implementation 'com.google.cloud:google-cloud-bigquery:2.34.2'
+    
+    // External dependencies identified by analyzer
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.google.cloud:google-cloud-bigquerystorage:3.0.1'
+    implementation 'com.google.cloud:google-cloud-bigquerydatatransfer:2.34.0'
+}
+
+// Source sets for BigQuery-specific code - Layer 0 approach
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            // Layer 0: Start with simple enums and data classes with no internal dependencies
+            include 'tilda/enums/DBStringType.java'        // Basic enum, no dependencies
+            include 'tilda/enums/DefaultType.java'         // Basic enum, no dependencies
+            include 'tilda/enums/TZMode.java'              // Basic enum, no dependencies
+            
+            // Layer 1: Add more basic enums with no internal dependencies
+            include 'tilda/enums/MigrationType.java'       // Migration enum, no dependencies
+            include 'tilda/enums/SyncStatus.java'          // Sync status enum, no dependencies
+            include 'tilda/enums/ConventionNaming.java'    // Naming convention enum, no dependencies
+            
+            // Exclude complex classes for now (will add incrementally)
+            // exclude 'tilda/db/stores/BigQuery.java'           // Has many dependencies
+            // exclude 'tilda/db/processors/BigQueryType.java'   // Has dependencies
+            // exclude 'tilda/db/processors/BigQueryExporter.java' // Has dependencies
+            // exclude 'tilda/db/Connection.java'                // Has many dependencies
+            // exclude 'tilda/enums/ColumnType.java'             // Has dependencies
+            // exclude 'tilda/utils/TextUtil.java'               // Has dependencies
+            // exclude 'tilda/generation/bigquery/BigQueryType.java' // Has dependencies
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/bigquery/**'
+        }
+    }
+}

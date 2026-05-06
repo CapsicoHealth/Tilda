@@ -1,0 +1,120 @@
+description = 'Tilda CLI - Command line interface and utilities'
+
+dependencies {
+    api project(':tilda-core')
+    api project(':tilda-antlr')
+    
+    // Optional database modules (user can choose which to include)
+    // Note: Users should add these dependencies in their own projects as needed
+    // implementation project(':tilda-postgres')
+    // implementation project(':tilda-sqlserver')
+    // implementation project(':tilda-bigquery')
+    // implementation project(':tilda-gcp')
+    
+    // External dependencies identified by analyzer
+    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+}
+
+// Source sets for CLI-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            // Core CLI classes
+            include 'tilda/Gen.java'               // Main generator class
+            include 'tilda/Export.java'            // Export utility
+            include 'tilda/Import.java'            // Import utility
+            include 'tilda/Migrate.java'           // Migration utility
+            
+            // Required utility dependencies
+            include 'tilda/utils/DurationUtil.java'       // Duration utilities
+            include 'tilda/utils/FileUtil.java'           // File utilities
+            include 'tilda/utils/TextUtil.java'           // Text utilities
+            include 'tilda/utils/SystemValues.java'       // System values
+            include 'tilda/utils/CollectionUtil.java'     // Collection utilities
+            
+            // Required parsing dependencies
+            include 'tilda/parsing/parts/Schema.java'     // Schema parsing
+            include 'tilda/parsing/parts/Object.java'     // Object parsing
+            include 'tilda/parsing/parts/Column.java'     // Column parsing
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/cli/**'
+            include '**/gen/**'
+        }
+    }
+}
+
+// Create executable JAR for CLI
+jar {
+    archiveBaseName = 'tilda-cli'
+    manifest {
+        attributes(
+            'Main-Class': 'tilda.Gen',
+            'Implementation-Title': 'Tilda CLI',
+            'Implementation-Version': project.version
+        )
+    }
+}
+
+// Fat JAR with all dependencies for standalone CLI
+task fatJar(type: Jar) {
+    group = 'build'
+    description = 'Create a fat JAR with all dependencies for standalone CLI usage'
+    archiveBaseName = 'tilda-cli-standalone'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    
+    manifest {
+        attributes(
+            'Main-Class': 'tilda.Gen',
+            'Implementation-Title': 'Tilda CLI Standalone',
+            'Implementation-Version': project.version
+        )
+    }
+    
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+// Compilation options to handle legacy code issues
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += [
+        '-Xlint:-unchecked',
+        '-Xlint:-deprecation',
+        '-Xlint:-rawtypes'
+    ]
+    options.failOnError = true
+}
+
+// Application plugin for easier CLI execution
+apply plugin: 'application'
+mainClassName = 'tilda.Gen'
+
+// Custom tasks for CLI operations
+task generateCode(type: JavaExec) {
+    group = 'tilda'
+    description = 'Generate Tilda code from JSON schemas'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.Gen'
+    
+    // Allow passing arguments from command line
+    if (project.hasProperty('schemaPath')) {
+        args project.property('schemaPath')
+    }
+}
+
+task listGenerators(type: JavaExec) {
+    group = 'tilda'
+    description = 'List available Tilda generators'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'tilda.Gen'
+    args '--help'
+}

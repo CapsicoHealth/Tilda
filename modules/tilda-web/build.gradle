@@ -1,0 +1,51 @@
+description = 'Tilda Web - Web interface and servlet support'
+
+dependencies {
+    api project(':tilda-core')
+    
+    // Servlet API (provided scope - container will provide)
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+    
+    // Web utilities
+    implementation 'org.jsoup:jsoup:1.17.2'
+    
+    // JSON processing for REST APIs
+    implementation 'com.google.code.gson:gson:2.11.0'
+}
+
+// Source sets for web-specific code
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            include 'tilda/servlet/**'
+            include 'tilda/web/**'
+            include 'tilda/rest/**'
+        }
+        resources {
+            srcDirs = ['../../src']
+            include '**/*.html'
+            include '**/*.css'
+            include '**/*.js'
+            include '**/*.jsp'
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/web/**'
+            include '**/servlet/**'
+        }
+    }
+}
+
+// WAR packaging for web deployment
+apply plugin: 'war'
+
+war {
+    archiveBaseName = 'tilda-web'
+    from('../../docs') {
+        into 'docs'
+    }
+}

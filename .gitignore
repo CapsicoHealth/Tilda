@@ -1,17 +1,168 @@
+# =============================================================================
+# TILDA PROJECT .GITIGNORE
+# Comprehensive ignore patterns for generated code and build artifacts
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# BUILD ARTIFACTS & BINARIES
+# -----------------------------------------------------------------------------
 /bin/
-/src/tilda/data/_Tilda.temp
-#/ut/tilda/tutorial/data/_Tilda
-#/ut/tilda/data_test/_Tilda
-*.DS_Store
 /target/
+*.class
+*.jar
+!lib/*.jar
 /tilda-docs.jar
 /tilda.jar
 /releases/
 /tilda-*.jar
 /tilda-*-dependencies.zip
+
+# -----------------------------------------------------------------------------
+# GRADLE BUILD SYSTEM
+# -----------------------------------------------------------------------------
+# Gradle build directories
+/build/
+**/build/
+/modules/*/build/
+
+# Gradle wrapper files (keep these for reproducible builds)
+# gradle/wrapper/gradle-wrapper.jar
+# gradle/wrapper/gradle-wrapper.properties
+# gradlew
+# gradlew.bat
+
+# Gradle cache and daemon
+.gradle/
+**/gradle-app.setting
+**/gradle.properties.local
+
+# Generated JAR files from modular build
+/modules/*/build/libs/*.jar
+/modules/*/build/classes/
+/modules/*/build/generated/
+/modules/*/build/tmp/
+
+# Gradle test reports
+/modules/*/build/reports/
+/modules/*/build/test-results/
+
+# -----------------------------------------------------------------------------
+# GENERATED TILDA CODE (NEVER COMMIT THESE)
+# -----------------------------------------------------------------------------
+# All _Tilda directories contain auto-generated code
+**/_Tilda/
+**/data/_Tilda/
+**/data/tmp/_Tilda/
+
+# Generated base classes (TILDA__ prefix)
+TILDA__*.java
+**/TILDA__*.java
+
+# Generated SQL schemas
+TILDA___Schema.*.sql
+**/TILDA___Schema.*.sql
+
+# Generated documentation
+TILDA___Docs.*.html
+**/TILDA___Docs.*.html
+
+# Generated catalogs
+TILDA___Catalog.*.csv
+**/TILDA___Catalog.*.csv
+
+# Generated BigQuery schemas
+**/bigquery/bq.*.json
+
+# Temporary generation files
+/src/tilda/data/_Tilda.temp
+**/data/_Tilda.temp
+
+# -----------------------------------------------------------------------------
+# EXAMPLES & TEST ARTIFACTS
+# -----------------------------------------------------------------------------
+# Example projects (these are for demonstration)
+/example/
+
+# Test-generated code
+/ut/tilda/tutorial/data/_Tilda/
+/ut/tilda/data_test/_Tilda/
+
+# -----------------------------------------------------------------------------
+# CONFIGURATION & RUNTIME FILES
+# -----------------------------------------------------------------------------
+# Tilda workbench files
 .tildaWorkbench
+
+# Migration files (contain sensitive DB info)
 /tilda.migration.*
+**/tilda.migration.*
+
+# Runtime configuration (may contain passwords)
 /ut/log4j2.xml
 /ut/log4j2.xml.SAVED
 /ut/tilda.config.json
 /ut/tilda.config.json.SAVED
+tilda.config.json
+**/tilda.config.json
+
+# -----------------------------------------------------------------------------
+# DEVELOPMENT & IDE FILES
+# -----------------------------------------------------------------------------
+# macOS
+*.DS_Store
+.DS_Store
+
+# Eclipse
+.metadata/
+.recommenders/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+
+# -----------------------------------------------------------------------------
+# DOCUMENTATION & REPORTS
+# -----------------------------------------------------------------------------
+# Generated test reports
+TEST_REPORT.md
+PR_DESCRIPTION.md
+REAL_WORLD_EXAMPLE.md
+
+# Build scripts (if auto-generated)
+build_standalone.sh
+
+# Modular build system documentation (KEEP THESE - they're important!)
+# MODULAR_BUILD_SYSTEM.md
+# MODULAR_BUILD_STATUS.md
+# PHASE2_PROGRESS_REPORT.md
+# NEXT_STEPS_BASED_ON_FEEDBACK.md
+
+# -----------------------------------------------------------------------------
+# LOGS & TEMPORARY FILES
+# -----------------------------------------------------------------------------
+*.log
+*.tmp
+*.temp
+/logs/
+
+# -----------------------------------------------------------------------------
+# COMPILED SCRIPTS
+# -----------------------------------------------------------------------------
+# Compiled test scripts
+scripts/*.class
+
+# =============================================================================
+# IMPORTANT NOTES:
+# 
+# 1. NEVER commit anything in _Tilda/ directories - these are auto-generated
+# 2. NEVER commit TILDA__*.java files - these are generated base classes
+# 3. NEVER commit tilda.config.json - it may contain database passwords
+# 4. The /example/ directory is for demonstration only
+# 5. Always run 'tilda gen' to regenerate code after schema changes
+# =============================================================================
+
+.chat/

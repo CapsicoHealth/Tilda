@@ -1,0 +1,65 @@
+description = 'Tilda GCP - Google Cloud Platform integration'
+
+dependencies {
+    api project(':tilda-core')
+    // Removed tilda-bigquery dependency to avoid circular issues
+    
+    // Google Cloud Platform libraries
+    implementation 'com.google.cloud:google-cloud-storage:2.32.1'
+    
+    // Additional external dependencies identified by analyzer
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'com.google.cloud:google-cloud-pubsub:1.126.1'
+    implementation 'com.google.cloud:google-cloud-language:2.18.0'
+    implementation 'com.google.cloud:google-cloud-aiplatform:3.18.0'
+    
+    // Google API clients
+    implementation 'com.google.api-client:google-api-client:2.2.0'
+    implementation 'com.google.apis:google-api-services-bigquery:v2-rev20240105-2.0.0'
+    implementation 'com.google.apis:google-api-services-storage:v1-rev20240105-2.0.0'
+    implementation 'com.google.apis:google-api-services-healthcare:v1-rev20240429-2.0.0'
+    
+    // Authentication
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.22.0'
+    implementation 'com.google.auth:google-auth-library-credentials:1.22.0'
+}
+
+// Add the existing GCP JAR files as dependencies
+dependencies {
+    implementation fileTree(dir: '../../lib/gcp', include: '*.jar')
+}
+
+// Source sets for GCP-specific code - Layer 0 approach
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            // Layer 0: Start with classes that have minimal external dependencies
+            include 'tilda/utils/gcp/JobCostDetails.java' // Simple data class, no Tilda dependencies
+            include 'tilda/utils/gcp/JobResults.java'     // Simple wrapper, only Google Cloud deps
+            
+            // Layer 1: Add classes with only external dependencies (no internal Tilda deps)
+            include 'tilda/utils/gcp/BQWriter.java'       // BigQuery writer, only Google Cloud deps
+            
+            // Layer 2: Add more complex classes with external dependencies only
+            include 'tilda/utils/gcp/JobHelper.java'      // Job helper, check if it has no internal deps
+            
+            // Exclude complex classes for now (will add incrementally)
+            // exclude 'tilda/utils/gcp/AuthHelper.java'     // Has FileUtil dependencies
+            // exclude 'tilda/utils/gcp/BQHelper.java'       // Complex BigQuery integration
+            // exclude 'tilda/utils/gcp/BQWriter.java'       // Has multiple dependencies
+            // exclude 'tilda/utils/gcp/CSHelper.java'       // Cloud Storage helper
+            // exclude 'tilda/utils/gcp/FHIRProviderCH.java' // FHIR provider
+            // exclude 'tilda/utils/gcp/JobHelper.java'      // Has multiple dependencies
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/gcp/**'
+            include '**/cloud/**'
+        }
+    }
+}

@@ -1,0 +1,138 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+// Root project configuration
+allprojects {
+    group = 'com.capsico.tilda'
+    version = '2.5.2-SNAPSHOT'
+    
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+// Common configuration for all subprojects
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        withSourcesJar()
+        withJavadocJar()
+    }
+    
+    // Common dependencies for all modules
+    dependencies {
+        // Logging
+        implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
+        implementation 'org.apache.logging.log4j:log4j-core:2.23.1'
+        implementation 'org.slf4j:slf4j-api:2.0.13'
+        implementation 'org.slf4j:slf4j-reload4j:2.0.13'
+        
+        // Apache Commons
+        implementation 'org.apache.commons:commons-lang3:3.14.0'
+        implementation 'org.apache.commons:commons-text:1.12.0'
+        implementation 'commons-io:commons-io:2.16.1'
+        implementation 'commons-codec:commons-codec:1.17.0'
+        
+        // JSON
+        implementation 'com.google.code.gson:gson:2.11.0'
+        implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+        
+        // Testing
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'org.mockito:mockito-core:4.11.0'
+    }
+    
+    // Compile options
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.compilerArgs += ['-Xlint:deprecation', '-Xlint:unchecked']
+    }
+    
+    // Test configuration
+    test {
+        useJUnit()
+        testLogging {
+            events "passed", "skipped", "failed"
+            exceptionFormat "full"
+        }
+    }
+    
+    // Publishing configuration
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+                
+                pom {
+                    name = project.name
+                    description = 'Tilda - Transparent Iterative Light Data Architecture'
+                    url = 'https://github.com/CapsicoHealth/Tilda'
+                    
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    
+                    developers {
+                        developer {
+                            id = 'lhasson'
+                            name = 'Laurent Hasson'
+                            email = 'laurent@capsico.com'
+                        }
+                    }
+                    
+                    scm {
+                        connection = 'scm:git:git://github.com/CapsicoHealth/Tilda.git'
+                        developerConnection = 'scm:git:ssh://github.com:CapsicoHealth/Tilda.git'
+                        url = 'https://github.com/CapsicoHealth/Tilda/tree/master'
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Root project tasks - clean task is provided by base plugin
+
+// Custom tasks for Tilda-specific operations
+task generateCode {
+    group = 'tilda'
+    description = 'Generate Tilda code from JSON schemas'
+    doLast {
+        println 'Running Tilda code generation...'
+        // This will be implemented to call tilda.Gen
+    }
+}
+
+task exportData {
+    group = 'tilda'
+    description = 'Export data using Tilda export utility'
+    doLast {
+        println 'Running Tilda data export...'
+        // This will be implemented to call tilda.Export
+    }
+}
+
+task migrate {
+    group = 'tilda'
+    description = 'Run Tilda database migrations'
+    doLast {
+        println 'Running Tilda migrations...'
+        // This will be implemented to call tilda.migration.Migrator
+    }
+}
+
+// Wrapper configuration
+wrapper {
+    gradleVersion = '8.5'
+    distributionType = Wrapper.DistributionType.ALL
+}

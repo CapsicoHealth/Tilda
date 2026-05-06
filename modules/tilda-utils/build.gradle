@@ -1,0 +1,43 @@
+description = 'Tilda Utils - Standalone utility classes with no dependencies'
+
+dependencies {
+    // Depend on tilda-core which already includes utility classes
+    implementation project(':tilda-core')
+    
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
+}
+
+// Source sets for additional utility classes not in tilda-core
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../../src']
+            
+            // Core utility classes that should be in tilda-utils
+            include 'tilda/utils/AnsiUtil.java'         // ANSI color utilities
+            include 'tilda/utils/AsciiArt.java'        // ASCII art utilities
+            include 'tilda/utils/ClassUtils.java'      // Class utilities
+            include 'tilda/utils/CompareUtil.java'     // Comparison utilities
+            include 'tilda/utils/Counter.java'         // Counter utility
+        }
+    }
+    
+    test {
+        java {
+            srcDirs = ['../../ut']
+            include '**/utils/**'
+        }
+    }
+}
+
+// Compilation options
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += [
+        '-Xlint:-unchecked',
+        '-Xlint:-deprecation',
+        '-Xlint:-rawtypes'
+    ]
+    options.failOnError = true
+}
