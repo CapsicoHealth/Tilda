@@ -55,6 +55,7 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationConversion;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -710,10 +711,10 @@ public final class Connection
         return _DB.alterTableAlterColumnStringSize(this, ColMeta, Col);
       }
 
-    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI, MigrationConversion mc)
     throws Exception
       {
-        return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
+        return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI, mc);
       }
 
     public boolean alterTableAlterColumnMulti(List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)

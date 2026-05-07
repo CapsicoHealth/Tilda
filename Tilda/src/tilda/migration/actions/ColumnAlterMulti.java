@@ -26,6 +26,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.MigrationConversion;
 import tilda.parsing.parts.Object;
 import tilda.utils.pairs.ColMetaColPair;
 
@@ -42,9 +43,9 @@ public class ColumnAlterMulti extends MigrationAction
     protected List<ColumnAlterType> _L = new ArrayList<ColumnAlterType>();
     protected List<ColumnAlterStringSize> _LS = new ArrayList<ColumnAlterStringSize>();
 
-    public void addColumnAlterType(ColumnMeta CMeta, Column Col)
+    public void addColumnAlterType(ColumnMeta CMeta, Column Col, MigrationConversion mc)
     {
-      ColumnAlterType CAT = new ColumnAlterType(_C, CMeta, Col);
+      ColumnAlterType CAT = new ColumnAlterType(_C, CMeta, Col, mc);
       _L.add(CAT);      
     }
     
@@ -95,7 +96,7 @@ public class ColumnAlterMulti extends MigrationAction
           {
             S += "\n                                                         -"
             +" Alter Column "+CAT._Col.getName()+" type from "+CAT._CMeta._TypeSql+(CAT._CMeta._TildaType == ColumnType.STRING &&  CAT._CMeta._Size > 0 ? "("+CAT._CMeta._Size+")":"")
-            +" to "+CAT._Col.getType();
+            +" to "+CAT._Col.getType()+(CAT._mc == null?"":" with conversion '"+CAT._mc._Conversion+"'");
           }
         
         for(ColumnAlterStringSize CAS : _LS)

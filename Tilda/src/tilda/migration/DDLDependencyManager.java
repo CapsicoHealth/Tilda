@@ -27,6 +27,7 @@ import tilda.data.FailedDependencyDDLScripts_Data;
 import tilda.data.FailedDependencyDDLScripts_Factory;
 import tilda.db.Connection;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 import tilda.utils.ReverseIterator;
 import tilda.utils.TextUtil;
 
@@ -45,6 +46,7 @@ public class DDLDependencyManager
     protected String                                _TableViewName;
     protected List<Schema>                          _TildaList;
     protected List<FailedDependencyDDLScripts_Data> _Scripts;
+    protected List<FailedDependencyDDLScripts_Data> _ExcludedRestoreScripts = new ArrayList<FailedDependencyDDLScripts_Data>();
     protected List<FailedDependencyDDLScripts_Data> _FailedUnmanagedViewScripts = new ArrayList<FailedDependencyDDLScripts_Data>();
 
 
@@ -124,6 +126,8 @@ public class DDLDependencyManager
         while (I.hasNext() == true)
           {
             FailedDependencyDDLScripts_Data S = I.next();
+            if (_ExcludedRestoreScripts.contains(S) == true)
+             continue;
             boolean OK = false;
             try
               {
@@ -219,5 +223,18 @@ public class DDLDependencyManager
           }
         return Str.toString();
       }
+    
+    public boolean addRestoreExclusion(View V)
+    {
+      for (FailedDependencyDDLScripts_Data S : _Scripts)
+        {
+          if (S.getDepSchemaName().equalsIgnoreCase(V.getSchema().getShortName()) == true && S.getDepViewName().equalsIgnoreCase(V.getBaseName()) == true)
+            {
+              _ExcludedRestoreScripts.add(S);
+              return true;
+            }
+        }
+      return false;
+    }
 
   }

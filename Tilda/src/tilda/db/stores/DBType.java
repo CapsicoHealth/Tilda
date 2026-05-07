@@ -40,6 +40,7 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationConversion;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -99,7 +100,7 @@ public interface DBType
     public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;   
     public boolean alterTableAlterColumnNull       (Connection Con, Column col, String defaultValue, String temporaryDefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment    (Connection Con, Column Col) throws Exception;
-    public boolean alterTableAlterColumnType       (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public boolean alterTableAlterColumnType       (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI, MigrationConversion mc) throws Exception;
     public boolean alterTableAlterColumnMulti      (Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)  throws Exception;
     public boolean alterTableAlterColumnStringSize (Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK        (Connection Con, Object Obj, PKMeta oldPK) throws Exception;

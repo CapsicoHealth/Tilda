@@ -16,10 +16,12 @@
 
 package tilda.migration.actions;
 
+import tilda.data.FailedDependencyDDLScripts_Data;
 import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
 import tilda.migration.DDLDependencyManager;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.View;
 
 public class DDLDependencyPostManagement extends MigrationAction
   {
@@ -49,5 +51,10 @@ public class DDLDependencyPostManagement extends MigrationAction
     throws Exception
       {
         _DdlDepMan.errorHandling(C);
+      }
+
+    public boolean addRestoreExclusion(View V)
+      {
+        return _DdlDepMan.addRestoreExclusion(V);
       }
   }

@@ -30,11 +30,12 @@ public class Migration
     @SerializedName("renames" ) public List<MigrationRename>   _Renames  = new ArrayList<MigrationRename >();
     @SerializedName("moves"   ) public List<MigrationMove>     _Moves    = new ArrayList<MigrationMove   >();
     @SerializedName("notNulls") public List<MigrationNotNull>  _NotNulls = new ArrayList<MigrationNotNull>();
+    @SerializedName("conversions") public List<MigrationConversion>  _Conversions = new ArrayList<MigrationConversion>();
 //  DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
 //  @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();
     /*@formatter:on*/
 
-    public transient Schema       _Parent;
+    public transient Schema          _Parent;
 
     public boolean validate(ParserSession PS, Schema Parent)
       {
@@ -45,7 +46,7 @@ public class Migration
           {
             MigrationRename M = _Renames.get(i);
             if (M == null)
-             continue;
+              continue;
             M.validate(PS, Parent);
             // We have to check for the cloning feature: if we have to rename a column from the source table, we have to rename
             // as well the column for all the clones.
@@ -72,7 +73,7 @@ public class Migration
         for (MigrationMove M : _Moves)
           {
             if (M == null)
-             continue;
+              continue;
             if (M._Objects != null)
               {
                 List<String> L = new ArrayList<String>();
@@ -97,8 +98,8 @@ public class Migration
           {
             MigrationNotNull M = _NotNulls.get(i);
             if (M == null)
-             continue;
-            
+              continue;
+
             M.validate(PS, Parent);
             // We have to check for the cloning feature: if we are adding a new column to a source table,
             // we also have to add it to the clones.
@@ -120,6 +121,33 @@ public class Migration
               }
           }
 
+        for (int i = 0; i < _Conversions.size(); ++i)
+          {
+            MigrationConversion M = _Conversions.get(i);
+            if (M == null)
+              continue;
+
+            M.validate(PS, Parent);
+            // We have to check for the cloning feature: if we are adding a new column to a source table,
+            // we also have to add it to the clones.
+            if (M._Object != null && M._Object._CloneAs != null)
+              for (Cloner cl : M._Object._CloneAs)
+                {
+                  MigrationConversion M2 = new MigrationConversion(M);
+                  M2._ObjectName = cl._Name;
+                  M2.validate(PS, Parent);
+                  _Conversions.add(M2);
+                }
+            // And history table too
+            if (M._Object != null && M._Object._HistoryObj != null)
+              {
+                MigrationConversion M2 = new MigrationConversion(M);
+                M2._ObjectName = M._Object._HistoryObj._Name;
+                M2.validate(PS, Parent);
+                _Conversions.add(M2);
+              }
+          }
+
         return Errs == PS.getErrorCount();
       }
 
@@ -129,6 +157,14 @@ public class Migration
           for (Column c : mnn._Columns)
             if (col.getFullName().equals(c.getFullName()) == true)
               return mnn;
+        return null;
+      }
+
+    public MigrationConversion getConversion(Column col)
+      {
+        for (MigrationConversion mc : _Conversions)
+          if (mc._Column.getFullName().equals(col.getFullName()) == true)
+            return mc;
         return null;
       }
 

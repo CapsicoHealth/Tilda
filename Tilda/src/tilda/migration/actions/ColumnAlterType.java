@@ -23,10 +23,11 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.MigrationConversion;
 
 public class ColumnAlterType extends MigrationAction
   {
-    public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col)
+    public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col, MigrationConversion mc)
       {
         super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, MaintenanceLog_Data._actionUpdate, MaintenanceLog_Data._objectTypeColumn);
         _Col = Col;
@@ -34,16 +35,18 @@ public class ColumnAlterType extends MigrationAction
         StringBuilder Str = new StringBuilder();
         C.getColumnType(Str, Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
         _ColTypeStr = Str.toString();
+        _mc = mc;
       }
 
     protected Column _Col;
     protected String _ColTypeStr;
     protected ColumnMeta _CMeta;
+    protected MigrationConversion _mc;
 
     public boolean process(Connection C)
     throws Exception
       {       
-        return C.alterTableAlterColumnType(C, _CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
+        return C.alterTableAlterColumnType(C, _CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"), _mc);
       }
 
 
@@ -52,6 +55,6 @@ public class ColumnAlterType extends MigrationAction
       {
         return "Alter table "+_Col._ParentObject.getFullName()
               +" alter column "+_Col.getName()+" type from "+_CMeta._TypeSql+(_CMeta._TildaType == ColumnType.STRING &&  _CMeta._Size > 0 ? "("+_CMeta._Size+")":"")
-              +" to "+_ColTypeStr;
+              +" to "+_ColTypeStr+(_mc==null?"":" with conversion '"+_mc._Conversion+"'");
       }
   }

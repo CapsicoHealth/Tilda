@@ -53,6 +53,7 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationConversion;
 import tilda.parsing.parts.MigrationNotNull;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
@@ -144,6 +145,11 @@ public abstract class CommonStoreImpl implements DBType
               else if (TypeName != null && TypeName.equalsIgnoreCase("vector") == true)
                 {
                   TypeSql = "VECTOR";
+                  TildaType = ColumnType.VECTOR;
+                }
+              else if (TypeName != null && TypeName.equalsIgnoreCase("halfvec") == true)
+                {
+                  TypeSql = "HALFVECTOR";
                   TildaType = ColumnType.VECTOR;
                 }
               else
@@ -441,10 +447,9 @@ public abstract class CommonStoreImpl implements DBType
 
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI, MigrationConversion mc)
     throws Exception
       {
-
         if (ColMeta._TildaType == ColumnType.STRING)
           {
             if (Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATETIME_PLAIN || Col.getType() == ColumnType.DATE
@@ -452,8 +457,11 @@ public abstract class CommonStoreImpl implements DBType
             || Col.getType() == ColumnType.BOOLEAN || Col.getType() == ColumnType.UUID)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale)
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale);
+                if (mc == null)
+                  Q += " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col.getTypeModifier(), Col._Mode, Col.isCollection(), Col._Precision, Col._Scale) + ");";
+                else
+                  Q += " USING (" + mc._Conversion + ");";
 
                 boolean res = Con.executeDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
                 if (Col.getType() != ColumnType.DATETIME || res == false)
@@ -873,7 +881,7 @@ public abstract class CommonStoreImpl implements DBType
                   First = false;
                 else
                   Out.print(", ");
-                Out.print("\"" + OB._Col.getName() + "\" " + (usingClause == null ? "" : OB._Order));
+                Out.print("\"" + OB._Col.getName() + "\" " + (usingClause == null ? OB._Order : ""));
                 if (OB._Nulls != null)
                   Out.print(" NULLS " + OB._Nulls);
               }
@@ -883,7 +891,7 @@ public abstract class CommonStoreImpl implements DBType
         String withClause = alterTableAddIndexWithDDL(IX);
         if (TextUtil.isNullOrEmpty(withClause) == false)
           Out.print(withClause);
-        
+
         if (IX._SubQuery != null)
           {
             Query Q = IX._SubQuery.getQuery(DBType.Postgres);
