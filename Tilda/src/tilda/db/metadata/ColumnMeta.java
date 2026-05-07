@@ -78,7 +78,7 @@ public class ColumnMeta
 
     public boolean isArray()
       {
-        return _Type == java.sql.Types.ARRAY || (_Type == java.sql.Types.OTHER && "vector".equals(_TypeName) == true);
+        return _Type == java.sql.Types.ARRAY; // || (_Type == java.sql.Types.OTHER && ("vector".equals(_TypeName) == true || "halfvec".equals(_TypeName) == true));
       }
 
     public TableMeta getParentTable()

@@ -136,8 +136,8 @@ public enum ColumnType
             } // STRING
             , { JSON, STRING
             } // JSON
-            , { VECTOR, STRING
-            } // JSON
+            , { VECTOR, STRING 
+            } // VECTOR
             , { CHAR, STRING, BOOLEAN
             } // CHAR
             , { SHORT, BOOLEAN, STRING, INTEGER, LONG, DOUBLE, FLOAT, NUMERIC, BITFIELD

@@ -90,6 +90,7 @@ import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.MigrationConversion;
 import tilda.parsing.parts.MigrationMove;
 import tilda.parsing.parts.MigrationNotNull;
 import tilda.parsing.parts.MigrationRename;
@@ -593,7 +594,8 @@ public class Migrator
                 // when a migration failed for whatever reason. Even though we just tested whether
                 // the view exists, we still want to drop it. The drop implementation does do an
                 // "if exists" so it's safe.
-                Actions.add(new ViewDrop(V));
+                if (addDDLDependencyViewRestoreExclusion(Actions, V) == false)
+                  Actions.add(new ViewDrop(V));
                 Actions.add(new ViewCreate(V));
               }
             else
@@ -629,7 +631,8 @@ public class Migrator
                      * DdlDepMan_R = null;
                      * }
                      */
-                    Actions.add(new ViewDrop(V));
+                    if (addDDLDependencyViewRestoreExclusion(Actions, V) == false)
+                      Actions.add(new ViewDrop(V));
                     Actions.add(new ViewCreate(V));
 
                     if (DdlDepMan != null)
@@ -662,6 +665,23 @@ public class Migrator
             throw new Exception(Str.toString());
           }
         return Actions;
+      }
+
+    /**
+     * With more complex migrations, it is possible to migrate a table a view depends on, and then migrate the view itself.
+     * If the view was not updated, then an error will happen if the view doesn't work with the table changes. In most cases
+     * things will just work. But in case the migration is more complex, for example with a conversion expression, the depending
+     * views also need to be changed. In that case, we will have DDLDependencyPreManagement and DDLDependencyPostManagement actions
+     * in the list that are no longer needed since the view is being dropped and re-created independently. This code removes
+     * the DDLDependencyPostManagement actions.
+     */
+    private static boolean addDDLDependencyViewRestoreExclusion(List<MigrationAction> actions, View V)
+      {
+        for (MigrationAction A : actions)
+          if (A.getClass() == DDLDependencyPostManagement.class)
+            if (((DDLDependencyPostManagement) A).addRestoreExclusion(V) == true)
+              return true;
+        return false;
       }
 
     protected static void handleRenames(Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions)
@@ -827,12 +847,19 @@ public class Migrator
           }
 
         //@formatter:off
+        boolean conditionVector = Col.getType() == ColumnType.VECTOR
+                               && (   "bit".equals(Col.getTypeModifier()) && CMeta._TildaType != ColumnType.BOOLEAN
+                                   || "vector".equals(Col.getTypeModifier()) && CMeta._TildaType != ColumnType.VECTOR
+                                   || "halfvec".equals(Col.getTypeModifier()) && CMeta._TypeSql.equalsIgnoreCase("HALFVECTOR") == false
+//                                   || (Col._Size != null && Col._Size != CMeta._Size) // Vectors don't have sizes in the metadata!!!!
+                                  );
+
         boolean condition1 = Col.isCollection() == false
              && (   Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                  || Col.getType() == ColumnType.JSON && CMeta._TildaType == ColumnType.STRING // && CMeta._TildaType != ColumnType.JSON
-                 || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType
+                 || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != ColumnType.VECTOR && Col.getType() != CMeta._TildaType
+                 || conditionVector == true
                 );
-        //@formatter:on
 
         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
         // The case here is that we have a CHAR(10) in the database, and the model still says
@@ -841,21 +868,29 @@ public class Migrator
         // the type in the DB. The previous set of checks look at fundamental type changes, for example
         // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
         // model changes, but to threshold changes.
-        boolean condition2 = Col.isCollection() == false && Col.getType() == ColumnType.STRING
-        // the database type is CHAR, but the Tilda type is not CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
-        && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(CMeta._Size) != DBStringType.CHARACTER
-        // the database type is VARCHAR but the Tilda type is CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
-        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER
-        // the database type is TEXT but the Tilda type is not TEXT
-        || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT);
+        boolean condition2 = 
+             Col.isCollection() == false && Col.getType() == ColumnType.STRING
+          // the database type is CHAR, but the Tilda type is not CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
+          && (   CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(CMeta._Size) != DBStringType.CHARACTER
+              // the database type is VARCHAR but the Tilda type is CHAR (i.e., the goal post for what is CHAR Vs VARCHAR changed)
+              || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER
+              // the database type is TEXT but the Tilda type is not TEXT
+              || CMeta._TypeSql.equals("VARCHAR") == true && CMeta._TypeName.equals("text") == true && C.getDBStringType(CMeta._Size) != DBStringType.TEXT
+             );
+        //@formatter:on
 
         if (condition1 || condition2)
           {
+            MigrationConversion mc = null;
             // Are the to/from types compatible?
             if (Col.getType().isDBCompatible(CMeta._TildaType) == false)
-              throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " in the database to " + Col.getType() + ".");
+              {
+                mc = Col._ParentObject._ParentSchema._Migration == null ? null : Col._ParentObject._ParentSchema._Migration.getConversion(Col);
+                if (mc == null)
+                  throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " in the database to " + Col.getType() + ".");
+              }
 
-            CAM.addColumnAlterType(CMeta, Col);
+            CAM.addColumnAlterType(CMeta, Col, mc);
             NeedsDdlDependencyManagement = true;
           }
         // Else, we could still have a size change and stay within a single STRING DB type
@@ -873,7 +908,7 @@ public class Migrator
                 NeedsDdlDependencyManagement = true;
               }
           }
-        else if (Col.getType() != CMeta._TildaType)
+        else if (Col.getType() != ColumnType.VECTOR && Col.getType() != CMeta._TildaType)
           throw new Exception("A type migration for column " + Col.getShortName() + " from " + CMeta._TildaType + " in the database to " + Col.getType() + " is not available: manual migration is required.");
 
         return NeedsDdlDependencyManagement;
@@ -1021,10 +1056,10 @@ public class Migrator
             boolean Found = false;
             String Sig = IX.getSignature();
 
-            // LOG.debug("Checking Index: '"+Sig+"'");
+            // LOG.debug("Checking model index: '"+Sig+"'");
             for (IndexMeta ix : TMeta._Indices.values())
               {
-                // LOG.debug(" - against index: '"+ix.getSignature()+"'");
+                // LOG.debug(" - against DB index: '"+ix.getSignature()+"'");
                 if (ix._Name.toLowerCase().endsWith("_pkey") == false)
                   {
                     String Sig1 = ix.getSignature();
@@ -1062,17 +1097,17 @@ public class Migrator
         // unique index that is stronger than intended.
         for (IndexMeta ix : TMeta._Indices.values())
           {
-//            StringBuilder str = new StringBuilder();
+            // StringBuilder str = new StringBuilder();
             if (ix == null || ix._Unique == false || ix._Name.toLowerCase().endsWith("_pkey") == true)
               continue;
             if (TMeta._PrimaryKey != null && TMeta._PrimaryKey._PKName.equals(ix._Name) == true)
               continue;
-//            str.append("   Object  : " + Obj.getShortName()+" / "+(TMeta._PrimaryKey==null?"No PK":TMeta._PrimaryKey._PKName)+ "\n");
-//            str.append("   DB Index: " + ix._Name + " (" + ix.getCleanName() + ") -> " + ix.getSignature()+"\n");
+            // str.append(" Object : " + Obj.getShortName()+" / "+(TMeta._PrimaryKey==null?"No PK":TMeta._PrimaryKey._PKName)+ "\n");
+            // str.append(" DB Index: " + ix._Name + " (" + ix.getCleanName() + ") -> " + ix.getSignature()+"\n");
             boolean found = false;
             for (Index IX : Obj._Indices)
               {
-//                str.append("       Model Index: " + IX._Name + " (" + IX.getName() + ") -> " + IX.getSignature()+"\n");
+                // str.append(" Model Index: " + IX._Name + " (" + IX.getName() + ") -> " + IX.getSignature()+"\n");
                 if (IX != null && ix.getSignature().equals(IX.getSignature()) == true)
                   {
                     found = true;
@@ -1081,7 +1116,7 @@ public class Migrator
               }
             if (found == false)
               {
-//                LOG.debug("\n"+str.toString());
+                // LOG.debug("\n"+str.toString());
                 Actions.add(new TableIndexDrop(Obj, ix));
               }
           }
@@ -1260,14 +1295,14 @@ public class Migrator
       {
         if (DBMeta.supportsArrays() == true)
           {
-            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON)
+            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON && Col.getType() != ColumnType.VECTOR)
               {
                 Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
                 return false;
               }
-            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON))
+            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON || Col.getType() == ColumnType.VECTOR))
               {
-                Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
+                Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as a base type, but it's an array in the DB. The database needs to be migrated manually.");
                 return false;
               }
           }

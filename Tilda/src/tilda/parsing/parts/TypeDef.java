@@ -123,7 +123,7 @@ public class TypeDef
             Matcher m = _PATTERN_VECTOR.matcher(_TypeStr);
             if (m.find() == true)
               {
-                _Size = ParseUtil.parseInteger(m.group(1), SystemValues.EVIL_VALUE);
+                _Size = ParseUtil.parseInteger(m.group(1), 768);
                 _typeModifier = m.group(2);
                 if (_typeModifier != null)
                  _typeModifier = _typeModifier.trim().toLowerCase();
