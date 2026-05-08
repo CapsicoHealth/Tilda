@@ -1,5 +1,0 @@
-[
-    { "name":"invalidDate","type":"DATE","mode":"REQUIRED","description":"The invalid date, e.g., '1111-11-11'." }
-   ,{ "name":"minDate","type":"DATE","mode":"REQUIRED","description":"The min date included in the DIM" }
-   ,{ "name":"maxDate","type":"DATE","mode":"REQUIRED","description":"The max date included in the DIM" }
-]

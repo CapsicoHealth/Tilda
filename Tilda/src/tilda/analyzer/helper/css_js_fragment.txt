@@ -1,0 +1,91 @@
+<STYLE>
+ .InBar {
+   background-color: #77CABB;
+   height: 20px;
+ }
+ .OutBar {
+   background-color: RGBA(231, 93, 93, 1);
+   height: 20px;
+ }
+ .Histogram {
+   border-spacing: 0;
+   border-collapse: collapse;
+ }
+ .Histogram TH {
+   border-bottom: 1px solid grey;
+   padding: 0px;
+ }
+ .Histogram TD {
+   padding: 0px 4px 1px 0px;
+   font-size: 15px;
+ }
+ .Histogram .Bar {
+   border: 0px;
+   padding: 0px;
+   margin: 0px;
+   background-color: #E2EFFF;
+   height: 15px;
+  }
+ h2 {
+   margin-top: 50px;
+   margin-bottom: 10px;
+   border-top: 2px solid black;
+  }
+ h3 {
+   margin-top: 50px;
+   margin-bottom: 10px;
+   border-top: 1px solid grey;
+  }
+</STYLE>
+
+<SCRIPT>
+ function printWith2Dec(n)
+  {
+    return Math.round(n * 100) / 100.0;
+  }
+ function printWithThousands(n)
+  {
+    return n == null ? "N/A" : n.toLocaleString();
+  }
+ function InOutBar(divId, inLabel, inVal, outLabel, outVal)
+  {
+    var Str = '<TABLE border="0px" cellspacing="0px" cellpadding="0px" width="500px">'
+               +'<TR>'
+                   +'<TD class="InBar"  width="'+(100*inVal/(inVal+outVal))+'%"></TD>'
+                   +'<TD class="OutBar" width="'+(100*outVal/(inVal+outVal))+'%"></TD>'
+               +'</TR>'
+             +'</TABLE>'
+             +inLabel+': '+printWithThousands(inVal)+' ('+printWith2Dec(100*inVal/(inVal+outVal))+'%) / ' +outLabel+': '+printWithThousands(outVal)+' ('+printWith2Dec(100*outVal/(inVal+outVal))+'%)';
+             ;
+    document.getElementById(divId).innerHTML=Str;
+  }
+ function Histogram(divId,NotNullCount, values)
+  {
+    var Str = 'Number of unique values found: '+(values.length >= 50 ? "50+" : values.length)+'<BR>'
+             +'<TABLE class="Histogram" border="0px">'
+             +'<TR><TH>Value</TH><TH></TH><TH>Count</TH><TH>Percent</TH></<TR>';
+    var maxVal = 0;
+    for (var i = 0; i < values.length; ++i)
+     {
+       var v = values[i].v;
+       if (maxVal < v)
+        maxVal = v;
+     }
+    var cumulativePercent = 0;
+    for (var i = 0; i < values.length; ++i)
+     {
+       var v = values[i];
+       var percent = 100*v.v/NotNullCount;
+       cumulativePercent+=percent;
+       Str+='<TR><TD>'+v.n+'</TD>'
+               +'<TD><DIV class="Bar" style="width:'+(250.0*v.v/maxVal)+'px;"></DIV></TD>'
+               +'<TD>'+printWithThousands(v.v)+'</TD>'
+               +'<TD>'+printWith2Dec(percent)+'%</TD>'
+               +'<TD style="font-size: 80%; color: #888;">'+printWith2Dec(cumulativePercent)+'%</TD>'
+           +'</TR>';
+     }
+    Str+='</TABLE>';
+    document.getElementById(divId).innerHTML=Str;
+  }
+ </SCRIPT>
+                                     

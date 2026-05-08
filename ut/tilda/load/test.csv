@@ -1,3 +1,0 @@
-"patientId","id","segment","startTZ","start","denialCode","remarkCodes","adjustmentReasonCodes","revenueCode","attendingPhysicianId","admitDxCodes","admitDxMethod","count","comment"
-"12345-6789","11111111","0","USEa","2017-01-15 13:40:54.123-04","aaa","0,1,2","1,2","R1","Bob Katona","124.43","ICD9","121","blah blah blah blah..."
-"12345-6789","11111111","1","USEa","2017-01-15 13:40:54.123-04","aaa","{0,1,2}","{1,2}","R1","Bob Katona","{124.43}","ICD9","121","blah blah blah blah..."
