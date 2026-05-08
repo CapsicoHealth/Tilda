@@ -473,7 +473,7 @@ object. The generic init method defaults to this general data structure as a gen
                if (failedRec != -1)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'CatalogFormulaResult_Data' objects ending at position #" + index + " failed being written to the database.");
-                   return L.size() - insertCount+failedRec;
+                   return L.size() - insertCount + failedRec;
                  }
                for (int index2 = batchStart; index2 <= index; ++index2)
                  L.get(index2).stateUpdatePostWrite();
