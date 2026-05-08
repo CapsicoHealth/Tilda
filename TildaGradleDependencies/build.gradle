@@ -11,6 +11,8 @@ plugins {
     id 'java'
 }
 
+defaultTasks 'build'
+
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.

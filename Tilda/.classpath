@@ -29,7 +29,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-codec-1.20.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-codec-1.22.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -64,7 +64,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-logging-1.3.5.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-logging-1.3.6.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -84,7 +84,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/fontbox-3.0.6.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/fontbox-3.0.7.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -119,7 +119,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/jakarta.activation-api-2.2.0-M1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/jakarta.activation-api-2.2.0-M2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -134,47 +134,47 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-1.2-api-2.25.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-1.2-api-2.26.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-api-2.25.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-api-2.26.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-core-2.25.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-core-2.26.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-slf4j-impl-2.25.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-slf4j-impl-2.26.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-web-2.25.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/log4j-web-2.26.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-tools-2.5.7.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-tools-2.5.9.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-uima-2.5.7.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/opennlp-uima-2.5.9.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-3.0.6.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-3.0.7.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-io-3.0.6.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/pdfbox-io-3.0.7.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -249,7 +249,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/checker-qual-3.49.5.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/checker-qual-3.46.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -274,7 +274,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/error_prone_annotations-2.41.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/error_prone_annotations-2.48.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -324,7 +324,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20251117-2.0.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20260331-2.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -539,7 +539,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/gson-2.13.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/gson-2.14.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -559,22 +559,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-annotations-2.18.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-annotations-2.21.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-core-2.18.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-core-2.21.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-databind-2.18.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-databind-2.21.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-datatype-jsr310-2.18.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-datatype-jsr310-2.21.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -834,7 +834,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/jsoup-1.22.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/jsoup-1.22.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -849,7 +849,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/postgresql-42.7.8.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/postgresql-42.7.11.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -909,7 +909,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/jakartaee-pac4j-8.0.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/jakartaee-pac4j-8.0.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -994,22 +994,17 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-core-6.1.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-core-6.4.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-jakartaee-6.1.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-jakartaee-6.4.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-saml-6.1.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/GoogleBigQueryJDBC42.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
