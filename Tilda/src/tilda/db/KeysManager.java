@@ -67,12 +67,13 @@ public class KeysManager
       }
 
     protected static final String _KEYS_POOL = "KEYS";
+    private static final Object _KEYS_LOCK = new Object();
 
     protected static void init(boolean reinit)
     throws SQLException
       {
         if (_M == null || _M.isEmpty() == true || reinit == true)
-          synchronized (_KEYS_POOL)
+          synchronized (_KEYS_LOCK)
             {
               if (_M == null || _M.isEmpty() == true || reinit == true)
                 {
@@ -111,7 +112,7 @@ public class KeysManager
     protected static void retryKeyInit(String objectName)
     throws SQLException
       {
-        synchronized (_KEYS_POOL)
+        synchronized (_KEYS_LOCK)
           {
             Connection C = null;
             try
