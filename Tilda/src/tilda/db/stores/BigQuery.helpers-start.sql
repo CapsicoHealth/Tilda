@@ -46,12 +46,25 @@ CREATE OR REPLACE FUNCTION TILDA.age(date_of_birth DATE, as_of_date DATE) AS (
 );
 
 
+CREATE OR REPLACE FUNCTION TILDA.safe_LEAST(v1 DATETIME, v2 DATETIME) RETURNS DATETIME AS (
+  ( case when v1 is null then v2 when v2 is null then v1 else LEAST(v1,v2) end )
+);
+CREATE OR REPLACE FUNCTION TILDA.safe_LEAST(v1 TIMESTAMP, v2 TIMESTAMP) RETURNS TIMESTAMP AS (
+  ( case when v1 is null then v2 when v2 is null then v1 else LEAST(v1,v2) end )
+);
+CREATE OR REPLACE FUNCTION TILDA.safe_GREATEST(v1 DATETIME, v2 DATETIME) RETURNS DATETIME AS (
+  ( case when v1 is null then v2 when v2 is null then v1 else GREATEST(v1,v2) end )
+);
+CREATE OR REPLACE FUNCTION TILDA.safe_GREATEST(v1 TIMESTAMP, v2 TIMESTAMP) RETURNS TIMESTAMP AS (
+  ( case when v1 is null then v2 when v2 is null then v1 else GREATEST(v1,v2) end )
+);
+
 
 CREATE OR REPLACE VIEW TILDA.BQJobDetailsView as
 SELECT start_time, end_time, project_id, job_id, user_email
      , coalesce(total_bytes_billed, 0) AS total_bytes_billed
-     , (CASE WHEN statement_type='CREATE_MODEL' THEN 25000.0 else 500.0 END)*coalesce(total_bytes_billed, 0)/(1024*1024*1024*1024) AS cost_cents -- $5/TB EXCEPT FOR modeling which costs $250/TB
-     , 25000.0*coalesce(total_bytes_billed, 0)/(1024*1024*1024*1024) AS cost_cents_modeling -- $250/TB
+     , (CASE WHEN statement_type='CREATE_MODEL' THEN 0.0     else 500.0 END)*coalesce(total_bytes_billed, 0)/(1024*1024*1024*1024) AS cost_cents -- $5/TB EXCEPT FOR modeling which costs $250/TB
+     , (CASE WHEN statement_type='CREATE_MODEL' THEN 25000.0 else 0     end)*coalesce(total_bytes_billed, 0)/(1024*1024*1024*1024) AS cost_cents_modeling -- $250/TB
      , job_type
      , statement_type
      , priority, state, cache_hit
@@ -74,6 +87,7 @@ select project_id
      , user_email
      , statement_type
      , round(sum(cost_cents)/100.0, 2) cost_dollars
+     , round(sum(cost_cents_modeling)/100.0, 2) cost_dollars_modeling
      , CASE WHEN sum(total_bytes_billed) < 1024           THEN cast(sum(total_bytes_billed) AS STRING)||' B'
             WHEN sum(total_bytes_billed) < 1024*1024      THEN cast(round(sum(total_bytes_billed)/1024.0, 2) AS STRING)||' KB'
             WHEN sum(total_bytes_billed) < 1024*1024*1024 THEN cast(round(sum(total_bytes_billed)/(1024.0*1024.0), 2) AS STRING)||' MB'
@@ -81,9 +95,33 @@ select project_id
        END AS total_bytes_billed
 from TILDA.BQJobDetailsView
 WHERE total_bytes_billed IS NOT null
+  AND statement_type != 'SCRIPT'
 group by 1, 2, 3, 4
 order by 1, 2, 3, 4
 ;
+
+
+CREATE OR REPLACE VIEW TILDA.BQCostsHourlyView as
+select project_id
+     , DATE_TRUNC(start_time, HOUR) as h
+     , user_email
+     , statement_type
+     , round(sum(cost_cents)/100.0, 2) cost_dollars
+     , round(sum(cost_cents_modeling)/100.0, 2) cost_dollars_modeling
+     , CASE WHEN sum(total_bytes_billed) < 1024           THEN cast(sum(total_bytes_billed) AS STRING)||' B'
+            WHEN sum(total_bytes_billed) < 1024*1024      THEN cast(round(sum(total_bytes_billed)/1024.0, 2) AS STRING)||' KB'
+            WHEN sum(total_bytes_billed) < 1024*1024*1024 THEN cast(round(sum(total_bytes_billed)/(1024.0*1024.0), 2) AS STRING)||' MB'
+            ELSE cast(round(sum(total_bytes_billed)/(1024.0*1024.0*1024.0), 2) AS STRING)||' GB'
+       END AS total_bytes_billed
+from TILDA.BQJobDetailsView
+WHERE total_bytes_billed IS NOT null
+  AND statement_type != 'SCRIPT'
+group by 1, 2, 3, 4
+order by 1, 2, 3, 4
+;
+
+
+
 
 
 CREATE OR REPLACE PROCEDURE TILDA.BQJobDetailsMonthBackup()
