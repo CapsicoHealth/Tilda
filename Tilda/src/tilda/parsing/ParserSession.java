@@ -32,6 +32,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.helpers.DelayedValidator;
 
 public class ParserSession
   {
@@ -45,10 +46,11 @@ public class ParserSession
 
     public Schema                 _Main;
     public CodeGenSql             _CGSql;
-    protected Map<String, Schema> _Dependencies     = new HashMap<String, Schema>();
-    protected Set<String>         _ValidatedSchemas = new HashSet<String>();
-    protected List<String>        _Errors           = new ArrayList<String>();
-    public List<String>           _Notes            = new ArrayList<String>();
+    protected Map<String, Schema> _Dependencies      = new HashMap<String, Schema>();
+    protected Set<String>         _ValidatedSchemas  = new HashSet<String>();
+    protected List<String>        _Errors            = new ArrayList<String>();
+    public List<String>           _Notes             = new ArrayList<String>();
+    public List<DelayedValidator> _DelayedValidators = new ArrayList<DelayedValidator>();
 
     public Iterator<Schema> getDependenciesIterator()
       {
@@ -77,7 +79,7 @@ public class ParserSession
 
     public Schema getSchema(String PackageName, String SchemaName)
       {
-//      Schema.PrintSchemaList(CollectionUtil.toList(_Dependencies.values().iterator()), true);
+        // Schema.PrintSchemaList(CollectionUtil.toList(_Dependencies.values().iterator()), true);
         String FullName = PackageName + "." + SchemaName;
         Schema S = _Dependencies.get(FullName);
         if (S == null)
@@ -88,11 +90,11 @@ public class ParserSession
     public Schema getSchema(String resourceName)
       {
         for (Schema S : _Dependencies.values())
-          if (S._ResourceName.contentEquals(resourceName) == true)
-           return S;
+          if (S._ResourceName.equalsIgnoreCase(resourceName) == true)
+            return S;
         LOG.debug("Schema " + resourceName + " cannot be found out of the current schema list [" + getSchemaList() + "].");
         return null;
-      }    
+      }
 
 
     public Schema getSchemaForDependency(String PackageName, String SchemaName)
@@ -121,11 +123,27 @@ public class ParserSession
         Schema S = getSchema(PackageName, SchemaName);
         return S == null ? null : S.getObject(ObjectName);
       }
+    public Object getObjectFromSchemaByName(String schemaName, String objectName)
+      {
+        for (Schema S : _Dependencies.values())
+          if (S._Name.equalsIgnoreCase(schemaName) == true)
+            return S.getObject(objectName);
+        LOG.debug("Object " + schemaName +"."+ objectName + " cannot be found out of the current schema list [" + getSchemaList() + "].");
+        return null;
+      }
 
     public View getView(String PackageName, String SchemaName, String ViewName)
       {
         Schema S = getSchema(PackageName, SchemaName);
         return S == null ? null : S.getView(ViewName);
+      }
+    public View getViewFromSchemaByName(String schemaName, String viewName)
+      {
+        for (Schema S : _Dependencies.values())
+          if (S._Name.equalsIgnoreCase(schemaName) == true)
+            return S.getView(viewName);
+        LOG.debug("Object " + schemaName +"."+ viewName + " cannot be found out of the current schema list [" + getSchemaList() + "].");
+        return null;
       }
 
     public Column getColumn(String PackageName, String SchemaName, String ObjectName, String ColumnName)
@@ -158,7 +176,7 @@ public class ParserSession
         Str.append("    There were " + getErrorCount() + " errors when trying to validate the schema set\n");
         int i = 0;
         for (String Err : _Errors)
-          Str.append("      " + (++i) + " - " + Err+"\n");
+          Str.append("      " + (++i) + " - " + Err + "\n");
         Str.append("==============================================================================================\n");
         LOG.error(Str.toString());
         return false;
@@ -191,4 +209,24 @@ public class ParserSession
           LOG.info("    " + (++i) + " - " + Note);
         return false;
       }
+
+    public void addDelayedValidator(DelayedValidator dv)
+      {
+        _DelayedValidators.add(dv);
+      }
+
+    public void runApplicableDelayedValidators(Object completedObject)
+      {
+        Iterator<DelayedValidator> I = _DelayedValidators.iterator();
+        while (I.hasNext() == true)
+          {
+            DelayedValidator dv = I.next();
+            if (dv.matches(completedObject) == true)
+              {
+                dv.apply();
+                I.remove();
+              }
+          }
+      }
+
   }

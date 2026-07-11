@@ -204,7 +204,7 @@ public class Object extends Base
               }
             if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
               {
-                if (CreateAutogenPK(PS) == false)
+                if (createAutogenPK(PS, false) == false)
                   return false;
               }
           }
@@ -448,7 +448,7 @@ public class Object extends Base
               I._Columns = _PrimaryKey._Columns;
             else
               {
-                obj.CreateAutogenPK(PS);
+                obj.createAutogenPK(PS, false);
                 I._Columns = new String[] { _ParentSchema.getConventionPrimaryKeyName()
                 };
               }
@@ -519,21 +519,24 @@ public class Object extends Base
         return false;
       }
 
-
-    private boolean CreateAutogenPK(ParserSession PS)
+    public boolean createAutogenPK(ParserSession PS, boolean preCreate)
       {
         for (Column C : _Columns)
-          {
-            if (C == null)
-              continue;
-
-            String N = C.getLogicalName();
-            if (N != null && N.equalsIgnoreCase(_ParentSchema.getConventionPrimaryKeyName()) == true)
-              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '" + _ParentSchema.getConventionPrimaryKeyName() + "', which is a reserved name.");
-          }
+          if (C != null)
+            {
+              String N = C.getLogicalName();
+              if (N != null && N.equalsIgnoreCase(_ParentSchema.getConventionPrimaryKeyName()) == true)
+                {
+                  if (preCreate == false && C._preCreatedPK == true)
+                    return true;
+                  return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column '" + _ParentSchema.getConventionPrimaryKeyName() + "', which is a reserved name.");
+                }
+            }
 
         Column C = new Column(_ParentSchema.getConventionPrimaryKeyName(), null, 0, false, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description, null, null, null, null);
         C._SameAs = "tilda.data.TILDA.Key.refnum";
+        if (preCreate == true)
+          C._preCreatedPK = true;
         _Columns.add(0, C);
 
         return true;
