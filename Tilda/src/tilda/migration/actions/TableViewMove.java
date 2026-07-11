@@ -18,29 +18,30 @@ package tilda.migration.actions;
 
 import tilda.data.MaintenanceLog_Data;
 import tilda.db.Connection;
+import tilda.enums.TildaType;
 import tilda.migration.MigrationAction;
 
-public class TableViewSchemaSet extends MigrationAction
+public class TableViewMove extends MigrationAction
   {
-    public TableViewSchemaSet(tilda.parsing.parts.Base Base, String OldSchemaName)
-      {
-        super(Base._ParentSchema._Name, Base._Name, false, MaintenanceLog_Data._actionRename, MaintenanceLog_Data._objectTypeView);
-        _Base = Base;
-        _OldSchemaName = OldSchemaName;
-      }
+    public TableViewMove(String srcSchemaName, String srcTableVieName, String dstSchemaName, String dstTableViewName, boolean isView)
+       {
+         super(srcSchemaName, srcTableVieName, false, MaintenanceLog_Data._actionRename, isView ? MaintenanceLog_Data._objectTypeView : MaintenanceLog_Data._objectTypeTable);
+         _dstSchemaName = dstSchemaName;
+         _dstTableViewName = dstTableViewName;
+       }
 
-    protected tilda.parsing.parts.Base _Base;
-    protected String _OldSchemaName;
+    protected String _dstSchemaName;
+    protected String _dstTableViewName;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.moveTableView(_Base, _OldSchemaName);
+        return C.moveTableView(_maintenanceObjectType.equals(MaintenanceLog_Data._objectTypeView) ? TildaType.VIEW : TildaType.OBJECT, _SchemaName, _TableViewName, _dstSchemaName, _dstTableViewName);
       }
 
     @Override
     public String getDescription()
       {
-        return "Moving "+_Base._TildaType.name()+" '"+_Base._Name+"' from schema '"+_OldSchemaName+"' to '"+_Base._ParentSchema._Name+"'.";
+        return "Moving "+_maintenanceObjectType+" from '"+_SchemaName+"."+_TableViewName+"' to '"+_dstSchemaName+"."+_dstTableViewName+"'.";
       }
   }

@@ -39,13 +39,13 @@ public class ReferenceHelper
         _S = S == null ? null : S.toUpperCase();
         _O = O == null ? null : O.toUpperCase();
         _multi = TextUtil.isNullOrEmpty(C) == false && C.endsWith("[]") == true;
-        _C = _multi ? C.substring(0, C.length()-2) : C;
+        _C = _multi ? C.substring(0, C.length() - 2) : C;
       }
 
-    public final String _P; // Package
-    public final String _S; // Schema
-    public final String _O; // Object
-    public final String _C; // Column
+    public final String  _P;    // Package
+    public final String  _S;    // Schema
+    public final String  _O;    // Object
+    public final String  _C;    // Column
     public final boolean _multi;
 
     public String getFullName()
@@ -66,7 +66,7 @@ public class ReferenceHelper
     protected static String searchPackage(String schemaName, Schema parentSchema)
       {
         if (TextUtil.isNullOrEmpty(schemaName) == false && schemaName.equalsIgnoreCase(parentSchema.getShortName()) == true)
-         return parentSchema._Package;
+          return parentSchema._Package;
         List<String> packages = new ArrayList<String>();
         for (Schema s : parentSchema._DependencySchemas)
           if (s.getShortName().equalsIgnoreCase(schemaName) == true)
@@ -148,34 +148,34 @@ public class ReferenceHelper
             LOG.debug("   - " + o.getFullName());
       }
 
-    public void logErrorKnownColumns(Object O)
+    public static void logErrorKnownColumns(Object O, String destColName)
       {
-        LOG.error("Cannot find Column '" + _S + "." + _O + "." + _C + "'.");
+        LOG.error("Cannot find Column '" + O.getShortName() + "." + destColName + "'.");
         LOG.debug("Known Columns from Object " + O._Name + " (" + O.getFullName() + "): ");
         for (Column c : O._Columns)
           if (c != null)
             LOG.debug("   - " + c.getFullName());
       }
 
-    public Column resolveAsColumn(ParserSession PS, String source, String what, boolean skipValidationCheck)
+    public Column resolveAsColumn(ParserSession PS, String source, String what, boolean skipValidationCheck, Column SrcCol)
       {
         if (TextUtil.isNullOrEmpty(_S) == true || TextUtil.isNullOrEmpty(_O) == true || TextUtil.isNullOrEmpty(_C) == true)
           {
             PS.AddError(source + " is declaring " + what + " with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
             return null;
           }
-        
+
         Schema S = PS.getSchema(_P, _S);
         if (S == null)
           {
-            PS.AddError(source+" is declaring " + what + " resolving to '" + getFullName() + "' with a schema that cannot be found.");
+            PS.AddError(source + " is declaring " + what + " resolving to '" + getFullName() + "' with a schema that cannot be found.");
             return null;
           }
 
         Object O = PS.getObject(_P, _S, _O);
         if (O == null)
           {
-            PS.AddError(source+ " is declaring " + what + " resolving to '" + getFullName() + "' with an Object/View that cannot be found.");
+            PS.AddError(source + " is declaring " + what + " resolving to '" + getFullName() + "' with an Object/View that cannot be found.");
             logErrorKnownObjects(S);
             return null;
           }
@@ -183,13 +183,19 @@ public class ReferenceHelper
         Column col = PS.getColumn(_P, _S, _O, _C);
         if (col == null)
           {
-            PS.AddError(source+" is declaring " + what + " resolving to '" + getFullName() + "' with a column that cannot be found.");
-            logErrorKnownColumns(O);
+//            DelayedValidator dv = DelayedValidator.preCreateDestPK(PS, SrcCol, O, _C);
+//            if (dv != null)
+//              {
+//                PS.addDelayedValidator(dv);
+//              }
+//            else
+//              {
+                PS.AddError(source + " is declaring " + what + " resolving to '" + getFullName() + "' with a column that cannot be found.");
+                logErrorKnownColumns(O, _C);
+//              }
             return null;
           }
-        else if (skipValidationCheck == false
-                 && col.hasBeenValidatedSuccessfully() == false
-                )
+        else if (skipValidationCheck == false && col.hasBeenValidatedSuccessfully() == false)
           {
             PS.AddError(source + " is declaring " + what + " which has failed validation.");
             return null;
@@ -197,7 +203,7 @@ public class ReferenceHelper
 
         return col;
       }
-    
+
     public static Object resolveObjectReference(ParserSession PS, Object parentObject, String destObject, String what)
       {
         Object obj = null;
@@ -208,17 +214,17 @@ public class ReferenceHelper
           {
             obj = PS.getObject(R._P, R._S, R._O);
             if (obj == null)
-             PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " with destination Object '" + destObject + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+              PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " with destination Object '" + destObject + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else if (parentObject != obj && obj._Validated == false)
               {
                 if (parentObject.getSchema().isDefinedInOrder(obj, parentObject) == false)
-                 PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " to destination Object '" + destObject + "', but is defined before. Dependent object must be defined first.");
+                  PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " to destination Object '" + destObject + "', but is defined before. Dependent object must be defined first.");
                 else
-                 PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " to destination Object '" + destObject + "' which has failed validation.");
+                  PS.AddError("Object '" + parentObject.getFullName() + "' declares " + what + " to destination Object '" + destObject + "' which has failed validation.");
               }
           }
         return obj;
       }
-    
+
 
   }

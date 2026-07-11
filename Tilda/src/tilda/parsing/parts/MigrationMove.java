@@ -34,7 +34,7 @@ public class MigrationMove
 
     public transient Schema       _Parent;
     public transient List<Object> _Objects = new ArrayList<Object>();
-    public transient List<View>   _Views = new ArrayList<View>();
+    public transient List<View>   _Views   = new ArrayList<View>();
 
     public boolean validate(ParserSession PS, Schema Parent)
       {
@@ -49,7 +49,25 @@ public class MigrationMove
             {
               Object obj = Parent.getObject(n);
               if (obj == null)
-                PS.AddError("Migration definition for changed schema '" + _Schema + "' is defining an object '" + n + "' in this schema '" + Parent._Name + "' which cannot be found.");
+                {
+                  String newName = Parent._Migration.hasObjectRenameFrom(n);
+                  if (newName != null)
+                    {
+                      // We could be moving and renaming as well, for example from schema A.X to B.Y.
+                      // This means that schema A might not exist, and Object A.X might not exist,
+                      // but we still want to be able to move the object to the new schema B with the new name Y.
+                      // Checking will occur during migration.
+                      obj = new Object();
+                      obj._Name = n;
+                      obj._OriginalName = n;
+                      obj._ParentSchema = new Schema();
+                      obj._ParentSchema._Name = _Schema;
+                    }
+                  if (obj == null)
+                    PS.AddError("Migration definition for changed schema '" + _Schema + "' is defining an object '" + n + "' in this schema '" + Parent._Name + "' which cannot be found.");
+                  else
+                    _Objects.add(obj);
+                }
               else
                 _Objects.add(obj);
             }
@@ -59,7 +77,24 @@ public class MigrationMove
             {
               View v = Parent.getView(n);
               if (v == null)
-                PS.AddError("Migration definition for changed schema '" + _Schema + "' is defining a view '" + n + "' in this schema '" + Parent._Name + "' which cannot be found.");
+                {
+                  String newName = Parent._Migration.hasViewRenameFrom(n);
+                  if (newName != null)
+                    {
+                      // We could be moving and renaming as well, for example from schema A.X to B.Y.
+                      // This means that schema A might not exist, and View A.X might not exist,
+                      // but we still want to be able to move the view to the new schema B with the new name Y.
+                      // Checking will occur during migration.                      
+                      v = new View();
+                      v._Name = n;
+                      v._ParentSchema = new Schema();
+                      v._ParentSchema._Name = _Schema;
+                    }
+                  if (v == null)
+                    PS.AddError("Migration definition for changed schema '" + _Schema + "' is defining a view '" + n + "' in this schema '" + Parent._Name + "' which cannot be found.");
+                  else
+                    _Views.add(v);
+                }
               else
                 _Views.add(v);
             }

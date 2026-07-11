@@ -121,7 +121,7 @@ public class Query
      * Taking patterns as <token>(.<token>)? not followed by a '(' or a '\'' to delimit what is most likely
      * a column name, or a "table.column" string that is not a function call, or a string.
      */
-    private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)\\s*(?!\\(|')\\b");
+    private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w*(\\.[a-zA-Z]\\w*)+)\\s*(?!\\(|')\\b");
 
     public boolean validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
@@ -220,7 +220,7 @@ public class Query
             else if (m._type == 'C')
               {
                 ReferenceHelper R = ReferenceHelper.parseColumnReference(m._name, ParentObject);
-                Column C = R.resolveAsColumn(PS, "Object '"+OwnerObjName+"'", "subWhereclause '" + _Clause + "'", false);
+                Column C = R.resolveAsColumn(PS, "Object '"+OwnerObjName+"'", "subWhereclause '" + _Clause + "'", false, null);
                 if (C == null)
                  continue;
                 // if (C.isCollection() == true)

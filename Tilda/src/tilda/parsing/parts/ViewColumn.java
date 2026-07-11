@@ -400,7 +400,7 @@ public class ViewColumn
     public static Column ValidateSameAs(ParserSession PS, String ColFullName, String SameAs, View ParentView)
       {
         ReferenceHelper R = ReferenceHelper.parseColumnReference(SameAs, ParentView);
-        Column Col = R.resolveAsColumn(PS, "View column '" + ColFullName + "'", "sameAs '" + SameAs + "'", false);
+        Column Col = R.resolveAsColumn(PS, "View column '" + ColFullName + "'", "sameAs '" + SameAs + "'", false, null);
         if (Col == null)
           return null;
 

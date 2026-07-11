@@ -422,15 +422,6 @@ public class BigQuery extends CommonStoreImpl
       }
 
     @Override
-    public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
-    throws Exception
-      {
-
-        String Q = "ALTER " + (base._TildaType == TildaType.VIEW ? "VIEW" : "TABLE") + " " + oldSchemaName + "." + base._Name + " SET SCHEMA " + base._ParentSchema._Name + "";
-        return Con.executeDDL(base._ParentSchema._Name, base.getBaseName(), Q);
-      }
-
-    @Override
     public boolean renameTableView(Connection Con, Base base, String oldName)
     throws Exception
       {

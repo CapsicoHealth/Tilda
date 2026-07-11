@@ -78,7 +78,7 @@ import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TablePKSwitchType;
 import tilda.migration.actions.TableViewRename;
-import tilda.migration.actions.TableViewSchemaSet;
+import tilda.migration.actions.TableViewMove;
 import tilda.migration.actions.TildaAclAdd;
 import tilda.migration.actions.TildaCatalogAdd;
 import tilda.migration.actions.TildaExtraDDL;
@@ -793,19 +793,29 @@ public class Migrator
 
               for (Object obj : MM._Objects) // let's look at tables to transfer
                 {
-                  handleTableMove(S, DBMeta, Actions, MM, obj);
+                  handleTableMove(C, S, DBMeta, Actions, MM, obj);
                   for (Object objCloned : obj._Clones)
-                    handleTableMove(S, DBMeta, Actions, MM, objCloned);
+                    handleTableMove(C, S, DBMeta, Actions, MM, objCloned);
                 }
               for (View v : MM._Views)
                 {
                   ViewMeta VMSrc = DBMeta.getViewMeta(MM._Schema, v._Name);
                   ViewMeta VMDest = DBMeta.getViewMeta(S._Name, v._Name);
+                  String newName = null;
+                  if (VMDest == null)
+                    {
+                      newName = S._Migration.hasViewRenameFrom(v._Name);
+                      if (newName != null)
+                        VMDest = DBMeta.getViewMeta(S._Name, newName); // dst table
+                      else
+                        newName = v._Name;
+                    }
+
                   // src view must exist and dst view must not exist (i.e., if it doesn't, it's been migrated previously already).
                   if (VMDest == null && VMSrc != null)
                     {
                       // Add the migration action
-                      Actions.add(new TableViewSchemaSet(v, MM._Schema));
+                      Actions.add(new TableViewMove(v._ParentSchema._Name, v._Name, S._Name, newName, true));
                       // Transfer view to new schema to avoid double-creation later in this loop
                       // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
                       if (DBMeta.getSchemaMeta(v._ParentSchema._Name).moveViewMetaFromOtherSchema(DBMeta, VMSrc) == false)
@@ -815,19 +825,28 @@ public class Migrator
             }
       }
 
-    protected static void handleTableMove(Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions, MigrationMove MM, Object obj)
+    protected static void handleTableMove(Connection C, Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions, MigrationMove MM, Object obj)
     throws Exception
       {
         TableMeta TMSrc = DBMeta.getTableMeta(MM._Schema, obj._Name); // src table
         TableMeta TMDest = DBMeta.getTableMeta(S._Name, obj._Name); // dst table
+        String newName = null;
+        if (TMDest == null)
+          {
+            newName = S._Migration.hasObjectRenameFrom(obj._Name);
+            if (newName != null)
+              TMDest = DBMeta.getTableMeta(S._Name, newName); // dst table
+            else
+              newName = obj._Name;
+          }
         // src table must exist and dst table must not exist (i.e., if it doesn't, it's been migrated previously already).
         if (TMDest == null && TMSrc != null)
           {
             // Add the migration action
-            Actions.add(new TableViewSchemaSet(obj, MM._Schema));
+            Actions.add(new TableViewMove(MM._Schema, obj._Name, S._Name, newName, false));
             // Transfer table to new schema to avoid double-creation later in this loop
             // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-            if (DBMeta.getSchemaMeta(obj._ParentSchema._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
+            if (DBMeta.getSchemaMeta(S._Name).moveTableMetaFromOtherSchema(DBMeta, TMSrc) == false)
               throw new Exception("An error occurred: table '" + obj._Name + "' is being moved from schema '" + MM._Schema + "' to '" + obj._ParentSchema._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
           }
       }
@@ -887,7 +906,7 @@ public class Migrator
               {
                 mc = Col._ParentObject._ParentSchema._Migration == null ? null : Col._ParentObject._ParentSchema._Migration.getConversion(Col);
                 if (mc == null)
-                  throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " in the database to " + Col.getType() + ".");
+                  throw new Exception("Type incompatbility requested for an alter column " + Col.getShortName() + ": cannot alter from " + CMeta._TildaType + " in the database to " + Col.getType() + " in the model.");
               }
 
             CAM.addColumnAlterType(CMeta, Col, mc);

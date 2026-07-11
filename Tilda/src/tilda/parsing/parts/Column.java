@@ -99,6 +99,8 @@ public class Column extends TypeDef
 
     private transient ValidationStatus   _Validation        = ValidationStatus.NONE;
 
+    public transient boolean _preCreatedPK;
+
     public Column()
       {
       }
@@ -361,7 +363,7 @@ public class Column extends TypeDef
 
         _SameAs = _SameAs.trim();
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
-        _SameAsObj = R.resolveAsColumn(PS, "Column '" + getFullName() + "'", "sameAs '" + _SameAs + "'", true);
+        _SameAsObj = R.resolveAsColumn(PS, "Column '" + getFullName() + "'", "sameAs '" + _SameAs + "'", true, this);
         if (_SameAsObj == this)
           PS.AddError("Column '" + getFullName() + "' is declaring a 'sameAs' to itself! That makes no sense.");
         else if (_SameAsObj != null)
@@ -631,6 +633,17 @@ public class Column extends TypeDef
     public boolean isForeignKey()
       {
         return _ForeignKey;
+      }
+
+    public boolean isForeignKeyPreParse()
+      {
+        if (_ParentObject._ForeignKeys != null)
+          for (ForeignKey FK : _ParentObject._ForeignKeys)
+            if (FK != null)
+              for (String srcColName : FK._SrcColumns)
+                if (srcColName.equals(_Name) == true)
+                  return true;
+        return false;
       }
 
     public boolean hasBeenValidatedSuccessfully()

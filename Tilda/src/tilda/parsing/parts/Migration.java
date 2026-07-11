@@ -168,4 +168,19 @@ public class Migration
         return null;
       }
 
+    public String hasObjectRenameFrom(String n)
+      {
+        for (MigrationRename mr : _Renames)
+         if (CollectionUtil.indexOf(mr._OldNames, n) > -1)
+          return mr._ObjectName;
+        return null;
+      }
+    public String hasViewRenameFrom(String n)
+      {
+        for (MigrationRename mr : _Renames)
+         if (CollectionUtil.indexOf(mr._OldNames, n) > -1)
+          return mr._ViewName;
+        return null;
+      }
+
   }

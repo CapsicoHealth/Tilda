@@ -62,6 +62,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
+import tilda.utils.EncryptionUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
@@ -800,7 +801,7 @@ public abstract class CommonStoreImpl implements DBType
           delete from TILDA.Key where "name" = '%s';
           insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated")
                values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), '%s',(select COALESCE(max("%s"),0)+1 from %s), %d, current_timestamp, current_timestamp);
-          """.formatted(Obj.getShortName(), pkColName, Obj._ParentSchema._Name, Obj.getShortName().toLowerCase() + "_" + pkColName, Obj.getShortName().toUpperCase(), Obj.getShortName().toUpperCase(), pkColName, Obj.getShortName(), Obj._PrimaryKey._KeyBatch);
+          """.formatted(Obj.getShortName(), pkColName, Obj._ParentSchema._Name, Obj.getBaseName().toLowerCase() + "_" + pkColName, Obj.getShortName().toUpperCase(), Obj.getShortName().toUpperCase(), pkColName, Obj.getShortName(), Obj._PrimaryKey._KeyBatch);
 
         return Con.executeDDL(Obj._ParentSchema._Name, Obj.getBaseName(), q);
       }
@@ -969,12 +970,20 @@ public abstract class CommonStoreImpl implements DBType
       }
 
     @Override
-    public boolean moveTableView(Connection Con, Base base, String oldSchemaName)
+    public boolean moveTableView(Connection Con, TildaType type, String srcSchemaName, String srcTableVieName, String dstSchemaName, String dstTableViewName)
     throws Exception
       {
-
-        String Q = "ALTER " + (base._TildaType == TildaType.VIEW ? "VIEW" : "TABLE") + " " + oldSchemaName + "." + base._Name + " SET SCHEMA " + base._ParentSchema._Name + "";
-        return Con.executeDDL(base._ParentSchema._Name, base.getBaseName(), Q);
+        String rand = EncryptionUtil.getToken(4, true);
+        String typeStr = type == TildaType.VIEW ? "VIEW" : "TABLE";
+        // we do not know if the table/view names we are transfering to/from exist in the src/dst schemas. Since we cannot
+        // move and rename all at once, we will move the source table/view to a random name in the source schema, then move
+        // it to the destination schema with the original name, and then rename it to the final name. This way, we avoid any 
+        // naming conflicts in either schema.
+        String Q = "\nALTER " + typeStr + " " + srcSchemaName + "." + srcTableVieName + " RENAME TO " + dstTableViewName + rand +";\n"
+                  +"ALTER " + typeStr + " " + srcSchemaName + "." + dstTableViewName + rand + " SET SCHEMA " + dstSchemaName + ";\n"
+                  +"ALTER " + typeStr + " " + dstSchemaName + "." + dstTableViewName + rand + " RENAME TO " + dstTableViewName + ";";
+        
+        return Con.executeDDL(dstSchemaName, dstTableViewName, Q);
       }
 
     @Override

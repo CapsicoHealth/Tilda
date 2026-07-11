@@ -49,6 +49,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
+import tilda.enums.TildaType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
@@ -1034,10 +1035,10 @@ public final class Connection
           CL.get(i).rollback();
       }
 
-    public boolean moveTableView(Base base, String oldSchemaName)
+    public boolean moveTableView(TildaType type, String srcSchemaName, String srcTableVieName, String dstSchemaName, String dstTableViewName)
     throws Exception
       {
-        return _DB.moveTableView(this, base, oldSchemaName);
+        return _DB.moveTableView(this, type, srcSchemaName, srcTableVieName, dstSchemaName, dstTableViewName);
       }
 
     public boolean renameTableView(Base base, String oldName)

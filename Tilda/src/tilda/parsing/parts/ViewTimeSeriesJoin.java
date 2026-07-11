@@ -93,7 +93,7 @@ public class ViewTimeSeriesJoin
             for (int i = 0; i < parts.length; ++i)
               {
                 ReferenceHelper R = ReferenceHelper.parseColumnReference(parts[i], _ObjectObj);
-                Column col = R.resolveAsColumn(PS, "View '" + _ParentView.getFullName() + "'", "Time Series range column '" + parts[i] + "'", false);
+                Column col = R.resolveAsColumn(PS, "View '" + _ParentView.getFullName() + "'", "Time Series range column '" + parts[i] + "'", false, null);
                 if (col != null)
                 L.add(col);
               }

@@ -40,6 +40,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
+import tilda.enums.TildaType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
@@ -752,7 +753,7 @@ public class MSSQL implements DBType
 
 
     @Override
-    public boolean moveTableView(Connection con, Base base, String oldSchemaName)
+    public boolean moveTableView(Connection Con, TildaType type, String srcSchemaName, String srcTableVieName, String dstSchemaName, String dstTableViewName)
     throws Exception
       {
         throw new UnsupportedOperationException();

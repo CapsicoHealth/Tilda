@@ -35,6 +35,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
+import tilda.enums.TildaType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
@@ -157,7 +158,7 @@ public interface DBType
     public void             within(Connection Con, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
     public String getBackendConnectionId(Connection con) throws Exception;
     void cancel(Connection con) throws SQLException;
-    public boolean moveTableView(Connection con, Base base, String oldSchemaName) throws Exception;
+    public boolean moveTableView(Connection Con, TildaType type, String srcSchemaName, String srcTableVieName, String dstSchemaName, String dstTableViewName) throws Exception;
     public boolean renameTableView(Connection con, Base base, String oldName) throws Exception;
     public boolean renameTableColumn(Connection con, Column col, String oldName) throws Exception;
     public ZonedDateTime getCurrentTimestamp(Connection con) throws Exception;
