@@ -155,6 +155,69 @@ public class CSHelper
           }
       }
 
+    /**
+     * Returns the full GCS paths of direct sub-folders under {@code dir},
+     * without a trailing slash.
+     * E.g. for dir="reports/" the result may be ["reports/2024","reports/2025"].
+     * Pass an empty string for {@code dir} to list root-level folders.
+     */
+    public static List<String> getSubDirectoryPaths(Storage cs, String bucketName, String dir)
+      {
+        List<String> paths = new ArrayList<String>();
+        Page<Blob> blobs = cs.list(bucketName, Storage.BlobListOption.prefix(dir), Storage.BlobListOption.currentDirectory());
+        for (Blob blob : blobs.iterateAll())
+          {
+            if (blob.getName().endsWith("/"))
+              {
+                // Skip the folder placeholder blob for the directory itself
+                // (GCS returns it when a zero-byte "TCGA-Images/" object exists).
+                if (blob.getName().equals(dir))
+                  continue;
+                String path = blob.getName();
+                paths.add(path.substring(0, path.length() - 1)); // strip trailing /
+              }
+          }
+        return paths;
+      }
+
+    /**
+     * Returns all non-folder {@link Blob} objects that are direct children of
+     * {@code dir} (one level deep, not recursive).
+     * Pass an empty string for {@code dir} to list root-level objects.
+     */
+    public static List<Blob> listBlobs(Storage cs, String bucketName, String dir)
+      {
+        List<Blob> result = new ArrayList<Blob>();
+        Page<Blob> blobs = cs.list(bucketName, Storage.BlobListOption.prefix(dir), Storage.BlobListOption.currentDirectory());
+        for (Blob blob : blobs.iterateAll())
+          {
+            if (blob.getName().endsWith("/") == false)
+              result.add(blob);
+          }
+        return result;
+      }
+
+    /**
+     * Derives a MIME type from a GCS object path when the stored content-type
+     * is absent.  Falls back to {@code application/octet-stream}.
+     */
+    public static String detectMimeType(String name)
+      {
+        if (name == null)
+          return "application/octet-stream";
+        String lc = name.toLowerCase();
+        if (lc.endsWith(".pdf"))                          return "application/pdf";
+        if (lc.endsWith(".jpg") || lc.endsWith(".jpeg")) return "image/jpeg";
+        if (lc.endsWith(".png"))                          return "image/png";
+        if (lc.endsWith(".gif"))                          return "image/gif";
+        if (lc.endsWith(".bmp"))                          return "image/bmp";
+        if (lc.endsWith(".zip"))                          return "application/zip";
+        if (lc.endsWith(".json"))                         return "application/json";
+        if (lc.endsWith(".csv"))                          return "text/csv";
+        if (lc.endsWith(".txt"))                          return "text/plain";
+        return "application/octet-stream";
+      }
+
     public static URL genSignedUrl(Storage cs, String bucketName, String fullFileName, String mimeType)
     throws IOException
       {

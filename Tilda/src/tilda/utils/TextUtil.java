@@ -2034,6 +2034,17 @@ public class TextUtil
       {
         return Str == null ? null : Str.trim();
       }
+    
+    /**
+     * Fully UNICODE-aware trim + ZWSP characters
+     * @param Str
+     * @return
+     */
+    public static String trimFull(String str)
+      {
+        return str == null ? null : str.replaceAll("(^[\\s\\u200B]+)|([\\s\\u200B]+$)", "");
+      }
+    
 
     public static String joinTrim(String[] A, String Separator)
       {

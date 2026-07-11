@@ -24,7 +24,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,6 +40,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -716,5 +719,68 @@ public class FileUtil
           {
             writer.dispose();
           }
-      }    
+      }
+    
+   public static boolean fileCopyNIO(File Src, File Dest)
+    {
+      FileChannel srcChannel = null;
+      FileChannel dstChannel = null;
+      try 
+       {
+         srcChannel = new FileInputStream(Src).getChannel();
+         dstChannel = new FileOutputStream(Dest).getChannel();
+         dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
+       }
+      catch (IOException E)
+       {
+         LOG.error("Cannot copy file '"+Src.getAbsolutePath()+"' to file '"+Dest.getAbsolutePath()+"'.\n", E);
+         return false;
+       }
+      finally
+       {
+         if (srcChannel != null)
+          try { srcChannel.close(); } catch (IOException e1) { }
+         if (dstChannel != null)
+          try { dstChannel.close(); } catch (IOException e1) { }
+       }
+      return true;
+    }
+   
+   public static File dirSafeCreate(String DirName)
+   throws Exception
+    {
+      File F = new File(DirName);
+      if (F.exists() == false && F.mkdirs() == false)
+       throw new Exception("ERROR: Cannot create folder '"+F.getAbsolutePath()+"'.");
+      return F;
+    }
+
+   /**
+    * Given a file name, if it already exists, it will try to find an alternative name by adding 
+    * a .001, .002, etc. before the extension. It will return null if it cannot find an available 
+    * name after 99 tries.
+    * @param FileName
+    * @return
+    */
+   public static File autoRenameAndCreate(String FileName)
+    {
+      int i = FileName.lastIndexOf('.');
+      if (i == -1)
+       {
+         FileName = FileName+".";
+         i = FileName.lastIndexOf('.');
+       }
+      
+      String Base = FileName.substring(0, i);
+      String Ext  = FileName.substring(i);
+      for (i = 1; i < 100; ++i)
+       {
+         FileName = Base+"."+NumberFormatUtil.leadingZero1(i)+Ext;
+         File F = new File(FileName);
+         if (F.exists() == false)
+          return F;
+       }
+      
+      return null;
+    }   
   }

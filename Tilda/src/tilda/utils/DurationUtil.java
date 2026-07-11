@@ -63,6 +63,11 @@ public class DurationUtil
         return F1.format(NanoSeconds / NANOSECS_PER_HOUR) + "h";
       }
 
+    public static double getDurationMillis(long NanoSeconds)
+      {
+        return 1.0 * NanoSeconds / NANOSECS_PER_MILLISECOND;
+      }
+
     public static double getDurationSeconds(long NanoSeconds)
       {
         return 1.0 * NanoSeconds / NANOSECS_PER_SECOND;
