@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,7 +69,6 @@ public class Docs
 
     protected static final Logger LOG = LogManager.getLogger(Docs.class.getName());
 
-
     public static void writeHeader(PrintWriter Out, Schema S)
     throws Exception
       {
@@ -101,7 +101,7 @@ public class Docs
         Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><SPAN class=\"BackToDetails\"><A href=\"#" + O._Name + "_CNT\">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
         Out.println("</TABLE>");
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
-        Out.println("The " + ObjType + " " + O.getShortName() + " "+(TextUtil.isNullOrEmpty(O._EntityClass)==true?"":"(defined with an entity class of "+O._EntityClass+")")+":<UL>");
+        Out.println("The " + ObjType + " " + O.getShortName() + " " + (TextUtil.isNullOrEmpty(O._EntityClass) == true ? "" : "(defined with an entity class of " + O._EntityClass + ")") + ":<UL>");
         if (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY) // view == null || view._DBOnly == false)
           Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>" + O._ParentSchema._Package + "</B>.");
         else if (O._Mode == ObjectMode.DB_ONLY)
@@ -113,20 +113,20 @@ public class Docs
           {
             Object RO = view._RealizedObj;
             if (RO != null)
-             {
-               Out.print("<LI>Configured to be Realized to <B>" + UrlMaker.makeObjectLink(RO) + "</B> through DB function <B>" + UrlMaker.coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.");
-               if (RO._ParentSchema._Name.equals(view._ParentSchema._Name) == false)
-                 Out.print("<BR><B>The target table exists in a different schema: "+RO._ParentSchema._Name+".</B></LI>");
-               Out.println("</LI>");
-             }
+              {
+                Out.print("<LI>Configured to be Realized to <B>" + UrlMaker.makeObjectLink(RO) + "</B> through DB function <B>" + UrlMaker.coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.");
+                if (RO._ParentSchema._Name.equals(view._ParentSchema._Name) == false)
+                  Out.print("<BR><B>The target table exists in a different schema: " + RO._ParentSchema._Name + ".</B></LI>");
+                Out.println("</LI>");
+              }
           }
         else if (O._FST == FrameworkSourcedType.REALIZED)
           {
             View V = O._RealizedView;
             if (V != null)
-             Out.print("<LI>Is Realized from <B>" + UrlMaker.makeObjectLink(V) + "</B> through DB function <B>" + UrlMaker.coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.");
+              Out.print("<LI>Is Realized from <B>" + UrlMaker.makeObjectLink(V) + "</B> through DB function <B>" + UrlMaker.coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.");
             if (O._ParentSchema._Name.equals(V._ParentSchema._Name) == false)
-              Out.print("<BR><B>This target table exists in a different schema: "+O._ParentSchema._Name+".</B></LI>");
+              Out.print("<BR><B>This target table exists in a different schema: " + O._ParentSchema._Name + ".</B></LI>");
             Out.println("</LI>");
           }
         else if (O._FST == FrameworkSourcedType.CLONED)
@@ -146,7 +146,7 @@ public class Docs
               {
                 Object OR = O._ParentSchema.getObject(c._Name);
                 if (OR != null)
-                 Out.println("<LI>" + UrlMaker.makeObjectLink(OR) + "</LI>");
+                  Out.println("<LI>" + UrlMaker.makeObjectLink(OR) + "</LI>");
               }
             Out.println("</UL></LI>");
           }
@@ -185,19 +185,17 @@ public class Docs
               }
             if (O._HistoryObj != null)
               {
-                Out.println("<LI>Has a History mapping to "+UrlMaker.makeObjectLink(O._HistoryObj)+":<UL>" + SystemValues.NEWLINE
-                + "<LI><B>Signature</B>: "+Column.printColumnList(O._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
-                + "<LI><B>History</B>: "+Column.printColumnList(O._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
-                +"</UL>"
-                );
+                Out.println("<LI>Has a History mapping to " + UrlMaker.makeObjectLink(O._HistoryObj) + ":<UL>" + SystemValues.NEWLINE
+                + "<LI><B>Signature</B>: " + Column.printColumnList(O._History._SignatureColumnObjs, true) + "</LI>" + SystemValues.NEWLINE
+                + "<LI><B>History</B>: " + Column.printColumnList(O._History._IncludedColumnObjs, true) + "</LI>" + SystemValues.NEWLINE
+                + "</UL>");
               }
             else if (O._FST == FrameworkSourcedType.HISTORY)
               {
-                Out.println("<LI>Is a History mapping from "+UrlMaker.makeObjectLink(O._SourceObject)+":<UL>" + SystemValues.NEWLINE
-                + "<LI><B>Signature</B>: "+Column.printColumnList(O._SourceObject._History._SignatureColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
-                + "<LI><B>History</B>: "+Column.printColumnList(O._SourceObject._History._IncludedColumnObjs, true)+"</LI>" + SystemValues.NEWLINE
-                +"</UL>"
-                );
+                Out.println("<LI>Is a History mapping from " + UrlMaker.makeObjectLink(O._SourceObject) + ":<UL>" + SystemValues.NEWLINE
+                + "<LI><B>Signature</B>: " + Column.printColumnList(O._SourceObject._History._SignatureColumnObjs, true) + "</LI>" + SystemValues.NEWLINE
+                + "<LI><B>History</B>: " + Column.printColumnList(O._SourceObject._History._IncludedColumnObjs, true) + "</LI>" + SystemValues.NEWLINE
+                + "</UL>");
               }
           }
 
@@ -208,7 +206,7 @@ public class Docs
 
         if (O._ForeignKeys != null && O._ForeignKeys.isEmpty() == false)
           {
-            Out.println("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a" : ""+O._ForeignKeys.size()) + " foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + ":<BR>");
+            Out.println("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a" : "" + O._ForeignKeys.size()) + " foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + ":<BR>");
             Out.println("<TABLE style=\"margin-left: 25px; border:1px solid #BBB;\" cellspacing=\"0px\" cellpadding=\"5px\" border=\"0px\">");
             Out.println("<TR style=\"background-color:#DDD; font-weight:bold;\"><TD></TD><TD>Source Columns</TD><TD>Destination Object</TD><TD>Destination Columns</TD><TD>Notes</TD></TR>");
             Set<String> Names = new HashSet<String>();
@@ -220,15 +218,14 @@ public class Docs
                 if (Names.add(FK._DestObjectObj.getShortName()) == false)
                   continue;
                 ++i;
-                Out.print("<TR "+(i%2==0?"style=\"background-color:#F7F7F7;\"":"")+"><TD>"+i+"</TD><TD>" + TextUtil.print(FK._SrcColumns) + "</TD>"
-                             +"<TD>" + UrlMaker.makeObjectLink(FK._DestObjectObj)+"</TD>"
-                             +"<TD>" + TextUtil.print(FK._DestObjectObj._PrimaryKey._Columns)+"</TD>"
-                             );
+                Out.print("<TR " + (i % 2 == 0 ? "style=\"background-color:#F7F7F7;\"" : "") + "><TD>" + i + "</TD><TD>" + TextUtil.print(FK._SrcColumns) + "</TD>"
+                + "<TD>" + UrlMaker.makeObjectLink(FK._DestObjectObj) + "</TD>"
+                + "<TD>" + TextUtil.print(FK._DestObjectObj._PrimaryKey._Columns) + "</TD>");
                 if (FK._multi == true)
-                 Out.print("<TD>multi-key, not implemented database-side</TD>");
+                  Out.print("<TD>multi-key, not implemented database-side</TD>");
                 else
                   Out.print("<TD>&nbsp;</TD>");
-                 
+
                 Out.println("</TR>");
               }
             Out.println("</TABLE></LI>");
@@ -256,7 +253,7 @@ public class Docs
             for (Index I : O._Indices)
               if (I != null && I._Unique == true)
                 {
-                  Out.print("<LI>Unique Index"+(I._Db == false?"  <B><I>(Application-side Only)</I></B>: ": I._Cluster==true ?"<B><I>(Clustered)</I></B>: ":": "));
+                  Out.print("<LI>Unique Index" + (I._Db == false ? "  <B><I>(Application-side Only)</I></B>: " : I._Cluster == true ? "<B><I>(Clustered)</I></B>: " : ": "));
                   Out.print(Column.printColumnList(I._ColumnObjs, true));
                   Out.println("</LI>");
                 }
@@ -275,9 +272,9 @@ public class Docs
                 {
                   Out.print("<LI>");
                   if (I._ColumnObjs.isEmpty() == false)
-                   Out.print(Column.printColumnList(I._ColumnObjs, true));
+                    Out.print(Column.printColumnList(I._ColumnObjs, true));
                   if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
-                   Out.println((I._ColumnObjs.isEmpty() == false ? ", " : "") + OrderBy.printOrderByList(I._OrderByObjs));
+                    Out.println((I._ColumnObjs.isEmpty() == false ? ", " : "") + OrderBy.printOrderByList(I._OrderByObjs));
                   if (I._Db != true)
                     Out.print(" <B><I>(Application-side Only)</I></B>");
                   else if (I._Cluster == true)
@@ -308,9 +305,9 @@ public class Docs
 
         if (O._Mode != ObjectMode.DB_ONLY)
           {
-          Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">TZ</TH>");
-          colCount += 4;
-        }
+            Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">TZ</TH>");
+            colCount += 4;
+          }
         Out.print("<TH align=\"left\">Description" + (view != null && view._FormulasRegEx != null ? "/<label>Formula<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'F')\", id=\"" + O._Name + "_TBL_F\"></label>" : "") + "</TH></TR>" + SystemValues.NEWLINE);
         colCount += 1;
 
@@ -352,10 +349,10 @@ public class Docs
               }
             if (O._Mode != ObjectMode.DB_ONLY)
               {
-                Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : "<SPAN style=\"font-weight:bold;font-size:10px\">"+C._Mode+"</SPAN>") + "&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : "<SPAN style=\"font-weight:bold;font-size:10px\">" + C._Mode + "</SPAN>") + "&nbsp;&nbsp;</TD>");
                 Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
-                Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : "<SPAN style=\"font-weight:bold;font-size:10px\">"+C._Protect+"</SPAN>") + "&nbsp;&nbsp;</TD>");
-                Out.println("<TD align=\"center\">" + (C.needsTZ() == true ? "<SPAN style=\"font-weight:bold;font-size:10px\">"+C._TzMode.name()+"</SPAN>" : "-") + "&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : "<SPAN style=\"font-weight:bold;font-size:10px\">" + C._Protect + "</SPAN>") + "&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"center\">" + (C.needsTZ() == true ? "<SPAN style=\"font-weight:bold;font-size:10px\">" + C._TzMode.name() + "</SPAN>" : "-") + "&nbsp;&nbsp;</TD>");
               }
 
             Out.print("<TD>" + processExternalLinks(C._Description));
@@ -387,7 +384,7 @@ public class Docs
                 if (F != null)
                   {
                     Out.println("</TD></TR>");
-                    Out.println("  <TR valign=\"top\" style=\"background-color:" + bgColor + "\"><TD colspan=\"2\"></TD><TD colspan=\""+(colCount-2)+"\">");
+                    Out.println("  <TR valign=\"top\" style=\"background-color:" + bgColor + "\"><TD colspan=\"2\"></TD><TD colspan=\"" + (colCount - 2) + "\">");
                     PrintFormulaDetails(Out, view, view._Name, F, false);
                   }
 
@@ -807,11 +804,11 @@ public class Docs
         return String.join("\n", Str); // .replaceAll("(?i)<\\s*br\\s*>\\s*<(/?\\s*[^>]+)\\s*>", "<$1>");
       }
 
-    public static String cleanClause(String Str)
+    private static final Pattern   CLEAN_CLAUSE_PAT = Pattern.compile("(?i)\\b([_a-z][a-z0-9_]*\\.)*([_a-z][a-z0-9_]*\\.[_a-z][a-z0-9_]*\\.[_a-z][a-z0-9_]*)");
+    public static String cleanClause(String whereClause)
       {
-        return Str.replaceAll("(?i)\\b([_a-z][a-z0-9_]*\\.)*([_a-z][a-z0-9_]*\\.[_a-z][a-z0-9_]*\\.[_a-z][a-z0-9_])", "$2");
+        return CLEAN_CLAUSE_PAT.matcher(whereClause).replaceAll("$2");
       }
-
 
     public static SortedSet<String> getColumnMatches(Formula F)
       {
@@ -1075,7 +1072,7 @@ public class Docs
                   for (ViewJoin VJ : parentView._Joins)
                     {
                       if (VJ == null)
-                       continue;
+                        continue;
                       if (VJ._ObjectObj.getShortName().equals(DW.getObj().getShortName()) == true)
                         {
                           found = true;

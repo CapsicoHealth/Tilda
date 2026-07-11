@@ -52,11 +52,11 @@ public class JsonValidation
         _Rule = jv._Rule;
         _Descr = jv._Descr;
       }
-    
-    
+
+
     public transient String _JavaCodeGenStr = null;
 
-    public boolean validate(ParserSession PS, Column C)
+    public boolean validate(ParserSession PS, Column C, JsonSchema js)
       {
         if (_Rule == null || _Rule.length == 0)
           {
@@ -70,9 +70,11 @@ public class JsonValidation
           }
 
         List<ColumnDefinition> ColDefs = new ArrayList<ColumnDefinition>();
-        for (JsonField f : C._JsonSchema._Fields)
+        for (JsonField f : js._Fields)
           {
             ColumnDefinition Col = ColumnDefinition.create(null, null, f._Name, f._Type, f._TypeCollection != MultiType.NONE, f._Nullable, f._Description);
+            if (f._JsonSchema != null)
+              Col.setJsonTyped(true);
             ColDefs.add(Col);
           }
 
@@ -106,7 +108,7 @@ public class JsonValidation
 
         _JavaCodeGenStr = WC_CG.getCodeStr();
 
-        //LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
+        // LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
 
         return true;
       }

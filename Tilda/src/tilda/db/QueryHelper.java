@@ -835,6 +835,15 @@ public abstract class QueryHelper
         setColumn(Col1);
         return equals(Col2);
       }
+    
+    public QueryHelper setIncrement(Type_ShortPrimitive Col1, short val)
+    throws Exception
+      {
+        setColumn(Col1);
+        equals(Col1);
+        return plus(val);
+      }
+    
 
     public QueryHelper set(Type_IntegerPrimitive Col1, Type_ShortPrimitive Col2)
     throws Exception
@@ -843,14 +852,22 @@ public abstract class QueryHelper
         return equals(Col2);
       }
 
-    public QueryHelper set(Type_LongPrimitive Col1, Type_ShortPrimitive Col2)
+    public QueryHelper set(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
-    public QueryHelper set(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    public QueryHelper setIncrement(Type_IntegerPrimitive Col1, int val)
+    throws Exception
+      {
+        setColumn(Col1);
+        equals(Col1);
+        return plus(val);
+      }
+
+    public QueryHelper set(Type_LongPrimitive Col1, Type_ShortPrimitive Col2)
     throws Exception
       {
         setColumn(Col1);
@@ -870,6 +887,15 @@ public abstract class QueryHelper
         setColumn(Col1);
         return equals(Col2);
       }
+    
+    public QueryHelper setIncrement(Type_LongPrimitive Col1, long val)
+    throws Exception
+      {
+        setColumn(Col1);
+        equals(Col1);
+        return plus(val);
+      }
+    
 
     public QueryHelper set(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
     throws Exception

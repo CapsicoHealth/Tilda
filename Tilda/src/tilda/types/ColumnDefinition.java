@@ -84,6 +84,20 @@ public class ColumnDefinition implements JSONable
     final boolean           _Collection;
     public final BitSet     _Mask          = new BitSet(64);
 
+    boolean                 _jsonTyped     = false;
+
+    public void setJsonTyped(boolean b)
+      {
+        if (getType() != ColumnType.JSON)
+          throw new Error("Cannot set a non-JSON column as jsonTyped.");
+        _jsonTyped = b;
+      }
+
+    public boolean isJsonTyped()
+      {
+        return _jsonTyped;
+      }
+
     public String getSchemaName()
       {
         return _SchemaName;

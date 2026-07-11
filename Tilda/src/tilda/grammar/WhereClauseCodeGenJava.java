@@ -112,9 +112,12 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
                 makeColumn(_CodeGen, Col);
                 _CodeGen.append(not == true ? " != null && " : " == null || ");
                 makeColumn(_CodeGen, Col);
-                _CodeGen.append(not == true ? ".length > 0" : ".length == 0)");
+                if (Col.getType() == ColumnType.JSON && Col.isJsonTyped() == true) // it's a list
+                  _CodeGen.append(not == true ? ".isEmpty() == false" : ".isEmpty() == true)");
+                else // it's an array
+                  _CodeGen.append(not == true ? ".length > 0" : ".length == 0)");
               }
-            else //  must be a string
+            else // must be a string
               {
                 _CodeGen.append(" TextUtil.isNullOrEmpty(");
                 makeColumn(_CodeGen, Col);

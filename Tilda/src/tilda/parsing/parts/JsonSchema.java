@@ -35,13 +35,14 @@ public class JsonSchema
     /*@formatter:off*/
     @SerializedName("typeName"   ) public String         _TypeName   ;
     @SerializedName("descr"      ) public String         _Descr      ;
+    @SerializedName("description") public String         _Description;
     @SerializedName("fields"     ) public JsonField[]    _Fields     ;
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
 
-    private transient ValidationStatus _Validated     = ValidationStatus.NONE;
-    transient public Column     _parentColumn;
-    transient public JsonSchema _reusedJsonSchema;
+    private transient ValidationStatus _Validated = ValidationStatus.NONE;
+    transient public Column            _parentColumn;
+    transient public JsonSchema        _reusedJsonSchema;
 
     public JsonSchema(JsonSchema js)
       {
@@ -65,6 +66,15 @@ public class JsonSchema
         boolean Success = true;
 
         _parentColumn = C;
+
+
+        if (TextUtil.isNullOrEmpty(_Description) == false && TextUtil.isNullOrEmpty(_Descr) == false)
+          {
+            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema with both 'descr' and 'description': only one is valid.");
+            Success = false;
+          }
+        else if (TextUtil.isNullOrEmpty(_Description) == false)
+          _Descr = _Description;
 
         if (TextUtil.isNullOrEmpty(_TypeName) == true)
           {
@@ -133,12 +143,12 @@ public class JsonSchema
 
         if (Success == true)
           {
-            if (_Validation != null && _Validation.validate(PS, C) == false)
+            if (_Validation != null && _Validation.validate(PS, C, this) == false)
               Success = false;
           }
 
         _Validated = Success ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
-        
+
         return Success;
       }
 
@@ -181,8 +191,6 @@ public class JsonSchema
           {
             if (obj == null || obj._FST != FrameworkSourcedType.NONE)
               continue;
-            if (obj == col._ParentObject)
-              break;
             if (typeName.startsWith(obj.getBaseName() + ".") == false)
               continue;
             for (Column c : obj._Columns)
@@ -192,6 +200,8 @@ public class JsonSchema
                   if (js != null)
                     return js;
                 }
+            if (obj == col._ParentObject)
+              break;
           }
         return null;
       }
@@ -207,7 +217,11 @@ public class JsonSchema
             if (f != null && f._JsonSchema != null)
               {
                 JsonSchema js = checkJsonSchemaTypeName(f._JsonSchema, typeName, false);
-                if (js != null)
+                // if there is a recursive pattern here, then there can be a field that references the same jsonSchema type name 
+                // as the parent, so we need to check for that and not return it. A proper reuse means the fields are empty, 
+                // so we check for that. Checking otherwise for js != jsonSchema is dangerous because it can be a different 
+                // instance of the same jsonSchema type name, which is valid.
+                if (js != null && (js._Fields == null || js._Fields.length == 0) == false)
                   return js;
               }
         return null;

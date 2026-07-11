@@ -519,7 +519,15 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
         else if (ctx.isnull_op().K_NULL_OR_EMPTY() != null)
           {
-            if (CD.getType() != ColumnType.STRING && CD.isCollection() != true)
+            if (CD.getType() == ColumnType.JSON)
+              {
+                if (CD.isCollection() == false && CD.isJsonTyped() == true) // NOE only applies to untyped JSON (output as STRINGs), or collections output as Lists.
+                  {
+                    Err = true;
+                    _Errors.addError("For a JSON column, operator 'null or empty' must take a Collection column or an untyped JSON: parameter '" + CD.getName() + "' is a " + CD.getType().toString() + ".", ctx);
+                  }
+              }
+            else if (CD.getType() != ColumnType.STRING && CD.isCollection() != true) // otherwise it must be a STRING or a Collection.
               {
                 Err = true;
                 _Errors.addError("Operator 'null or empty' must take a Collection column or a Strings: parameter '" + CD.getName() + "' is a " + CD.getType().toString() + ".", ctx);
