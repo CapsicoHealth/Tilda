@@ -704,6 +704,8 @@ public class TildaData implements CodeGenTildaData
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
                     Out.println("       if (pos >= _" + C.getName() + ".size() || _" + C.getName() + ".get(pos).equals(v) == false)");
+                  else if (C.getType() == ColumnType.NUMERIC)
+                    Out.println("       if (__Init == InitMode.CREATE || _" + C.getName() + " == null || v.compareTo(_" + C.getName() + ") != 0)");
                   else
                     Out.println("       if (__Init == InitMode.CREATE || _" + C.getName() + " == null || v != _" + C.getName() + ")");
                   Out.println("        {");
@@ -1047,9 +1049,9 @@ public class TildaData implements CodeGenTildaData
         if (C._Mode != ColumnMode.CALCULATED)
           {
             // If the set method was called explicitly, we have to make sure the "changes" flag is set, even if the column was null by default.
-            Out.println("       __Changes.or(" + Mask + ");");
             Out.println("       if (__Nulls.intersects(" + Mask + ") == true) // already NULL");
             Out.println("        return;");
+            Out.println("       __Changes.or(" + Mask + ");");
             Out.println("       __Nulls.or(" + Mask + ");");
           }
 

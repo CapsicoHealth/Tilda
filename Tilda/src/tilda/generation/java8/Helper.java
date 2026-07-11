@@ -216,6 +216,7 @@ public class Helper
       {
         // TODO Auto-generated method stub
         int LookupId = -1;
+        Out.println("       String partialIndexWhere = \"\";");
         Out.println("       str.append(\"\\nON CONFLICT(\");");
         Out.println("       switch (__LookupId)");
         Out.println("        {");
@@ -255,14 +256,16 @@ public class Helper
                     if (C._FCT != FrameworkColumnType.OCC_CREATED)
                       Out.println("                " + getRuntimeShortSelectStr(C, "str") + ";");
                   }
+              if (TextUtil.isNullOrEmpty(I._SubWhere) == false)
+                 Out.println("                partialIndexWhere = " + TextUtil.escapeDoubleQuoteWithSlash("WHERE "+I._SubQuery.getQuery(G.getSql().getSQlCodeGen())._ClauseStatic) + ";");
               Out.println("             break;");
             }
         // Out.println(" case " + SystemValues.EVIL_VALUE + ": if (__Init == InitMode.CREATE) break;");
         Out.println("          default: throw new Exception(\"Invalid LookupId \"+__LookupId+\" found. Cannot create upsert statement.\");");
         Out.println("        }");
-        Out.println("       str.append(\") DO UPDATE\\n\");");
-
-
+        Out.println("       str.append(\") \");");
+        Out.println("       str.append(partialIndexWhere);");
+        Out.println("       str.append(\" DO UPDATE\\n\");");
         Out.println("       boolean first = true;");
         Out.println("       str.append(\"set \");");
         for (Column C : O._Columns)

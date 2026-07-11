@@ -743,7 +743,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
-                    Str.append(" filter(where ").append(rewriteExpressionColumnQuoting(VC._Filter)).append(")");
+                    String filter = rewriteExpressionColumnQuoting(VC._Filter.replaceAll("\\?", "\""+VC.getName()+"\""));
+                    Str.append(" filter(where ").append(filter).append(")");
                   }
               }
           }
