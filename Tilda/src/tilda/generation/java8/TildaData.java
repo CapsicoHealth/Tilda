@@ -158,7 +158,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("   transient String _" + C.getName() + ";");
             if (C.isJSONColumn() == true)
               Out.println("   @SerializedName(\"" + C.getName() + "\"" + ")");
-
+            
             String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
             if (C.isCollection() == false)
               Out.println("   " + jsonClassNameRootPath + C._JsonSchema._TypeName + " _" + C.getName() + "Obj;");
@@ -405,6 +405,10 @@ public class TildaData implements CodeGenTildaData
                 Out.println("        return _" + C.getName() + "Obj;");
                 Out.println("      }");
               }
+            Out.println("   public final String get" + TextUtil.capitalizeFirstCharacter(C.getName()) + "AsString()");
+            Out.println("      {");
+            Out.println("        return _" + C.getName() + ";");
+            Out.println("      }");
           }
         // Other non-collection columns
         else if (C.isCollection() == false)
@@ -502,7 +506,7 @@ public class TildaData implements CodeGenTildaData
         String jsonClassNameRootPath = SameAsHelper.getPathToRootJsonColClass(C);
         if (C._JsonSchema != null && C.isCollection() == true && C._JsonSchema._reusedJsonSchema == null)
           {
-            Out.println("   protected static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">>(){}.getType();");
+            Out.println("   public static final java.lang.reflect.Type LIST_TYPE_" + C._JsonSchema._TypeName + " = new com.google.gson.reflect.TypeToken<ArrayList<" + jsonClassNameRootPath + C._JsonSchema._TypeName + ">>(){}.getType();");
             Out.println();
           }
 

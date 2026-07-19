@@ -81,11 +81,11 @@ public class JsonSchema
             PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema without a typeName.");
             Success = false;
           }
-
+        
         // With views, the jsonSchema is reused. If "reused" has been set already, don't do it again!
         if (_reusedJsonSchema == null)
           {
-            _reusedJsonSchema = getReusedJsonFieldTypeColumn(C, _TypeName);
+            _reusedJsonSchema = getReusedJsonFieldTypeColumn(PS, C, _TypeName);
             if (_reusedJsonSchema == this)
               _reusedJsonSchema = null;
           }
@@ -103,6 +103,12 @@ public class JsonSchema
             String prefix = _reusedJsonSchema._parentColumn._ParentObject.getBaseName() + ".";
             if (_TypeName.startsWith(prefix) == true)
               _TypeName = _TypeName.substring(prefix.length());
+            else
+              {
+                prefix = _reusedJsonSchema._parentColumn.getFullName() + ".";
+                if (_TypeName.startsWith(prefix) == true)
+                 _TypeName = _TypeName.substring(prefix.length());
+              }
           }
         else if (_Fields == null || _Fields.length == 0)
           {
@@ -164,15 +170,41 @@ public class JsonSchema
      * @param typeName
      * @return
      */
-    protected static JsonSchema getReusedJsonFieldTypeColumn(Column col, String typeName)
+    protected static JsonSchema getReusedJsonFieldTypeColumn(ParserSession PS, Column col, String typeName)
       {
+        // Short cut if the type name is trans-schema. It must be of the form ".*\.data\.<schema>.<object>.<column>.<jsonSchemaTypeName>".
+        // We can parse and if we have at least 5 parts separated by a ".", then the last 4 parts are the schema, object, column and jsonSchemaTypeName.
+        // We can then look for the object in the schema and then look for the jsonSchema in the object.
+        String[] parts = typeName.split("\\.");
+        if (parts.length >= 6 && parts[parts.length - 5].equals("data") == true)
+          {
+            // The package name is the substring up to and including the ".data" part, which is the 5th to last part.
+            // The schema name is the 2nd to last part, the object name is the last part, and the jsonSchema type name is the last part. 
+            String packageName = typeName.substring(0, typeName.indexOf(".data.") + 5);
+            String schemaName = parts[parts.length - 4];
+            String objectName = parts[parts.length - 3];
+            String columnName = parts[parts.length - 2];
+            String jsonSchemaTypeName = parts[parts.length - 1];
+            Column C = PS.getColumn(packageName, schemaName, objectName, columnName);
+            if (C != null && C._JsonSchema != null && C._JsonSchema._TypeName.equals(jsonSchemaTypeName) == true)
+             return C._JsonSchema;
+          }
+        if (parts.length >= 3)
+         {
+           PS.AddError("Column '" + col.getFullName() + "' is attempting to reuse jsonSchema '" + typeName + "' but that type cannot be found. Make sure you use the format <packageName>.data.<schema>.<object>.<column>.<jsonSchemaTypeName>.");
+           return null;
+         }
+
+        
+        
+        // First let's look at the column itself, in case it is referring to a jsonSchema with the same type name.
         if (col != null && col._JsonSchema != null)
           {
             JsonSchema js = checkJsonSchemaTypeName(col._JsonSchema, typeName, true);
             if (js != null)
               return js;
           }
-
+        // Then let's look at other columns in the same object, in case they are referring to a jsonSchema with the same type name.
         for (Column c : col._ParentObject._Columns)
           {
             if (c == null)
@@ -187,6 +219,8 @@ public class JsonSchema
               }
 
           }
+        
+        // Then let's look at other objects in the same schema 
         for (Object obj : col._ParentObject._ParentSchema._Objects)
           {
             if (obj == null || obj._FST != FrameworkSourcedType.NONE)
