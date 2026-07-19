@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -679,6 +680,12 @@ public class CollectionUtil
         return L == null ? null : L.toArray(new String[L.size()]);
       }
 
+    public static UUID[] toUUIDArray(List<UUID> L)
+      {
+        return L == null ? null : L.toArray(new UUID[L.size()]);
+      }
+    
+
     public static String[][] toDoubleStringArray(Collection<String[]> L)
       {
         return L == null ? null : L.toArray(new String[L.size()][]);
@@ -868,4 +875,5 @@ public class CollectionUtil
       {
         return A==null || A.length == 0 ? null : new SimpleArrayIterator<T>(A);
       }
+
   }

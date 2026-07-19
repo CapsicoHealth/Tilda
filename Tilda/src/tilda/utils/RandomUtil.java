@@ -16,8 +16,10 @@
 
 package tilda.utils;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 
 public class RandomUtil
@@ -70,5 +72,23 @@ public class RandomUtil
       {
         short s = (short) _R.nextInt(1 << 16);
         return s == 0 ? SystemValues.EVIL_VALUE : s;
+      }
+
+    private static final SecureRandom random = new SecureRandom();
+    public static UUID generateUUIDv7()
+      {
+        long timestamp = System.currentTimeMillis();
+
+        // 1. Construct Most Significant Bits (msb)
+        long msb = (timestamp & 0xFFFFFFFFFFFFL) << 16; // 48-bit timestamp pushed to the left
+        msb |= (7L << 12); // Set version bit to 7 (0111)
+        msb |= (random.nextLong() & 0xFFFL); // Fill remaining 12 bits with random data (rand_a)
+
+        // 2. Construct Least Significant Bits (lsb)
+        long lsb = random.nextLong();
+        lsb &= 0x3FFFFFFFFFFFFFFFL; // Clear variant bits
+        lsb |= 0x8000000000000000L; // Set variant bit to IETF standard (10xx)
+
+        return new UUID(msb, lsb);
       }
   }

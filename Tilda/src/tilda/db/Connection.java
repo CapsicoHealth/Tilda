@@ -28,6 +28,7 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -805,6 +806,12 @@ public final class Connection
         _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
       }
 
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, UUID[] val)
+    throws Exception
+      {
+        _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
+      }
+    
     public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, long[] val)
     throws Exception
       {
