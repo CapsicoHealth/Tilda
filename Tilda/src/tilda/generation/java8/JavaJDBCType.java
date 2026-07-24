@@ -124,7 +124,10 @@ public enum JavaJDBCType
             case SET:
               return JavaJDBCType.get(F.getType())._JavaClassType + "[]";
             case NONE:
-              return JavaJDBCType.get(F.getType())._JavaType;
+              if (F.getType() == ColumnType.JSON) // JSON fields inside JSON objects are represented as JsonObject, not String, so that they can be manipulated as JSON objects.
+                return "com.google.gson.JsonObject";
+              else
+               return JavaJDBCType.get(F.getType())._JavaType;
             default:
               throw new Error("Unhandled case in switch for json field type '" + F.getTypeCollection() + "'.");
           }
