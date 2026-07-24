@@ -22,7 +22,9 @@ COMMENT ON COLUMN TILDATEST.Test."test_fk" IS E'The name of the test';
 COMMENT ON COLUMN TILDATEST.Test."created" IS E'The timestamp for when the record was created. (TILDATEST.Test)';
 COMMENT ON COLUMN TILDATEST.Test."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Test)';
 COMMENT ON COLUMN TILDATEST.Test."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.Test)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Test_Name ON TILDATEST.Test ("name");
+
 delete from TILDA.Key where "name" = 'TILDATEST.TEST';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TEST',(select COALESCE(max("refnum"),0)+1 from TILDATEST.Test), 250, current_timestamp, current_timestamp);
 
@@ -45,7 +47,9 @@ COMMENT ON COLUMN TILDATEST.Test2."test_fk" IS E'The name of the test';
 COMMENT ON COLUMN TILDATEST.Test2."created" IS E'The timestamp for when the record was created. (TILDATEST.Test2)';
 COMMENT ON COLUMN TILDATEST.Test2."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Test2)';
 COMMENT ON COLUMN TILDATEST.Test2."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.Test2)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Test2_Name ON TILDATEST.Test2 ("name");
+
 delete from TILDA.Key where "name" = 'TILDATEST.TEST2';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TEST2',(select COALESCE(max("refnum"),0)+1 from TILDATEST.Test2), 250, current_timestamp, current_timestamp);
 
@@ -161,90 +165,14 @@ COMMENT ON COLUMN TILDATEST.Testing."a14" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing."created" IS E'The timestamp for when the record was created. (TILDATEST.Testing)';
 COMMENT ON COLUMN TILDATEST.Testing."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing)';
 COMMENT ON COLUMN TILDATEST.Testing."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.Testing)';
+
 -- app-level index only -- CREATE INDEX IF NOT EXISTS Testing_AllByName ON TILDATEST.Testing ("name" ASC);
 CREATE INDEX IF NOT EXISTS Testing_AllByName2 ON TILDATEST.Testing ("name" ASC);
 CREATE INDEX IF NOT EXISTS Testing_AllByName3 ON TILDATEST.Testing ("name" DESC);
 CREATE INDEX IF NOT EXISTS Testing_AllByName4 ON TILDATEST.Testing ("name" ASC, "description" DESC) where TILDATEST.Testing."deleted" is null and TILDATEST.Testing."name" = 'Hello' and TILDATEST.Testing."created" > '2018-01-01';
+
 delete from TILDA.Key where "name" = 'TILDATEST.TESTING';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDATEST.Testing), 25000, current_timestamp, current_timestamp);
-
-
-
-create table if not exists TILDATEST.TestingTimestamps -- blah blah
- (  "refnum"                             bigint         not null   -- The primary key for this record
-  , "id"                                 varchar(20)    not null   -- Medical system unique enterprise id
-  , "dt1TZ"                              character(5)              -- Generated helper column to hold the time zone ID for 'dt1'.
-  , "dt1"                                timestamptz               -- The blah
-  , "dt1nTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt1n'.
-  , "dt1n"                               timestamptz             DEFAULT statement_timestamp()   -- The blah
-  , "dt1uTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt1u'.
-  , "dt1u"                               timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
-  , "dt1aTZ"                             text[]                    -- Generated helper column to hold the time zone ID for 'dt1a'.
-  , "dt1a"                               timestamptz[]             -- The blah
-  , "rowTZ_TILDATEST_TestingTimestamps"  character(5)              -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.
-  , "dt2"                                timestamptz               -- The blah
-  , "dt2n"                               timestamptz             DEFAULT statement_timestamp()   -- The blah
-  , "dt2u"                               timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
-  , "dt2a"                               timestamptz[]             -- The blah
-  , "dt3TZ"                              character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
-  , "dt3"                                timestamp                 -- The blah
-  , "dt3nTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
-  , "dt3n"                               timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
-  , "dt3uTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
-  , "dt3u"                               timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
-  , "dt3aTZ"                             text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
-  , "dt3a"                               timestamp[]               -- The blah
-  , "dt4"                                timestamp                 -- The blah
-  , "dt4n"                               timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
-  , "dt4u"                               timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
-  , "dt4a"                               timestamp[]               -- The blah
-  , "created"                            timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps)
-  , "lastUpdated"                        timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)
-  , "deleted"                            timestamptz               -- The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)
-  , PRIMARY KEY("refnum")
-  , CONSTRAINT fk_TestingTimestamps_dt1 FOREIGN KEY ("dt1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_TestingTimestamps_dt1n FOREIGN KEY ("dt1nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_TestingTimestamps_dt1u FOREIGN KEY ("dt1uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_TestingTimestamps_dt2 FOREIGN KEY ("rowTZ_TILDATEST_TestingTimestamps") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_TestingTimestamps_dt3 FOREIGN KEY ("dt3TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_TestingTimestamps_dt3n FOREIGN KEY ("dt3nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_TestingTimestamps_dt3u FOREIGN KEY ("dt3uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
- );
-COMMENT ON TABLE TILDATEST.TestingTimestamps IS E'blah blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."refnum" IS E'The primary key for this record';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."id" IS E'Medical system unique enterprise id';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1TZ" IS E'Generated helper column to hold the time zone ID for ''dt1''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1nTZ" IS E'Generated helper column to hold the time zone ID for ''dt1n''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1n" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1uTZ" IS E'Generated helper column to hold the time zone ID for ''dt1u''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1u" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1aTZ" IS E'Generated helper column to hold the time zone ID for ''dt1a''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1a" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps" IS E'Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2n" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2u" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2a" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3TZ" IS E'Generated helper column to hold the time zone ID for ''dt3''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3nTZ" IS E'Generated helper column to hold the time zone ID for ''dt3n''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3n" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3uTZ" IS E'Generated helper column to hold the time zone ID for ''dt3u''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3u" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3aTZ" IS E'Generated helper column to hold the time zone ID for ''dt3a''.';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3a" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4n" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4u" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4a" IS E'The blah';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."created" IS E'The timestamp for when the record was created. (TILDATEST.TestingTimestamps)';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)';
-COMMENT ON COLUMN TILDATEST.TestingTimestamps."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)';
-CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Id ON TILDATEST.TestingTimestamps ("id");
--- app-level index only -- CREATE INDEX IF NOT EXISTS TestingTimestamps_AllByName ON TILDATEST.TestingTimestamps ("id" ASC);
-delete from TILDA.Key where "name" = 'TILDATEST.TESTINGTIMESTAMPS';
-insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTINGTIMESTAMPS',(select COALESCE(max("refnum"),0)+1 from TILDATEST.TestingTimestamps), 25000, current_timestamp, current_timestamp);
 
 
 
@@ -358,12 +286,94 @@ COMMENT ON COLUMN TILDATEST.Testing_Cloned."a14" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."created" IS E'The timestamp for when the record was created. (TILDATEST.Testing_Cloned)';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing_Cloned)';
 COMMENT ON COLUMN TILDATEST.Testing_Cloned."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.Testing_Cloned)';
+
 -- app-level index only -- CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName ON TILDATEST.Testing_Cloned ("name" ASC);
 CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName2 ON TILDATEST.Testing_Cloned ("name" ASC);
 CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName3 ON TILDATEST.Testing_Cloned ("name" DESC);
 CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName4 ON TILDATEST.Testing_Cloned ("name" ASC, "description" DESC) where TILDATEST.Testing_Cloned."deleted" is null and TILDATEST.Testing_Cloned."name" = 'Hello' and TILDATEST.Testing_Cloned."created" > '2018-01-01';
+
 delete from TILDA.Key where "name" = 'TILDATEST.TESTING_CLONED';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTING_CLONED',(select COALESCE(max("refnum"),0)+1 from TILDATEST.Testing_Cloned), 25000, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDATEST.TestingTimestamps -- blah blah
+ (  "refnum"                             bigint         not null   -- The primary key for this record
+  , "id"                                 varchar(20)    not null   -- Medical system unique enterprise id
+  , "dt1TZ"                              character(5)              -- Generated helper column to hold the time zone ID for 'dt1'.
+  , "dt1"                                timestamptz               -- The blah
+  , "dt1nTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt1n'.
+  , "dt1n"                               timestamptz             DEFAULT statement_timestamp()   -- The blah
+  , "dt1uTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt1u'.
+  , "dt1u"                               timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt1aTZ"                             text[]                    -- Generated helper column to hold the time zone ID for 'dt1a'.
+  , "dt1a"                               timestamptz[]             -- The blah
+  , "rowTZ_TILDATEST_TestingTimestamps"  character(5)              -- Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.
+  , "dt2"                                timestamptz               -- The blah
+  , "dt2n"                               timestamptz             DEFAULT statement_timestamp()   -- The blah
+  , "dt2u"                               timestamptz             DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt2a"                               timestamptz[]             -- The blah
+  , "dt3TZ"                              character(5)              -- Generated helper column to hold the time zone ID for 'dt3'.
+  , "dt3"                                timestamp                 -- The blah
+  , "dt3nTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt3n'.
+  , "dt3n"                               timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt3uTZ"                             character(5)              -- Generated helper column to hold the time zone ID for 'dt3u'.
+  , "dt3u"                               timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt3aTZ"                             text[]                    -- Generated helper column to hold the time zone ID for 'dt3a'.
+  , "dt3a"                               timestamp[]               -- The blah
+  , "dt4"                                timestamp                 -- The blah
+  , "dt4n"                               timestamp               DEFAULT (statement_timestamp() at time zone 'utc')::timestamp   -- The blah
+  , "dt4u"                               timestamp               DEFAULT '1111-11-11T00:00:00Z'   -- The blah
+  , "dt4a"                               timestamp[]               -- The blah
+  , "created"                            timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDATEST.TestingTimestamps)
+  , "lastUpdated"                        timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)
+  , "deleted"                            timestamptz               -- The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)
+  , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_TestingTimestamps_dt1 FOREIGN KEY ("dt1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt1n FOREIGN KEY ("dt1nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt1u FOREIGN KEY ("dt1uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt2 FOREIGN KEY ("rowTZ_TILDATEST_TestingTimestamps") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt3 FOREIGN KEY ("dt3TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt3n FOREIGN KEY ("dt3nTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TestingTimestamps_dt3u FOREIGN KEY ("dt3uTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDATEST.TestingTimestamps IS E'blah blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."id" IS E'Medical system unique enterprise id';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1TZ" IS E'Generated helper column to hold the time zone ID for ''dt1''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1nTZ" IS E'Generated helper column to hold the time zone ID for ''dt1n''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1uTZ" IS E'Generated helper column to hold the time zone ID for ''dt1u''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1aTZ" IS E'Generated helper column to hold the time zone ID for ''dt1a''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt1a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."rowTZ_TILDATEST_TestingTimestamps" IS E'Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt2a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3TZ" IS E'Generated helper column to hold the time zone ID for ''dt3''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3nTZ" IS E'Generated helper column to hold the time zone ID for ''dt3n''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3uTZ" IS E'Generated helper column to hold the time zone ID for ''dt3u''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3aTZ" IS E'Generated helper column to hold the time zone ID for ''dt3a''.';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt3a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4n" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4u" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."dt4a" IS E'The blah';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."created" IS E'The timestamp for when the record was created. (TILDATEST.TestingTimestamps)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)';
+COMMENT ON COLUMN TILDATEST.TestingTimestamps."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)';
+
+CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Id ON TILDATEST.TestingTimestamps ("id");
+-- app-level index only -- CREATE INDEX IF NOT EXISTS TestingTimestamps_AllByName ON TILDATEST.TestingTimestamps ("id" ASC);
+
+delete from TILDA.Key where "name" = 'TILDATEST.TESTINGTIMESTAMPS';
+insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTINGTIMESTAMPS',(select COALESCE(max("refnum"),0)+1 from TILDATEST.TestingTimestamps), 25000, current_timestamp, current_timestamp);
 
 
 
@@ -438,8 +448,10 @@ COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."dt4a" IS E'The blah';
 COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."created" IS E'The timestamp for when the record was created. (TILDATEST.TestingTimestamps_Cloned)';
 COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps_Cloned)';
 COMMENT ON COLUMN TILDATEST.TestingTimestamps_Cloned."deleted" IS E'The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps_Cloned)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Cloned_Id ON TILDATEST.TestingTimestamps_Cloned ("id");
 -- app-level index only -- CREATE INDEX IF NOT EXISTS TestingTimestamps_Cloned_AllByName ON TILDATEST.TestingTimestamps_Cloned ("id" ASC);
+
 delete from TILDA.Key where "name" = 'TILDATEST.TESTINGTIMESTAMPS_CLONED';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATEST.TESTINGTIMESTAMPS_CLONED',(select COALESCE(max("refnum"),0)+1 from TILDATEST.TestingTimestamps_Cloned), 25000, current_timestamp, current_timestamp);
 
@@ -478,6 +490,7 @@ COMMENT ON COLUMN TILDATEST.Testing2Realized."toto" IS E'<B>Last Updated</B>: Bl
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc2_Cat1" IS E'<B>desc2_Cat1 Title</B>: This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc2_Cat2" IS E'<B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing2Realized."desc2_Cat3" IS E'<B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Testing2Realized_Refnum ON TILDATEST.Testing2Realized ("refnum");
 CREATE INDEX IF NOT EXISTS Testing2Realized_LastUpdated ON TILDATEST.Testing2Realized ("lastUpdated" DESC);
 
@@ -494,6 +507,7 @@ COMMENT ON COLUMN TILDATEST.Testing3Realized."refnum" IS E'The primary key for t
 COMMENT ON COLUMN TILDATEST.Testing3Realized."name" IS E'Medical system unique enterprise id';
 COMMENT ON COLUMN TILDATEST.Testing3Realized."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing)';
 COMMENT ON COLUMN TILDATEST.Testing3Realized."xxxLastUpdated" IS E'The timestamp for when the record was last updated. (TILDATEST.Testing)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Testing3Realized_Refnum ON TILDATEST.Testing3Realized ("refnum");
 CREATE INDEX IF NOT EXISTS Testing3Realized_LastUpdated ON TILDATEST.Testing3Realized ("lastUpdated" DESC);
 
@@ -530,6 +544,7 @@ COMMENT ON COLUMN TILDATEST.Testing4Realized."desc2_Cat1" IS E'<B>desc2_Cat1 Tit
 COMMENT ON COLUMN TILDATEST.Testing4Realized."desc2_Cat2" IS E'<B>desc2_Cat2 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing4Realized."desc2_Cat3" IS E'<B>desc2_Cat3 Title</B>: This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDATEST.Testing2View.';
 COMMENT ON COLUMN TILDATEST.Testing4Realized."lastUpdated" IS E'<B>Always True</B>: Blah...';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Testing4Realized_Refnum ON TILDATEST.Testing4Realized ("refnum");
 CREATE INDEX IF NOT EXISTS Testing4Realized_LastUpdated ON TILDATEST.Testing4Realized ("lastUpdated" DESC);
 

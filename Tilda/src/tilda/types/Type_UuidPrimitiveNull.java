@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_UuidPrimitiveNull extends Type_UuidPrimitive implements Nullable
   {
-    public Type_UuidPrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies)
+    public Type_UuidPrimitiveNull(String SchemaName, String TableName, String ColumnName, int Count, String Description, String[] expressionStrs, String[] expressionsDependencies, String[][] values)
       {
-        super(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies);
+        super(SchemaName, TableName, ColumnName, Count, Description, expressionStrs, expressionsDependencies, values);
       }
     
   }

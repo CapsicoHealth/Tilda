@@ -17,6 +17,7 @@
 package tilda.parsing.parts.helpers;
 
 import java.util.Map;
+import java.util.UUID;
 
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
@@ -135,9 +136,15 @@ public class ValueHelper
               if (M == null)
                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is not a JSON object.");
               break; 
+            case UUID:
+              try {
+                UUID.fromString(Value);
+              } catch (IllegalArgumentException e) {
+                PS.AddError(Label+" '" + ColFullName + "' defines Value '" + Name + "' with value '" + Value + "' which is not a valid UUID.");
+              }
+              break;
             case BINARY:
             case BITFIELD:
-            case UUID:
             default:
               throw new Error("Unhandled switch case for type '" + ColType + "'.");
           }
@@ -178,9 +185,10 @@ public class ValueHelper
                 return TextUtil.escapeSingleQuoteForSQL(val);
             case JSON:
               return TextUtil.escapeSingleQuoteForSQL(val);
+            case UUID:
+                return "'" + val.toString() + "'";
             case BINARY:
             case BITFIELD:
-            case UUID:
             default:
               throw new Error("Unhandled switch case for type '" + colType + "'.");
           }
@@ -253,8 +261,8 @@ public class ValueHelper
           {
             case BINARY:
             case BITFIELD:
-            case UUID:
               return false;
+            case UUID:
             case JSON:
             case NUMERIC:
             case BOOLEAN:

@@ -112,7 +112,12 @@ public abstract class TILDA__TESTING3VIEW implements tilda.interfaces.ReaderObje
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -596,15 +601,20 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
+      String OCCLocalZone = ZoneId.systemDefault().getId();
                                _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
                                _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask          ); _name = null; }
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
-                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
+                                                          _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                                                          _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -641,6 +651,14 @@ This is the setter for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data_test.Testing3View_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data_test.Testing3View_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.Testing3View_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

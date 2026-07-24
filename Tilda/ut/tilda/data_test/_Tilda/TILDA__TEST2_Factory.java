@@ -337,19 +337,19 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("name");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_name != null) Obj.setName(_name);
+       if (_name != null ) Obj.setName(_name);
 
        vals = Values.get("test_fk");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("test_fk", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _test_fk = ParseUtil.parseLong("test_fk", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_test_fk != null) Obj.setTest_fk(_test_fk);
+       if (_test_fk != null  && _test_fk != SystemValues.EVIL_VALUE) Obj.setTest_fk(_test_fk);
 
 
        return (tilda.data_test.Test2_Data) Obj;
@@ -399,7 +399,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -526,7 +526,7 @@ Lookup one record by the unique index 'Name': name.
        tilda.data_test._Tilda.TILDA__TEST2 Obj = new tilda.data_test.Test2_Data();
        Obj.initForLookup(1);
 
-       Obj.setName       (name       ); 
+       Obj.setName       (name       ); Obj.__Saved_name        = Obj._name       ;
 
        return (tilda.data_test.Test2_Data) Obj;
      }

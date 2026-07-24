@@ -15,8 +15,10 @@ create table if not exists TILDATEST.Test -- The table to keep track tests amd o
   , FOREIGN KEY (`test_fk`) REFERENCES TILDATEST.Test(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="The table to keep track tests amd owners");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS Test_Name ON TILDATEST.Test ("name");
+-- app-level index only -- ALTER TABLE TILDATEST.Test ADD CONSTRAINT Test_Name UNIQUE ("name") NOT ENFORCED; --  
+
 
 
 
@@ -31,8 +33,10 @@ create table if not exists TILDATEST.Test2 -- The table to keep track tests amd 
   , FOREIGN KEY (`test_fk`) REFERENCES TILDATEST.Test(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="The table to keep track tests amd owners");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS Test2_Name ON TILDATEST.Test2 ("name");
+-- app-level index only -- ALTER TABLE TILDATEST.Test2 ADD CONSTRAINT Test2_Name UNIQUE ("name") NOT ENFORCED; --  
+
 
 
 
@@ -95,58 +99,13 @@ create table if not exists TILDATEST.Testing -- blah blah
   , FOREIGN KEY (`a9a1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE INDEX IF NOT EXISTS Testing_AllByName ON TILDATEST.Testing ("name" ASC);
---  CREATE INDEX IF NOT EXISTS Testing_AllByName2 ON TILDATEST.Testing ("name" ASC);
---  CREATE INDEX IF NOT EXISTS Testing_AllByName3 ON TILDATEST.Testing ("name" DESC);
---  CREATE INDEX IF NOT EXISTS Testing_AllByName4 ON TILDATEST.Testing ("name" ASC, "description" DESC) where TILDATEST.Testing."deleted" is null and TILDATEST.Testing."name" = 'Hello' and TILDATEST.Testing."created" > '2018-01-01';
+-- app-level index only -- Index 'Testing_AllByName' on TILDATEST.Testing() order by "name" ASC
+-- app-level index only -- Index 'Testing_AllByName2' on TILDATEST.Testing() order by "name" ASC
+-- app-level index only -- Index 'Testing_AllByName3' on TILDATEST.Testing() order by "name" DESC
+-- app-level index only -- Index 'Testing_AllByName4' on TILDATEST.Testing() order by "name" ASC, "description" DESC where TILDATEST.Testing."deleted" is null and TILDATEST.Testing."name" = 'Hello' and TILDATEST.Testing."created" > '2018-01-01'
 
-
-
-create table if not exists TILDATEST.TestingTimestamps -- blah blah
- (  `refnum`                             INT64             not null  OPTIONS(description="The primary key for this record")
-  , `id`                                 STRING            not null  OPTIONS(description="Medical system unique enterprise id")
-  , `dt1TZ`                              STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1'.")
-  , `dt1`                                TIMESTAMP                   OPTIONS(description="The blah")
-  , `dt1nTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1n'.")
-  , `dt1n`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
-  , `dt1uTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1u'.")
-  , `dt1u`                               TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt1aTZ`                             ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1a'.")
-  , `dt1a`                               ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
-  , `rowTZ_TILDATEST_TestingTimestamps`  STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.")
-  , `dt2`                                TIMESTAMP                   OPTIONS(description="The blah")
-  , `dt2n`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
-  , `dt2u`                               TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt2a`                               ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
-  , `dt3TZ`                              STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3'.")
-  , `dt3`                                DATETIME                    OPTIONS(description="The blah")
-  , `dt3nTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3n'.")
-  , `dt3n`                               DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
-  , `dt3uTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3u'.")
-  , `dt3u`                               DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt3aTZ`                             ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3a'.")
-  , `dt3a`                               ARRAY<DATETIME>             OPTIONS(description="The blah")
-  , `dt4`                                DATETIME                    OPTIONS(description="The blah")
-  , `dt4n`                               DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
-  , `dt4u`                               DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
-  , `dt4a`                               ARRAY<DATETIME>             OPTIONS(description="The blah")
-  , `created`                            TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.TestingTimestamps)")
-  , `lastUpdated`                        TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)")
-  , `deleted`                            TIMESTAMP                   OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)")
-  , PRIMARY KEY(`refnum`) NOT ENFORCED
-  , FOREIGN KEY (`dt1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
-  , FOREIGN KEY (`dt1nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
-  , FOREIGN KEY (`dt1uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
-  , FOREIGN KEY (`rowTZ_TILDATEST_TestingTimestamps`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
-  , FOREIGN KEY (`dt3TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
-  , FOREIGN KEY (`dt3nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
-  , FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
- )
-OPTIONS (description="blah blah");
--- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Id ON TILDATEST.TestingTimestamps ("id");
---  CREATE INDEX IF NOT EXISTS TestingTimestamps_AllByName ON TILDATEST.TestingTimestamps ("id" ASC);
 
 
 
@@ -209,11 +168,62 @@ create table if not exists TILDATEST.Testing_Cloned -- blah blah - Ready for pub
   , FOREIGN KEY (`a9a1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah - Ready for publishing (cloned from TILDATEST.Testing)");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName ON TILDATEST.Testing_Cloned ("name" ASC);
---  CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName2 ON TILDATEST.Testing_Cloned ("name" ASC);
---  CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName3 ON TILDATEST.Testing_Cloned ("name" DESC);
---  CREATE INDEX IF NOT EXISTS Testing_Cloned_AllByName4 ON TILDATEST.Testing_Cloned ("name" ASC, "description" DESC) where TILDATEST.Testing_Cloned."deleted" is null and TILDATEST.Testing_Cloned."name" = 'Hello' and TILDATEST.Testing_Cloned."created" > '2018-01-01';
+-- app-level index only -- Index 'Testing_Cloned_AllByName' on TILDATEST.Testing_Cloned() order by "name" ASC
+-- app-level index only -- Index 'Testing_Cloned_AllByName2' on TILDATEST.Testing_Cloned() order by "name" ASC
+-- app-level index only -- Index 'Testing_Cloned_AllByName3' on TILDATEST.Testing_Cloned() order by "name" DESC
+-- app-level index only -- Index 'Testing_Cloned_AllByName4' on TILDATEST.Testing_Cloned() order by "name" ASC, "description" DESC where TILDATEST.Testing_Cloned."deleted" is null and TILDATEST.Testing_Cloned."name" = 'Hello' and TILDATEST.Testing_Cloned."created" > '2018-01-01'
+
+
+
+
+create table if not exists TILDATEST.TestingTimestamps -- blah blah
+ (  `refnum`                             INT64             not null  OPTIONS(description="The primary key for this record")
+  , `id`                                 STRING            not null  OPTIONS(description="Medical system unique enterprise id")
+  , `dt1TZ`                              STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1'.")
+  , `dt1`                                TIMESTAMP                   OPTIONS(description="The blah")
+  , `dt1nTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1n'.")
+  , `dt1n`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
+  , `dt1uTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1u'.")
+  , `dt1u`                               TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt1aTZ`                             ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt1a'.")
+  , `dt1a`                               ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
+  , `rowTZ_TILDATEST_TestingTimestamps`  STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 1 or more columns at the TILDATEST.TestingTimestamps row level: dt2, dt2n, dt2u, dt2a, dt4, dt4n, dt4u, dt4a.")
+  , `dt2`                                TIMESTAMP                   OPTIONS(description="The blah")
+  , `dt2n`                               TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()            OPTIONS(description="The blah")
+  , `dt2u`                               TIMESTAMP        DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt2a`                               ARRAY<TIMESTAMP>            OPTIONS(description="The blah")
+  , `dt3TZ`                              STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3'.")
+  , `dt3`                                DATETIME                    OPTIONS(description="The blah")
+  , `dt3nTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3n'.")
+  , `dt3n`                               DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
+  , `dt3uTZ`                             STRING                      OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3u'.")
+  , `dt3u`                               DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt3aTZ`                             ARRAY<STRING>               OPTIONS(description="Generated helper column to hold the time zone ID for 'dt3a'.")
+  , `dt3a`                               ARRAY<DATETIME>             OPTIONS(description="The blah")
+  , `dt4`                                DATETIME                    OPTIONS(description="The blah")
+  , `dt4n`                               DATETIME         DEFAULT CURRENT_DATETIME()            OPTIONS(description="The blah")
+  , `dt4u`                               DATETIME         DEFAULT '1111-11-11T00:00:00Z'            OPTIONS(description="The blah")
+  , `dt4a`                               ARRAY<DATETIME>             OPTIONS(description="The blah")
+  , `created`                            TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was created. (TILDATEST.TestingTimestamps)")
+  , `lastUpdated`                        TIMESTAMP        DEFAULT CURRENT_TIMESTAMP()  not null  OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.TestingTimestamps)")
+  , `deleted`                            TIMESTAMP                   OPTIONS(description="The timestamp for when the record was deleted. (TILDATEST.TestingTimestamps)")
+  , PRIMARY KEY(`refnum`) NOT ENFORCED
+  , FOREIGN KEY (`dt1TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt1nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt1uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`rowTZ_TILDATEST_TestingTimestamps`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3TZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3nTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+  , FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
+ )
+OPTIONS (description="blah blah");
+
+-- Indices are not supported for this database, so logical definition only
+-- app-level index only -- ALTER TABLE TILDATEST.TestingTimestamps ADD CONSTRAINT TestingTimestamps_Id UNIQUE ("id") NOT ENFORCED; --  
+-- app-level index only -- Index 'TestingTimestamps_AllByName' on TILDATEST.TestingTimestamps() order by "id" ASC
+
 
 
 
@@ -258,9 +268,11 @@ create table if not exists TILDATEST.TestingTimestamps_Cloned -- blah blah - Rea
   , FOREIGN KEY (`dt3uTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="blah blah - Ready for publishing (cloned from TILDATEST.TestingTimestamps)");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS TestingTimestamps_Cloned_Id ON TILDATEST.TestingTimestamps_Cloned ("id");
---  CREATE INDEX IF NOT EXISTS TestingTimestamps_Cloned_AllByName ON TILDATEST.TestingTimestamps_Cloned ("id" ASC);
+-- app-level index only -- ALTER TABLE TILDATEST.TestingTimestamps_Cloned ADD CONSTRAINT TestingTimestamps_Cloned_Id UNIQUE ("id") NOT ENFORCED; --  
+-- app-level index only -- Index 'TestingTimestamps_Cloned_AllByName' on TILDATEST.TestingTimestamps_Cloned() order by "id" ASC
+
 
 
 
@@ -282,9 +294,10 @@ create table if not exists TILDATEST.Testing2Realized -- Realized table for view
   , `desc2_Cat3`      FLOAT64              OPTIONS(description="<B>desc2_Cat3 Title</B>: This formula checks whether the column 'desc2' contains the values 'x', 'y', 'z' for the View TILDATEST.Testing2View.")
  )
 OPTIONS (description="Realized table for view TILDATEST.Testing2View: A test view to test .* and exclude and block.");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS Testing2Realized_Refnum ON TILDATEST.Testing2Realized ("refnum");
---  CREATE INDEX IF NOT EXISTS Testing2Realized_LastUpdated ON TILDATEST.Testing2Realized ("lastUpdated" DESC);
+-- app-level index only -- ALTER TABLE TILDATEST.Testing2Realized ADD CONSTRAINT Testing2Realized_Refnum UNIQUE ("refnum") NOT ENFORCED; --  
+-- app-level index only -- Index 'Testing2Realized_LastUpdated' on TILDATEST.Testing2Realized() order by "lastUpdated" DESC
 
 
 
@@ -295,9 +308,10 @@ create table if not exists TILDATEST.Testing3Realized -- Realized table for view
   , `xxxLastUpdated`  TIMESTAMP            OPTIONS(description="The timestamp for when the record was last updated. (TILDATEST.Testing)")
  )
 OPTIONS (description="Realized table for view TILDATEST.Testing3View: A test view to test .* and exclude and block.");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS Testing3Realized_Refnum ON TILDATEST.Testing3Realized ("refnum");
---  CREATE INDEX IF NOT EXISTS Testing3Realized_LastUpdated ON TILDATEST.Testing3Realized ("lastUpdated" DESC);
+-- app-level index only -- ALTER TABLE TILDATEST.Testing3Realized ADD CONSTRAINT Testing3Realized_Refnum UNIQUE ("refnum") NOT ENFORCED; --  
+-- app-level index only -- Index 'Testing3Realized_LastUpdated' on TILDATEST.Testing3Realized() order by "lastUpdated" DESC
 
 
 
@@ -318,9 +332,10 @@ create table if not exists TILDATEST.Testing4Realized -- Realized table for view
   , `lastUpdated`  TIMESTAMP            OPTIONS(description="<B>Always True</B>: Blah...")
  )
 OPTIONS (description="Realized table for view TILDATEST.Testing4View: A test view to test .* and exclude and block.");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS Testing4Realized_Refnum ON TILDATEST.Testing4Realized ("refnum");
---  CREATE INDEX IF NOT EXISTS Testing4Realized_LastUpdated ON TILDATEST.Testing4Realized ("lastUpdated" DESC);
+-- app-level index only -- ALTER TABLE TILDATEST.Testing4Realized ADD CONSTRAINT Testing4Realized_Refnum UNIQUE ("refnum") NOT ENFORCED; --  
+-- app-level index only -- Index 'Testing4Realized_LastUpdated' on TILDATEST.Testing4Realized() order by "lastUpdated" DESC
 
 
 

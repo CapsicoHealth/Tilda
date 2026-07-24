@@ -318,7 +318,12 @@ public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObje
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -846,9 +851,9 @@ This is the null setter for:<BR>
     void setNullDescription()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask);
        _description=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -987,9 +992,9 @@ This is the null setter for:<BR>
     void setNullDesc2()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask);
        _desc2=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1128,9 +1133,9 @@ This is the null setter for:<BR>
     void setNullDesc3()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask);
        _desc3=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1269,9 +1274,9 @@ This is the null setter for:<BR>
     void setNullDesc4()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask);
        _desc4=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1410,9 +1415,9 @@ This is the null setter for:<BR>
     void setNullDesc5()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask);
        _desc5=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1648,9 +1653,9 @@ This is the null setter for:<BR>
     void setNullDesc6()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask);
        _desc6=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1806,9 +1811,9 @@ This is the null setter for:<BR>
     void setNullBastille()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask);
        _bastille=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1964,9 +1969,9 @@ This is the null setter for:<BR>
     void setNullToto()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask);
        _toto=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2118,9 +2123,9 @@ This is the null setter for:<BR>
     void setNullDesc2_Cat1()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask);
        _desc2_Cat1=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2272,9 +2277,9 @@ This is the null setter for:<BR>
     void setNullDesc2_Cat2()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask);
        _desc2_Cat2=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2426,9 +2431,9 @@ This is the null setter for:<BR>
     void setNullDesc2_Cat3()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask);
        if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask);
        _desc2_Cat3=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2523,26 +2528,31 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
+      String OCCLocalZone = ZoneId.systemDefault().getId();
                                _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.REFNUM._Mask        ); _refnum = null; }
                                _name           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.NAME._Mask          ); _name = null; }
-                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
-                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
+                                                          _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.LASTUPDATED._Mask   ); _lastUpdated = null; }
+                                                          _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.XXXLASTUPDATED._Mask); _xxxLastUpdated = null; }
                                _description    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESCRIPTION._Mask   ); _description = null; }
                                _desc2          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2._Mask         ); _desc2 = null; }
                                _desc3          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC3._Mask         ); _desc3 = null; }
                                _desc4          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC4._Mask         ); _desc4 = null; }
                                _desc5          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC5._Mask         ); _desc5 = null; }
                                _desc6          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC6._Mask         ); _desc6 = null; }
-                               _bastille       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask      ); _bastille = null; }
-                               _toto           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask          ); _toto = null; }
+                                                          _bastille       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask      ); _bastille = null; }
+                                                          _toto           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask          ); _toto = null; }
                                _desc2_Cat1     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask    ); _desc2_Cat1 = null; }
                                _desc2_Cat2     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask    ); _desc2_Cat2 = null; }
                                _desc2_Cat3     =                              RS.getDouble    (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask    ); _desc2_Cat3 = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -2590,6 +2600,14 @@ This is the null setter for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data_test.Testing2View_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data_test.Testing2View_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.Testing2View_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

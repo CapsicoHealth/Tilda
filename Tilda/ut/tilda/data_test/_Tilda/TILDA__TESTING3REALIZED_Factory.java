@@ -285,13 +285,13 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("name");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _name = ParseUtil.parseString("name", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_name != null) Obj.setName(_name);
+       if (_name != null ) Obj.setName(_name);
 
 
        return (tilda.data_test.Testing3Realized_Data) Obj;
@@ -332,7 +332,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -445,7 +445,7 @@ Lookup one record by the unique index 'Refnum': refnum.
        tilda.data_test._Tilda.TILDA__TESTING3REALIZED Obj = new tilda.data_test.Testing3Realized_Data();
        Obj.initForLookup(0);
 
-       Obj.setRefnum        (refnum        ); 
+       Obj.setRefnum        (refnum        ); Obj.__Saved_refnum         = Obj._refnum        ;
 
        return (tilda.data_test.Testing3Realized_Data) Obj;
      }

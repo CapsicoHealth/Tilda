@@ -994,101 +994,101 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("id");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("id", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _id = ParseUtil.parseString("id", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_id != null) Obj.setId(_id);
+       if (_id != null ) Obj.setId(_id);
 
        vals = Values.get("dt1");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt1", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt1 = ParseUtil.parseZonedDateTime("dt1", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt1 != null) Obj.setDt1(_dt1);
+       if (_dt1 != null ) Obj.setDt1(_dt1);
 
        vals = Values.get("dt1n");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt1n", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt1n = ParseUtil.parseZonedDateTime("dt1n", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt1n != null) Obj.setDt1n(_dt1n);
+       if (_dt1n != null ) Obj.setDt1n(_dt1n);
 
        vals = Values.get("dt1u");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt1u", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt1u = ParseUtil.parseZonedDateTime("dt1u", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt1u != null) Obj.setDt1u(_dt1u);
+       if (_dt1u != null ) Obj.setDt1u(_dt1u);
 
        vals = Values.get("dt1a");
        List<ZonedDateTime> _dt1a = CollectionUtil.toList(ParseUtil.parseZonedDateTime("dt1a", false, vals, Errors));
-       if (_dt1a != null) Obj.setDt1a(_dt1a);
+       if (_dt1a != null ) Obj.setDt1a(_dt1a);
 
        vals = Values.get("dt2");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt2", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt2 = ParseUtil.parseZonedDateTime("dt2", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt2 != null) Obj.setDt2(_dt2);
+       if (_dt2 != null ) Obj.setDt2(_dt2);
 
        vals = Values.get("dt2n");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt2n", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt2n = ParseUtil.parseZonedDateTime("dt2n", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt2n != null) Obj.setDt2n(_dt2n);
+       if (_dt2n != null ) Obj.setDt2n(_dt2n);
 
        vals = Values.get("dt2u");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt2u", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt2u = ParseUtil.parseZonedDateTime("dt2u", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt2u != null) Obj.setDt2u(_dt2u);
+       if (_dt2u != null ) Obj.setDt2u(_dt2u);
 
        vals = Values.get("dt2a");
        List<ZonedDateTime> _dt2a = CollectionUtil.toList(ParseUtil.parseZonedDateTime("dt2a", false, vals, Errors));
-       if (_dt2a != null) Obj.setDt2a(_dt2a);
+       if (_dt2a != null ) Obj.setDt2a(_dt2a);
 
        vals = Values.get("dt3");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt3", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt3 = ParseUtil.parseZonedDateTime("dt3", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt3 != null) Obj.setDt3(_dt3);
+       if (_dt3 != null ) Obj.setDt3(_dt3);
 
        vals = Values.get("dt3n");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt3n", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt3n = ParseUtil.parseZonedDateTime("dt3n", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt3n != null) Obj.setDt3n(_dt3n);
+       if (_dt3n != null ) Obj.setDt3n(_dt3n);
 
        vals = Values.get("dt3u");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt3u", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt3u = ParseUtil.parseZonedDateTime("dt3u", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt3u != null) Obj.setDt3u(_dt3u);
+       if (_dt3u != null ) Obj.setDt3u(_dt3u);
 
        vals = Values.get("dt3a");
        List<ZonedDateTime> _dt3a = CollectionUtil.toList(ParseUtil.parseZonedDateTime("dt3a", false, vals, Errors));
-       if (_dt3a != null) Obj.setDt3a(_dt3a);
+       if (_dt3a != null ) Obj.setDt3a(_dt3a);
 
        vals = Values.get("dt4");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt4", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt4 = ParseUtil.parseZonedDateTime("dt4", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt4 != null) Obj.setDt4(_dt4);
+       if (_dt4 != null ) Obj.setDt4(_dt4);
 
        vals = Values.get("dt4n");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt4n", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt4n = ParseUtil.parseZonedDateTime("dt4n", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt4n != null) Obj.setDt4n(_dt4n);
+       if (_dt4n != null ) Obj.setDt4n(_dt4n);
 
        vals = Values.get("dt4u");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dt4u", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dt4u = ParseUtil.parseZonedDateTime("dt4u", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dt4u != null) Obj.setDt4u(_dt4u);
+       if (_dt4u != null ) Obj.setDt4u(_dt4u);
 
        vals = Values.get("dt4a");
        List<ZonedDateTime> _dt4a = CollectionUtil.toList(ParseUtil.parseZonedDateTime("dt4a", false, vals, Errors));
-       if (_dt4a != null) Obj.setDt4a(_dt4a);
+       if (_dt4a != null ) Obj.setDt4a(_dt4a);
 
 
        return (tilda.data_test.TestingTimestamps_Data) Obj;
@@ -1154,7 +1154,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -1281,7 +1281,7 @@ Lookup one record by the unique index 'Id': id.
        tilda.data_test._Tilda.TILDA__TESTINGTIMESTAMPS Obj = new tilda.data_test.TestingTimestamps_Data();
        Obj.initForLookup(1);
 
-       Obj.setId                               (id                               ); 
+       Obj.setId                               (id                               ); Obj.__Saved_id                                = Obj._id                               ;
 
        return (tilda.data_test.TestingTimestamps_Data) Obj;
      }

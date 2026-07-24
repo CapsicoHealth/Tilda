@@ -1067,7 +1067,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_UuidPrimitiveNull            A13        = new Type_UuidPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a13"        , 45/*45*/, "The blah", null, null);
+     public final Type_UuidPrimitiveNull            A13        = new Type_UuidPrimitiveNull           (SCHEMA_LABEL, TABLENAME_LABEL, "a13"        , 45/*45*/, "The blah", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1369,227 +1369,227 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("refnum2");
        List<Long> _refnum2 = CollectionUtil.toList(ParseUtil.parseLong("refnum2", true, vals, Errors));
-       if (_refnum2 != null) Obj.setRefnum2(_refnum2);
+       if (_refnum2 != null ) Obj.setRefnum2(_refnum2);
 
        vals = Values.get("name");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_name != null) Obj.setName(_name);
+       if (_name != null ) Obj.setName(_name);
 
        vals = Values.get("description");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _description = ParseUtil.parseString("description", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_description != null) Obj.setDescription(_description);
+       if (_description != null ) Obj.setDescription(_description);
 
        vals = Values.get("desc2");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("desc2", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _desc2 = ParseUtil.parseString("desc2", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_desc2 != null) Obj.setDesc2(_desc2);
+       if (_desc2 != null ) Obj.setDesc2(_desc2);
 
        vals = Values.get("desc3");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("desc3", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _desc3 = ParseUtil.parseString("desc3", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_desc3 != null) Obj.setDesc3(_desc3);
+       if (_desc3 != null ) Obj.setDesc3(_desc3);
 
        vals = Values.get("desc4");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("desc4", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _desc4 = ParseUtil.parseString("desc4", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_desc4 != null) Obj.setDesc4(_desc4);
+       if (_desc4 != null ) Obj.setDesc4(_desc4);
 
        vals = Values.get("desc5");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("desc5", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _desc5 = ParseUtil.parseString("desc5", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_desc5 != null) Obj.setDesc5(_desc5);
+       if (_desc5 != null ) Obj.setDesc5(_desc5);
 
        vals = Values.get("desc6");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("desc6", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _desc6 = ParseUtil.parseString("desc6", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_desc6 != null) Obj.setDesc6(_desc6);
+       if (_desc6 != null ) Obj.setDesc6(_desc6);
 
        vals = Values.get("tops");
        List<String> _tops = CollectionUtil.toList(ParseUtil.parseString("tops", false, vals, Errors));
-       if (_tops != null) Obj.setTops(_tops);
+       if (_tops != null ) Obj.setTops(_tops);
 
        vals = Values.get("tops2");
        Set <String> _tops2 = CollectionUtil.toSet (ParseUtil.parseString("tops2", false, vals, Errors));
-       if (_tops2 != null) Obj.setTops2(_tops2);
+       if (_tops2 != null ) Obj.setTops2(_tops2);
 
        vals = Values.get("a2");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a2", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Character _a2 = ParseUtil.parseCharacter("a2", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a2 != null) Obj.setA2(_a2);
+       if (_a2 != null ) Obj.setA2(_a2);
 
        vals = Values.get("a2b");
        List<Character> _a2b = CollectionUtil.toList(ParseUtil.parseCharacter("a2b", false, vals, Errors));
-       if (_a2b != null) Obj.setA2b(_a2b);
+       if (_a2b != null ) Obj.setA2b(_a2b);
 
        vals = Values.get("a2c");
        Set <Character> _a2c = CollectionUtil.toSet (ParseUtil.parseCharacter("a2c", false, vals, Errors));
-       if (_a2c != null) Obj.setA2c(_a2c);
+       if (_a2c != null ) Obj.setA2c(_a2c);
 
        vals = Values.get("a3");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a3", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _a3 = ParseUtil.parseBoolean("a3", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a3 != null) Obj.setA3(_a3);
+       if (_a3 != null ) Obj.setA3(_a3);
 
        vals = Values.get("a3b");
        List<Boolean> _a3b = CollectionUtil.toList(ParseUtil.parseBoolean("a3b", false, vals, Errors));
-       if (_a3b != null) Obj.setA3b(_a3b);
+       if (_a3b != null ) Obj.setA3b(_a3b);
 
        vals = Values.get("a4");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a4", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Double _a4 = ParseUtil.parseDouble("a4", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a4 != null) Obj.setA4(_a4);
+       if (_a4 != null  && _a4 != SystemValues.EVIL_VALUE) Obj.setA4(_a4);
 
        vals = Values.get("a4b");
        List<Double> _a4b = CollectionUtil.toList(ParseUtil.parseDouble("a4b", false, vals, Errors));
-       if (_a4b != null) Obj.setA4b(_a4b);
+       if (_a4b != null ) Obj.setA4b(_a4b);
 
        vals = Values.get("a5");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a5", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Float _a5 = ParseUtil.parseFloat("a5", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a5 != null) Obj.setA5(_a5);
+       if (_a5 != null  && _a5 != SystemValues.EVIL_VALUE) Obj.setA5(_a5);
 
        vals = Values.get("a5b");
        List<Float> _a5b = CollectionUtil.toList(ParseUtil.parseFloat("a5b", false, vals, Errors));
-       if (_a5b != null) Obj.setA5b(_a5b);
+       if (_a5b != null ) Obj.setA5b(_a5b);
 
        vals = Values.get("a6");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a6", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _a6 = ParseUtil.parseLong("a6", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a6 != null) Obj.setA6(_a6);
+       if (_a6 != null  && _a6 != SystemValues.EVIL_VALUE) Obj.setA6(_a6);
 
        vals = Values.get("a6b");
        List<Long> _a6b = CollectionUtil.toList(ParseUtil.parseLong("a6b", false, vals, Errors));
-       if (_a6b != null) Obj.setA6b(_a6b);
+       if (_a6b != null ) Obj.setA6b(_a6b);
 
        vals = Values.get("a6c");
        Set <Long> _a6c = CollectionUtil.toSet (ParseUtil.parseLong("a6c", false, vals, Errors));
-       if (_a6c != null) Obj.setA6c(_a6c);
+       if (_a6c != null ) Obj.setA6c(_a6c);
 
        vals = Values.get("a6d");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a6d", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _a6d = ParseUtil.parseZonedDateTime("a6d", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a6d != null) Obj.setA6d(_a6d);
+       if (_a6d != null ) Obj.setA6d(_a6d);
 
        vals = Values.get("a7");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a7", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _a7 = ParseUtil.parseInteger("a7", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a7 != null) Obj.setA7(_a7);
+       if (_a7 != null  && _a7 != SystemValues.EVIL_VALUE) Obj.setA7(_a7);
 
        vals = Values.get("a7b");
        List<Integer> _a7b = CollectionUtil.toList(ParseUtil.parseInteger("a7b", false, vals, Errors));
-       if (_a7b != null) Obj.setA7b(_a7b);
+       if (_a7b != null ) Obj.setA7b(_a7b);
 
        vals = Values.get("a8b");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a8b", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _a8b = ParseUtil.parseZonedDateTime("a8b", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a8b != null) Obj.setA8b(_a8b);
+       if (_a8b != null ) Obj.setA8b(_a8b);
 
        vals = Values.get("a9");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a9", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _a9 = ParseUtil.parseZonedDateTime("a9", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a9 != null) Obj.setA9(_a9);
+       if (_a9 != null ) Obj.setA9(_a9);
 
        vals = Values.get("a9a1");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a9a1", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _a9a1 = ParseUtil.parseZonedDateTime("a9a1", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a9a1 != null) Obj.setA9a1(_a9a1);
+       if (_a9a1 != null ) Obj.setA9a1(_a9a1);
 
        vals = Values.get("a9b");
        List<ZonedDateTime> _a9b = CollectionUtil.toList(ParseUtil.parseZonedDateTime("a9b", false, vals, Errors));
-       if (_a9b != null) Obj.setA9b(_a9b);
+       if (_a9b != null ) Obj.setA9b(_a9b);
 
        vals = Values.get("a9c");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a9c", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        LocalDate _a9c = ParseUtil.parseLocalDate("a9c", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a9c != null) Obj.setA9c(_a9c);
+       if (_a9c != null ) Obj.setA9c(_a9c);
 
        vals = Values.get("a9d");
        List<LocalDate> _a9d = CollectionUtil.toList(ParseUtil.parseLocalDate("a9d", false, vals, Errors));
-       if (_a9d != null) Obj.setA9d(_a9d);
+       if (_a9d != null ) Obj.setA9d(_a9d);
 
        vals = Values.get("a10a");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a10a", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _a10a = ParseUtil.parseInteger("a10a", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a10a != null) Obj.setA10a(_a10a);
+       if (_a10a != null  && _a10a != SystemValues.EVIL_VALUE) Obj.setA10a(_a10a);
 
        vals = Values.get("a10b");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a10b", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _a10b = ParseUtil.parseString("a10b", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a10b != null) Obj.setA10b(_a10b);
+       if (_a10b != null ) Obj.setA10b(_a10b);
 
        vals = Values.get("a10c");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a10c", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _a10c = ParseUtil.parseInteger("a10c", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a10c != null) Obj.setA10c(_a10c);
+       if (_a10c != null  && _a10c != SystemValues.EVIL_VALUE) Obj.setA10c(_a10c);
 
        vals = Values.get("a11");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a11", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        BigDecimal _a11 = ParseUtil.parseBigDecimal("a11", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a11 != null) Obj.setA11(_a11);
+       if (_a11 != null ) Obj.setA11(_a11);
 
        vals = Values.get("a11b");
        List<BigDecimal> _a11b = CollectionUtil.toList(ParseUtil.parseBigDecimal("a11b", false, vals, Errors));
-       if (_a11b != null) Obj.setA11b(_a11b);
+       if (_a11b != null ) Obj.setA11b(_a11b);
 
        vals = Values.get("a11c");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a11c", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        BigDecimal _a11c = ParseUtil.parseBigDecimal("a11c", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a11c != null) Obj.setA11c(_a11c);
+       if (_a11c != null ) Obj.setA11c(_a11c);
 
        vals = Values.get("a12");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a12", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Short _a12 = ParseUtil.parseShort("a12", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a12 != null) Obj.setA12(_a12);
+       if (_a12 != null  && _a12 != SystemValues.EVIL_VALUE) Obj.setA12(_a12);
 
        vals = Values.get("a12b");
        List<Short> _a12b = CollectionUtil.toList(ParseUtil.parseShort("a12b", false, vals, Errors));
-       if (_a12b != null) Obj.setA12b(_a12b);
+       if (_a12b != null ) Obj.setA12b(_a12b);
 
        vals = Values.get("a13");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a13", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        UUID _a13 = ParseUtil.parseUUID("a13", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a13 != null) Obj.setA13(_a13);
+       if (_a13 != null ) Obj.setA13(_a13);
 
        vals = Values.get("a13b");
        List<UUID> _a13b = CollectionUtil.toList(ParseUtil.parseUUID("a13b", false, vals, Errors));
-       if (_a13b != null) Obj.setA13b(_a13b);
+       if (_a13b != null ) Obj.setA13b(_a13b);
 
        vals = Values.get("a14");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("a14", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _a14 = ParseUtil.parseString("a14", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_a14 != null) Obj.setA14(_a14);
+       if (_a14 != null ) Obj.setA14(_a14);
 
 
        return (tilda.data_test.Testing_Data) Obj;
@@ -1681,7 +1681,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -2470,7 +2470,7 @@ The results are ordered by: refnum asc
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, "" + Obj.getA13b());
       Str.append(",");
-      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getA14());
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj._a14);
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getCreated()));
       Str.append(",");

@@ -476,55 +476,55 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("type");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_type != null) Obj.setType(_type);
+       if (_type != null ) Obj.setType(_type);
 
        vals = Values.get("questionSeq");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("questionSeq", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _questionSeq = ParseUtil.parseInteger("questionSeq", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_questionSeq != null) Obj.setQuestionSeq(_questionSeq);
+       if (_questionSeq != null  && _questionSeq != SystemValues.EVIL_VALUE) Obj.setQuestionSeq(_questionSeq);
 
        vals = Values.get("questionId");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("questionId", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _questionId = ParseUtil.parseString("questionId", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_questionId != null) Obj.setQuestionId(_questionId);
+       if (_questionId != null ) Obj.setQuestionId(_questionId);
 
        vals = Values.get("questionLabel");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("questionLabel", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _questionLabel = ParseUtil.parseString("questionLabel", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_questionLabel != null) Obj.setQuestionLabel(_questionLabel);
+       if (_questionLabel != null ) Obj.setQuestionLabel(_questionLabel);
 
        vals = Values.get("answerSeq");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("answerSeq", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _answerSeq = ParseUtil.parseInteger("answerSeq", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_answerSeq != null) Obj.setAnswerSeq(_answerSeq);
+       if (_answerSeq != null  && _answerSeq != SystemValues.EVIL_VALUE) Obj.setAnswerSeq(_answerSeq);
 
        vals = Values.get("answerId");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("answerId", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _answerId = ParseUtil.parseString("answerId", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_answerId != null) Obj.setAnswerId(_answerId);
+       if (_answerId != null ) Obj.setAnswerId(_answerId);
 
        vals = Values.get("answerLabel");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("answerLabel", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _answerLabel = ParseUtil.parseString("answerLabel", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_answerLabel != null) Obj.setAnswerLabel(_answerLabel);
+       if (_answerLabel != null ) Obj.setAnswerLabel(_answerLabel);
 
        vals = Values.get("correct");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("correct", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Short _correct = ParseUtil.parseShort("correct", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_correct != null) Obj.setCorrect(_correct);
+       if (_correct != null  && _correct != SystemValues.EVIL_VALUE) Obj.setCorrect(_correct);
 
 
        return (tilda.tutorial.data.TestQuestionAnswer_Data) Obj;
@@ -586,7 +586,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -713,9 +713,9 @@ Lookup one record by the unique index 'FormAnswer': type, questionId, answerSeq.
        tilda.tutorial.data._Tilda.TILDA__TESTQUESTIONANSWER Obj = new tilda.tutorial.data.TestQuestionAnswer_Data();
        Obj.initForLookup(1);
 
-       Obj.setType         (type         ); 
-       Obj.setQuestionId   (questionId   ); 
-       Obj.setAnswerSeq    (answerSeq    ); 
+       Obj.setType         (type         ); Obj.__Saved_type          = Obj._type         ;
+       Obj.setQuestionId   (questionId   ); Obj.__Saved_questionId    = Obj._questionId   ;
+       Obj.setAnswerSeq    (answerSeq    ); Obj.__Saved_answerSeq     = Obj._answerSeq    ;
 
        return (tilda.tutorial.data.TestQuestionAnswer_Data) Obj;
      }

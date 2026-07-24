@@ -358,25 +358,25 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("formRefnum");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("formRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _formRefnum = ParseUtil.parseLong("formRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_formRefnum != null) Obj.setFormRefnum(_formRefnum);
+       if (_formRefnum != null  && _formRefnum != SystemValues.EVIL_VALUE) Obj.setFormRefnum(_formRefnum);
 
        vals = Values.get("field");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("field", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _field = ParseUtil.parseString("field", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_field != null) Obj.setField(_field);
+       if (_field != null ) Obj.setField(_field);
 
        vals = Values.get("value");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("value", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _value = ParseUtil.parseString("value", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_value != null) Obj.setValue(_value);
+       if (_value != null ) Obj.setValue(_value);
 
 
        return (tilda.tutorial.data.FormAnswer_Data) Obj;
@@ -429,7 +429,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -556,8 +556,8 @@ Lookup one record by the unique index 'FormAnswer': formRefnum, field.
        tilda.tutorial.data._Tilda.TILDA__FORMANSWER Obj = new tilda.tutorial.data.FormAnswer_Data();
        Obj.initForLookup(1);
 
-       Obj.setFormRefnum (formRefnum ); 
-       Obj.setField      (field      ); 
+       Obj.setFormRefnum (formRefnum ); Obj.__Saved_formRefnum  = Obj._formRefnum ;
+       Obj.setField      (field      ); Obj.__Saved_field       = Obj._field      ;
 
        return (tilda.tutorial.data.FormAnswer_Data) Obj;
      }

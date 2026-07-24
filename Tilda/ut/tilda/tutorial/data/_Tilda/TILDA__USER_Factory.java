@@ -338,19 +338,19 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("id");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("id", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _id = ParseUtil.parseString("id", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_id != null) Obj.setId(_id);
+       if (_id != null ) Obj.setId(_id);
 
        vals = Values.get("email");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("email", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _email = ParseUtil.parseString("email", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_email != null) Obj.setEmail(_email);
+       if (_email != null ) Obj.setEmail(_email);
 
 
        return (tilda.tutorial.data.User_Data) Obj;
@@ -400,7 +400,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -527,7 +527,7 @@ Lookup one record by the unique index 'Id': id.
        tilda.tutorial.data._Tilda.TILDA__USER Obj = new tilda.tutorial.data.User_Data();
        Obj.initForLookup(1);
 
-       Obj.setId         (id         ); 
+       Obj.setId         (id         ); Obj.__Saved_id          = Obj._id         ;
 
        return (tilda.tutorial.data.User_Data) Obj;
      }
@@ -540,7 +540,7 @@ Lookup one record by the unique index 'Email': email.
        tilda.tutorial.data._Tilda.TILDA__USER Obj = new tilda.tutorial.data.User_Data();
        Obj.initForLookup(2);
 
-       Obj.setEmail      (email      ); 
+       Obj.setEmail      (email      ); Obj.__Saved_email       = Obj._email      ;
 
        return (tilda.tutorial.data.User_Data) Obj;
      }

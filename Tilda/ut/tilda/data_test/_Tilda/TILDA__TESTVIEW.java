@@ -86,7 +86,12 @@ public abstract class TILDA__TESTVIEW implements tilda.interfaces.ReaderObject, 
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -378,11 +383,15 @@ This is the setter for:<BR>
      __Init = InitMode.LOOKUP;
                        _refnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTVIEW_Factory.COLS.REFNUM._Mask); _refnum = null; }
                        _name   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTVIEW_Factory.COLS.NAME._Mask  ); _name = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;

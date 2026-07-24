@@ -421,7 +421,12 @@ public abstract class TILDA__TESTINGTIMESTAMPS implements tilda.interfaces.Write
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -753,9 +758,9 @@ This is the null setter for:<BR>
     void setNullDt1TZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask);
        _dt1TZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -940,9 +945,9 @@ This is the null setter for:<BR>
    public void setNullDt1()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask);
        _dt1=null;
        setNullDt1TZ();
@@ -1189,9 +1194,9 @@ This is the null setter for:<BR>
     void setNullDt1nTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask);
        _dt1nTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1411,9 +1416,9 @@ This is the null setter for:<BR>
    public void setNullDt1n()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask);
        _dt1n=null;
        setNullDt1nTZ();
@@ -1688,9 +1693,9 @@ This is the null setter for:<BR>
     void setNullDt1uTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask);
        _dt1uTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1910,9 +1915,9 @@ This is the null setter for:<BR>
    public void setNullDt1u()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask);
        _dt1u=null;
        setNullDt1uTZ();
@@ -2104,9 +2109,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final String[] getDt1aTZAsArray()
-      { return _dt1aTZ==null? null : _dt1aTZ.toArray(new String[_dt1aTZ.size()]); }
+      { return _dt1aTZ==null? null : _dt1aTZ.toArray(new String[0]); }
    public final Iterator<String> getDt1aTZ()
       { return _dt1aTZ==null? null : _dt1aTZ.iterator(); }
+   public final int getDt1aTZSize()
+      { return _dt1aTZ==null? 0 : _dt1aTZ.size(); }
    public final boolean hasDt1aTZ(String v)
       { return _dt1aTZ==null? false : _dt1aTZ.contains(v); }
 
@@ -2195,6 +2202,8 @@ This is the setter for:<BR>
     void removeFromDt1aTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_dt1aTZ == null)
+        _dt1aTZ = new ArrayList<String>();
        if (_dt1aTZ.remove(v) == true)
           __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask);
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2231,9 +2240,9 @@ This is the null setter for:<BR>
     void setNullDt1aTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask);
        _dt1aTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2321,9 +2330,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final ZonedDateTime[] getDt1aAsArray()
-      { return _dt1a==null? null : _dt1a.toArray(new ZonedDateTime[_dt1a.size()]); }
+      { return _dt1a==null? null : _dt1a.toArray(new ZonedDateTime[0]); }
    public final Iterator<ZonedDateTime> getDt1a()
       { return _dt1a==null? null : _dt1a.iterator(); }
+   public final int getDt1aSize()
+      { return _dt1a==null? 0 : _dt1a.size(); }
    public final boolean hasDt1a(ZonedDateTime v)
       { return _dt1a==null? false : _dt1a.contains(v); }
 
@@ -2431,6 +2442,8 @@ This is the setter for:<BR>
    public void removeFromDt1a(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_dt1a == null)
+        _dt1a = new ArrayList<ZonedDateTime>();
        int i = _dt1a.indexOf(v);
        if (1 != -1)
         {
@@ -2477,9 +2490,9 @@ This is the null setter for:<BR>
    public void setNullDt1a()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask);
        _dt1a=null;
        setNullDt1aTZ();
@@ -2659,9 +2672,9 @@ This is the null setter for:<BR>
        else if (CollectionUtil.isNullOrEmpty(_dt4a) == false) allRowTxColsAreNull = false;
        if (allRowTxColsAreNull == false)
         return;
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS._Mask);
        _rowTZ_TILDATEST_TestingTimestamps=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2846,9 +2859,9 @@ This is the null setter for:<BR>
    public void setNullDt2()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask);
        _dt2=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -3157,9 +3170,9 @@ This is the null setter for:<BR>
    public void setNullDt2n()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask);
        _dt2n=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -3496,9 +3509,9 @@ This is the null setter for:<BR>
    public void setNullDt2u()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask);
        _dt2u=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -3703,9 +3716,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final ZonedDateTime[] getDt2aAsArray()
-      { return _dt2a==null? null : _dt2a.toArray(new ZonedDateTime[_dt2a.size()]); }
+      { return _dt2a==null? null : _dt2a.toArray(new ZonedDateTime[0]); }
    public final Iterator<ZonedDateTime> getDt2a()
       { return _dt2a==null? null : _dt2a.iterator(); }
+   public final int getDt2aSize()
+      { return _dt2a==null? 0 : _dt2a.size(); }
    public final boolean hasDt2a(ZonedDateTime v)
       { return _dt2a==null? false : _dt2a.contains(v); }
 
@@ -3816,6 +3831,8 @@ This is the setter for:<BR>
    public void removeFromDt2a(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_dt2a == null)
+        _dt2a = new ArrayList<ZonedDateTime>();
        int i = _dt2a.indexOf(v);
        if (1 != -1)
         {
@@ -3860,9 +3877,9 @@ This is the null setter for:<BR>
    public void setNullDt2a()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask);
        _dt2a=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -4025,9 +4042,9 @@ This is the null setter for:<BR>
     void setNullDt3TZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ._Mask);
        _dt3TZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4212,9 +4229,9 @@ This is the null setter for:<BR>
    public void setNullDt3()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask);
        _dt3=null;
        setNullDt3TZ();
@@ -4461,9 +4478,9 @@ This is the null setter for:<BR>
     void setNullDt3nTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask);
        _dt3nTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4683,9 +4700,9 @@ This is the null setter for:<BR>
    public void setNullDt3n()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask);
        _dt3n=null;
        setNullDt3nTZ();
@@ -4960,9 +4977,9 @@ This is the null setter for:<BR>
     void setNullDt3uTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask);
        _dt3uTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -5182,9 +5199,9 @@ This is the null setter for:<BR>
    public void setNullDt3u()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask);
        _dt3u=null;
        setNullDt3uTZ();
@@ -5376,9 +5393,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final String[] getDt3aTZAsArray()
-      { return _dt3aTZ==null? null : _dt3aTZ.toArray(new String[_dt3aTZ.size()]); }
+      { return _dt3aTZ==null? null : _dt3aTZ.toArray(new String[0]); }
    public final Iterator<String> getDt3aTZ()
       { return _dt3aTZ==null? null : _dt3aTZ.iterator(); }
+   public final int getDt3aTZSize()
+      { return _dt3aTZ==null? 0 : _dt3aTZ.size(); }
    public final boolean hasDt3aTZ(String v)
       { return _dt3aTZ==null? false : _dt3aTZ.contains(v); }
 
@@ -5467,6 +5486,8 @@ This is the setter for:<BR>
     void removeFromDt3aTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_dt3aTZ == null)
+        _dt3aTZ = new ArrayList<String>();
        if (_dt3aTZ.remove(v) == true)
           __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask);
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -5503,9 +5524,9 @@ This is the null setter for:<BR>
     void setNullDt3aTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask);
        _dt3aTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -5593,9 +5614,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final ZonedDateTime[] getDt3aAsArray()
-      { return _dt3a==null? null : _dt3a.toArray(new ZonedDateTime[_dt3a.size()]); }
+      { return _dt3a==null? null : _dt3a.toArray(new ZonedDateTime[0]); }
    public final Iterator<ZonedDateTime> getDt3a()
       { return _dt3a==null? null : _dt3a.iterator(); }
+   public final int getDt3aSize()
+      { return _dt3a==null? 0 : _dt3a.size(); }
    public final boolean hasDt3a(ZonedDateTime v)
       { return _dt3a==null? false : _dt3a.contains(v); }
 
@@ -5703,6 +5726,8 @@ This is the setter for:<BR>
    public void removeFromDt3a(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_dt3a == null)
+        _dt3a = new ArrayList<ZonedDateTime>();
        int i = _dt3a.indexOf(v);
        if (1 != -1)
         {
@@ -5749,9 +5774,9 @@ This is the null setter for:<BR>
    public void setNullDt3a()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask);
        _dt3a=null;
        setNullDt3aTZ();
@@ -5941,9 +5966,9 @@ This is the null setter for:<BR>
    public void setNullDt4()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask);
        _dt4=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -6252,9 +6277,9 @@ This is the null setter for:<BR>
    public void setNullDt4n()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask);
        _dt4n=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -6591,9 +6616,9 @@ This is the null setter for:<BR>
    public void setNullDt4u()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask);
        _dt4u=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -6798,9 +6823,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final ZonedDateTime[] getDt4aAsArray()
-      { return _dt4a==null? null : _dt4a.toArray(new ZonedDateTime[_dt4a.size()]); }
+      { return _dt4a==null? null : _dt4a.toArray(new ZonedDateTime[0]); }
    public final Iterator<ZonedDateTime> getDt4a()
       { return _dt4a==null? null : _dt4a.iterator(); }
+   public final int getDt4aSize()
+      { return _dt4a==null? 0 : _dt4a.size(); }
    public final boolean hasDt4a(ZonedDateTime v)
       { return _dt4a==null? false : _dt4a.contains(v); }
 
@@ -6911,6 +6938,8 @@ This is the setter for:<BR>
    public void removeFromDt4a(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_dt4a == null)
+        _dt4a = new ArrayList<ZonedDateTime>();
        int i = _dt4a.indexOf(v);
        if (1 != -1)
         {
@@ -6955,9 +6984,9 @@ This is the null setter for:<BR>
    public void setNullDt4a()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask);
        _dt4a=null;
     // setNullRowTZ_TILDATEST_TestingTimestamps(); // row TZs are shared, so can't just null it!
@@ -7551,9 +7580,9 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -7662,37 +7691,21 @@ This is the hasChanged for:<BR>
      {
        if (_id                                != null)
         Dst.setId                               (_id                               );
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask) == true || _dt1TZ                            ==null)
-        Dst.setNullDt1TZ                            ();
-       else
-        Dst.setDt1TZ                            (_dt1TZ                            );
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask) == true || _dt1                              ==null)
         Dst.setNullDt1                              ();
        else
         Dst.setDt1                              (_dt1                              );
        Dst.Str_dt1 = Str_dt1;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask) == true || _dt1nTZ                           ==null)
-        Dst.setNullDt1nTZ                           ();
-       else
-        Dst.setDt1nTZ                           (_dt1nTZ                           );
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask) == true || _dt1n                             ==null)
         Dst.setNullDt1n                             ();
        else
         Dst.setDt1n                             (_dt1n                             );
        Dst.Str_dt1n = Str_dt1n;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask) == true || _dt1uTZ                           ==null)
-        Dst.setNullDt1uTZ                           ();
-       else
-        Dst.setDt1uTZ                           (_dt1uTZ                           );
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask) == true || _dt1u                             ==null)
         Dst.setNullDt1u                             ();
        else
         Dst.setDt1u                             (_dt1u                             );
        Dst.Str_dt1u = Str_dt1u;
-       if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask) == true || _dt1aTZ                           ==null)
-        Dst.setNullDt1aTZ                           ();
-       else
-        Dst.setDt1aTZ                           (_dt1aTZ                           );
        if (__Nulls.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask) == true || _dt1a                             ==null)
         Dst.setNullDt1a                             ();
        else
@@ -7818,14 +7831,28 @@ This is the hasChanged for:<BR>
 */
    public final boolean write(Connection C) throws Exception
      {
+       return write(C, false);
+     }
+
+   protected final boolean write(Connection C, boolean upsert) throws Exception
+     {
        long T0 = System.nanoTime();
 
        if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
         {
           validateDeserialization();
-          initForCreate();
-          // Auto PK
-          setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
+          if (_refnum != null) // is an update
+           {
+             __Changes.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.REFNUM._Mask);
+             __Saved_refnum = _refnum;
+             initForLookup(0); // Read/update with PK
+           }
+          else // is a create
+           {
+             initForCreate();
+             // Auto PK
+             setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
+           }
         }
 
        if (hasChanged() == false)
@@ -7843,7 +7870,7 @@ This is the hasChanged for:<BR>
           return false;
         }
 
-       String Q = getWriteQuery(C);
+       String Q = getWriteQuery(C, upsert);
 
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -7853,20 +7880,34 @@ This is the hasChanged for:<BR>
           PS = C.prepareStatement(Q);
           int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
+          if (__Init != InitMode.CREATE)
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum                           );
+               PS.setLong      (++i, __Saved_refnum                           );
                break;
              case 1: // Unique Index 'Id'
-               PS.setString    (++i, _id                               );
+               PS.setString    (++i, __Saved_id                               );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
           C.setSavepoint();
-          count = PS.executeUpdate();
+          if (upsert == false || __Init != InitMode.CREATE)
+            count = PS.executeUpdate();
+          else if (__Init == InitMode.CREATE)
+           {
+             PS.execute();
+             java.sql.ResultSet rs = PS.getResultSet();
+             if (rs.next() == true)
+              {
+                 _refnum = rs.getLong(1);
+                 count = 1;
+              }
+             else
+              count = 0;
+           }
           C.releaseSavepoint(true);
           if (count == 0)
            return false;
@@ -8153,7 +8194,83 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
-   protected String getWriteQuery(Connection C) throws Exception
+
+   public final boolean upsert(Connection C) throws Exception
+     {
+       return write(C, true);
+     }
+
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
+   protected int getFirstValidLookupBy() throws Exception
+     {
+
+       // Testing if cols for unique index Id were set - Id: 1
+       if (TextUtil.isNullOrEmpty(_id) == false)
+        return 1;
+
+       return SystemValues.EVIL_VALUE;
+     }
+
+
+   protected final void getUpsertQueryPart(Connection C, StringBuilder str) throws Exception
+     {
+       __LookupId = getFirstValidLookupBy();
+       if (__LookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+       String partialIndexWhere = "";
+       str.append("\nON CONFLICT(");
+       switch (__LookupId)
+        {
+          case 1:
+                TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID.getShortColumnVarForSelect(C, str);
+             break;
+          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create upsert statement.");
+        }
+       str.append(") ");
+       str.append(partialIndexWhere);
+       str.append(" DO UPDATE\n");
+       boolean first = true;
+       str.append("set ");
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID._Mask                               ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID.getShortColumnVarForSelect(C, str)                               ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID.getShortColumnVarForSelect(C, str)                               ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask                            ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ.getShortColumnVarForSelect(C, str)                            ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ.getShortColumnVarForSelect(C, str)                            ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1._Mask                              ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1.getShortColumnVarForSelect(C, str)                              ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1.getShortColumnVarForSelect(C, str)                              ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ._Mask                           ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ.getShortColumnVarForSelect(C, str)                           ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1NTZ.getShortColumnVarForSelect(C, str)                           ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1N.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ._Mask                           ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ.getShortColumnVarForSelect(C, str)                           ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1UTZ.getShortColumnVarForSelect(C, str)                           ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1U.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ._Mask                           ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ.getShortColumnVarForSelect(C, str)                           ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1ATZ.getShortColumnVarForSelect(C, str)                           ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1A.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS._Mask) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS.getShortColumnVarForSelect(C, str); str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS.getShortColumnVarForSelect(C, str); str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2._Mask                              ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2.getShortColumnVarForSelect(C, str)                              ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2.getShortColumnVarForSelect(C, str)                              ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2N.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2U.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT2A.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ._Mask                            ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ.getShortColumnVarForSelect(C, str)                            ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3TZ.getShortColumnVarForSelect(C, str)                            ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3._Mask                              ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3.getShortColumnVarForSelect(C, str)                              ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3.getShortColumnVarForSelect(C, str)                              ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ._Mask                           ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ.getShortColumnVarForSelect(C, str)                           ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3NTZ.getShortColumnVarForSelect(C, str)                           ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3N.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ._Mask                           ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ.getShortColumnVarForSelect(C, str)                           ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3UTZ.getShortColumnVarForSelect(C, str)                           ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3U.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ._Mask                           ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ.getShortColumnVarForSelect(C, str)                           ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3ATZ.getShortColumnVarForSelect(C, str)                           ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT3A.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4._Mask                              ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4.getShortColumnVarForSelect(C, str)                              ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4.getShortColumnVarForSelect(C, str)                              ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask                             ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A.getShortColumnVarForSelect(C, str)                             ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A.getShortColumnVarForSelect(C, str)                             ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask                      ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED.getShortColumnVarForSelect(C, str)                      ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED.getShortColumnVarForSelect(C, str)                      ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask                          ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED.getShortColumnVarForSelect(C, str)                          ; str.append("=EXCLUDED."); TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED.getShortColumnVarForSelect(C, str)                          ; str.append("\n"); }
+       str.append("returning "); TILDA__TESTINGTIMESTAMPS_Factory.COLS.REFNUM.getShortColumnVarForSelect(C, str);
+     }
+
+
+   protected String getWriteQuery(Connection C, boolean upsert) throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
 
@@ -8432,6 +8549,8 @@ This is the hasChanged for:<BR>
           S.setCharAt(Pos, ' ');
         }
 
+       if (upsert == true && __Init == InitMode.CREATE)
+        getUpsertQueryPart(C, S);
        String Q = S.toString();
        S.setLength(0);
        S = null;
@@ -8570,7 +8689,8 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           __Init = InitMode.WRITTEN;
-          __LookupId = 0;
+          if (__LookupId == SystemValues.EVIL_VALUE)
+            __LookupId = 0;
         }
        else
         {
@@ -8591,83 +8711,6 @@ This is the hasChanged for:<BR>
 
        __Changes.clear();
      }
-/**
- Writes the object to the data store using an upsert approach and assumes the object is either
- in create or deserialized mode. 
- The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
- an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
- without a robust upsert SQL syntax where separate insert/update statements must be issued.
- The method will figure out based on the fields set which natural identity (a unique index) is applicable for
- the lookup operation.
- Note that when you use upsert() (right after a create or deserialization initialization), only the template
- fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
- refresh() to force a select and retrieve all the fields for that record.
-*/
-   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
-     {
-       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
-                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
-               ;
-       if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
-
-       if (__Init == null && __LookupId==0)  // object deserialized
-        validateDeserialization();
-
-       int lookupId = getFirstValidLookupBy();
-       if (lookupId == SystemValues.EVIL_VALUE)
-        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
-
-       if (updateFirst == true)
-        {
-          initForLookup(lookupId);
-          if (write(C) == false)
-           {
-             initForCreate();
-             // Auto PK
-             setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
-             return write(C);
-           }
-        }
-       else
-        {
-          initForCreate();
-          // Auto PK
-          setRefnum(tilda.db.KeysManager.getKey("TILDATEST.TESTINGTIMESTAMPS"));
-          if (write(C) == false)
-           {
-             initForLookup(lookupId);
-              // Undo auto PK
-              __Changes.andNot(TILDA__TESTINGTIMESTAMPS_Factory.COLS.REFNUM._Mask);
-             return write(C);
-           }
-        }
-
-       return true;
-     }
-
-   /**
-   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
-   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
-   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
-   * but also an identify over an email address for example. That email address for a given logical user should be
-   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
-   * on dynamic factors that are very likely to be different across systems.
-   */
-   protected int getFirstValidLookupBy() throws Exception
-     {
-
-       // Testing if cols for unique index Id were set - Id: 1
-       if (TextUtil.isNullOrEmpty(_id) == false)
-        return 1;
-
-       // Testing if primary key has been set - Id: 0
-       if (_refnum != null)
-        return 0;
-
-       return SystemValues.EVIL_VALUE;
-     }
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -8765,6 +8808,7 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
+      String OCCLocalZone = ZoneId.systemDefault().getId();
       __Saved_refnum                            = _refnum                            =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.REFNUM._Mask                           ); _refnum = null; }
       __Saved_id                                = _id                                = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.ID._Mask                               ); _id = null; }
                                                   _dt1TZ                             = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT1TZ._Mask                            ); _dt1TZ = null; } else _dt1TZ                             = _dt1TZ                            .trim();
@@ -8806,14 +8850,18 @@ This is the hasChanged for:<BR>
                                                   _dt4n                              = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps                             , "tilda.data_test.TILDATEST.TestingTimestamps.dt4n"                             , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N                             , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS                             , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4N._Mask                             ); _dt4n = null; }
                                                   _dt4u                              = JDBCHelper.processZDT(_rowTZ_TILDATEST_TestingTimestamps                             , "tilda.data_test.TILDATEST.TestingTimestamps.dt4u"                             , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U                             , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS                             , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4U._Mask                             ); _dt4u = null; }
                                                   _dt4a                              = JDBCHelper.processZDTs(_rowTZ_TILDATEST_TestingTimestamps                             , "tilda.data_test.TILDATEST.TestingTimestamps.dt4a"                             , RS, ++i, TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A                             , TILDA__TESTINGTIMESTAMPS_Factory.COLS.ROWTZ_TILDATEST_TESTINGTIMESTAMPS                             , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DT4A._Mask                             ); _dt4a = null; }
-                                                  _created                           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask                          ); _created = null; }
-                                                  _lastUpdated                       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask                      ); _lastUpdated = null; }
-                                                  _deleted                           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask                          ); _deleted = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
+                                                                                                _created                           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.CREATED._Mask                          ); _created = null; }
+                                                                                                _lastUpdated                       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.LASTUPDATED._Mask                      ); _lastUpdated = null; }
+                                                                                                _deleted                           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGTIMESTAMPS_Factory.COLS.DELETED._Mask                          ); _deleted = null; }
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -8868,6 +8916,14 @@ This is the hasChanged for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data_test.TestingTimestamps_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data_test.TestingTimestamps_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.TestingTimestamps_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

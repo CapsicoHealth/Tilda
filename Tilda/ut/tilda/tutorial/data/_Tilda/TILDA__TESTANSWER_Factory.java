@@ -410,37 +410,37 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("formRefnum");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("formRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _formRefnum = ParseUtil.parseLong("formRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_formRefnum != null) Obj.setFormRefnum(_formRefnum);
+       if (_formRefnum != null  && _formRefnum != SystemValues.EVIL_VALUE) Obj.setFormRefnum(_formRefnum);
 
        vals = Values.get("questionId");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("questionId", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _questionId = ParseUtil.parseString("questionId", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_questionId != null) Obj.setQuestionId(_questionId);
+       if (_questionId != null ) Obj.setQuestionId(_questionId);
 
        vals = Values.get("answerId");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("answerId", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _answerId = ParseUtil.parseString("answerId", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_answerId != null) Obj.setAnswerId(_answerId);
+       if (_answerId != null ) Obj.setAnswerId(_answerId);
 
        vals = Values.get("timeMillis");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("timeMillis", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _timeMillis = ParseUtil.parseInteger("timeMillis", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeMillis != null) Obj.setTimeMillis(_timeMillis);
+       if (_timeMillis != null  && _timeMillis != SystemValues.EVIL_VALUE) Obj.setTimeMillis(_timeMillis);
 
        vals = Values.get("correct");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("correct", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Short _correct = ParseUtil.parseShort("correct", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_correct != null) Obj.setCorrect(_correct);
+       if (_correct != null  && _correct != SystemValues.EVIL_VALUE) Obj.setCorrect(_correct);
 
 
        return (tilda.tutorial.data.TestAnswer_Data) Obj;
@@ -497,7 +497,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -624,8 +624,8 @@ Lookup one record by the unique index 'FormAnswer': formRefnum, questionId.
        tilda.tutorial.data._Tilda.TILDA__TESTANSWER Obj = new tilda.tutorial.data.TestAnswer_Data();
        Obj.initForLookup(1);
 
-       Obj.setFormRefnum (formRefnum ); 
-       Obj.setQuestionId (questionId ); 
+       Obj.setFormRefnum (formRefnum ); Obj.__Saved_formRefnum  = Obj._formRefnum ;
+       Obj.setQuestionId (questionId ); Obj.__Saved_questionId  = Obj._questionId ;
 
        return (tilda.tutorial.data.TestAnswer_Data) Obj;
      }

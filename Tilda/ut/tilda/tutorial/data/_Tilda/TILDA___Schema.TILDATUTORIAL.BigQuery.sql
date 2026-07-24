@@ -13,10 +13,12 @@ create table if not exists TILDATUTORIAL.User -- Users
   , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Users");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS User_Id ON TILDATUTORIAL.User ("id");
---  CREATE UNIQUE INDEX IF NOT EXISTS User_Email ON TILDATUTORIAL.User ("email");
---  CREATE INDEX IF NOT EXISTS User_All ON TILDATUTORIAL.User ("lastUpdated" ASC);
+-- app-level index only -- ALTER TABLE TILDATUTORIAL.User ADD CONSTRAINT User_Id UNIQUE ("id") NOT ENFORCED; --  
+-- app-level index only -- ALTER TABLE TILDATUTORIAL.User ADD CONSTRAINT User_Email UNIQUE ("email") NOT ENFORCED; --  
+-- app-level index only -- Index 'User_All' on TILDATUTORIAL.User() order by "lastUpdated" ASC
+
 
 
 
@@ -34,9 +36,11 @@ create table if not exists TILDATUTORIAL.Form -- User-entered forms
   , FOREIGN KEY (`fillDateTZ`) REFERENCES TILDA.ZoneInfo(`id`) NOT ENFORCED
  )
 OPTIONS (description="User-entered forms");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE INDEX IF NOT EXISTS Form_Type ON TILDATUTORIAL.Form ("type", "fillDate" ASC);
---  CREATE INDEX IF NOT EXISTS Form_All ON TILDATUTORIAL.Form ("lastUpdated" ASC);
+-- app-level index only -- Index 'Form_Type' on TILDATUTORIAL.Form("type") order by , "fillDate" ASC
+-- app-level index only -- Index 'Form_All' on TILDATUTORIAL.Form() order by "lastUpdated" ASC
+
 
 
 
@@ -52,9 +56,11 @@ create table if not exists TILDATUTORIAL.FormAnswer -- Form answers
   , FOREIGN KEY (`formRefnum`) REFERENCES TILDATUTORIAL.Form(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Form answers");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS FormAnswer_FormAnswer ON TILDATUTORIAL.FormAnswer ("formRefnum", "field");
---  CREATE INDEX IF NOT EXISTS FormAnswer_All ON TILDATUTORIAL.FormAnswer ("lastUpdated" ASC);
+-- app-level index only -- ALTER TABLE TILDATUTORIAL.FormAnswer ADD CONSTRAINT FormAnswer_FormAnswer UNIQUE ("formRefnum", "field") NOT ENFORCED; --  
+-- app-level index only -- Index 'FormAnswer_All' on TILDATUTORIAL.FormAnswer() order by "lastUpdated" ASC
+
 
 
 
@@ -74,9 +80,11 @@ create table if not exists TILDATUTORIAL.TestQuestionAnswer -- Questions and ans
   , PRIMARY KEY(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Questions and answers for multiple-choice tests");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS TestQuestionAnswer_FormAnswer ON TILDATUTORIAL.TestQuestionAnswer ("type", "questionId", "answerSeq");
---  CREATE INDEX IF NOT EXISTS TestQuestionAnswer_Form ON TILDATUTORIAL.TestQuestionAnswer ("type", "questionId" ASC, "answerSeq" ASC);
+-- app-level index only -- ALTER TABLE TILDATUTORIAL.TestQuestionAnswer ADD CONSTRAINT TestQuestionAnswer_FormAnswer UNIQUE ("type", "questionId", "answerSeq") NOT ENFORCED; --  
+-- app-level index only -- Index 'TestQuestionAnswer_Form' on TILDATUTORIAL.TestQuestionAnswer("type") order by , "questionId" ASC, "answerSeq" ASC
+
 
 
 
@@ -94,9 +102,11 @@ create table if not exists TILDATUTORIAL.TestAnswer -- Test answers
   , FOREIGN KEY (`formRefnum`) REFERENCES TILDATUTORIAL.Form(`refnum`) NOT ENFORCED
  )
 OPTIONS (description="Test answers");
+
 -- Indices are not supported for this database, so logical definition only
---  CREATE UNIQUE INDEX IF NOT EXISTS TestAnswer_FormAnswer ON TILDATUTORIAL.TestAnswer ("formRefnum", "questionId");
---  CREATE INDEX IF NOT EXISTS TestAnswer_Form ON TILDATUTORIAL.TestAnswer ("formRefnum", "questionId" ASC);
+-- app-level index only -- ALTER TABLE TILDATUTORIAL.TestAnswer ADD CONSTRAINT TestAnswer_FormAnswer UNIQUE ("formRefnum", "questionId") NOT ENFORCED; --  
+-- app-level index only -- Index 'TestAnswer_Form' on TILDATUTORIAL.TestAnswer("formRefnum") order by , "questionId" ASC
+
 
 
 

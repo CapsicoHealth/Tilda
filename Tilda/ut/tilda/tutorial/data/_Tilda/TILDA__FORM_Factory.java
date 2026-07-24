@@ -392,25 +392,25 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("userRefnum");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("userRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _userRefnum = ParseUtil.parseLong("userRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_userRefnum != null) Obj.setUserRefnum(_userRefnum);
+       if (_userRefnum != null  && _userRefnum != SystemValues.EVIL_VALUE) Obj.setUserRefnum(_userRefnum);
 
        vals = Values.get("type");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_type != null) Obj.setType(_type);
+       if (_type != null ) Obj.setType(_type);
 
        vals = Values.get("fillDate");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("fillDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _fillDate = ParseUtil.parseZonedDateTime("fillDate", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_fillDate != null) Obj.setFillDate(_fillDate);
+       if (_fillDate != null ) Obj.setFillDate(_fillDate);
 
 
        return (tilda.tutorial.data.Form_Data) Obj;
@@ -463,7 +463,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 

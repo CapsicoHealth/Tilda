@@ -19,9 +19,11 @@ COMMENT ON COLUMN TILDATUTORIAL.User."email" IS E'The user''s email';
 COMMENT ON COLUMN TILDATUTORIAL.User."created" IS E'The timestamp for when the record was created. (TILDATUTORIAL.User)';
 COMMENT ON COLUMN TILDATUTORIAL.User."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATUTORIAL.User)';
 COMMENT ON COLUMN TILDATUTORIAL.User."deleted" IS E'The timestamp for when the record was deleted. (TILDATUTORIAL.User)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS User_Id ON TILDATUTORIAL.User ("id");
 CREATE UNIQUE INDEX IF NOT EXISTS User_Email ON TILDATUTORIAL.User ("email");
 CREATE INDEX IF NOT EXISTS User_All ON TILDATUTORIAL.User ("lastUpdated" ASC);
+
 delete from TILDA.Key where "name" = 'TILDATUTORIAL.USER';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATUTORIAL.USER',(select COALESCE(max("refnum"),0)+1 from TILDATUTORIAL.User), 500, current_timestamp, current_timestamp);
 
@@ -49,8 +51,10 @@ COMMENT ON COLUMN TILDATUTORIAL.Form."fillDate" IS E'The date the form was fille
 COMMENT ON COLUMN TILDATUTORIAL.Form."created" IS E'The timestamp for when the record was created. (TILDATUTORIAL.Form)';
 COMMENT ON COLUMN TILDATUTORIAL.Form."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATUTORIAL.Form)';
 COMMENT ON COLUMN TILDATUTORIAL.Form."deleted" IS E'The timestamp for when the record was deleted. (TILDATUTORIAL.Form)';
+
 CREATE INDEX IF NOT EXISTS Form_Type ON TILDATUTORIAL.Form ("type", "fillDate" ASC);
 CREATE INDEX IF NOT EXISTS Form_All ON TILDATUTORIAL.Form ("lastUpdated" ASC);
+
 delete from TILDA.Key where "name" = 'TILDATUTORIAL.FORM';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATUTORIAL.FORM',(select COALESCE(max("refnum"),0)+1 from TILDATUTORIAL.Form), 500, current_timestamp, current_timestamp);
 
@@ -75,8 +79,10 @@ COMMENT ON COLUMN TILDATUTORIAL.FormAnswer."value" IS E'answer value';
 COMMENT ON COLUMN TILDATUTORIAL.FormAnswer."created" IS E'The timestamp for when the record was created. (TILDATUTORIAL.FormAnswer)';
 COMMENT ON COLUMN TILDATUTORIAL.FormAnswer."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATUTORIAL.FormAnswer)';
 COMMENT ON COLUMN TILDATUTORIAL.FormAnswer."deleted" IS E'The timestamp for when the record was deleted. (TILDATUTORIAL.FormAnswer)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS FormAnswer_FormAnswer ON TILDATUTORIAL.FormAnswer ("formRefnum", "field");
 CREATE INDEX IF NOT EXISTS FormAnswer_All ON TILDATUTORIAL.FormAnswer ("lastUpdated" ASC);
+
 delete from TILDA.Key where "name" = 'TILDATUTORIAL.FORMANSWER';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATUTORIAL.FORMANSWER',(select COALESCE(max("refnum"),0)+1 from TILDATUTORIAL.FormAnswer), 500, current_timestamp, current_timestamp);
 
@@ -110,8 +116,10 @@ COMMENT ON COLUMN TILDATUTORIAL.TestQuestionAnswer."correct" IS E'Whether the an
 COMMENT ON COLUMN TILDATUTORIAL.TestQuestionAnswer."created" IS E'The timestamp for when the record was created. (TILDATUTORIAL.TestQuestionAnswer)';
 COMMENT ON COLUMN TILDATUTORIAL.TestQuestionAnswer."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATUTORIAL.TestQuestionAnswer)';
 COMMENT ON COLUMN TILDATUTORIAL.TestQuestionAnswer."deleted" IS E'The timestamp for when the record was deleted. (TILDATUTORIAL.TestQuestionAnswer)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS TestQuestionAnswer_FormAnswer ON TILDATUTORIAL.TestQuestionAnswer ("type", "questionId", "answerSeq");
 -- app-level index only -- CREATE INDEX IF NOT EXISTS TestQuestionAnswer_Form ON TILDATUTORIAL.TestQuestionAnswer ("type", "questionId" ASC, "answerSeq" ASC);
+
 delete from TILDA.Key where "name" = 'TILDATUTORIAL.TESTQUESTIONANSWER';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATUTORIAL.TESTQUESTIONANSWER',(select COALESCE(max("refnum"),0)+1 from TILDATUTORIAL.TestQuestionAnswer), 500, current_timestamp, current_timestamp);
 
@@ -140,8 +148,10 @@ COMMENT ON COLUMN TILDATUTORIAL.TestAnswer."correct" IS E'Whether the answer is 
 COMMENT ON COLUMN TILDATUTORIAL.TestAnswer."created" IS E'The timestamp for when the record was created. (TILDATUTORIAL.TestAnswer)';
 COMMENT ON COLUMN TILDATUTORIAL.TestAnswer."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDATUTORIAL.TestAnswer)';
 COMMENT ON COLUMN TILDATUTORIAL.TestAnswer."deleted" IS E'The timestamp for when the record was deleted. (TILDATUTORIAL.TestAnswer)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS TestAnswer_FormAnswer ON TILDATUTORIAL.TestAnswer ("formRefnum", "questionId");
 CREATE INDEX IF NOT EXISTS TestAnswer_Form ON TILDATUTORIAL.TestAnswer ("formRefnum", "questionId" ASC);
+
 delete from TILDA.Key where "name" = 'TILDATUTORIAL.TESTANSWER';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDATUTORIAL.TESTANSWER',(select COALESCE(max("refnum"),0)+1 from TILDATUTORIAL.TestAnswer), 500, current_timestamp, current_timestamp);
 

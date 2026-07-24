@@ -165,7 +165,12 @@ public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObjec
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -478,9 +483,9 @@ This is the null setter for:<BR>
     void setNullA2Min()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask);
        _a2Min=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -608,9 +613,9 @@ This is the null setter for:<BR>
     void setNullA2Max()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask);
        _a2Max=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -663,9 +668,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final String[] getA9TZAsArray()
-      { return _a9TZ==null? null : _a9TZ.toArray(new String[_a9TZ.size()]); }
+      { return _a9TZ==null? null : _a9TZ.toArray(new String[0]); }
    public final Iterator<String> getA9TZ()
       { return _a9TZ==null? null : _a9TZ.iterator(); }
+   public final int getA9TZSize()
+      { return _a9TZ==null? 0 : _a9TZ.size(); }
    public final boolean hasA9TZ(String v)
       { return _a9TZ==null? false : _a9TZ.contains(v); }
 
@@ -758,6 +765,8 @@ This is the setter for:<BR>
     void removeFromA9TZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_a9TZ == null)
+        _a9TZ = new ArrayList<String>();
        if (_a9TZ.remove(v) == true)
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -794,9 +803,9 @@ This is the null setter for:<BR>
     void setNullA9TZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
        _a9TZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -876,9 +885,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final ZonedDateTime[] getA9AsArray()
-      { return _a9==null? null : _a9.toArray(new ZonedDateTime[_a9.size()]); }
+      { return _a9==null? null : _a9.toArray(new ZonedDateTime[0]); }
    public final Iterator<ZonedDateTime> getA9()
       { return _a9==null? null : _a9.iterator(); }
+   public final int getA9Size()
+      { return _a9==null? 0 : _a9.size(); }
    public final boolean hasA9(ZonedDateTime v)
       { return _a9==null? false : _a9.contains(v); }
 
@@ -1004,6 +1015,8 @@ This is the setter for:<BR>
     void removeFromA9(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_a9 == null)
+        _a9 = new ArrayList<ZonedDateTime>();
        int i = _a9.indexOf(v);
        if (1 != -1)
         {
@@ -1057,9 +1070,9 @@ This is the null setter for:<BR>
     void setNullA9()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
        _a9=null;
        setNullA9TZ();
@@ -1112,9 +1125,11 @@ This is the getter for:<BR>
 </TABLE>
 */
    public final LocalDate[] getA9cAsArray()
-      { return _a9c==null? null : _a9c.toArray(new LocalDate[_a9c.size()]); }
+      { return _a9c==null? null : _a9c.toArray(new LocalDate[0]); }
    public final Iterator<LocalDate> getA9c()
       { return _a9c==null? null : _a9c.iterator(); }
+   public final int getA9cSize()
+      { return _a9c==null? 0 : _a9c.size(); }
    public final boolean hasA9c(LocalDate v)
       { return _a9c==null? false : _a9c.contains(v); }
 
@@ -1205,6 +1220,8 @@ This is the setter for:<BR>
     void removeFromA9c(LocalDate v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (_a9c == null)
+        _a9c = new ArrayList<LocalDate>();
        if (_a9c.remove(v) == true)
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1240,9 +1257,9 @@ This is the null setter for:<BR>
     void setNullA9c()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
        _a9c=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1370,9 +1387,9 @@ This is the null setter for:<BR>
     void setNullA6First()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask);
        _a6First=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1500,9 +1517,9 @@ This is the null setter for:<BR>
     void setNullA6Last()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask);
        if (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask);
        _a6Last=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1616,11 +1633,15 @@ This is the null setter for:<BR>
                         _a9c     = DateTimeUtil.toLocalDates((List<java.sql.Date>) JDBCHelper.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C.getType(), false)); if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    ); _a9c = null; }
                         _a6First =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask); _a6First = null; }
                         _a6Last  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask ); _a6Last = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -1661,6 +1682,14 @@ This is the null setter for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data_test.TestingView_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data_test.TestingView_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data_test.TestingView_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

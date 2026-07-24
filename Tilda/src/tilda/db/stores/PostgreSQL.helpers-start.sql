@@ -177,6 +177,14 @@ CREATE OR REPLACE FUNCTION TILDA.In(vals character[], v character)
   IMMUTABLE COST 1 LANGUAGE SQL AS
   'select v = ANY(vals);';
   
+CREATE OR REPLACE FUNCTION TILDA.In(v UUID, vals UUID[])
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select v = ANY(vals);';
+CREATE OR REPLACE FUNCTION TILDA.In(vals UUID[], v UUID)
+  RETURNS boolean
+  IMMUTABLE COST 1 LANGUAGE SQL AS
+  'select v = ANY(vals);';
   
   
 
