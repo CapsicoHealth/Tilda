@@ -46,27 +46,27 @@ public class Reverse
         LOG.info("");
         LOG.info("Tilda reverse utility");
         LOG.info("   This utility will reverse enginer a whole Schema or Table from the database and generate a tilda.json file.");
-        LOG.info("   It takes one mandatory parameter, the name of the schema to reverse engineer, and optionally, the name of a specific table to reverse engineer.");
+        LOG.info("   It takes two mandatory parameters, the name of the connection, the name of the schema to reverse engineer, and optionally, the name of a specific table to reverse engineer.");
         LOG.info("");
-        if (args.length < 1 || args.length > 2)
+        if (args.length < 2 || args.length > 3)
           {
-            LOG.error("You must specify 1 or 2 parameters: the name of the schema to reverse engineer and optionally the name of a specific table.");
+            LOG.error("You must specify 2 or 3 parameters: the name of the connection, the name of the schema to reverse engineer, and optionally the name of a specific table.");
             return;
           }
         LOG.info("");
         try
           {
             ConnDefs._SKIP_TILDA_LOADING = true; // Skip loading Tilda infrastructure since we are 100% JDBC-based DB meta-data only.
-            Connection C = ConnectionPool.get("MAIN");
-            SchemaMeta S = new SchemaMeta(args[0]);
-            S.load(C, args.length == 2 && TextUtil.isNullOrEmpty(args[1]) == false ? args[1] : null);
+            Connection C = ConnectionPool.get(args[0]);
+            SchemaMeta S = new SchemaMeta(args[1]);
+            S.load(C, args.length == 3 && TextUtil.isNullOrEmpty(args[2]) == false ? args[2] : null);
             StringBuilder str = new StringBuilder();
             int tableNum = -1;
             genTildaSchemaJSONStart(str, "", "Schema generated via Reverse");
             genTildaObjectsJSONStart(str);
             for (TableMeta T : S.getTableMetas())
               {
-                if (args.length == 2 && TextUtil.isNullOrEmpty(args[1]) == false && args[1].equalsIgnoreCase(T._TableName) == false)
+                if (args.length == 3 && TextUtil.isNullOrEmpty(args[2]) == false && args[2].equalsIgnoreCase(T._TableName) == false)
                   continue;
                 ++tableNum;
                 LOG.info("Analyzing table " + T._SchemaName + "." + T._TableName);
@@ -79,7 +79,7 @@ public class Reverse
             genTildaViewsJSONStart(str);
             for (ViewMeta V : S.getViewMetas())
               {
-                if (args.length == 2 && TextUtil.isNullOrEmpty(args[1]) == false && args[1].equalsIgnoreCase(V._ViewName) == false)
+                if (args.length == 3 && TextUtil.isNullOrEmpty(args[2]) == false && args[2].equalsIgnoreCase(V._ViewName) == false)
                   continue;
                 ++viewNum;
                 LOG.info("Analyzing view " + V._SchemaName + "." + V._ViewName);
