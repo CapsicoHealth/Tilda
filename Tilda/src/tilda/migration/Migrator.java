@@ -815,10 +815,10 @@ public class Migrator
                   if (VMDest == null && VMSrc != null)
                     {
                       // Add the migration action
-                      Actions.add(new TableViewMove(v._ParentSchema._Name, v._Name, S._Name, newName, true));
+                      Actions.add(new TableViewMove(MM._Schema, v._Name, S._Name, newName, true));
                       // Transfer view to new schema to avoid double-creation later in this loop
                       // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                      if (DBMeta.getSchemaMeta(v._ParentSchema._Name).moveViewMetaFromOtherSchema(DBMeta, VMSrc) == false)
+                      if (DBMeta.getSchemaMeta(S._Name).moveViewMetaFromOtherSchema(DBMeta, VMSrc) == false)
                         throw new Exception("An error occurred: view '" + v._Name + "' is being moved from schema '" + MM._Schema + "' to '" + v._ParentSchema._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
                     }
                 }
