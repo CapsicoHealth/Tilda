@@ -1866,20 +1866,21 @@ public class TildaData implements CodeGenTildaData
           if (C != null)
             {
               String Mask = Helper.getRuntimeMask(C);
-              String Pad = O._PadderColumnNames.getPad(C.getName());
+              String colName = C.getName() + (C.getType() == ColumnType.JSON && C._JsonSchema != null ? "Obj" : "");
+              String Pad = O._PadderColumnNames.getPad(colName);
               if (C._Nullable == true)
-                Out.print("       if (__Nulls.intersects(" + Mask + ") == true || _" + C.getName() + Pad + "==null)\n"
+                Out.print("       if (__Nulls.intersects(" + Mask + ") == true || _" + colName + Pad + "==null)\n"
                 + "        Dst.setNull" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + Pad + "();\n"
                 + "       else\n "); // extra space to indent next line
               else if (true == C._Invariant)
                 {
-                  Out.print("       if (__Init == InitMode.CREATE && _" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                  Out.print("       if (__Init == InitMode.CREATE && _" + colName + Pad + " != null)\n "); // extra space to indent next line
                 }
               else
                 {
-                  Out.print("       if (_" + C.getName() + Pad + " != null)\n "); // extra space to indent next line
+                  Out.print("       if (_" + colName + Pad + " != null)\n "); // extra space to indent next line
                 }
-              Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + Pad + "(_" + C.getName() + Pad + ");");
+              Out.println("       Dst.set" + TextUtil.capitalizeFirstCharacter(Helper.getSystemMappedColumnName(C)) + Pad + "(_" + colName + Pad + ");");
 
               if ((C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATETIME_PLAIN) && C.isJSONColumn() == true)
                 Out.println("       Dst.Str_" + C.getName() + " = Str_" + C.getName() + ";");
