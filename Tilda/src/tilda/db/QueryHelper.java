@@ -16,6 +16,7 @@
 
 package tilda.db;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import tilda.types.Type_IntegerCollection;
 import tilda.types.Type_IntegerPrimitive;
 import tilda.types.Type_LongCollection;
 import tilda.types.Type_LongPrimitive;
+import tilda.types.Type_NumericPrimitive;
 import tilda.types.Type_ShortCollection;
 import tilda.types.Type_ShortPrimitive;
 import tilda.types.Type_StringCollection;
@@ -681,6 +683,14 @@ public abstract class QueryHelper
         opValBase(O, valStr);
       }
 
+    protected final void opVal(Op O, BigDecimal V)
+    throws Exception
+      {
+        // toPlainString() rather than toString(): a NUMERIC/DECIMAL literal must never be emitted in
+        // scientific notation (e.g. "1E+2"), which some engines will refuse to parse as a NUMERIC.
+        opValBase(O, V == null ? null : V.toPlainString());
+      }
+
 
     public String getWhereClause()
     throws Exception
@@ -836,11 +846,19 @@ public abstract class QueryHelper
         return equals(Col2);
       }
     
+    /**
+     * Atomically sets Col1 = coalesce(Col1,0) + val at the database level -- see
+     * {@link #setIncrement(Type_NumericPrimitive, BigDecimal)}'s docs for why the self-reference is
+     * coalesced: the underlying column type ({@code Type_ShortPrimitiveNull}) can be a nullable SMALLINT,
+     * and a bare "Col1 = Col1 + val" would silently and permanently poison a NULL column to NULL forever.
+     */
     public QueryHelper setIncrement(Type_ShortPrimitive Col1, short val)
     throws Exception
       {
         setColumn(Col1);
-        equals(Col1);
+        _QueryStr.append(" = coalesce(");
+        Col1.getShortColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", 0)");
         return plus(val);
       }
     
@@ -859,11 +877,19 @@ public abstract class QueryHelper
         return equals(Col2);
       }
 
+    /**
+     * Atomically sets Col1 = coalesce(Col1,0) + val at the database level -- see
+     * {@link #setIncrement(Type_NumericPrimitive, BigDecimal)}'s docs for why the self-reference is
+     * coalesced: the underlying column type ({@code Type_IntegerPrimitiveNull}) can be a nullable INTEGER,
+     * and a bare "Col1 = Col1 + val" would silently and permanently poison a NULL column to NULL forever.
+     */
     public QueryHelper setIncrement(Type_IntegerPrimitive Col1, int val)
     throws Exception
       {
         setColumn(Col1);
-        equals(Col1);
+        _QueryStr.append(" = coalesce(");
+        Col1.getShortColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", 0)");
         return plus(val);
       }
 
@@ -888,11 +914,59 @@ public abstract class QueryHelper
         return equals(Col2);
       }
     
+    /**
+     * Atomically sets Col1 = coalesce(Col1,0) + val at the database level -- see
+     * {@link #setIncrement(Type_NumericPrimitive, BigDecimal)}'s docs for why the self-reference is
+     * coalesced: the underlying column type ({@code Type_LongPrimitiveNull}) can be a nullable BIGINT,
+     * and a bare "Col1 = Col1 + val" would silently and permanently poison a NULL column to NULL forever.
+     */
     public QueryHelper setIncrement(Type_LongPrimitive Col1, long val)
     throws Exception
       {
         setColumn(Col1);
-        equals(Col1);
+        _QueryStr.append(" = coalesce(");
+        Col1.getShortColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", 0)");
+        return plus(val);
+      }
+
+    public QueryHelper set(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_NumericPrimitive Col1, BigDecimal V)
+    throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    /**
+     * Atomically sets Col1 = coalesce(Col1,0) + val at the database level. This is the safe alternative to
+     * the traditional read (getXXX()) -> compute in Java -> write (setXXX()+write()) chain for a value that
+     * can be concurrently updated, e.g., a balance or a counter: since the increment is expressed as
+     * SQL arithmetic against whatever the CURRENT row value is at the time the UPDATE executes (under the
+     * database's own row lock), two concurrent increments can never silently overwrite one another the
+     * way two Java-side read-modify-write sequences could. val may be negative to decrement.
+     * <P>
+     * The self-reference is wrapped in <CODE>coalesce(Col1,0)</CODE> rather than a bare "Col1 = Col1 + val":
+     * in standard SQL, <CODE>NULL + val</CODE> evaluates to <CODE>NULL</CODE>, so a nullable NUMERIC column
+     * that starts out NULL (e.g. a freshly-created wallet row whose balance was never explicitly
+     * initialized) would silently stay NULL forever, no matter how many increments are applied -- with no
+     * error raised anywhere, since the UPDATE still matches and "succeeds". Coalescing to 0 here treats an
+     * unset column exactly like a zero starting point, which is what every current caller (see
+     * UserPlanSubscription_Factory.incrementCreditsBalance/incrementCreditsBonusGranted) actually needs.
+     */
+    public QueryHelper setIncrement(Type_NumericPrimitive Col1, BigDecimal val)
+    throws Exception
+      {
+        setColumn(Col1);
+        _QueryStr.append(" = coalesce(");
+        Col1.getShortColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", 0)");
         return plus(val);
       }
     
@@ -1582,6 +1656,16 @@ public abstract class QueryHelper
         return sb.toString();
       }
 
+    private static String numericArrayToStr(BigDecimal[] V)
+      {
+        StringBuilder sb = new StringBuilder();
+        // toPlainString() rather than toString(): a NUMERIC/DECIMAL literal must never be emitted in
+        // scientific notation (e.g. "1E+2"), which some engines will refuse to parse as a NUMERIC.
+        for (int i = 0; i < V.length; ++i)
+          { if (i != 0) sb.append(","); sb.append(V[i].toPlainString()); }
+        return sb.toString();
+      }
+
     public QueryHelper in(Type_ShortPrimitive Col, short[] V)
     throws Exception
       {
@@ -1640,6 +1724,26 @@ public abstract class QueryHelper
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
         return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toString(), not, numericArrayToStr(V));
+      }
+
+    public QueryHelper in(Type_NumericPrimitive Col, BigDecimal[] V)
+    throws Exception
+      {
+        return in(Col, null, V, false);
+      }
+
+    public QueryHelper in(Type_NumericPrimitive Col, BigDecimal[] V, boolean not)
+    throws Exception
+      {
+        return in(Col, null, V, not);
+      }
+
+    public QueryHelper in(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal[] V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.length == 0)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty value array.");
+        return inNumericBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), not, numericArrayToStr(V));
       }
 
     public QueryHelper in(Type_FloatPrimitive Col, float[] V)
@@ -2016,6 +2120,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper equals(BigDecimal V)
+    throws Exception
+      {
+        opVal(Op.EQUALS, V);
+        return this;
+      }
+
     public QueryHelper equals(ZonedDateTime ZDT)
     throws Exception
       {
@@ -2100,6 +2211,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.EQUALS);
+      }
+
+    public QueryHelper equals(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.EQUALS);
@@ -2237,6 +2354,18 @@ public abstract class QueryHelper
         return equals(Col, null, V);
       }
 
+    public QueryHelper equals(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), Op.EQUALS, V == null ? null : V.toPlainString());
+      }
+
+    public QueryHelper equals(Type_NumericPrimitive Col, BigDecimal V)
+    throws Exception
+      {
+        return equals(Col, null, V);
+      }
+
     public QueryHelper equals(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2361,6 +2490,18 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_LongPrimitive Col, long V)
+    throws Exception
+      {
+        return lt(Col, null, V);
+      }
+
+    public QueryHelper lt(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), Op.LT, V == null ? null : V.toPlainString());
+      }
+
+    public QueryHelper lt(Type_NumericPrimitive Col, BigDecimal V)
     throws Exception
       {
         return lt(Col, null, V);
@@ -2504,6 +2645,18 @@ public abstract class QueryHelper
         return lte(Col, null, V);
       }
 
+    public QueryHelper lte(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), Op.LTE, V == null ? null : V.toPlainString());
+      }
+
+    public QueryHelper lte(Type_NumericPrimitive Col, BigDecimal V)
+    throws Exception
+      {
+        return lte(Col, null, V);
+      }
+
     public QueryHelper lte(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2636,6 +2789,18 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_LongPrimitive Col, long V)
+    throws Exception
+      {
+        return gt(Col, null, V);
+      }
+
+    public QueryHelper gt(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), Op.GT, V == null ? null : V.toPlainString());
+      }
+
+    public QueryHelper gt(Type_NumericPrimitive Col, BigDecimal V)
     throws Exception
       {
         return gt(Col, null, V);
@@ -2778,6 +2943,18 @@ public abstract class QueryHelper
         return gte(Col, null, V);
       }
 
+    public QueryHelper gte(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), Op.GTE, V == null ? null : V.toPlainString());
+      }
+
+    public QueryHelper gte(Type_NumericPrimitive Col, BigDecimal V)
+    throws Exception
+      {
+        return gte(Col, null, V);
+      }
+
     public QueryHelper gte(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -2915,6 +3092,18 @@ public abstract class QueryHelper
         return notEquals(Col, null, V);
       }
 
+    public QueryHelper notEquals(Type_NumericPrimitive Col, BigDecimal coalesceVal, BigDecimal V)
+    throws Exception
+      {
+        return colOpBase(Col, coalesceVal == null ? null : coalesceVal.toPlainString(), Op.NOT_EQUALS, V == null ? null : V.toPlainString());
+      }
+
+    public QueryHelper notEquals(Type_NumericPrimitive Col, BigDecimal V)
+    throws Exception
+      {
+        return notEquals(Col, null, V);
+      }
+
     public QueryHelper notEquals(Type_FloatPrimitive Col, Float coalesceVal, float V)
     throws Exception
       {
@@ -3031,6 +3220,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.LT);
       }
 
+    public QueryHelper lt(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
     public QueryHelper lt(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
     throws Exception
       {
@@ -3089,6 +3284,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.LTE);
@@ -3157,6 +3358,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.GT);
       }
 
+    public QueryHelper gt(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
     public QueryHelper gt(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
     throws Exception
       {
@@ -3220,6 +3427,12 @@ public abstract class QueryHelper
         return compareBase(Col1, Col2, Op.GTE);
       }
 
+    public QueryHelper gte(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
     public QueryHelper gte(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
     throws Exception
       {
@@ -3278,6 +3491,12 @@ public abstract class QueryHelper
       }
 
     public QueryHelper notEquals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper notEquals(Type_NumericPrimitive Col1, Type_NumericPrimitive Col2)
     throws Exception
       {
         return compareBase(Col1, Col2, Op.NOT_EQUALS);
@@ -3357,6 +3576,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper plus(BigDecimal V)
+    throws Exception
+      {
+        opVal(Op.PLUS, V);
+        return this;
+      }
+
     public QueryHelper plus(ZonedDateTime ZDT)
     throws Exception
       {
@@ -3421,6 +3647,13 @@ public abstract class QueryHelper
       }
 
     public QueryHelper minus(double V)
+    throws Exception
+      {
+        opVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(BigDecimal V)
     throws Exception
       {
         opVal(Op.MINUS, V);
@@ -3497,6 +3730,13 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper multiply(BigDecimal V)
+    throws Exception
+      {
+        opVal(Op.MULTIPLY, V);
+        return this;
+      }
+
     public QueryHelper divide(ColumnDefinition Col)
     throws Exception
       {
@@ -3547,6 +3787,13 @@ public abstract class QueryHelper
       }
 
     public QueryHelper divide(double V)
+    throws Exception
+      {
+        opVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(BigDecimal V)
     throws Exception
       {
         opVal(Op.DIVIDE, V);

@@ -22,24 +22,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DoubleArrayRP implements RecordProcessor
+public class LongListRP implements RecordProcessor
   {
-    protected List<double[]> _Res;
+    protected List<Long> _Res;
 
     @Override
     public void start()
       {
-        _Res = new ArrayList<double[]>();
+        _Res = new ArrayList<Long>();
+
       }
 
     @Override
     public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
-        double[] Row = new double[RS.getMetaData().getColumnCount()];
-        for (int i = 0; i < Row.length; ++i)
-         Row[i] = RS.getDouble(i+1);
-        _Res.add(Row);
+        _Res.add(RS.getLong(1));
         return true;
       }
 
@@ -48,7 +46,7 @@ public class DoubleArrayRP implements RecordProcessor
       {
       }
 
-    public List<double[]> getResult()
+    public List<Long> getResult()
       {
         return _Res;
       }

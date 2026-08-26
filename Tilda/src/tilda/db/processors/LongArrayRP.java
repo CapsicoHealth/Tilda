@@ -18,25 +18,28 @@ package tilda.db.processors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LongArrayRP implements RecordProcessor
   {
-    protected long[] _Res;
+    protected List<long[]> _Res;
 
     @Override
     public void start()
       {
-        _Res = new long[] { };
+        _Res = new ArrayList<long[]>();
       }
 
     @Override
     public boolean process(int Index, ResultSet RS)
       throws SQLException
       {
-        _Res = new long[RS.getMetaData().getColumnCount()];
-        for (int i = 0; i < _Res.length; ++i)
-         _Res[i] = RS.getLong(i+1);
+        long[] Row = new long[RS.getMetaData().getColumnCount()];
+        for (int i = 0; i < Row.length; ++i)
+         Row[i] = RS.getLong(i+1);
+        _Res.add(Row);
         return true;
       }
 
@@ -45,7 +48,7 @@ public class LongArrayRP implements RecordProcessor
       {
       }
 
-    public long[] getResult()
+    public List<long[]> getResult()
       {
         return _Res;
       }

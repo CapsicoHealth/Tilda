@@ -576,7 +576,7 @@ public class Migrator
                 // if (XXX != Actions.size())
                 // Actions.add(new CommitPoint());
 
-                handleIndices(Actions, Errors, Obj, TMeta);
+                handleIndices(Actions, Errors, Obj, TMeta, DBMeta.getSchemaMeta(Obj._ParentSchema._Name));
               }
           }
         for (View V : S._Views)
@@ -662,7 +662,8 @@ public class Migrator
             Str.append("\n\nDatabase couldn't be migrated because of errors found:\n");
             for (int i = 0; i < Errors.size(); ++i)
               Str.append("     " + (i + 1) + ": " + Errors.get(i) + ".\n");
-            throw new Exception(Str.toString());
+            LOG.error(Str);
+            throw new Exception("Database couldn't be migrated because of "+Errors.size()+" error(s) found.");
           }
         return Actions;
       }
@@ -748,8 +749,8 @@ public class Migrator
                       Actions.add(new TableViewRename(MR._View, VMSrcs.get(0)._ViewName));
                       // Rename table to avoid double-creation later in this loop
                       // i.e., the table didn't exist in this schema when the database was originally scanned (DBMeta).
-                      if (DBMeta.getSchemaMeta(MR._Object._ParentSchema._Name).renameView(DBMeta, VMSrcs.get(0), MR._Object._Name) == false)
-                        throw new Exception("An error occurred: view '" + VMSrcs.get(0)._SchemaName + "." + VMSrcs.get(0)._ViewName + "' is being renamed to '" + MR._Object._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
+                      if (DBMeta.getSchemaMeta(MR._View._ParentSchema._Name).renameView(DBMeta, VMSrcs.get(0), MR._View._Name) == false)
+                        throw new Exception("An error occurred: view '" + VMSrcs.get(0)._SchemaName + "." + VMSrcs.get(0)._ViewName + "' is being renamed to '" + MR._View._Name + "' but seems to already exist there even though we just tested that a second ago and found nothing!");
                     }
                 }
             }
@@ -995,7 +996,7 @@ public class Migrator
           }
       }
 
-    protected static void handleIndices(List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta)
+    protected static void handleIndices(List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta, SchemaMeta SMeta)
       {
         // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
         Set<String> DroppedSignatures = new HashSet<String>(); // Dropped Signatures
@@ -1007,14 +1008,6 @@ public class Migrator
           {
             if (IX == null || IX._Db == false)
               continue;
-            if (Obj._Name.equalsIgnoreCase("UserPlanSubscription") == true)
-              {
-                if (IX._SubQuery != null)
-                  {
-                    Query Q = IX._SubQuery.getQuery(DBType.Postgres);
-                    LOG.debug("Index " + IX._Name + "; " + IX.getSignature() + "; " + Q._ClauseStatic);
-                  }
-              }
             // Checking for dropped indices
             for (IndexMeta ix : TMeta._Indices.values())
               {
@@ -1106,7 +1099,21 @@ public class Migrator
                   Actions.add(new TableIndexDrop(Obj, IMeta));
                 if (IMeta2 != null)
                   Actions.add(new TableIndexDrop(Obj, IMeta2));
-                Actions.add(new TableIndexAdd(IX));
+
+                // Before blindly issuing a "CREATE INDEX IF NOT EXISTS", make sure no OTHER table in this schema
+                // already owns an index with this name. Index names are unique per-schema (not per-table) in
+                // databases like Postgres, so if some other table (e.g., an old renamed/backup copy of this one)
+                // already has an index by this name, the CREATE would silently do nothing on THIS table, and we'd
+                // otherwise re-attempt (and re-fail) this exact same "fix" on every single migration run forever,
+                // without ever raising a flag about it.
+                String OtherTable = SMeta == null ? null : SMeta.findIndexOwner(IX.getName(), TMeta._TableName);
+                if (OtherTable != null)
+                  Errors.add("Index '" + IX.getName() + "' is needed on " + Obj.getShortName()
+                  + " but already exists on '" + TMeta._SchemaName+"."+OtherTable + "'. "
+                  + "This is often caused by a renamed/backup copy of the table that still holds the original index name. "
+                  + "Please rename or drop the conflicting index.");
+                else
+                  Actions.add(new TableIndexAdd(IX));
               }
           }
 

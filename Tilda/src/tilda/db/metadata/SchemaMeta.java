@@ -290,6 +290,27 @@ public class SchemaMeta
       {
         return _DBTables.get(TableName.toLowerCase());
       }
+
+    /**
+     * Looks across every table in this schema (except ExcludeTableName) for an index named IndexName (case-insensitive).
+     * This is used to detect orphaned indices left behind on old/renamed/backup copies of a table: since index names
+     * must be unique per-schema (not per-table) in databases like Postgres, an orphaned index can silently prevent
+     * "CREATE INDEX IF NOT EXISTS" from having any effect on the table that actually needs it, with no error raised.
+     *
+     * @return the name of the other table that already owns that index name, or null if none was found.
+     */
+    public String findIndexOwner(String IndexName, String ExcludeTableName)
+      {
+        for (TableMeta T : _DBTables.values())
+          {
+            if (T._TableName.equalsIgnoreCase(ExcludeTableName) == true)
+              continue;
+            for (IndexMeta IM : T._Indices.values())
+              if (IM._Name.equalsIgnoreCase(IndexName) == true)
+                return T._TableName;
+          }
+        return null;
+      }
     public Collection<TableMeta> getTableMetas()
       {
         return _DBTables.values();
