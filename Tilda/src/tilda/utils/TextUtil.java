@@ -844,14 +844,15 @@ public class TextUtil
       }
 
     /**
-     * Replaces all consecutive non-word character (\W+) with a '_', plus Trim and Lowercase. If the input 
-     * string starts with a digit, the results will not be a fully compliant java identifier though. 
+     * Replaces all consecutive non-word character (\W+) with a '_', plus Trim and Lowercase. If the input
+     * string starts with a digit, the results will not be a fully compliant java identifier though.
+     * 
      * @param txt
      * @return
      */
     public static String toJavaIdentifier(String txt)
       {
-        return txt.trim().replaceAll("\\W+","_").toLowerCase();
+        return txt.trim().replaceAll("\\W+", "_").toLowerCase();
       }
 
     public static String processTextToHTMLParagraphs(String Text, String StyleClass)
@@ -2034,9 +2035,10 @@ public class TextUtil
       {
         return Str == null ? null : Str.trim();
       }
-    
+
     /**
      * Fully UNICODE-aware trim + ZWSP characters
+     * 
      * @param Str
      * @return
      */
@@ -2044,7 +2046,7 @@ public class TextUtil
       {
         return str == null ? null : str.replaceAll("(^[\\s\\u200B]+)|([\\s\\u200B]+$)", "");
       }
-    
+
 
     public static String joinTrim(String[] A, String Separator)
       {
@@ -2141,4 +2143,47 @@ public class TextUtil
           arr[i] = val;
         return arr;
       }
+
+
+    private static final String MARKER_START = " [DEL:";
+    private static final String MARKER_END = "UTC]";
+    private static final int MARKER_LENGTH = (MARKER_START+"YYYYmmdd_HHMMss"+MARKER_END).length();
+
+    /**
+     * Adds a marker ' [DEL:yyyyMMdd_HHmmssUTC]' to the string to indicate it has been deleted. This is used for logging and debugging purposes
+     * or more generally to update a title, name or id, to avoid keeping around a value that would run afoul a unique index for example.
+     * If the pattern is detected, it is either kept as-is or updated with a new timestamp based on the boolean 'update'. Otherwise,
+     * the marker is appended to the string.
+     * 
+     * @param str
+     */
+    public static String deletionMarkerAdd(String str, boolean update)
+      {
+        if (str != null && str.length() >= MARKER_LENGTH)
+          {
+            int startIdx = str.length() - MARKER_LENGTH;
+            // Fast static anchor check: " [DEL-UTC:" at the right offset, and "]" at the end
+            if (str.startsWith(MARKER_START, startIdx) && str.endsWith(MARKER_END))
+              {
+                if (update == false)
+                  return str;
+                // Instantly slice off the old marker without regex
+                str = str.substring(0, startIdx);
+              }
+          }
+        return str + MARKER_START + DateTimeUtil.printDateTime(DateTimeUtil.nowUTC(), "yyyyMMdd_HHmmss") + MARKER_END;
+      }
+
+    public static String deletionMarkerRemove(String str)
+      {
+        if (str != null && str.length() >= MARKER_LENGTH)
+          {
+            int startIdx = str.length() - MARKER_LENGTH;
+            // Fast static anchor check: " [DEL-UTC:" at the right offset, and "]" at the end
+            if (str.startsWith(MARKER_START, startIdx) && str.endsWith(MARKER_END))
+             str = str.substring(0, startIdx);
+          }
+        return str;
+      }
+
   }

@@ -212,7 +212,8 @@ public class ConnectionPool
           }
         catch (Throwable T)
           {
-            throw new Error("Cannot initialize Tilda", T);
+            LOG.error("Cannot initialize Tilda\n", T);
+            System.exit(-1); // Hard kill of the process... Can't move forward if Tilda cannot initialize.
           }
         finally
           {
