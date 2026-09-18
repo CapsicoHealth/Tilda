@@ -28,7 +28,7 @@ import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
 
 
-public class Executor
+public class Executor implements ExceptionCollector
   {
     protected static final Logger LOG = LogManager.getLogger(Executor.class);
 
@@ -51,6 +51,7 @@ public class Executor
     protected ExecutorService      _Executor;
     protected final int            _MaxThreadCount;
 
+    @Override
     public void addException(Exception E)
       {
         synchronized (_Exceptions)

@@ -30,10 +30,10 @@ public abstract class SimpleRunnable implements Runnable
         _name = Name;
       }
 
-    String   _name;
-    Executor _executor;
-    long     _taskTimeNano = 0;
-    long     _totalCount   = 0;
+    String              _name;
+    ExceptionCollector  _executor;
+    long                _taskTimeNano = 0;
+    long                _totalCount   = 0;
 
     public String getName()
       {
