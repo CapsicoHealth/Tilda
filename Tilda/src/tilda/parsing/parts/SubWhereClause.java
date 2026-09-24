@@ -31,16 +31,23 @@ import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 
 public class SubWhereClause
   {
     protected static final Logger          LOG          = LogManager.getLogger(SubWhereClause.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Name of this reusable query/sub-where definition; required when declared at object/view level.")
     @SerializedName("name"       ) public String   _Name       ;
+    @SchemaDoc(description = "Description of this reusable query; required when declared at object/view level.")
     @SerializedName("description") public String   _Description;
+    @SchemaDoc(description = "Objects participating in the query's FROM clause; references are resolved in the current schema/dependency context.", refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("from"       ) public String[] _From   = { };
+    @SchemaDoc(description = "Database-specific query clauses; at least one query is required.", required = true)
     @SerializedName("wheres"     ) public Query [] _Wheres = { };
+    @SchemaDoc(description = "Column expressions controlling result ordering.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("orderBy"    ) public String[] _OrderBy= { };
     /*@formatter:on*/
 

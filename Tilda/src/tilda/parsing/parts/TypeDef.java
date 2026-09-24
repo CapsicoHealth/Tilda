@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.enums.FrameworkSourcedType;
@@ -40,9 +41,13 @@ public class TypeDef
     static final Logger                LOG             = LogManager.getLogger(Mapper.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The type, e.g. STRING(50), INTEGER, DATETIME; append '[]' for an ordered list or '{}' for an unordered set, e.g. INTEGER[].", required = true)
     @SerializedName("type"        ) public String         _TypeStr     ;
+    @SchemaDoc(description = "Size/length, mainly used for sized types such as STRING(n) when not expressed inline in 'type'.")
     @SerializedName("size"        ) public Integer        _Size        ;
+    @SchemaDoc(description = "Precision for NUMERIC types (default: 19).")
     @SerializedName("precision"   ) public Integer        _Precision  = 19; // Default values commonly used for Monetary amounts which is a very common use
+    @SchemaDoc(description = "Scale for NUMERIC types (default: 4); must not exceed 'precision'.")
     @SerializedName("scale"       ) public Integer        _Scale      =  4; // for numeric. https://stackoverflow.com/questions/224462/storing-money-in-a-decimal-column-what-precision-and-scale
     /*@formatter:on*/
 

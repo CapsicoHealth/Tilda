@@ -20,15 +20,21 @@ import java.util.Arrays;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
 public class MigrationRename
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Object whose name or column name is being renamed; mutually exclusive with 'view'.", refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("object"  ) public String    _ObjectName;
+    @SchemaDoc(description = "View whose name is being renamed; mutually exclusive with 'object'.", refKind = SchemaRefKind.VIEW_IN_SCHEMA)
     @SerializedName("view"    ) public String    _ViewName  ;
+    @SchemaDoc(description = "Column to rename within the specified object; not valid when renaming a view.", refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("column"  ) public String    _ColumnName;
+    @SchemaDoc(description = "One or more previous names for the selected object, view, or column.", required = true)
     @SerializedName("oldNames") public String[]  _OldNames;
     /*@formatter:on*/
 

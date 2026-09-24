@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -28,9 +29,13 @@ public class JsonField extends TypeDef
       }
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The name of this field within its parent JSON structure.", required = true)
     @SerializedName("name"       ) public String  _Name       ;
+    @SchemaDoc(description = "Whether this field may be null/omitted (default: true).")
     @SerializedName("nullable"   ) public Boolean _Nullable   ;
+    @SchemaDoc(description = "Description of this field.", required = true)
     @SerializedName("description") public String  _Description;
+    @SchemaDoc(description = "Nested JSON structure definition when this field's value is itself a JSON object (or array of objects).")
     @SerializedName("jsonSchema" ) public JsonSchema _JsonSchema ;
     /*@formatter:on*/
 

@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 
 public class SubWhereX
@@ -28,7 +29,9 @@ public class SubWhereX
     protected static final Logger LOG = LogManager.getLogger(SubWhereX.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Extended SQL sub-where clause, optionally split into multiple lines.", required = true)
     @SerializedName("clause"     ) public String[] _Clause     ;
+    @SchemaDoc(description = "One or more lines describing the extended sub-where clause.", required = true)
     @SerializedName("description") public String[] _Description;
     /*@formatter:on*/
 

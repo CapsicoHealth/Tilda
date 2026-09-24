@@ -28,6 +28,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
@@ -47,31 +49,57 @@ public class ViewColumn
     static final Logger LOG          = LogManager.getLogger(ViewColumn.class.getName());
 
     /*@formatter:off*/
+	@SchemaDoc(description = "The name of this view column; defaults to the source column's name if omitted.")
 	@SerializedName("name"       ) public String         _Name         ;
+	@SchemaDoc(description = "Deprecated: use 'sameAs' instead.")
 	@SerializedName("sameas"     ) public String         _Sameas_DEPRECATED;
+    @SchemaDoc(description = "References the source object/view column this view column is derived from; see 'expression' for computed columns.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("sameAs"     ) public String         _SameAs       ;
+    @SchemaDoc(description = "Optional alias overriding the default output name for this view column.")
     @SerializedName("as"         ) public String         _As           ;
+    @SchemaDoc(description = "SQL expression defining this view column when it isn't a simple 'sameAs' passthrough.")
     @SerializedName("expression" ) public String         _Expression   ;
+    @SchemaDoc(description = "Overrides the inferred data type for this view column, mainly used together with 'expression'.")
     @SerializedName("type"       ) public String         _TypeStr      ;
+    @SchemaDoc(description = "Overrides the inferred precision for this view column.")
     @SerializedName("precision"  ) public Integer        _Precision    ;
+    @SchemaDoc(description = "Overrides the inferred scale for this view column.")
     @SerializedName("scale"      ) public Integer        _Scale        ;
+    @SchemaDoc(description = "Overrides the inferred size for this view column.")
     @SerializedName("size"       ) public Integer        _Size         ;
+    @SchemaDoc(description = "Prefix prepended to the generated column name.")
     @SerializedName("prefix"     ) public String         _Prefix       ;
+    @SchemaDoc(description = "Postfix appended to the generated column name.")
     @SerializedName("postfix"    ) public String         _Postfix      ;
+    @SchemaDoc(description = "Column names to exclude when this view column expands a wildcard/object reference.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
+    @SchemaDoc(description = "Column names to block/hide from being generated for this view column.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("block"      ) public String[]       _Block         = new String[] { };
+    @SchemaDoc(description = "The SQL join type (e.g., INNER, LEFT) used to reach this column's source object (see JoinType).")
     @SerializedName("joinType"   ) public String         _JoinStr      ;
+    @SchemaDoc(description = "Whether this column only exists for use in formulas and is not emitted in the view's output.")
     @SerializedName("formulaOnly") public boolean        _FormulaOnly   = false;
+    @SchemaDoc(description = "Whether this column is only used to drive a join and is not emitted in the view's output.")
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
+    @SchemaDoc(description = "Aggregate function (e.g., SUM, COUNT) applied to this column (see AggregateType).")
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
+    @SchemaDoc(description = "Column names controlling ordering for ordered aggregates (e.g., first/last).", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("orderBy"    ) public String[]       _OrderBy      ;
+    @SchemaDoc(description = "Column names partitioning the window/aggregate calculation for this column.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("partitionBy") public String[]       _PartitionBy  ;
+    @SchemaDoc(description = "Window frame range specification for windowed aggregates.")
     @SerializedName("range"      ) public String         _Range        ;
+    @SchemaDoc(description = "Default value expression substituted when this column's value is null.")
     @SerializedName("coalesce"   ) public String         _Coalesce     = null;
+    @SchemaDoc(description = "Whether the aggregate applied to this column uses DISTINCT semantics.")
     @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
+    @SchemaDoc(description = "Conditional filter expression restricting which rows contribute to this column's aggregate.")
     @SerializedName("filter"     ) public String         _Filter       ;
+    @SchemaDoc(description = "Whether to resolve this column's value through its source column's mapper.")
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
+    @SchemaDoc(description = "Whether to resolve this column's value through its source column's enum.")
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
+    @SchemaDoc(description = "Overrides the source column's description for this view column.")
     @SerializedName("description") public String         _Description   = null;
     /*@formatter:on*/
 

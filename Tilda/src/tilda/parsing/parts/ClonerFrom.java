@@ -21,6 +21,8 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
@@ -32,7 +34,9 @@ public class ClonerFrom
       }
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The object to clone columns from.", required = true, refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("srcObject"  ) public String             _SrcObject  ;
+    @SchemaDoc(description = "Column-cloning rules; defaults to cloning all columns ('*') if omitted.")
     @SerializedName("srcColumns" ) public List<CloneColumn>  _SrcColumns = new ArrayList<CloneColumn>();
     /*@formatter:on*/
 

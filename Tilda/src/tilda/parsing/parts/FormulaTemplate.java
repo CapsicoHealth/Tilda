@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.FormulaPatternType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
@@ -34,8 +35,11 @@ public class FormulaTemplate
     protected static final Logger   LOG             = LogManager.getLogger(FormulaTemplate.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Name of this formula template.", required = true)
     @SerializedName("name"   ) public String            _Name   ;
+    @SchemaDoc(description = "Template matching pattern type (see FormulaPatternType).", required = true)
     @SerializedName("pattern") public String            _PatternStr;
+    @SchemaDoc(description = "Implementation objects defining the template's expansion behavior; at least one is required.", required = true)
     @SerializedName("impls"  ) public List<JsonObject>  _Impls = new ArrayList<JsonObject>();
     /*@formatter:on*/
     

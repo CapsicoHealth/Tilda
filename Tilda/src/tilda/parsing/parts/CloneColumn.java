@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -29,9 +30,13 @@ public class CloneColumn
     static final Logger LOG          = LogManager.getLogger(CloneColumn.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Source column name to clone, or a trailing '*' wildcard to select multiple columns in this object.", required = true)
     @SerializedName("sameAs"      ) public String   _SameAs       ;
+    @SchemaDoc(description = "Column names to omit when 'sameAs' ends with '*'; only valid with wildcard expansion.")
     @SerializedName("exclude"     ) public String[] _Exclude      = new String[] { };
+  	@SchemaDoc(description = "Optional output column name override; not allowed with wildcard expansion.")
 	@SerializedName("name"        ) public String   _Name         ;
+  	@SchemaDoc(description = "Optional description override; not allowed with wildcard expansion. Defaults from the source column.")
     @SerializedName("description" ) public String   _Description  = null;
     /*@formatter:on*/
 

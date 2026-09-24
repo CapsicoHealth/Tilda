@@ -21,14 +21,18 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
 public class MigrationMove
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Destination database schema name for the selected objects and views.", required = true)
     @SerializedName("schema" )  public String    _Schema ;
+    @SchemaDoc(description = "Objects to move into the destination schema; entries may also identify old object names being renamed in the same migration.")
     @SerializedName("objects")  public String[]  _ObjectNames;
+    @SchemaDoc(description = "Views to move into the destination schema; entries may also identify old view names being renamed in the same migration.")
     @SerializedName("views"  )  public String[]  _ViewNames  ;
     /*@formatter:on*/
 

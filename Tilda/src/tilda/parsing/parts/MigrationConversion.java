@@ -18,14 +18,19 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
 public class MigrationConversion
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Object containing the column to convert.", required = true, refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("object"    ) public String  _ObjectName;
+    @SchemaDoc(description = "Column whose stored values are transformed.", required = true, refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("column"    ) public String  _ColumnName;
+    @SchemaDoc(description = "SQL expression used to convert the selected column's values.", required = true)
     @SerializedName("conversion") public String  _Conversion;
     /*@formatter:on*/
 

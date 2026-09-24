@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.DefaultType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -29,11 +30,17 @@ public class ColumnValue
   {
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The identifier for this value (used as the generated constant name).", required = true)
     @SerializedName("name"       ) public String      _Name;
+    @SchemaDoc(description = "The actual stored value; defaults to 'name' if omitted.")
     @SerializedName("value"      ) public String      _Value;
+    @SchemaDoc(description = "Human-friendly label for this value; defaults to 'name' if omitted.")
     @SerializedName("label"      ) public String      _Label;
+    @SchemaDoc(description = "Description of this value; defaults to 'label' if omitted.")
     @SerializedName("description") public String      _Description;
+    @SchemaDoc(description = "Optional group tags used to categorize this value.")
     @SerializedName("groupings"  ) public String[]    _Groupings;
+    @SchemaDoc(description = "Whether/when this value is used as the column's default, e.g. CREATE or ALWAYS (see DefaultType).")
     @SerializedName("default"    ) public DefaultType _Default = DefaultType.NONE;
     /*@formatter:on*/
 

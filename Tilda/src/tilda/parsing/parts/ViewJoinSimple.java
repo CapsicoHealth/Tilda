@@ -24,6 +24,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -32,7 +34,9 @@ public class ViewJoinSimple
     static final Logger               LOG      = LogManager.getLogger(ViewJoinSimple.class.getName());
 
     /*@formatter:off*/
+  @SchemaDoc(description = "Source view columns used to form the join condition.", required = true, refKind = SchemaRefKind.COLUMN_REFERENCE)
 	@SerializedName("from") public String[]  _From;
+  @SchemaDoc(description = "Columns in the current view matched positionally to the source columns.", required = true, refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("to"  ) public String[]  _To  ;
     /*@formatter:on*/
 

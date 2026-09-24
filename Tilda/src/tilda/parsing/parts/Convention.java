@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.ConventionNaming;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
@@ -18,21 +20,33 @@ public class Convention
     protected static final Logger     LOG                   = LogManager.getLogger(Convention.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Reuses another schema's conventions wholesale; when set, no other convention fields (except 'default*' ones) may be defined.", refKind = SchemaRefKind.SCHEMA_REFERENCE)
     @SerializedName("sameAs"                 ) public String  _SameAs                   ;
+    @SchemaDoc(description = "Name used for auto-generated primary key columns (default: 'refnum').")
     @SerializedName("primaryKeyName"         ) public String  _PrimaryKeyName           ;
+    @SchemaDoc(description = "Name used for the OCC 'created' timestamp column (default: 'created').")
     @SerializedName("createdName"            ) public String  _CreatedName              ;
+    @SchemaDoc(description = "Name used for the OCC 'lastUpdated' timestamp column (default: 'lastUpdated').")
     @SerializedName("lastUpdatedName"        ) public String  _LastUpdatedName          ;
+    @SchemaDoc(description = "Name used for the OCC 'deleted' timestamp column (default: 'deleted').")
     @SerializedName("deletedName"            ) public String  _DeletedName              ;
+    @SchemaDoc(description = "Postfix appended to generated foreign key names.")
     @SerializedName("foreignKeyNamePostfix"  ) public String  _ForeignKeyNamePostfix    ;
 //    @SerializedName("prefix"                 ) public Boolean _Prefix                   ;
 //    @SerializedName("uniquePrefixes"         ) public Boolean _UniquePrefixes           ;
+    @SchemaDoc(description = "Naming convention enforced for column names (see ConventionNaming).")
     @SerializedName("columnNamingConvention" ) public String  _ColumnNamingConventionStr;
+    @SchemaDoc(description = "Whether column names are treated as case-sensitive.")
     @SerializedName("caseSensitiveColumns")    public Boolean  _CaseSensitiveColumns    ;
 //    @SerializedName("uniqueColumnNames"      ) public Boolean _UniqueColumnNames        ;
 //    @SerializedName("dbColumnNameTranslation") public Boolean _DBColumnNameTranslation  ;
+    @SchemaDoc(description = "Default 'mode' applied to objects/views that don't declare one explicitly.")
     @SerializedName("defaultMode")             public String  _DefaultModeStr           ;
+    @SchemaDoc(description = "Default lifecycle applied to objects that don't declare one explicitly.")
     @SerializedName("defaultLC")               public String  _DefaultLCStr             ;
+    @SchemaDoc(description = "Default timezone mode applied to objects/columns that don't declare one explicitly.")
     @SerializedName("defaultTzMode")           public String  _DefaultTzModeStr         ;
+    @SchemaDoc(description = "Name used for the row-level timezone column (default: 'rowTZ').")
     @SerializedName("tzRowName")               public String  _TzRowName                ;
 //    @SerializedName("tzColPostfix")            public String  _TzColPostfix             ; // TERRIBLE IDEA TO ALLOW CUSTOMIZATION OF THIS!
     /*@formatter:on*/

@@ -19,6 +19,8 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.db.stores.DBType;
 import tilda.enums.JoinType;
 import tilda.parsing.ParserSession;
@@ -32,9 +34,13 @@ public class ViewJoin
     static final Logger LOG = LogManager.getLogger(ViewJoin.class.getName());
 
     /*@formatter:off*/
+  @SchemaDoc(description = "Object to join into the view; may be qualified by package and schema.", required = true, refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
 	@SerializedName("object"     ) public String  _Object ;
+  @SchemaDoc(description = "Alias for the joined object.")
     @SerializedName("as"         ) public String  _As     ;
+  @SchemaDoc(description = "One or more database-specific join conditions.", required = true)
 	@SerializedName("on"         ) public Query[] _Ons    ;
+  @SchemaDoc(description = "Join type; when omitted, the parser/generator default behavior applies.")
     @SerializedName("joinType"   ) public String  _JoinStr;
     /*@formatter:on*/
 

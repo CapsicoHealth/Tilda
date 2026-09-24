@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
@@ -43,20 +44,35 @@ public abstract class Base
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The name of this object/view. Must be a unique, valid SQL/Java identifier within its schema.", required = true)
     @SerializedName("name"        ) public String               _Name       = null;
+    @SchemaDoc(description = "Deprecated: use 'mode' with NORMAL/DB_ONLY/CODE_ONLY instead.")
     @SerializedName("dbOnly"      ) private Boolean              _DBOnly_DEPRECATED;
+    @SchemaDoc(description = "Object/view mode, e.g. NORMAL, DB_ONLY or CODE_ONLY (see ObjectMode); falls back to the schema's convention if unset.")
     @SerializedName("mode"        ) public String               _ModeStr    ;
+    @SchemaDoc(description = "Deprecated: use 'prefix' instead.")
     @SerializedName("shortAlias"  ) public String               _ShortAlias_DEPRECATED = null;
+    @SchemaDoc(description = "Optional short alias/prefix used when generating SQL/Java identifiers for this object/view (e.g. index names).")
     @SerializedName("prefix"      ) public String               _Prefix = null;
+    @SchemaDoc(description = "Human-readable description of this object/view. Mutually exclusive with 'descriptionX'; exactly one of the two is mandatory.")
     @SerializedName("description" ) public String               _Description= null;    
+    @SchemaDoc(description = "Multi-line alternative to 'description': an array of strings joined with spaces. Mutually exclusive with 'description'; exactly one of the two is mandatory.")
     @SerializedName("descriptionX") public String[]             _DescriptionX= null;
+    @SchemaDoc(description = "Optional URL substituted into '?{}' placeholders found in this object/view's description (and its columns' descriptions).")
     @SerializedName("referenceUrl") public String               _ReferenceUrl;
+    @SchemaDoc(description = "Optional label used alongside 'referenceUrl' when rewriting descriptions.")
     @SerializedName("referenceTag") public String               _ReferenceTag;
+    @SchemaDoc(description = "Must match one of the schema's declared 'entityClasses' names; mandatory if the schema defines any entityClasses, forbidden otherwise.")
     @SerializedName("entityClass" ) public String               _EntityClass;
+    @SchemaDoc(description = "Named sub-where query definitions available for this object/view.")
     @SerializedName("queries"     ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
+    @SchemaDoc(description = "Deprecated: use 'outputMaps' instead.")
     @SerializedName("json"        ) public List<OutputMap>      _JsonDEPRECATED = new ArrayList<OutputMap >();
+    @SchemaDoc(description = "Named output column-set mappings (e.g., CSV/JSON exports) for this object/view.")
     @SerializedName("outputMaps"  ) public List<OutputMap>      _OutputMaps = new ArrayList<OutputMap>();
+    @SchemaDoc(description = "De-identification/masking rules applied to specific columns of this object/view.")
     @SerializedName("masks"       ) public List<Mask>           _Masks = new ArrayList<Mask>();
+    @SchemaDoc(description = "Whether this object/view participates in per-tenant initialization.")
     @SerializedName("tenantInit"  ) public Boolean              _TenantInit = Boolean.FALSE;
     /*@formatter:on*/
 

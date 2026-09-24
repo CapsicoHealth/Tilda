@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.ColumnType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
@@ -19,11 +20,17 @@ public class History
     protected static final Logger LOG                       = LogManager.getLogger(Convention.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Suffix appended to the source object name to form its history object name (default: '_Hist').")
     @SerializedName("postfix"                ) public String    _Postfix           = "_Hist";
+    @SchemaDoc(description = "Column names or wildcard patterns included in history rows (default: all columns).")
     @SerializedName("includedColumns"        ) public String[]  _IncludedColumns   = new String[] { "*" };
+    @SchemaDoc(description = "Column names excluded from history rows; OCC lifecycle columns are excluded automatically.")
     @SerializedName("excludedColumns"        ) public String[]  _ExcludedColumns   = new String[] {     };
+    @SchemaDoc(description = "Column names or wildcard patterns used to detect meaningful row changes (default: all columns).")
     @SerializedName("signatureColumns"       ) public String[]  _SignatureColumns  = new String[] { "*" };
+    @SchemaDoc(description = "Column names excluded from the history signature; primary key and OCC timestamps are excluded automatically.")
     @SerializedName("signatureColumnsExclude") public String[]  _SignatureColumnsExcluded = new String[] { };
+    @SchemaDoc(description = "History compression window in seconds; zero disables compression.")
     @SerializedName("compressionSeconds"     ) public Integer   _CompressionSeconds= 0;
     /*@formatter:on*/
 

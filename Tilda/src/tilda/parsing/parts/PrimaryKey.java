@@ -26,12 +26,19 @@ import tilda.parsing.parts.helpers.ValidationHelper;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
+
 public class PrimaryKey
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Column names making up the primary key; mutually exclusive with 'autogen'.", refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("columns"  )  public String[] _Columns;
+    @SchemaDoc(description = "Whether to auto-generate a single-column primary key (using the schema's naming convention) instead of listing 'columns'.")
     @SerializedName("autogen"  )  public Boolean  _Autogen  = Boolean.FALSE;
+    @SchemaDoc(description = "Batch size for pre-allocating auto-generated primary key values; only valid when 'autogen' is true.")
     @SerializedName("keyBatch" )  public Integer  _KeyBatch;
+    @SchemaDoc(description = "Whether the auto-generated primary key is backed by a database sequence instead of Tilda's key-allocation table; only valid when 'autogen' is true.")
     @SerializedName("sequence" )  public Boolean  _Sequence = Boolean.FALSE;
     /*@formatter:on*/
 

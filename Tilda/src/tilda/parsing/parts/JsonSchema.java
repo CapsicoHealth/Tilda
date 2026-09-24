@@ -21,6 +21,7 @@ import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -33,10 +34,15 @@ public class JsonSchema
       }
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The generated nested Java class name for this JSON structure.", required = true)
     @SerializedName("typeName"   ) public String         _TypeName   ;
+    @SchemaDoc(description = "Alternate/legacy form of 'description'; only one of the two may be specified.")
     @SerializedName("descr"      ) public String         _Descr      ;
+    @SchemaDoc(description = "Description of this JSON structure; mutually exclusive with 'descr'.")
     @SerializedName("description") public String         _Description;
+    @SchemaDoc(description = "The fields making up this JSON structure.", required = true)
     @SerializedName("fields"     ) public JsonField[]    _Fields     ;
+    @SchemaDoc(description = "Optional custom validation rule for instances of this JSON structure.")
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
 

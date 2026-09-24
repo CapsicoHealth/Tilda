@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
@@ -49,19 +50,32 @@ public class Object extends Base
     static final Logger                   LOG           = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Whether this object uses Optimistic Concurrency Control, adding the framework's created/lastUpdated/deleted columns.")
     @SerializedName("occ"      ) public boolean           _OCC        = true;
+    @SchemaDoc(description = "Whether foreign keys pointing to this object also carry along its row-level timezone column.")
     @SerializedName("tzFk"     ) public Boolean           _TZFK       = true;
+    @SchemaDoc(description = "Default timezone handling mode (see TZMode) applied to this object's DATETIME columns; falls back to the schema's convention if unset.")
     @SerializedName("tzMode"   ) public String            _TzModeStr  ;
+    @SchemaDoc(description = "Whether this object also generates ETL-specific created/lastUpdated columns.")
     @SerializedName("etl"      ) public boolean           _ETL        = false;
+    @SchemaDoc(description = "Object lifecycle, e.g. NORMAL or WORM (write-once-read-many); see ObjectLifecycle.")
     @SerializedName("lc"       ) public String            _LCStr      ; // life-cycle
+    @SchemaDoc(description = "Clones this object's columns from another source object.")
     @SerializedName("cloneFrom") public ClonerFrom        _CloneFrom  ;
+    @SchemaDoc(description = "Declares one or more clones of this object under different (derived) names.")
     @SerializedName("cloneAs"  ) public Cloner[]          _CloneAs    ;
+    @SchemaDoc(description = "The columns making up this object.", required = true)
     @SerializedName("columns"  ) public List<Column>      _Columns    = new ArrayList<Column    >();
 
+    @SchemaDoc(description = "The primary key definition for this object.")
     @SerializedName("primary"  ) public PrimaryKey        _PrimaryKey = null;
+    @SchemaDoc(description = "Foreign key definitions for this object.")
     @SerializedName("foreign"  ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
+    @SchemaDoc(description = "Index definitions for this object.")
     @SerializedName("indices"  ) public List<Index>       _Indices    = new ArrayList<Index     >();
+    @SchemaDoc(description = "HTTP endpoint mappings generated for this object.")
     @SerializedName("http"     ) public HttpMapping[]     _Http       = { };
+    @SchemaDoc(description = "Bi-temporal history/versioning configuration for this object.")
     @SerializedName("history"  ) public History           _History    ;
     /*@formatter:on*/
 

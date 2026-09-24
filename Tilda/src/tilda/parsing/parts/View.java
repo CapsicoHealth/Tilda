@@ -33,6 +33,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.db.stores.DBType;
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -55,20 +57,35 @@ public class View extends Base
     static final Logger                LOG               = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "The columns making up this view.", required = true)
     @SerializedName("columns"         ) public List<ViewColumn>      _ViewColumns= new ArrayList<ViewColumn>();
+    @SchemaDoc(description = "Object joins used to compute this view's rows.")
     @SerializedName("joins"           ) public List<ViewJoin>        _Joins      = new ArrayList<ViewJoin  >();
+    @SchemaDoc(description = "Legacy free-form SQL WHERE clause applied to this view; prefer 'subWhereX'.")
     @SerializedName("subWhere"        ) public String                _SubWhere;
+    @SchemaDoc(description = "Structured, per-database WHERE clause applied to this view (preferred over 'subWhere').")
     @SerializedName("subWhereX"       ) public SubWhereX             _SubWhereX;
+    @SchemaDoc(description = "Named reusable sub-query definition associated with this view.")
     @SerializedName("subQuery"        ) public SubWhereClause        _SubQuery;
+    @SchemaDoc(description = "Deprecated and unused.")
     @SerializedName("countStar"       ) public String                _CountStarDeprecated;  // Deprecated
+    @SchemaDoc(description = "Single declarative pivot transformation for this view (see also 'pivots').")
     @SerializedName("pivot"           ) public ViewPivot             _PivotSingle;
+    @SchemaDoc(description = "One or more declarative pivot transformations for this view.")
     @SerializedName("pivots"          ) public List<ViewPivot>       _Pivots = new ArrayList<ViewPivot>();
+    @SchemaDoc(description = "Time-series bucketing/aggregation configuration for this view.")
     @SerializedName("timeSeries"      ) public ViewTimeSeries        _TimeSeries;
+    @SchemaDoc(description = "DISTINCT ON configuration for this view.")
     @SerializedName("distinctOn"      ) public ViewDistinctOn        _DistinctOn;
+    @SchemaDoc(description = "Deprecated: use 'pivots'/'pivot' instead.")
     @SerializedName("pivotColumns"    ) public List<ViewPivotColumn> _PivotColumnsDeprecated;  // Deprecated
+    @SchemaDoc(description = "Configuration to materialize (realize) this view into a physical table.")
     @SerializedName("realize"         ) public ViewRealize           _Realize;
+    @SchemaDoc(description = "Names of other views whose 'formulaColumns' should be imported into this view.", refKind = SchemaRefKind.VIEW_IN_SCHEMA)
     @SerializedName("importFormulas"  ) public String[]              _ImportFormulas = new String[] { };
+    @SchemaDoc(description = "Computed/derived formula columns defined on this view.")
     @SerializedName("formulaColumns"  ) public List<Formula>         _Formulas = new ArrayList<Formula>();
+    @SchemaDoc(description = "Reusable formula templates available to this view's formula columns.")
     @SerializedName("formulaTemplates") public List<FormulaTemplate> _FormulaTemplates = new ArrayList<FormulaTemplate>();
     /*@formatter:on*/
 

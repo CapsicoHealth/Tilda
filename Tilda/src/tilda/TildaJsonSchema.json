@@ -1,0 +1,1977 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/CapsicoHealth/Tilda/tilda.schema.json",
+  "title": "TILDA Database Schema Definition DSL",
+  "type": "object",
+  "properties": {
+    "package": {
+      "type": "string"
+    },
+    "dynamic": {
+      "type": "boolean",
+      "default": false
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "documentation": {
+      "$ref": "#/$defs/tildaDocumentation"
+    },
+    "extraDDL": {
+      "$ref": "#/$defs/tildaExtraDDL"
+    },
+    "conventions": {
+      "$ref": "#/$defs/tildaConvention"
+    },
+    "entityClasses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "enumerations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tildaEnumeration"
+      },
+      "default": []
+    },
+    "mappers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tildaMapper"
+      },
+      "default": []
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tildaObject"
+      },
+      "default": []
+    },
+    "views": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tildaView"
+      },
+      "default": []
+    },
+    "migrations": {
+      "$ref": "#/$defs/tildaMigration"
+    }
+  },
+  "$defs": {
+    "tildaCloneColumn": {
+      "type": "object",
+      "properties": {
+        "sameAs": {
+          "type": "string",
+          "description": "Source column name to clone, or a trailing '*' wildcard to select multiple columns. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names to omit when 'sameAs' ends with '*'; only valid with wildcard expansion. Must match the name of a column defined in this object's \"columns\" array.",
+          "default": []
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional output column name override; not allowed with wildcard expansion."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description override; not allowed with wildcard expansion. Defaults from the source column."
+        }
+      },
+      "required": [
+        "sameAs"
+      ]
+    },
+    "tildaCloner": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the cloned object; combined with the source object's name unless 'fullName' is true."
+        },
+        "fullName": {
+          "type": "boolean",
+          "description": "Whether 'name' is used verbatim as the cloned object's name instead of being prefixed with the source object's name.",
+          "default": false
+        },
+        "referenceUrl": {
+          "type": "string",
+          "description": "Optional URL substituted into '?{}' placeholders found in this clone's description."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the cloned object; '?{}' is substituted with the source object's original description."
+        },
+        "referenceTag": {
+          "type": "string",
+          "description": "Optional label used alongside 'referenceUrl' when rewriting this clone's description."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "tildaClonerFrom": {
+      "type": "object",
+      "properties": {
+        "srcObject": {
+          "type": "string",
+          "description": "The object to clone columns from. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "srcColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaCloneColumn"
+          },
+          "description": "Column-cloning rules; defaults to cloning all columns ('*') if omitted.",
+          "default": []
+        }
+      },
+      "required": [
+        "srcObject"
+      ]
+    },
+    "tildaColumn": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type, e.g. STRING(50), INTEGER, DATETIME; append '[]' for an ordered list or '{}' for an unordered set, e.g. INTEGER[]."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Size/length, mainly used for sized types such as STRING(n) when not expressed inline in 'type'."
+        },
+        "precision": {
+          "type": "integer",
+          "description": "Precision for NUMERIC types (default: 19).",
+          "default": 19
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Scale for NUMERIC types (default: 4); must not exceed 'precision'.",
+          "default": 4
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the column, unique within its object (case-insensitive)."
+        },
+        "sameas": {
+          "type": "string",
+          "description": "Deprecated: use 'sameAs' instead."
+        },
+        "sameAs": {
+          "type": "string",
+          "description": "Derives this column from another column (optionally qualified as 'package.schema.object.column'), inheriting its type/size unless overridden. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        },
+        "nullable": {
+          "type": "boolean",
+          "description": "Whether this column allows NULL values."
+        },
+        "allowEmpty": {
+          "type": "boolean",
+          "description": "Whether an empty string is allowed; only valid for non-nullable STRING columns."
+        },
+        "invariant": {
+          "type": "boolean",
+          "description": "Whether this column's value cannot change after row creation."
+        },
+        "mode": {
+          "type": "string",
+          "description": "Column mode, e.g. NORMAL or CALCULATED (see ColumnMode)."
+        },
+        "protect": {
+          "type": "string",
+          "description": "De-identification/protection strategy applied to this STRING column (see ProtectionType)."
+        },
+        "tzMode": {
+          "type": "string",
+          "description": "Timezone handling mode for this DATETIME column (see TZMode); falls back to the parent object's/schema's convention if unset."
+        },
+        "default": {
+          "type": "string",
+          "description": "Default value expression applied on row creation/update."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of this column; mandatory unless inherited from a 'sameAs' reference."
+        },
+        "mapper": {
+          "$ref": "#/$defs/tildaColumnMapper",
+          "description": "Maps this column's values to/from an external mapping table; mutually exclusive with 'enum'."
+        },
+        "enum": {
+          "$ref": "#/$defs/tildaColumnEnum",
+          "description": "Restricts/labels this column's values using an enumeration; mutually exclusive with 'mapper'."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaColumnValue"
+          },
+          "description": "Named, well-known values for this column (e.g., documented constants and/or defaults)."
+        },
+        "jsonSchema": {
+          "$ref": "#/$defs/tildaJsonSchema",
+          "description": "The JSON structure definition for this column; only valid when 'type' is JSON."
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ]
+    },
+    "tildaColumnEnum": {
+      "type": "object",
+      "properties": {
+        "destObject": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "MEMORY",
+            "DB"
+          ],
+          "default": "MEMORY"
+        },
+        "multi": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "SET",
+            "LIST"
+          ],
+          "default": "NONE"
+        }
+      }
+    },
+    "tildaColumnMapper": {
+      "type": "object",
+      "properties": {
+        "srcColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "destObject": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "MEMORY",
+            "DB"
+          ],
+          "default": "MEMORY"
+        },
+        "group": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "MEMORY",
+            "DB"
+          ],
+          "default": "DB"
+        },
+        "multi": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "SET",
+            "LIST"
+          ],
+          "default": "NONE"
+        }
+      }
+    },
+    "tildaColumnValue": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The identifier for this value (used as the generated constant name)."
+        },
+        "value": {
+          "type": "string",
+          "description": "The actual stored value; defaults to 'name' if omitted."
+        },
+        "label": {
+          "type": "string",
+          "description": "Human-friendly label for this value; defaults to 'name' if omitted."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of this value; defaults to 'label' if omitted."
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Optional group tags used to categorize this value."
+        },
+        "default": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "MASK",
+            "CREATE",
+            "UPDATE",
+            "ALWAYS"
+          ],
+          "description": "Whether/when this value is used as the column's default, e.g. CREATE or ALWAYS (see DefaultType).",
+          "default": "NONE"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "tildaConvention": {
+      "type": "object",
+      "properties": {
+        "sameAs": {
+          "type": "string",
+          "description": "Reuses another schema's conventions wholesale; when set, no other convention fields (except 'default*' ones) may be defined. Must resolve to another already-loaded Tilda schema, referenced as \"package.schemaName\"."
+        },
+        "primaryKeyName": {
+          "type": "string",
+          "description": "Name used for auto-generated primary key columns (default: 'refnum')."
+        },
+        "createdName": {
+          "type": "string",
+          "description": "Name used for the OCC 'created' timestamp column (default: 'created')."
+        },
+        "lastUpdatedName": {
+          "type": "string",
+          "description": "Name used for the OCC 'lastUpdated' timestamp column (default: 'lastUpdated')."
+        },
+        "deletedName": {
+          "type": "string",
+          "description": "Name used for the OCC 'deleted' timestamp column (default: 'deleted')."
+        },
+        "foreignKeyNamePostfix": {
+          "type": "string",
+          "description": "Postfix appended to generated foreign key names."
+        },
+        "columnNamingConvention": {
+          "type": "string",
+          "description": "Naming convention enforced for column names (see ConventionNaming)."
+        },
+        "caseSensitiveColumns": {
+          "type": "boolean",
+          "description": "Whether column names are treated as case-sensitive."
+        },
+        "defaultMode": {
+          "type": "string",
+          "description": "Default 'mode' applied to objects/views that don't declare one explicitly."
+        },
+        "defaultLC": {
+          "type": "string",
+          "description": "Default lifecycle applied to objects that don't declare one explicitly."
+        },
+        "defaultTzMode": {
+          "type": "string",
+          "description": "Default timezone mode applied to objects/columns that don't declare one explicitly."
+        },
+        "tzRowName": {
+          "type": "string",
+          "description": "Name used for the row-level timezone column (default: 'rowTZ')."
+        }
+      }
+    },
+    "tildaDocumentation": {
+      "type": "object",
+      "properties": {
+        "graph": {
+          "type": "string",
+          "default": "simple"
+        },
+        "description": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exportPublish": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "tildaEnumeration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/tildaTypeDef"
+        },
+        "value": {
+          "$ref": "#/$defs/tildaTypeDef"
+        }
+      }
+    },
+    "tildaExtraDDL": {
+      "type": "object",
+      "properties": {
+        "before": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths to SQL script resources executed before this schema's generated DDL."
+        },
+        "after": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths to SQL script resources executed after this schema's generated DDL."
+        }
+      }
+    },
+    "tildaForeignKey": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of this foreign key, used to derive its generated constraint/identifier name."
+        },
+        "srcColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The columns of the declaring object making up this foreign key; must line up, in order and count, with the destination object's primary key columns. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "destObject": {
+          "type": "string",
+          "description": "The object this foreign key points to. Must match the name of an object defined in this schema or one of its dependencies."
+        }
+      },
+      "required": [
+        "name",
+        "srcColumns",
+        "destObject"
+      ]
+    },
+    "tildaFormula": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type, e.g. STRING(50), INTEGER, DATETIME; append '[]' for an ordered list or '{}' for an unordered set, e.g. INTEGER[]."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Size/length, mainly used for sized types such as STRING(n) when not expressed inline in 'type'."
+        },
+        "precision": {
+          "type": "integer",
+          "description": "Precision for NUMERIC types (default: 19).",
+          "default": 19
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Scale for NUMERIC types (default: 4); must not exceed 'precision'.",
+          "default": 4
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of this formula column."
+        },
+        "measure": {
+          "type": "boolean",
+          "description": "Whether this formula represents a measure.",
+          "default": false
+        },
+        "formula": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "SQL formula expression, optionally specified as one clause per supported database."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short title for this formula, used in generated documentation and metadata."
+        },
+        "id": {
+          "type": "string",
+          "description": "Optional stable identifier for this formula."
+        },
+        "description": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "One or more lines describing this formula."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaValue"
+          },
+          "description": "Enumerated result values and their descriptions when the formula has a finite set of known results."
+        },
+        "coalesceNumbers": {
+          "type": "boolean",
+          "description": "Whether numeric inputs are coalesced when evaluating the formula (default: true).",
+          "default": true
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "formula",
+        "title",
+        "description"
+      ]
+    },
+    "tildaFormulaTemplate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of this formula template."
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Template matching pattern type (see FormulaPatternType)."
+        },
+        "impls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Implementation objects defining the template's expansion behavior; at least one is required.",
+          "default": []
+        }
+      },
+      "required": [
+        "name",
+        "pattern",
+        "impls"
+      ]
+    },
+    "tildaHistory": {
+      "type": "object",
+      "properties": {
+        "postfix": {
+          "type": "string",
+          "description": "Suffix appended to the source object name to form its history object name (default: '_Hist').",
+          "default": "_Hist"
+        },
+        "includedColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names or wildcard patterns included in history rows (default: all columns). Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "excludedColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names excluded from history rows; OCC lifecycle columns are excluded automatically. Must match the name of a column defined in this object's \"columns\" array.",
+          "default": []
+        },
+        "signatureColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names or wildcard patterns used to detect meaningful row changes (default: all columns). Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "signatureColumnsExclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names excluded from the history signature; primary key and OCC timestamps are excluded automatically. Must match the name of a column defined in this object's \"columns\" array.",
+          "default": []
+        },
+        "compressionSeconds": {
+          "type": "integer",
+          "description": "History compression window in seconds; zero disables compression.",
+          "default": 0
+        }
+      }
+    },
+    "tildaHttpMapping": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mandatories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tildaIndex": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of this index, used to derive its generated identifier."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names making up this index, optionally followed by a modifier, e.g. 'colName lal' or 'colName(mod=val;)'. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "cluster": {
+          "type": "boolean",
+          "description": "Whether the database should cluster the table's physical storage on this index.",
+          "default": false
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names (optionally suffixed with 'asc'/'desc') this index sorts by; presence makes the index non-unique. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "db": {
+          "type": "boolean",
+          "description": "Whether this index is actually created in the database (vs. only tracked/documented).",
+          "default": true
+        },
+        "nullsNotDistinct": {
+          "type": "boolean",
+          "description": "Whether NULLs are treated as equal (not distinct) for uniqueness purposes.",
+          "default": false
+        },
+        "subWhere": {
+          "type": "string",
+          "description": "Free-form partial-index WHERE clause."
+        },
+        "subQuery": {
+          "$ref": "#/$defs/tildaSubWhereClause",
+          "description": "Structured, per-database partial-index WHERE clause (preferred over 'subWhere')."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "tildaIndexTemplate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subWhere": {
+          "type": "string"
+        },
+        "subQuery": {
+          "$ref": "#/$defs/tildaSubWhereClause"
+        }
+      }
+    },
+    "tildaJsonField": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type, e.g. STRING(50), INTEGER, DATETIME; append '[]' for an ordered list or '{}' for an unordered set, e.g. INTEGER[]."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Size/length, mainly used for sized types such as STRING(n) when not expressed inline in 'type'."
+        },
+        "precision": {
+          "type": "integer",
+          "description": "Precision for NUMERIC types (default: 19).",
+          "default": 19
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Scale for NUMERIC types (default: 4); must not exceed 'precision'.",
+          "default": 4
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of this field within its parent JSON structure."
+        },
+        "nullable": {
+          "type": "boolean",
+          "description": "Whether this field may be null/omitted (default: true)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of this field."
+        },
+        "jsonSchema": {
+          "$ref": "#/$defs/tildaJsonSchema",
+          "description": "Nested JSON structure definition when this field's value is itself a JSON object (or array of objects)."
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "description"
+      ]
+    },
+    "tildaJsonSchema": {
+      "type": "object",
+      "properties": {
+        "typeName": {
+          "type": "string",
+          "description": "The generated nested Java class name for this JSON structure."
+        },
+        "descr": {
+          "type": "string",
+          "description": "Alternate/legacy form of 'description'; only one of the two may be specified."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of this JSON structure; mutually exclusive with 'descr'."
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaJsonField"
+          },
+          "description": "The fields making up this JSON structure."
+        },
+        "validation": {
+          "$ref": "#/$defs/tildaJsonValidation",
+          "description": "Optional custom validation rule for instances of this JSON structure."
+        }
+      },
+      "required": [
+        "typeName",
+        "fields"
+      ]
+    },
+    "tildaJsonValidation": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "descr": {
+          "type": "string"
+        }
+      }
+    },
+    "tildaMapper": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "primaryColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaColumn"
+          },
+          "default": []
+        },
+        "extraColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaColumn"
+          },
+          "default": []
+        },
+        "mappingColumns": {
+          "$ref": "#/$defs/tildaMappingColumn"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaColumnValue"
+          }
+        }
+      }
+    },
+    "tildaMappingColumn": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/tildaTypeDef"
+        },
+        "name": {
+          "$ref": "#/$defs/tildaTypeDef"
+        },
+        "group": {
+          "$ref": "#/$defs/tildaTypeDef"
+        }
+      }
+    },
+    "tildaMask": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mask": {
+          "type": "string"
+        }
+      }
+    },
+    "tildaMigration": {
+      "type": "object",
+      "properties": {
+        "renames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaMigrationRename"
+          },
+          "description": "Object/column rename operations to apply during migration.",
+          "default": []
+        },
+        "moves": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaMigrationMove"
+          },
+          "description": "Object move operations (between schemas) to apply during migration.",
+          "default": []
+        },
+        "notNulls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaMigrationNotNull"
+          },
+          "description": "Column not-null transition operations to apply during migration.",
+          "default": []
+        },
+        "conversions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaMigrationConversion"
+          },
+          "description": "Column type conversion operations to apply during migration.",
+          "default": []
+        }
+      }
+    },
+    "tildaMigrationConversion": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "type": "string",
+          "description": "Object containing the column to convert. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "column": {
+          "type": "string",
+          "description": "Column whose stored values are transformed. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "conversion": {
+          "type": "string",
+          "description": "SQL expression used to convert the selected column's values."
+        }
+      },
+      "required": [
+        "object",
+        "column",
+        "conversion"
+      ]
+    },
+    "tildaMigrationMove": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "description": "Destination schema name for the selected objects and views. Must resolve to another already-loaded Tilda schema, referenced as \"package.schemaName\"."
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Objects to move into the destination schema; entries may also identify objects being renamed in the same migration. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Views to move into the destination schema; entries may also identify views being renamed in the same migration. Must match the name of a view defined in this schema or one of its dependencies."
+        }
+      },
+      "required": [
+        "schema"
+      ]
+    },
+    "tildaMigrationNotNull": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "type": "string",
+          "description": "Object containing the columns being made non-null. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "One or more columns to make non-null; all columns must have compatible types and no existing create default. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "default": {
+          "type": "string",
+          "description": "Required value to backfill existing rows before applying the not-null constraint."
+        }
+      },
+      "required": [
+        "object",
+        "columns",
+        "default"
+      ]
+    },
+    "tildaMigrationRename": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "type": "string",
+          "description": "Object whose name or column name is being renamed; mutually exclusive with 'view'. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "view": {
+          "type": "string",
+          "description": "View whose name is being renamed; mutually exclusive with 'object'. Must match the name of a view defined in this schema or one of its dependencies."
+        },
+        "column": {
+          "type": "string",
+          "description": "Column to rename within the specified object; not valid when renaming a view. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "oldNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "One or more previous names for the selected object, view, or column."
+        }
+      },
+      "required": [
+        "oldNames"
+      ]
+    },
+    "tildaObject": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of this object/view. Must be a unique, valid SQL/Java identifier within its schema."
+        },
+        "dbOnly": {
+          "type": "boolean",
+          "description": "Deprecated: use 'mode' with NORMAL/DB_ONLY/CODE_ONLY instead."
+        },
+        "mode": {
+          "type": "string",
+          "description": "Object/view mode, e.g. NORMAL, DB_ONLY or CODE_ONLY (see ObjectMode); falls back to the schema's convention if unset."
+        },
+        "shortAlias": {
+          "type": "string",
+          "description": "Deprecated: use 'prefix' instead."
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Optional short alias/prefix used when generating SQL/Java identifiers for this object/view (e.g. index names)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this object/view. Mutually exclusive with 'descriptionX'; exactly one of the two is mandatory."
+        },
+        "descriptionX": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Multi-line alternative to 'description': an array of strings joined with spaces. Mutually exclusive with 'description'; exactly one of the two is mandatory."
+        },
+        "referenceUrl": {
+          "type": "string",
+          "description": "Optional URL substituted into '?{}' placeholders found in this object/view's description (and its columns' descriptions)."
+        },
+        "referenceTag": {
+          "type": "string",
+          "description": "Optional label used alongside 'referenceUrl' when rewriting descriptions."
+        },
+        "entityClass": {
+          "type": "string",
+          "description": "Must match one of the schema's declared 'entityClasses' names; mandatory if the schema defines any entityClasses, forbidden otherwise."
+        },
+        "queries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaSubWhereClause"
+          },
+          "description": "Named sub-where query definitions available for this object/view.",
+          "default": []
+        },
+        "json": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaOutputMap"
+          },
+          "description": "Deprecated: use 'outputMaps' instead.",
+          "default": []
+        },
+        "outputMaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaOutputMap"
+          },
+          "description": "Named output column-set mappings (e.g., CSV/JSON exports) for this object/view.",
+          "default": []
+        },
+        "masks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaMask"
+          },
+          "description": "De-identification/masking rules applied to specific columns of this object/view.",
+          "default": []
+        },
+        "tenantInit": {
+          "type": "boolean",
+          "description": "Whether this object/view participates in per-tenant initialization.",
+          "default": false
+        },
+        "occ": {
+          "type": "boolean",
+          "description": "Whether this object uses Optimistic Concurrency Control, adding the framework's created/lastUpdated/deleted columns.",
+          "default": true
+        },
+        "tzFk": {
+          "type": "boolean",
+          "description": "Whether foreign keys pointing to this object also carry along its row-level timezone column.",
+          "default": true
+        },
+        "tzMode": {
+          "type": "string",
+          "description": "Default timezone handling mode (see TZMode) applied to this object's DATETIME columns; falls back to the schema's convention if unset."
+        },
+        "etl": {
+          "type": "boolean",
+          "description": "Whether this object also generates ETL-specific created/lastUpdated columns.",
+          "default": false
+        },
+        "lc": {
+          "type": "string",
+          "description": "Object lifecycle, e.g. NORMAL or WORM (write-once-read-many); see ObjectLifecycle."
+        },
+        "cloneFrom": {
+          "$ref": "#/$defs/tildaClonerFrom",
+          "description": "Clones this object's columns from another source object."
+        },
+        "cloneAs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaCloner"
+          },
+          "description": "Declares one or more clones of this object under different (derived) names."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaColumn"
+          },
+          "description": "The columns making up this object.",
+          "default": []
+        },
+        "primary": {
+          "$ref": "#/$defs/tildaPrimaryKey",
+          "description": "The primary key definition for this object."
+        },
+        "foreign": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaForeignKey"
+          },
+          "description": "Foreign key definitions for this object.",
+          "default": []
+        },
+        "indices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaIndex"
+          },
+          "description": "Index definitions for this object.",
+          "default": []
+        },
+        "http": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaHttpMapping"
+          },
+          "description": "HTTP endpoint mappings generated for this object.",
+          "default": []
+        },
+        "history": {
+          "$ref": "#/$defs/tildaHistory",
+          "description": "Bi-temporal history/versioning configuration for this object."
+        }
+      },
+      "required": [
+        "name",
+        "columns"
+      ]
+    },
+    "tildaOutputMap": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "sync": {
+          "type": "boolean",
+          "default": false
+        },
+        "outTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nvpSrc": {
+          "type": "string"
+        },
+        "nvpValueType": {
+          "type": "string"
+        }
+      }
+    },
+    "tildaPrimaryKey": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names making up the primary key; mutually exclusive with 'autogen'. Must match the name of a column defined in this object's \"columns\" array."
+        },
+        "autogen": {
+          "type": "boolean",
+          "description": "Whether to auto-generate a single-column primary key (using the schema's naming convention) instead of listing 'columns'.",
+          "default": false
+        },
+        "keyBatch": {
+          "type": "integer",
+          "description": "Batch size for pre-allocating auto-generated primary key values; only valid when 'autogen' is true."
+        },
+        "sequence": {
+          "type": "boolean",
+          "description": "Whether the auto-generated primary key is backed by a database sequence instead of Tilda's key-allocation table; only valid when 'autogen' is true.",
+          "default": false
+        }
+      }
+    },
+    "tildaQuery": {
+      "type": "object",
+      "properties": {
+        "db": {
+          "type": "string",
+          "description": "Database type this clause applies to; '*' applies to all supported databases.",
+          "default": "*"
+        },
+        "clause": {
+          "type": "string",
+          "description": "SQL clause used by this query, with TILDA parameter/column syntax."
+        }
+      },
+      "required": [
+        "db",
+        "clause"
+      ]
+    },
+    "tildaSubWhereClause": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of this reusable query/sub-where definition; required when declared at object/view level."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of this reusable query; required when declared at object/view level."
+        },
+        "from": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Objects participating in the query's FROM clause; references are resolved in the current schema/dependency context. Must match the name of an object defined in this schema or one of its dependencies.",
+          "default": []
+        },
+        "wheres": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaQuery"
+          },
+          "description": "Database-specific query clauses; at least one query is required.",
+          "default": []
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column expressions controlling result ordering. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable.",
+          "default": []
+        }
+      },
+      "required": [
+        "wheres"
+      ]
+    },
+    "tildaSubWhereX": {
+      "type": "object",
+      "properties": {
+        "clause": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tildaTypeDef": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type, e.g. STRING(50), INTEGER, DATETIME; append '[]' for an ordered list or '{}' for an unordered set, e.g. INTEGER[]."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Size/length, mainly used for sized types such as STRING(n) when not expressed inline in 'type'."
+        },
+        "precision": {
+          "type": "integer",
+          "description": "Precision for NUMERIC types (default: 19).",
+          "default": 19
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Scale for NUMERIC types (default: 4); must not exceed 'precision'.",
+          "default": 4
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "tildaValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The formula result value."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the value; defaults to the value itself when omitted."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the formula result value."
+        }
+      },
+      "required": [
+        "value",
+        "description"
+      ]
+    },
+    "tildaView": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of this object/view. Must be a unique, valid SQL/Java identifier within its schema."
+        },
+        "dbOnly": {
+          "type": "boolean",
+          "description": "Deprecated: use 'mode' with NORMAL/DB_ONLY/CODE_ONLY instead."
+        },
+        "mode": {
+          "type": "string",
+          "description": "Object/view mode, e.g. NORMAL, DB_ONLY or CODE_ONLY (see ObjectMode); falls back to the schema's convention if unset."
+        },
+        "shortAlias": {
+          "type": "string",
+          "description": "Deprecated: use 'prefix' instead."
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Optional short alias/prefix used when generating SQL/Java identifiers for this object/view (e.g. index names)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this object/view. Mutually exclusive with 'descriptionX'; exactly one of the two is mandatory."
+        },
+        "descriptionX": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Multi-line alternative to 'description': an array of strings joined with spaces. Mutually exclusive with 'description'; exactly one of the two is mandatory."
+        },
+        "referenceUrl": {
+          "type": "string",
+          "description": "Optional URL substituted into '?{}' placeholders found in this object/view's description (and its columns' descriptions)."
+        },
+        "referenceTag": {
+          "type": "string",
+          "description": "Optional label used alongside 'referenceUrl' when rewriting descriptions."
+        },
+        "entityClass": {
+          "type": "string",
+          "description": "Must match one of the schema's declared 'entityClasses' names; mandatory if the schema defines any entityClasses, forbidden otherwise."
+        },
+        "queries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaSubWhereClause"
+          },
+          "description": "Named sub-where query definitions available for this object/view.",
+          "default": []
+        },
+        "json": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaOutputMap"
+          },
+          "description": "Deprecated: use 'outputMaps' instead.",
+          "default": []
+        },
+        "outputMaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaOutputMap"
+          },
+          "description": "Named output column-set mappings (e.g., CSV/JSON exports) for this object/view.",
+          "default": []
+        },
+        "masks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaMask"
+          },
+          "description": "De-identification/masking rules applied to specific columns of this object/view.",
+          "default": []
+        },
+        "tenantInit": {
+          "type": "boolean",
+          "description": "Whether this object/view participates in per-tenant initialization.",
+          "default": false
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewColumn"
+          },
+          "description": "The columns making up this view.",
+          "default": []
+        },
+        "joins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewJoin"
+          },
+          "description": "Object joins used to compute this view's rows.",
+          "default": []
+        },
+        "subWhere": {
+          "type": "string",
+          "description": "Legacy free-form SQL WHERE clause applied to this view; prefer 'subWhereX'."
+        },
+        "subWhereX": {
+          "$ref": "#/$defs/tildaSubWhereX",
+          "description": "Structured, per-database WHERE clause applied to this view (preferred over 'subWhere')."
+        },
+        "subQuery": {
+          "$ref": "#/$defs/tildaSubWhereClause",
+          "description": "Named reusable sub-query definition associated with this view."
+        },
+        "countStar": {
+          "type": "string",
+          "description": "Deprecated and unused."
+        },
+        "pivot": {
+          "$ref": "#/$defs/tildaViewPivot",
+          "description": "Single declarative pivot transformation for this view (see also 'pivots')."
+        },
+        "pivots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewPivot"
+          },
+          "description": "One or more declarative pivot transformations for this view.",
+          "default": []
+        },
+        "timeSeries": {
+          "$ref": "#/$defs/tildaViewTimeSeries",
+          "description": "Time-series bucketing/aggregation configuration for this view."
+        },
+        "distinctOn": {
+          "$ref": "#/$defs/tildaViewDistinctOn",
+          "description": "DISTINCT ON configuration for this view."
+        },
+        "pivotColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewPivotColumn"
+          },
+          "description": "Deprecated: use 'pivots'/'pivot' instead."
+        },
+        "realize": {
+          "$ref": "#/$defs/tildaViewRealize",
+          "description": "Configuration to materialize (realize) this view into a physical table."
+        },
+        "importFormulas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Names of other views whose 'formulaColumns' should be imported into this view. Must match the name of a view defined in this schema or one of its dependencies.",
+          "default": []
+        },
+        "formulaColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaFormula"
+          },
+          "description": "Computed/derived formula columns defined on this view.",
+          "default": []
+        },
+        "formulaTemplates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaFormulaTemplate"
+          },
+          "description": "Reusable formula templates available to this view's formula columns.",
+          "default": []
+        }
+      },
+      "required": [
+        "name",
+        "columns"
+      ]
+    },
+    "tildaViewColumn": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of this view column; defaults to the source column's name if omitted."
+        },
+        "sameas": {
+          "type": "string",
+          "description": "Deprecated: use 'sameAs' instead."
+        },
+        "sameAs": {
+          "type": "string",
+          "description": "References the source object/view column this view column is derived from; see 'expression' for computed columns. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        },
+        "as": {
+          "type": "string",
+          "description": "Optional alias overriding the default output name for this view column."
+        },
+        "expression": {
+          "type": "string",
+          "description": "SQL expression defining this view column when it isn't a simple 'sameAs' passthrough."
+        },
+        "type": {
+          "type": "string",
+          "description": "Overrides the inferred data type for this view column, mainly used together with 'expression'."
+        },
+        "precision": {
+          "type": "integer",
+          "description": "Overrides the inferred precision for this view column."
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Overrides the inferred scale for this view column."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Overrides the inferred size for this view column."
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Prefix prepended to the generated column name."
+        },
+        "postfix": {
+          "type": "string",
+          "description": "Postfix appended to the generated column name."
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names to exclude when this view column expands a wildcard/object reference. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable.",
+          "default": []
+        },
+        "block": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names to block/hide from being generated for this view column. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable.",
+          "default": []
+        },
+        "joinType": {
+          "type": "string",
+          "description": "The SQL join type (e.g., INNER, LEFT) used to reach this column's source object (see JoinType)."
+        },
+        "formulaOnly": {
+          "type": "boolean",
+          "description": "Whether this column only exists for use in formulas and is not emitted in the view's output.",
+          "default": false
+        },
+        "joinOnly": {
+          "type": "boolean",
+          "description": "Whether this column is only used to drive a join and is not emitted in the view's output.",
+          "default": false
+        },
+        "aggregate": {
+          "type": "string",
+          "description": "Aggregate function (e.g., SUM, COUNT) applied to this column (see AggregateType)."
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names controlling ordering for ordered aggregates (e.g., first/last). Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        },
+        "partitionBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Column names partitioning the window/aggregate calculation for this column. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        },
+        "range": {
+          "type": "string",
+          "description": "Window frame range specification for windowed aggregates."
+        },
+        "coalesce": {
+          "type": "string",
+          "description": "Default value expression substituted when this column's value is null."
+        },
+        "distinct": {
+          "type": "boolean",
+          "description": "Whether the aggregate applied to this column uses DISTINCT semantics.",
+          "default": false
+        },
+        "filter": {
+          "type": "string",
+          "description": "Conditional filter expression restricting which rows contribute to this column's aggregate."
+        },
+        "useMapper": {
+          "type": "boolean",
+          "description": "Whether to resolve this column's value through its source column's mapper.",
+          "default": false
+        },
+        "useEnum": {
+          "type": "boolean",
+          "description": "Whether to resolve this column's value through its source column's enum.",
+          "default": false
+        },
+        "description": {
+          "type": "string",
+          "description": "Overrides the source column's description for this view column."
+        }
+      }
+    },
+    "tildaViewDistinctOn": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tildaViewJoin": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "type": "string",
+          "description": "Object to join into the view; may be qualified by package and schema. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "as": {
+          "type": "string",
+          "description": "Alias for the joined object."
+        },
+        "on": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaQuery"
+          },
+          "description": "One or more database-specific join conditions."
+        },
+        "joinType": {
+          "type": "string",
+          "description": "Join type; when omitted, the parser/generator default behavior applies."
+        }
+      },
+      "required": [
+        "object",
+        "on"
+      ]
+    },
+    "tildaViewJoinSimple": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Source view columns used to form the join condition. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        },
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Columns in the current view matched positionally to the source columns. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ]
+    },
+    "tildaViewPivot": {
+      "type": "object",
+      "properties": {
+        "on": {
+          "type": "string"
+        },
+        "aggregates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewPivotAggregate"
+          },
+          "default": []
+        },
+        "interleave": {
+          "type": "boolean",
+          "default": false
+        },
+        "globals": {
+          "type": "boolean",
+          "default": true
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewPivotValue"
+          }
+        }
+      }
+    },
+    "tildaViewPivotAggregate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        },
+        "aggregate": {
+          "type": "string"
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "distinct": {
+          "type": "boolean",
+          "default": false
+        },
+        "coalesce": {
+          "type": "string"
+        }
+      }
+    },
+    "tildaViewPivotColumn": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "join": {
+          "$ref": "#/$defs/tildaViewJoinSimple"
+        }
+      }
+    },
+    "tildaViewPivotValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The formula result value."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the value; defaults to the value itself when omitted."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the formula result value."
+        },
+        "expression": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "scale": {
+          "type": "integer"
+        },
+        "precision": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "value",
+        "description"
+      ]
+    },
+    "tildaViewRealize": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "targetSchema": {
+          "type": "string"
+        },
+        "primary": {
+          "$ref": "#/$defs/tildaPrimaryKey"
+        },
+        "foreign": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaForeignKey"
+          },
+          "default": []
+        },
+        "indices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaIndex"
+          },
+          "default": []
+        },
+        "indexTemplates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaIndexTemplate"
+          },
+          "default": []
+        },
+        "incremental": {
+          "$ref": "#/$defs/tildaViewRealizeIncremental"
+        },
+        "subRealized": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mappings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaViewRealizeMapping"
+          }
+        }
+      }
+    },
+    "tildaViewRealizeIncremental": {
+      "type": "object",
+      "properties": {
+        "deleteFirst": {
+          "type": "boolean",
+          "default": false
+        },
+        "whereClause": {
+          "type": "string"
+        }
+      }
+    },
+    "tildaViewRealizeMapping": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mapper": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "tildaViewTimeSeries": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "YEARLY",
+            "QUARTERLY",
+            "MONTHLY",
+            "DAILY"
+          ]
+        },
+        "lookback": {
+          "type": "integer",
+          "default": -666
+        },
+        "between": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "join": {
+          "$ref": "#/$defs/tildaViewTimeSeriesJoin"
+        }
+      }
+    },
+    "tildaViewTimeSeriesJoin": {
+      "type": "object",
+      "properties": {
+        "object": {
+          "type": "string",
+          "description": "Object supplying the time-series rows; may be qualified by package and schema. Must match the name of an object defined in this schema or one of its dependencies."
+        },
+        "range": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "One or two comma-separated groups of range columns: start columns, with optional end columns. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable."
+        }
+      },
+      "required": [
+        "object",
+        "range"
+      ]
+    }
+  }
+}

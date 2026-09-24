@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
@@ -33,13 +35,21 @@ import tilda.utils.TextUtil;
 public class Index
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "The name of this index, used to derive its generated identifier.", required = true)
     @SerializedName("name"            ) public String         _Name   ;
+    @SchemaDoc(description = "Column names making up this index, optionally followed by a modifier, e.g. 'colName lal' or 'colName(mod=val;)'.", refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("columns"         ) public String[]       _Columns;
+    @SchemaDoc(description = "Whether the database should cluster the table's physical storage on this index.")
     @SerializedName("cluster"         ) public boolean        _Cluster = false;
+    @SchemaDoc(description = "Column names (optionally suffixed with 'asc'/'desc') this index sorts by; presence makes the index non-unique.", refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("orderBy"         ) public String[]       _OrderBy;
+    @SchemaDoc(description = "Whether this index is actually created in the database (vs. only tracked/documented).")
     @SerializedName("db"              ) public boolean        _Db     = true;
+    @SchemaDoc(description = "Whether NULLs are treated as equal (not distinct) for uniqueness purposes.")
     @SerializedName("nullsNotDistinct") public boolean        _NullsNotDistinct = false;
+    @SchemaDoc(description = "Free-form partial-index WHERE clause.")
     @SerializedName("subWhere"        ) public String         _SubWhere;
+    @SchemaDoc(description = "Structured, per-database partial-index WHERE clause (preferred over 'subWhere').")
     @SerializedName("subQuery"        ) public SubWhereClause _SubQuery;
     /*@formatter:on*/
 

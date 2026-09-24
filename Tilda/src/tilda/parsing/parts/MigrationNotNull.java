@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValueHelper;
@@ -32,8 +34,11 @@ import tilda.utils.TextUtil;
 public class MigrationNotNull
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Object containing the columns being made non-null.", required = true, refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("object"  ) public String    _ObjectName;
+    @SchemaDoc(description = "One or more columns to make non-null; all columns must have compatible types and no existing create default.", required = true, refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("columns" ) public String[]  _ColumnNames;
+    @SchemaDoc(description = "Required value to backfill existing rows before applying the not-null constraint.", required = true)
     @SerializedName("default" ) public String    _Default;
     /*@formatter:on*/
 

@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.utils.CollectionUtil;
@@ -38,13 +39,21 @@ public class Formula extends TypeDef
     protected static final Logger LOG              = LogManager.getLogger(Formula.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Name of this formula column.", required = true)
     @SerializedName("name"       ) public String   _Name       ;
+    @SchemaDoc(description = "Whether this formula represents a measure.")
     @SerializedName("measure"    ) public Boolean  _Measure    = Boolean.FALSE;
+    @SchemaDoc(description = "SQL formula expression, optionally specified as one clause per supported database.", required = true)
     @SerializedName("formula"    ) public String[] _FormulaStrs;
+    @SchemaDoc(description = "Short title for this formula, used in generated documentation and metadata.", required = true)
     @SerializedName("title"      ) public String   _Title      ;
+    @SchemaDoc(description = "Optional stable identifier for this formula.")
     @SerializedName("id"         ) public String   _Id         ;
+    @SchemaDoc(description = "One or more lines describing this formula.", required = true)
     @SerializedName("description") public String[] _Description;
+    @SchemaDoc(description = "Enumerated result values and their descriptions when the formula has a finite set of known results.")
     @SerializedName("values"     ) public Value[]  _Values;
+    @SchemaDoc(description = "Whether numeric inputs are coalesced when evaluating the formula (default: true).")
     @SerializedName("coalesceNumbers" ) public boolean  _CoalesceNumbers = Boolean.TRUE;
     /*@formatter:on*/
 

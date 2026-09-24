@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -29,8 +30,11 @@ public class Value
     static final Logger LOG = LogManager.getLogger(Value.class.getName());
 
     /*@formatter:off*/
+  	@SchemaDoc(description = "The formula result value.", required = true)
 	@SerializedName("value"      ) public String _Value;
+    @SchemaDoc(description = "Name for the value; defaults to the value itself when omitted.")
     @SerializedName("name"       ) public String _Name;
+    @SchemaDoc(description = "Description of the formula result value.", required = true)
     @SerializedName("description") public String _Description;
     /*@formatter:on*/
 

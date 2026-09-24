@@ -26,6 +26,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -52,20 +54,35 @@ public class Column extends TypeDef
     static final Logger                  LOG                = LogManager.getLogger(Column.class.getName());
 
     /*@formatter:off*/
+	@SchemaDoc(description = "The name of the column, unique within its object (case-insensitive).", required = true)
 	@SerializedName("name"       ) protected String      _Name       ;
+	@SchemaDoc(description = "Deprecated: use 'sameAs' instead.")
 	@SerializedName("sameas"     ) public String         _SameAs__DEPRECATED;
+    @SchemaDoc(description = "Derives this column from another column (optionally qualified as 'package.schema.object.column'), inheriting its type/size unless overridden.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("sameAs"     ) public String         _SameAs     ;
+    @SchemaDoc(description = "Whether this column allows NULL values.")
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
+    @SchemaDoc(description = "Whether an empty string is allowed; only valid for non-nullable STRING columns.")
     @SerializedName("allowEmpty" ) public Boolean        _AllowEmpty ;
+    @SchemaDoc(description = "Whether this column's value cannot change after row creation.")
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
+    @SchemaDoc(description = "Column mode, e.g. NORMAL or CALCULATED (see ColumnMode).")
     @SerializedName("mode"       ) public String         _ModeStr    ;
+    @SchemaDoc(description = "De-identification/protection strategy applied to this STRING column (see ProtectionType).")
     @SerializedName("protect"    ) public String         _ProtectStr ;
+    @SchemaDoc(description = "Timezone handling mode for this DATETIME column (see TZMode); falls back to the parent object's/schema's convention if unset.")
     @SerializedName("tzMode"     ) public String         _TzModeStr  ;    
+    @SchemaDoc(description = "Default value expression applied on row creation/update.")
     @SerializedName("default"    ) public String         _Default    ;
+    @SchemaDoc(description = "Description of this column; mandatory unless inherited from a 'sameAs' reference.")
     @SerializedName("description") public String         _Description;
+    @SchemaDoc(description = "Maps this column's values to/from an external mapping table; mutually exclusive with 'enum'.")
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
+    @SchemaDoc(description = "Restricts/labels this column's values using an enumeration; mutually exclusive with 'mapper'.")
     @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
+    @SchemaDoc(description = "Named, well-known values for this column (e.g., documented constants and/or defaults).")
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
+    @SchemaDoc(description = "The JSON structure definition for this column; only valid when 'type' is JSON.")
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
 

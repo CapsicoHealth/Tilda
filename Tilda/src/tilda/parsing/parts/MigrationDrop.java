@@ -18,14 +18,20 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 
 public class MigrationDrop
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Object from which columns are dropped.", refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("object")  public String    _ObjectName ;
+    @SchemaDoc(description = "Column names to drop from the selected object.", refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("columns") public String[]  _Columns    ;
+    @SchemaDoc(description = "Object names to drop.", refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("objects") public String[]  _ObjectNames;
+    @SchemaDoc(description = "View names to drop.", refKind = SchemaRefKind.VIEW_IN_SCHEMA)
     @SerializedName("views")   public String[]  _ViewNames  ;
     /*@formatter:on*/
 

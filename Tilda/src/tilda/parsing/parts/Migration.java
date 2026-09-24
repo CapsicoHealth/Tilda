@@ -21,15 +21,20 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 import tilda.utils.CollectionUtil;
 
 public class Migration
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "Object/column rename operations to apply during migration.")
     @SerializedName("renames" ) public List<MigrationRename>   _Renames  = new ArrayList<MigrationRename >();
+    @SchemaDoc(description = "Object move operations (between schemas) to apply during migration.")
     @SerializedName("moves"   ) public List<MigrationMove>     _Moves    = new ArrayList<MigrationMove   >();
+    @SchemaDoc(description = "Column not-null transition operations to apply during migration.")
     @SerializedName("notNulls") public List<MigrationNotNull>  _NotNulls = new ArrayList<MigrationNotNull>();
+    @SchemaDoc(description = "Column type conversion operations to apply during migration.")
     @SerializedName("conversions") public List<MigrationConversion>  _Conversions = new ArrayList<MigrationConversion>();
 //  DROP is currently being removed from feature list as per #58. Too complex with lots of issues.
 //  @SerializedName("drops"  ) public List<MigrationDrop>   _Drops   = new ArrayList<MigrationDrop  >();

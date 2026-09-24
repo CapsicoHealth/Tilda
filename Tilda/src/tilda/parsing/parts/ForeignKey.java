@@ -24,6 +24,8 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.DescriptionRewritingHelper;
@@ -34,8 +36,11 @@ import tilda.utils.TextUtil;
 public class ForeignKey
   {
     /*@formatter:off*/
+    @SchemaDoc(description = "The name of this foreign key, used to derive its generated constraint/identifier name.", required = true)
     @SerializedName("name"       ) public String   _Name       ;
+    @SchemaDoc(description = "The columns of the declaring object making up this foreign key; must line up, in order and count, with the destination object's primary key columns.", required = true, refKind = SchemaRefKind.COLUMN_IN_SAME_OBJECT)
     @SerializedName("srcColumns" ) public String[] _SrcColumns ;
+    @SchemaDoc(description = "The object this foreign key points to.", required = true, refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
     @SerializedName("destObject" ) public String   _DestObject ;
     /*@formatter:on*/
 

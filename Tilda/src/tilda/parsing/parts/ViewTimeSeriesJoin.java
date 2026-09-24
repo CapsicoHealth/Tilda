@@ -24,6 +24,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
@@ -33,7 +35,9 @@ public class ViewTimeSeriesJoin
     static final Logger LOG = LogManager.getLogger(ViewTimeSeriesJoin.class.getName());
 
     /*@formatter:off*/
+  @SchemaDoc(description = "Object supplying the time-series rows; may be qualified by package and schema.", required = true, refKind = SchemaRefKind.OBJECT_IN_SCHEMA)
 	@SerializedName("object") public String    _Object ;
+  @SchemaDoc(description = "One or two comma-separated groups of range columns: start columns, with optional end columns.", required = true, refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("range" ) public String[]  _Range  ;
     /*@formatter:on*/
 

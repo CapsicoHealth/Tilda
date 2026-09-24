@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.db.stores.DBType;
 import tilda.enums.ColumnType;
 import tilda.generation.java8.Helper;
@@ -38,7 +39,9 @@ public class Query
     protected static final Logger LOG = LogManager.getLogger(Query.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Database type this clause applies to; '*' applies to all supported databases.", required = true)
     @SerializedName("db"    ) public final String   _DB    ;
+    @SchemaDoc(description = "SQL clause used by this query, with TILDA parameter/column syntax.", required = true)
     @SerializedName("clause") public       String   _Clause;
     /*@formatter:on*/
 
