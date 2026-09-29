@@ -82,6 +82,7 @@ dependencies {
     implementation platform('com.google.cloud:libraries-bom:26.45.0')
     implementation 'com.google.cloud:google-cloud-storage'
     implementation 'com.google.cloud:google-cloud-bigquery'
+    implementation 'com.google.cloud:google-cloud-bigquery-jdbc:1.+'
     implementation 'com.google.cloud:google-cloud-compute'
     implementation 'com.google.cloud:google-cloud-pubsub'
     implementation 'com.google.cloud:google-cloud-aiplatform'
