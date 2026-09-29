@@ -31,6 +31,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
+import tilda.annotations.SchemaRefKind;
 import tilda.enums.ConventionNaming;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
@@ -40,18 +42,32 @@ public class Schema
     protected static final Logger LOG                  = LogManager.getLogger(Schema.class.getName());
 
     /*@formatter:off*/
+    @SchemaDoc(description = "Java package containing classes generated from this schema.", required = true)
     @SerializedName("package"      ) public String            _Package;
+    @SchemaDoc(description = "When true, preserve database objects not declared in this schema during migrations.")
     @SerializedName("dynamic"      ) public boolean           _Dynamic = false;
+    @SchemaDoc(description = "Schema files that must be loaded before this schema for cross-schema references and compatibility inheritance.", refKind = SchemaRefKind.SCHEMA_FILE_DEPENDENCY)
     @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
+    @SchemaDoc(description = "Schema-level metadata used when generating Tilda documentation.")
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
+    @SchemaDoc(description = "Database compatibility baseline and explicit additional targets for this schema.")
+    @SerializedName("dbCompatibility") public DBCompatibility _DBCompatibility;
+    @SchemaDoc(description = "Custom SQL scripts executed before or after this schema's generated DDL.")
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
+    @SchemaDoc(description = "Naming and object defaults applied throughout this schema.")
     @SerializedName("conventions"  ) public Convention        _Conventions   = new Convention();
+    @SchemaDoc(description = "Entity-class groups used to organize objects in generated documentation.")
     @SerializedName("entityClasses") public String[]          _EntityClasses = new String[] { };
 //    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces    = new ArrayList<Interface  >();
+    @SchemaDoc(description = "Enumerations declared by this schema.")
     @SerializedName("enumerations" ) public List<Enumeration> _Enumerations  = new ArrayList<Enumeration>();
+    @SchemaDoc(description = "Custom mapping definitions declared by this schema.")
     @SerializedName("mappers"      ) public List<Mapper     > _Mappers       = new ArrayList<Mapper     >();
+    @SchemaDoc(description = "Database table objects declared by this schema.")
     @SerializedName("objects"      ) public List<Object     > _Objects       = new ArrayList<Object     >();
+    @SchemaDoc(description = "Views declared by this schema.")
     @SerializedName("views"        ) public List<View       > _Views         = new ArrayList<View       >();
+    @SchemaDoc(description = "Explicit rename, move, nullability, and type-conversion operations for schema migrations.")
     @SerializedName("migrations"   ) public Migration         _Migration;
     /*@formatter:on*/
 
@@ -265,6 +281,10 @@ public class Schema
 
         setDefaultDependencies(PS);
 
+        if (_DBCompatibility == null)
+          _DBCompatibility = new DBCompatibility();
+        _DBCompatibility.validate(PS, this);
+
         if (_Conventions != null)
          _Conventions.validate(PS, this);
         
@@ -347,6 +367,11 @@ public class Schema
             else
               throw new Exception("Cannot find Tilda schema '" + _BASE_TILDA_SCHEMA_RESOURCE + "' in the dependencies!!!");
           }
+      }
+
+    public boolean isCoreTildaSchema()
+      {
+        return "TILDA".equalsIgnoreCase(_Name) && "tilda.data".equalsIgnoreCase(_Package);
       }
 
     /*

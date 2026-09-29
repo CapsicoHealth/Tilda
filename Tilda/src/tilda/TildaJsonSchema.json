@@ -5,10 +5,12 @@
   "type": "object",
   "properties": {
     "package": {
-      "type": "string"
+      "type": "string",
+      "description": "Java package containing classes generated from this schema."
     },
     "dynamic": {
       "type": "boolean",
+      "description": "When true, preserve database objects not declared in this schema during migrations.",
       "default": false
     },
     "dependencies": {
@@ -16,22 +18,31 @@
       "items": {
         "type": "string"
       },
+      "description": "Schema files that must be loaded before this schema for cross-schema references and compatibility inheritance. Must resolve to another Tilda schema JSON file's resource path, relative to the classpath root.",
       "default": []
     },
     "documentation": {
-      "$ref": "#/$defs/tildaDocumentation"
+      "$ref": "#/$defs/tildaDocumentation",
+      "description": "Schema-level metadata used when generating Tilda documentation."
+    },
+    "dbCompatibility": {
+      "$ref": "#/$defs/tildaDBCompatibility",
+      "description": "Database compatibility baseline and explicit additional targets for this schema."
     },
     "extraDDL": {
-      "$ref": "#/$defs/tildaExtraDDL"
+      "$ref": "#/$defs/tildaExtraDDL",
+      "description": "Custom SQL scripts executed before or after this schema's generated DDL."
     },
     "conventions": {
-      "$ref": "#/$defs/tildaConvention"
+      "$ref": "#/$defs/tildaConvention",
+      "description": "Naming and object defaults applied throughout this schema."
     },
     "entityClasses": {
       "type": "array",
       "items": {
         "type": "string"
       },
+      "description": "Entity-class groups used to organize objects in generated documentation.",
       "default": []
     },
     "enumerations": {
@@ -39,6 +50,7 @@
       "items": {
         "$ref": "#/$defs/tildaEnumeration"
       },
+      "description": "Enumerations declared by this schema.",
       "default": []
     },
     "mappers": {
@@ -46,6 +58,7 @@
       "items": {
         "$ref": "#/$defs/tildaMapper"
       },
+      "description": "Custom mapping definitions declared by this schema.",
       "default": []
     },
     "objects": {
@@ -53,6 +66,7 @@
       "items": {
         "$ref": "#/$defs/tildaObject"
       },
+      "description": "Database table objects declared by this schema.",
       "default": []
     },
     "views": {
@@ -60,26 +74,31 @@
       "items": {
         "$ref": "#/$defs/tildaView"
       },
+      "description": "Views declared by this schema.",
       "default": []
     },
     "migrations": {
-      "$ref": "#/$defs/tildaMigration"
+      "$ref": "#/$defs/tildaMigration",
+      "description": "Explicit rename, move, nullability, and type-conversion operations for schema migrations."
     }
   },
+  "required": [
+    "package"
+  ],
   "$defs": {
     "tildaCloneColumn": {
       "type": "object",
       "properties": {
         "sameAs": {
           "type": "string",
-          "description": "Source column name to clone, or a trailing '*' wildcard to select multiple columns. Must match the name of a column defined in this object's \"columns\" array."
+          "description": "Source column name to clone, or a trailing '*' wildcard to select multiple columns in this object."
         },
         "exclude": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Column names to omit when 'sameAs' ends with '*'; only valid with wildcard expansion. Must match the name of a column defined in this object's \"columns\" array.",
+          "description": "Column names to omit when 'sameAs' ends with '*'; only valid with wildcard expansion.",
           "default": []
         },
         "name": {
@@ -397,6 +416,26 @@
         }
       }
     },
+    "tildaDBCompatibility": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Stable platform database baseline. Declared only by the core TILDA schema and inherited by dependent schemas."
+        },
+        "additional": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional database targets explicitly enabled for this schema; these are not inherited by dependent schemas.",
+          "default": []
+        }
+      }
+    },
     "tildaDocumentation": {
       "type": "object",
       "properties": {
@@ -589,14 +628,14 @@
           "items": {
             "type": "string"
           },
-          "description": "Column names or wildcard patterns included in history rows (default: all columns). Must match the name of a column defined in this object's \"columns\" array."
+          "description": "Column names or wildcard patterns included in history rows (default: all columns)."
         },
         "excludedColumns": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Column names excluded from history rows; OCC lifecycle columns are excluded automatically. Must match the name of a column defined in this object's \"columns\" array.",
+          "description": "Column names excluded from history rows; OCC lifecycle columns are excluded automatically.",
           "default": []
         },
         "signatureColumns": {
@@ -604,14 +643,14 @@
           "items": {
             "type": "string"
           },
-          "description": "Column names or wildcard patterns used to detect meaningful row changes (default: all columns). Must match the name of a column defined in this object's \"columns\" array."
+          "description": "Column names or wildcard patterns used to detect meaningful row changes (default: all columns)."
         },
         "signatureColumnsExclude": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Column names excluded from the history signature; primary key and OCC timestamps are excluded automatically. Must match the name of a column defined in this object's \"columns\" array.",
+          "description": "Column names excluded from the history signature; primary key and OCC timestamps are excluded automatically.",
           "default": []
         },
         "compressionSeconds": {
@@ -932,21 +971,21 @@
       "properties": {
         "schema": {
           "type": "string",
-          "description": "Destination schema name for the selected objects and views. Must resolve to another already-loaded Tilda schema, referenced as \"package.schemaName\"."
+          "description": "Destination database schema name for the selected objects and views."
         },
         "objects": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Objects to move into the destination schema; entries may also identify objects being renamed in the same migration. Must match the name of an object defined in this schema or one of its dependencies."
+          "description": "Objects to move into the destination schema; entries may also identify old object names being renamed in the same migration."
         },
         "views": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Views to move into the destination schema; entries may also identify views being renamed in the same migration. Must match the name of a view defined in this schema or one of its dependencies."
+          "description": "Views to move into the destination schema; entries may also identify old view names being renamed in the same migration."
         }
       },
       "required": [
@@ -1296,15 +1335,21 @@
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "Extended SQL sub-where clause, optionally split into multiple lines."
         },
         "description": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "One or more lines describing the extended sub-where clause."
         }
-      }
+      },
+      "required": [
+        "clause",
+        "description"
+      ]
     },
     "tildaTypeDef": {
       "type": "object",
