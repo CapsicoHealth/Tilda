@@ -89,14 +89,9 @@ public class TableMeta implements TableViewMeta
             MetaPerformance._TableColumnNano += (System.nanoTime() - TS);
             MetaPerformance._TableColumnCount += _ColumnsList.size();
           }
-        // Loading unique indices
+        // Loading all indices
         long TS = System.nanoTime();
-        ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
-        loadIndices(RS);
-        RS.close();
-
-        // Loading non-unique indices
-        RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
+        ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
         loadIndices(RS);
         RS.close();
         MetaPerformance._IndexNano += (System.nanoTime() - TS);

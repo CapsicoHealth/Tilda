@@ -265,7 +265,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         if (O._ForeignKeys != null)
           for (ForeignKey FK : O._ForeignKeys)
-            if (FK != null)
+            if (FK != null && FK.isEnforcementExceptionFor(getName()) == false)
               {
                 if (FK._multi == true)
                   {

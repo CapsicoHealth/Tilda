@@ -18,7 +18,9 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -48,6 +50,12 @@ public class ForeignKey
     public transient Object       _DestObjectObj;
     public transient Object       _ParentObject;
     public transient boolean      _multi         = false;
+    public transient Set<String>  _EnforcementExceptionDBs = new HashSet<String>();
+
+    public boolean isEnforcementExceptionFor(String database)
+      {
+        return _EnforcementExceptionDBs != null && _EnforcementExceptionDBs.contains(DBCompatibility.canonicalizeBackendId(database));
+      }
 
     public ForeignKey()
       {

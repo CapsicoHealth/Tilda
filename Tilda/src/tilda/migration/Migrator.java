@@ -459,6 +459,17 @@ public class Migrator
         List<MigrationAction> Actions = new ArrayList<MigrationAction>();
         List<String> Errors = new ArrayList<String>();
 
+        String Database = CGSQL.getName();
+        boolean HasCompatibleEntity = false;
+        for (Object Obj : S._Objects)
+          if (Obj != null && Obj._FST != FrameworkSourcedType.VIEW && Obj.isCompatibleWith(Database) == true && (Obj._Mode == ObjectMode.NORMAL || Obj._Mode == ObjectMode.DB_ONLY))
+            HasCompatibleEntity = true;
+        for (View V : S._Views)
+          if (V != null && V.isCompatibleWith(Database) == true && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+            HasCompatibleEntity = true;
+        if (HasCompatibleEntity == false)
+          return Actions;
+
         // Create the schema if not exists
         if (DBMeta.getSchemaMeta(S._Name) == null)
           {
@@ -470,8 +481,8 @@ public class Migrator
 
         if (S._Migration != null) // Are there any migration steps to move tables over to this schema?
           {
-            handleMoves(C, S, DBMeta, Actions);
-            handleRenames(S, DBMeta, Actions);
+            handleMoves(C, S, DBMeta, Actions, Database);
+            handleRenames(S, DBMeta, Actions, Database);
           }
 
         boolean Helpers = false;
@@ -496,6 +507,8 @@ public class Migrator
         for (Object Obj : S._Objects)
           {
             if (Obj == null)
+              continue;
+            if (Obj.isCompatibleWith(Database) == false)
               continue;
             // No need to migrate unless there is a DB artifact
             if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY || Obj._Mode == ObjectMode.NONE)
@@ -562,7 +575,7 @@ public class Migrator
                         Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                       }
                   }
-                handleKeys(TildaList, Actions, Errors, Obj, TMeta);
+                handleKeys(TildaList, Actions, Errors, Obj, TMeta, Database);
 
                 /*
                  * for (String c : Obj._DropOldColumns)
@@ -576,12 +589,14 @@ public class Migrator
                 // if (XXX != Actions.size())
                 // Actions.add(new CommitPoint());
 
-                handleIndices(Actions, Errors, Obj, TMeta, DBMeta.getSchemaMeta(Obj._ParentSchema._Name));
+                handleIndices(Actions, Errors, Obj, TMeta, DBMeta.getSchemaMeta(Obj._ParentSchema._Name), Database);
               }
           }
         for (View V : S._Views)
           {
             if (V == null)
+              continue;
+            if (V.isCompatibleWith(Database) == false)
               continue;
             // No need to migrate unless there is a DB artifact
             if (V._Mode == ObjectMode.CODE_ONLY || V._Mode == ObjectMode.NONE)
@@ -685,12 +700,15 @@ public class Migrator
         return false;
       }
 
-    protected static void handleRenames(Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions)
+    protected static void handleRenames(Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions, String database)
     throws Exception
       {
         for (MigrationRename MR : S._Migration._Renames)
           if (MR != null)
             {
+              if ((MR._Object != null && MR._Object.isCompatibleWith(database) == false)
+              || (MR._View != null && MR._View.isCompatibleWith(database) == false))
+                continue;
               if (MR._Object != null) // Renaming object or column
                 {
                   if (MR._Column != null) // renaming column
@@ -783,7 +801,7 @@ public class Migrator
           }
       }
 
-    protected static void handleMoves(Connection C, Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions)
+    protected static void handleMoves(Connection C, Schema S, DatabaseMeta DBMeta, List<MigrationAction> Actions, String database)
     throws Exception
       {
         for (MigrationMove MM : S._Migration._Moves)
@@ -794,12 +812,16 @@ public class Migrator
 
               for (Object obj : MM._Objects) // let's look at tables to transfer
                 {
-                  handleTableMove(C, S, DBMeta, Actions, MM, obj);
+                  if (obj.isCompatibleWith(database) == true)
+                    handleTableMove(C, S, DBMeta, Actions, MM, obj);
                   for (Object objCloned : obj._Clones)
-                    handleTableMove(C, S, DBMeta, Actions, MM, objCloned);
+                    if (objCloned.isCompatibleWith(database) == true)
+                      handleTableMove(C, S, DBMeta, Actions, MM, objCloned);
                 }
               for (View v : MM._Views)
                 {
+                  if (v.isCompatibleWith(database) == false)
+                    continue;
                   ViewMeta VMSrc = DBMeta.getViewMeta(MM._Schema, v._Name);
                   ViewMeta VMDest = DBMeta.getViewMeta(S._Name, v._Name);
                   String newName = null;
@@ -934,7 +956,7 @@ public class Migrator
         return NeedsDdlDependencyManagement;
       }
 
-    protected static void handleKeys(List<Schema> TildaList, List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta)
+    protected static void handleKeys(List<Schema> TildaList, List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta, String database)
     throws Exception
       {
         if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && Obj._PrimaryKey._Sequence == false && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
@@ -969,7 +991,7 @@ public class Migrator
                 if (FK == null)
                   continue;
                 // LOG.debug("Checking model FK " + FK.getSignature() + ".");
-                if (Sig.equals(FK.getSignature()) == true)
+                if (FK.isEnforcementExceptionFor(database) == false && Sig.equals(FK.getSignature()) == true)
                   {
                     Found = true;
                     break;
@@ -981,7 +1003,7 @@ public class Migrator
         // Checking any FK defined in the Model which are not in the DB, so they can be added.
         for (ForeignKey FK : Obj._ForeignKeys)
           {
-            if (FK == null)
+            if (FK == null || FK.isEnforcementExceptionFor(database) == true)
               continue;
             boolean Found = false;
             String Sig = FK.getSignature();
@@ -996,8 +1018,12 @@ public class Migrator
           }
       }
 
-    protected static void handleIndices(List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta, SchemaMeta SMeta)
+    protected static void handleIndices(List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta, SchemaMeta SMeta, String database)
       {
+        // BigQuery indexes have distinct semantics; generic reconciliation can destroy database-defined search/vector indexes.
+        if ("bigquery".equalsIgnoreCase(database) == true)
+          return;
+
         // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
         Set<String> DroppedSignatures = new HashSet<String>(); // Dropped Signatures
 
@@ -1230,6 +1256,16 @@ public class Migrator
         List<MigrationDrops> drops = new ArrayList<MigrationDrops>();
         if (s._Dynamic == true)
           return drops;
+        String Database = SQlCodeGen.getName();
+        boolean HasCompatibleEntity = false;
+        for (Object Obj : s._Objects)
+          if (Obj != null && Obj._FST != FrameworkSourcedType.VIEW && Obj.isCompatibleWith(Database) == true && (Obj._Mode == ObjectMode.NORMAL || Obj._Mode == ObjectMode.DB_ONLY))
+            HasCompatibleEntity = true;
+        for (View V : s._Views)
+          if (V != null && V.isCompatibleWith(Database) == true && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+            HasCompatibleEntity = true;
+        if (HasCompatibleEntity == false)
+          return drops;
         SchemaMeta sm = DBMeta.getSchemaMeta(s.getShortName());
         if (sm != null)
           {
@@ -1238,6 +1274,8 @@ public class Migrator
                 Object obj = s.getObject(tm._TableName);
                 if (obj == null)
                   drops.add(new tilda.migration.drops.TableDrop(tm));
+                else if (obj.isCompatibleWith(Database) == false)
+                  continue;
                 else
                   {
                     // for (IndexMeta im : tm.getIndexMetas())

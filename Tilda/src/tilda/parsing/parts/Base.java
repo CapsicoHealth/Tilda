@@ -17,6 +17,7 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -89,6 +90,7 @@ public abstract class Base
     public transient View            _RealizedView;
     public transient boolean         _HasUniqueQuery;
     public transient ObjectMode      _Mode;
+    public transient Set<String>     _DBCompatibilityTargets = Collections.emptySet();
 
     public abstract Column getColumn(String name);
 
@@ -161,6 +163,11 @@ public abstract class Base
     public Schema getSchema()
       {
         return _ParentSchema;
+      }
+
+    public boolean isCompatibleWith(String database)
+      {
+        return _DBCompatibilityTargets != null && _DBCompatibilityTargets.contains(DBCompatibility.canonicalizeBackendId(database));
       }
 
     public String getAppDataClassName()

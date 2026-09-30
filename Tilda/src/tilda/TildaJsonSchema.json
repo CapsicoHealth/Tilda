@@ -27,7 +27,7 @@
     },
     "dbCompatibility": {
       "$ref": "#/$defs/tildaDBCompatibility",
-      "description": "Database compatibility baseline and explicit additional targets for this schema."
+      "description": "Stable database baseline, explicit object/view routes, and foreign-key enforcement exceptions for this schema."
     },
     "extraDDL": {
       "$ref": "#/$defs/tildaExtraDDL",
@@ -426,15 +426,77 @@
           },
           "description": "Stable platform database baseline. Declared only by the core TILDA schema and inherited by dependent schemas."
         },
-        "additional": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaDBCompatibilityTarget"
+          },
+          "description": "Database-specific object/view routing rules for this schema.",
+          "default": []
+        },
+        "fkEnforcementExceptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaDBCompatibilityFKEnforcementException"
+          },
+          "description": "Explicit exceptions allowing listed foreign-key declarations to be omitted on databases where their destination objects are absent.",
+          "default": []
+        }
+      }
+    },
+    "tildaDBCompatibilityFKEnforcementException": {
+      "type": "object",
+      "properties": {
+        "db": {
+          "type": "string",
+          "description": "Database where listed foreign-key declarations may be omitted when their destination objects are unavailable."
+        },
+        "fks": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Additional database targets explicitly enabled for this schema; these are not inherited by dependent schemas.",
+          "description": "Source object and foreign-key names in ObjectName.ForeignKeyName form.",
           "default": []
         }
-      }
+      },
+      "required": [
+        "db",
+        "fks"
+      ]
+    },
+    "tildaDBCompatibilityTarget": {
+      "type": "object",
+      "properties": {
+        "db": {
+          "type": "string",
+          "description": "Registered database identifier targeted by this route."
+        },
+        "only": {
+          "type": "boolean",
+          "description": "Whether matched objects/views are exclusive to this database; only wildcard selectors can override inherited/additive targets.",
+          "default": false
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Object names or supported wildcard patterns routed to this database.",
+          "default": []
+        },
+        "views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "View names or supported wildcard patterns routed to this database.",
+          "default": []
+        }
+      },
+      "required": [
+        "db"
+      ]
     },
     "tildaDocumentation": {
       "type": "object",

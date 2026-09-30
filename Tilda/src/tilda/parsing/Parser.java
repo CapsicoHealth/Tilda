@@ -52,6 +52,10 @@ public abstract class Parser
               return null;
           }
         for (Schema S : SchemaList)
+          S.setDefaultDependencies(PS);
+        List<Schema> OrderedSchemas = new ArrayList<Schema>(SchemaList);
+        Schema.ReorderTildaListWithDependencies(OrderedSchemas);
+        for (Schema S : OrderedSchemas)
           S.validate(PS);
         return PS;
       }

@@ -28,7 +28,8 @@ Not in scope:
 Before starting this phase, Phase 1a should provide:
 
 - A validated schema-level `dbCompatibility` contract and canonical database IDs.
-- The core TILDA schema's inherited PostgreSQL default, additive BigQuery opt-in, and per-object routing for PostgreSQL-only, shared, or BigQuery-only tables/views.
+- The core TILDA schema's stable PostgreSQL default, schema-level BigQuery target routes, and resolved per-object/per-view targets for PostgreSQL-only, shared, or BigQuery-only entities.
+- Per-target FK destination validation and explicit FK DDL-suppression exceptions for logical cross-store relationships.
 - Per-store object selection for migration, preserving PostgreSQL-first behavior for legacy schemas and excluding BigQuery-only objects from PostgreSQL targets.
 - BigQuery schemas/tables/views that can be migrated and introspected for the selected objects.
 - An established BigQuery DDL/metadata access path and a recorded JDBC driver dependency/package assessment, if the spike selects the driver. Runtime `tilda.config.json` provides available connections; it does not define compatibility.

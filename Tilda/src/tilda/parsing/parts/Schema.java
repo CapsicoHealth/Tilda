@@ -50,7 +50,7 @@ public class Schema
     @SerializedName("dependencies" ) public String[]          _Dependencies  = new String[] { };
     @SchemaDoc(description = "Schema-level metadata used when generating Tilda documentation.")
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
-    @SchemaDoc(description = "Database compatibility baseline and explicit additional targets for this schema.")
+    @SchemaDoc(description = "Stable database baseline, explicit object/view routes, and foreign-key enforcement exceptions for this schema.")
     @SerializedName("dbCompatibility") public DBCompatibility _DBCompatibility;
     @SchemaDoc(description = "Custom SQL scripts executed before or after this schema's generated DDL.")
     @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
@@ -341,6 +341,9 @@ public class Schema
         
         if (_Migration != null)
           _Migration.validate(PS, this);
+
+        _DBCompatibility.resolveEntityTargets(PS, this);
+        _DBCompatibility.validateForeignKeysAndViewDependencies(PS, this);
 
         /*
          * if (hasFormulas == true)

@@ -85,9 +85,12 @@ public class Generator
 
         genTildaBigQuerySchemas(G, GenFolder, S);
         genTildaSql(G, GenFolder, S);
-        G.switchDBGenerator("bigquery", 0, 0);
-        genTildaSql(G, GenFolder, S);
-        G.switchDBGeneratorBack();
+        if (hasBigQueryEntities(S) == true)
+          {
+            G.switchDBGenerator("bigquery", 0, 0);
+            genTildaSql(G, GenFolder, S);
+            G.switchDBGeneratorBack();
+          }
         genCatalogCSV(G, GenFolder, S);
         return true;
       }
@@ -119,7 +122,7 @@ public class Generator
         CG.genFileStart(Out, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._FST != FrameworkSourcedType.VIEW && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && O.isCompatibleWith(CG.getName()) == true && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
             {
               Out.println();
               Out.println();
@@ -130,7 +133,7 @@ public class Generator
         Out.println();
 
         for (View V : S._Views)
-          if (V != null && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+          if (V != null && V.isCompatibleWith(CG.getName()) == true && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
             {
               Out.println();
               Out.println();
@@ -177,6 +180,9 @@ public class Generator
       {
         LOG.debug("  Generating the BigQuery JSON Schema files.");
 
+        if (hasBigQueryEntities(S) == false)
+          return;
+
         GenFolder = new File(GenFolder.getAbsolutePath() + File.separator + "bigquery");
         if (GenFolder.exists() == true)
           FileUtils.deleteDirectory(GenFolder);
@@ -184,7 +190,7 @@ public class Generator
           throw new Exception("Cannot create the Tilda folder " + GenFolder.getAbsolutePath());
 
         for (Object O : S._Objects)
-          if (O != null && O._FST != FrameworkSourcedType.VIEW && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && O.isCompatibleWith("bigquery") == true && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + O._Name + ".json");
               PrintWriter Out = new PrintWriter(f);
@@ -193,7 +199,7 @@ public class Generator
             }
 
         for (View V : S._Views)
-          if (V != null && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+          if (V != null && V.isCompatibleWith("bigquery") == true && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
             {
               File f = new File(GenFolder.getAbsolutePath() + File.separator + "bq." + V._Name + ".json");
               PrintWriter Out = new PrintWriter(f);
@@ -204,6 +210,19 @@ public class Generator
         LOG.debug("  Generating the BigQuery JSON Schema files.");
 
 
+      }
+
+    private static boolean hasBigQueryEntities(Schema S)
+      {
+        for (Object O : S._Objects)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && O.isCompatibleWith("bigquery") == true && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.DB_ONLY))
+            return true;
+
+        for (View V : S._Views)
+          if (V != null && V.isCompatibleWith("bigquery") == true && (V._Mode == ObjectMode.NORMAL || V._Mode == ObjectMode.DB_ONLY))
+            return true;
+
+        return false;
       }
 
 
