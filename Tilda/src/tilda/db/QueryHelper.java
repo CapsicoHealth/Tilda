@@ -228,12 +228,11 @@ public abstract class QueryHelper
                 str.append("||");
                 TextUtil.escapeSingleQuoteForSQL(str, sep);
               }
+            // The column must always be joined with "||", whether or not a separator or a coalesce is used.
+            str.append("||");
             boolean coal = TextUtil.isNullOrEmpty(coalesce) == false;
             if (coal == true)
-              {
-                str.append("||");
-                str.append("coalesce(");
-              }
+              str.append("coalesce(");
             col.getFullColumnVarForSelect(_C, str);
             if (coal == true)
               {
