@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,7 @@ import tilda.annotations.SchemaDoc;
 import tilda.annotations.SchemaRefKind;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.db.stores.DBType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
@@ -51,7 +53,37 @@ public class Index
     @SerializedName("subWhere"        ) public String         _SubWhere;
     @SchemaDoc(description = "Structured, per-database partial-index WHERE clause (preferred over 'subWhere').")
     @SerializedName("subQuery"        ) public SubWhereClause _SubQuery;
+    @SchemaDoc(description = "Shared vector-index semantics and backend-specific options.")
+    @SerializedName("vector"          ) public Vector         _Vector;
     /*@formatter:on*/
+
+    public static class Details
+      {
+        @SchemaDoc(description = "Database type this vector detail applies to; '*' is an all-database default.", required = true)
+        @SerializedName("db") public String _Db;
+        @SchemaDoc(description = "Database-specific approximate-nearest-neighbor algorithm; mutually exclusive with vector.algorithm. If one detail specifies an algorithm, all details must.")
+        @SerializedName("algorithm") public String _Algorithm;
+        @SchemaDoc(description = "Algorithm-specific options as name/value strings.")
+        @SerializedName("options") public List<Option> _Options;
+      }
+
+    public static class Vector
+      {
+        @SchemaDoc(description = "Shared distance metric for this vector index; defaults to euclidean.")
+        @SerializedName("distance") public String _Distance;
+        @SchemaDoc(description = "Approximate-nearest-neighbor algorithm shared by every database in details; mutually exclusive with detail-level algorithms.")
+        @SerializedName("algorithm") public String _Algorithm;
+        @SchemaDoc(description = "Backend-specific details; define one '*' entry or database-specific entries.")
+        @SerializedName("details") public List<Details> _Details;
+      }
+
+    public static class Option
+      {
+        @SchemaDoc(description = "Option name interpreted by the selected database and algorithm.", required = true)
+        @SerializedName("option") public String _Option;
+        @SchemaDoc(description = "Option value represented as a string and validated by the selected database.", required = true)
+        @SerializedName("value") public String _Value;
+      }
 
     public transient List<Column>        _ColumnObjs           = new ArrayList<Column>();
     public transient List<OrderBy>       _OrderByObjs          = new ArrayList<OrderBy>();
@@ -71,6 +103,13 @@ public class Index
         _OrderBy = I._OrderBy;
         _Db = I._Db;
         _SubWhere = I._SubWhere;
+        if (I._Vector != null)
+          {
+            _Vector = new Vector();
+            _Vector._Distance = I._Vector._Distance;
+            _Vector._Algorithm = I._Vector._Algorithm;
+            _Vector._Details = I._Vector._Details;
+          }
         if (I._SubQuery != null)
           _SubQuery = new SubWhereClause(I._SubQuery);
       }
@@ -78,6 +117,55 @@ public class Index
     public String getName()
       {
         return TextUtil.print(_Parent._Prefix, _Parent._OriginalName) + "_" + _Name;
+      }
+
+    public boolean isVectorIndex()
+      {
+        if (_ColumnObjs != null)
+          for (Column column : _ColumnObjs)
+            if (column != null && column.getType() == ColumnType.VECTOR)
+              return true;
+        return false;
+      }
+
+    public Details getDetails(DBType DB)
+    throws Exception
+      {
+        if (_Vector == null || _Vector._Details == null || _Vector._Details.isEmpty() == true)
+          return null;
+
+        String target = DBCompatibility.resolveBackendId(DB.getName());
+        Details wildcard = null;
+        Details selected = null;
+        boolean hasWildcard = false;
+        java.util.Set<String> databases = new java.util.HashSet<String>();
+        for (Details detail : _Vector._Details)
+          {
+            if (detail == null || TextUtil.isNullOrEmpty(detail._Db) == true)
+              throw new Exception("The index "+_Parent.getShortName() + "." + getName() + " has a detail without a database ('db').");
+            if ("*".equals(detail._Db) == true)
+              {
+                hasWildcard = true;
+                wildcard = detail;
+                continue;
+              }
+
+            String database = DBCompatibility.resolveBackendId(detail._Db);
+            if (database == null)
+              throw new Exception("The index "+_Parent.getShortName() + "." + getName() + " has an unrecognized database in details: '" + detail._Db + "'.");
+            if (databases.add(database) == false)
+              throw new Exception("The index "+_Parent.getShortName() + "." + getName() + " has duplicate details for database '" + detail._Db + "'.");
+            if (database.equals(target) == true)
+              selected = detail;
+          }
+
+        if (hasWildcard == true && _Vector._Details.size() != 1)
+          throw new Exception("The index "+_Parent.getShortName() + "." + getName() + " cannot mix a '*' detail with database-specific details.");
+        if (selected != null)
+          return selected;
+        if (wildcard != null)
+          return wildcard;
+        throw new Exception("The index "+_Parent.getShortName() + "." + getName() + " has no details for database '" + DB.getName() + "' while the table is listed as a target for '" + DB.getName() + "' as per this schema's 'dbCompatibility'.");
       }
 
     protected static Pattern _PATTERN_INDEX_COLUMN = Pattern.compile("(\\w+)(.*)");
@@ -159,20 +247,33 @@ public class Index
           });
 
         int vectorColumns = 0;
-        for (Column C : _ColumnObjs)
+        if (_ColumnObjs != null)
+          for (Column C : _ColumnObjs)
+            {
+              if (C != null && C.getType() == ColumnType.VECTOR)
+                {
+                  ++vectorColumns;
+                  // Vector indices are never UNIQUE.
+                  if (_Unique == true)
+                    _Unique = false;
+                }
+            }
+        if (vectorColumns > 0)
           {
-            if (C.getType() == ColumnType.VECTOR)
-              {
-                if (++vectorColumns > 1)
-                  PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with more than one vector column: this is not allowed as vector columns are not supported in multi-column indices.");
-                // Vector indices are never UNIQUE, but we infer unique automatically if there is no orderBy,
-                // so we have to switch here.
-                if (_Unique == true)
-                  _Unique = false;
-              }
+            if (_ColumnObjs.size() != 1 || vectorColumns != 1)
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining VECTOR index '" + _Name + "' with more than one column; vector indices must contain exactly one VECTOR column.");
+            if (_Vector == null)
+              _Vector = new Vector();
+            if (_Vector._Details == null || _Vector._Details.isEmpty() == true)
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining VECTOR index '" + _Name + "' without a 'vector.details' array.");
+            if (TextUtil.isNullOrEmpty(_Vector._Distance) == true)
+              _Vector._Distance = "euclidean";
+            else
+              _Vector._Distance = _Vector._Distance.toLowerCase(Locale.ROOT);
+            if ("euclidean".equals(_Vector._Distance) == false && "dot".equals(_Vector._Distance) == false && "cosine".equals(_Vector._Distance) == false && "l1".equals(_Vector._Distance) == false && "hamming".equals(_Vector._Distance) == false && "jaccard".equals(_Vector._Distance) == false)
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining VECTOR index '" + _Name + "' with unsupported distance '" + _Vector._Distance + "'. Supported distances: euclidean, dot, cosine, l1, hamming, jaccard.");
+            validateVectorAlgorithms(PS);
           }
-        if (vectorColumns > 0 && _ColumnObjs.size() != vectorColumns)
-          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a vector column and non-vector columns: this is not allowed as vector columns are not supported in multi-column indices.");
 
         if (_Unique == false)
           {
@@ -221,6 +322,67 @@ public class Index
           PS.AddError("Object '" + _Parent.getFullName() + "' is defining a cluster index '" + _Name + "' that is also partial: partial indices (i.e., with a where clause, cannot be clustered).");
 
         return Errs == PS.getErrorCount();
+      }
+
+    private void validateVectorAlgorithms(ParserSession PS)
+      {
+        boolean sharedAlgorithm = TextUtil.isNullOrEmpty(_Vector._Algorithm) == false;
+        if (sharedAlgorithm == true)
+          _Vector._Algorithm = _Vector._Algorithm.toLowerCase(Locale.ROOT);
+
+        boolean hasDetailAlgorithm = false;
+        if (_Vector._Details != null)
+          for (Details detail : _Vector._Details)
+            if (detail != null && TextUtil.isNullOrEmpty(detail._Algorithm) == false)
+              {
+                detail._Algorithm = detail._Algorithm.toLowerCase(Locale.ROOT);
+                hasDetailAlgorithm = true;
+              }
+
+        if (sharedAlgorithm == true && hasDetailAlgorithm == true)
+          {
+            PS.AddError("Object '" + _Parent.getFullName() + "' is defining VECTOR index '" + _Name + "' with both vector.algorithm and a vector.details[].algorithm; specify a shared algorithm or database-specific algorithms, not both.");
+            return;
+          }
+
+        if (sharedAlgorithm == true)
+          {
+            if (_Vector._Details != null)
+              for (Details detail : _Vector._Details)
+                if (detail != null)
+                  validateVectorAlgorithmForDatabase(PS, detail._Db, _Vector._Algorithm);
+            return;
+          }
+
+        if (hasDetailAlgorithm == true && _Vector._Details != null)
+          for (Details detail : _Vector._Details)
+            if (detail == null || TextUtil.isNullOrEmpty(detail._Algorithm) == true)
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining VECTOR index '" + _Name + "' with database-specific algorithms but a vector.details entry is missing its algorithm.");
+            else
+              validateVectorAlgorithmForDatabase(PS, detail._Db, detail._Algorithm);
+      }
+
+    private void validateVectorAlgorithmForDatabase(ParserSession PS, String database, String algorithm)
+      {
+        if ("*".equals(database) == true)
+          {
+            for (DBType DB : DBType._DBTypes)
+              validateVectorAlgorithmForBackend(PS, DB.getName(), algorithm);
+            return;
+          }
+
+        String backend = DBCompatibility.resolveBackendId(database);
+        if (backend == null)
+          return;
+        validateVectorAlgorithmForBackend(PS, backend, algorithm);
+      }
+
+    private void validateVectorAlgorithmForBackend(ParserSession PS, String backend, String algorithm)
+      {
+        boolean supported = "postgres".equals(backend) == true && ("ivf".equals(algorithm) == true || "ivfflat".equals(algorithm) == true || "hnsw".equals(algorithm) == true)
+                         || "bigquery".equals(backend) == true && ("ivf".equals(algorithm) == true || "tree_ah".equals(algorithm) == true);
+        if (supported == false)
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining VECTOR index '" + _Name + "' with algorithm '" + algorithm + "', which is not supported by database '" + backend + "'.");
       }
 
     public String getSignature()

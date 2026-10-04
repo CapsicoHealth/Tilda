@@ -41,7 +41,7 @@ public class RootImporter implements Importer
         for (ZoneInfo_Data obj : _Zones)
           {
             ++Count;
-            if (obj.upsert(C, true) == false)
+            if (obj.upsert(C) == false)
               throw new Exception("Cannot upsert ZoneInfo");
           }
         ZoneInfo_Factory.initMappings(C);

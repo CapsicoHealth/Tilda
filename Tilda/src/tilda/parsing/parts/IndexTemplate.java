@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.annotations.SchemaDoc;
 import tilda.parsing.ParserSession;
 import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
@@ -30,6 +31,8 @@ public class IndexTemplate
     @SerializedName("orderBy" ) public String[]       _OrderBy;
     @SerializedName("subWhere") public String         _SubWhere;
     @SerializedName("subQuery") public SubWhereClause _SubQuery;
+    @SchemaDoc(description = "Shared vector-index semantics and backend-specific options.")
+    @SerializedName("vector"  ) public Index.Vector   _Vector;
     /*@formatter:on*/
 
     public transient Base         _Parent;
@@ -44,6 +47,13 @@ public class IndexTemplate
         _Columns = I._Columns;
         _OrderBy = I._OrderBy;
         _SubWhere = I._SubWhere;
+        if (I._Vector != null)
+          {
+            _Vector = new Index.Vector();
+            _Vector._Distance = I._Vector._Distance;
+            _Vector._Algorithm = I._Vector._Algorithm;
+            _Vector._Details = I._Vector._Details;
+          }
         if (I._SubQuery != null)
           _SubQuery = new SubWhereClause(I._SubQuery);
       }

@@ -149,6 +149,7 @@ public class ViewRealize
                   I._Unique = false;
                   I._OrderBy = IT._OrderBy;
                   I._SubWhere = IT._SubWhere;
+                  I._Vector = IT._Vector;
                   if (I._SubWhere != null)
                     I._SubWhere = I._SubWhere.replace("?", col);
                   I._SubQuery = IT._SubQuery;
