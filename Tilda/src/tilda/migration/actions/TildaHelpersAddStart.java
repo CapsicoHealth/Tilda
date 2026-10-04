@@ -25,6 +25,7 @@ import tilda.data.MaintenanceLog_Data;
 import tilda.data.MaintenanceLog_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
+import tilda.db.metadata.TableMeta;
 import tilda.migration.MigrationAction;
 import tilda.utils.TextUtil;
 
@@ -62,7 +63,8 @@ public class TildaHelpersAddStart extends MigrationAction
     throws Exception
       {
         // When run for the first time, some tables may not exist yet.
-        if (DBMeta.getTableMeta(MaintenanceLog_Factory.SCHEMA_LABEL, MaintenanceLog_Factory.TABLENAME_LABEL) == null)
+        TableMeta MaintenanceLogMeta = DBMeta.getTableMeta(MaintenanceLog_Factory.SCHEMA_LABEL, MaintenanceLog_Factory.TABLENAME_LABEL);
+        if (MaintenanceLogMeta == null || MaintenanceLogMeta.getColumnMeta("statementHash", false) == null)
           return true;
         String startScript = C.getHelperFunctionsScript(true);
         if (startScript == null)

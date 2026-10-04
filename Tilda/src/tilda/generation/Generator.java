@@ -72,7 +72,6 @@ public class Generator
         if (GenFolder.mkdir() == false)
           throw new Exception("Cannot create the Tilda folder " + GenFolder.getAbsolutePath());
 
-        genTildaSupport(G, GenFolder, S);
         for (Object O : S._Objects)
           if (O != null && (O._Mode == ObjectMode.NORMAL || O._Mode == ObjectMode.CODE_ONLY))
             {
@@ -92,6 +91,7 @@ public class Generator
             G.switchDBGeneratorBack();
           }
         genCatalogCSV(G, GenFolder, S);
+        genTildaSupport(G, GenFolder, S);
         return true;
       }
 
@@ -256,15 +256,21 @@ public class Generator
     public static void getTableDDL(CodeGenSql CG, PrintWriter Out, Object O, boolean mainDDL, boolean keysDDL)
     throws Exception
       {
+        getTableDDL(CG, Out, O, mainDDL, keysDDL, true);
+      }
+
+    public static void getTableDDL(CodeGenSql CG, PrintWriter Out, Object O, boolean mainDDL, boolean keysDDL, boolean inlineVectorIndices)
+    throws Exception
+      {
         if (mainDDL == true)
           {
             CG.genDDL(Out, O);
             Out.println();
-            if (CG.supportsIndices() == false && O._Indices.isEmpty() == false)
+            if (CG.supportsRegularIndices() == false && O._Indices.isEmpty() == false)
               Out.println("-- Indices are not supported for this database, so logical definition only");
 
             for (Index I : O._Indices)
-              if (I != null)
+              if (I != null && (inlineVectorIndices == true || I.isVectorIndex() == false))
                 CG.genIndex(Out, I);
           }
         if (keysDDL == true)
