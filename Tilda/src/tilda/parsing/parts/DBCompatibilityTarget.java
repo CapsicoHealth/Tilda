@@ -38,6 +38,8 @@ public class DBCompatibilityTarget
     @SerializedName("objects") public String[] _Objects = new String[] { };
     @SchemaDoc(description = "View names or supported wildcard patterns routed to this database.")
     @SerializedName("views"  ) public String[] _Views   = new String[] { };
+    @SchemaDoc(description = "Object names to exempt all their foreign keys, or exact ObjectName.ForeignKeyName references, when destinations are absent from this database route.")
+    @SerializedName("fkEnforcementExceptions") public String[] _FKEnforcementExceptions = new String[] { };
     /*@formatter:on*/
 
     transient public String  _ResolvedDB;
@@ -57,14 +59,36 @@ public class DBCompatibilityTarget
           PS.AddError("Schema '" + parentSchema.getFullName() + "' defines null 'objects' in dbCompatibility.targets; it must be an array.");
         if (_Views == null)
           PS.AddError("Schema '" + parentSchema.getFullName() + "' defines null 'views' in dbCompatibility.targets; it must be an array.");
+        validateFKEnforcementExceptions(PS, parentSchema);
 
         int ObjectCount = validatePatterns(PS, parentSchema, "objects", _Objects, parentSchema._Objects == null ? null : getObjectNames(parentSchema));
         int ViewCount = validatePatterns(PS, parentSchema, "views", _Views, parentSchema._Views == null ? null : getViewNames(parentSchema));
-        if (ObjectCount == 0 && ViewCount == 0)
+        if (ObjectCount == 0 && ViewCount == 0 && hasEmptySchemaWildcard(parentSchema) == false)
           PS.AddError("Schema '" + parentSchema.getFullName() + "' defines a dbCompatibility target without any objects or views.");
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    private void validateFKEnforcementExceptions(ParserSession PS, Schema parentSchema)
+      {
+        if (_FKEnforcementExceptions == null)
+          {
+            PS.AddError("Schema '" + parentSchema.getFullName() + "' defines null 'fkEnforcementExceptions' in dbCompatibility.targets; it must be an array.");
+            return;
+          }
+        if (_FKEnforcementExceptions.length == 0)
+          return;
+
+        Set<String> Seen = new HashSet<String>();
+        for (String FK : _FKEnforcementExceptions)
+          {
+            String[] Parts = FK == null ? new String[0] : FK.split("\\.", -1);
+            if (FK == null || FK.trim().equals(FK) == false || (Parts.length != 1 && Parts.length != 2) || ValidationHelper.isValidIdentifier(Parts[0]) == false || Parts.length == 2 && ValidationHelper.isValidIdentifier(Parts[1]) == false)
+              PS.AddError("Schema '" + parentSchema.getFullName() + "' defines invalid FK exception '" + FK + "' in dbCompatibility.targets.fkEnforcementExceptions; use ObjectName or ObjectName.ForeignKeyName.");
+            else if (Seen.add(FK.toLowerCase(Locale.ROOT)) == false)
+              PS.AddError("Schema '" + parentSchema.getFullName() + "' repeats FK reference '" + FK + "' in dbCompatibility.targets.fkEnforcementExceptions.");
+          }
       }
 
     private static int validatePatterns(ParserSession PS, Schema parentSchema, String fieldName, String[] patterns, Set<String> names)
@@ -89,11 +113,27 @@ public class DBCompatibilityTarget
               for (String name : names)
                 if (matches(Pattern, name) == true)
                   ++PatternMatches;
-            if (PatternMatches == 0)
+            if (PatternMatches == 0 && ("*".equals(Pattern) == false || names == null || names.isEmpty() == false))
               PS.AddError("Schema '" + parentSchema.getFullName() + "' defines " + fieldName + " pattern '" + Pattern + "' in dbCompatibility.targets, but it matches no declared " + ("objects".equals(fieldName) == true ? "object" : "view") + ".");
             Matches += PatternMatches;
           }
         return Matches;
+      }
+
+    private boolean hasEmptySchemaWildcard(Schema schema)
+      {
+        if (schema._Objects == null || schema._Views == null || getObjectNames(schema).isEmpty() == false || getViewNames(schema).isEmpty() == false)
+          return false;
+        return containsWildcard(_Objects) || containsWildcard(_Views);
+      }
+
+    private static boolean containsWildcard(String[] patterns)
+      {
+        if (patterns != null)
+          for (String pattern : patterns)
+            if ("*".equals(pattern) == true)
+              return true;
+        return false;
       }
 
     private static Set<String> getObjectNames(Schema schema)

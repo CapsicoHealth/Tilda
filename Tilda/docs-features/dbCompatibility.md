@@ -68,19 +68,14 @@ By default, a foreign key's source and destination must both target each databas
       "db": "bigquery",
       "only": true,
       "objects": ["CohortMart*"],
-      "views": []
-    }
-  ],
-  "fkEnforcementExceptions": [
-    {
-      "db": "bigquery",
-      "fks": ["CohortMartX.CohortDefinitionFK"]
+      "views": [],
+      "fkEnforcementExceptions": ["CohortMartX.CohortDefinitionFK", "CohortMart2"]
     }
   ]
 }
 ```
 
-Each exception entry has a `db` and a non-empty `fks` array. An FK reference uses the exact form `SourceObject.ForeignKeyName`. The source object must be declared in this schema, the FK must exist, and the source must target the specified database. Wildcards are not allowed. Use one exception entry per database and do not repeat FK references.
+`fkEnforcementExceptions` is an optional array on a target entry. An entry in `SourceObject.ForeignKeyName` form exempts that exact FK; an entry containing only `SourceObject` exempts every FK declared on that object. The source object must be declared in this schema, selected by that target's `objects` patterns, and routed to the target database. The named FK must exist, and object shorthand requires at least one declared FK. Wildcards are not allowed, and an FK may be excepted only once per database, including overlap between object shorthand and exact references.
 
 An exception permits the logical relationship to remain in the Tilda model while omitting physical FK DDL on that database. It is an error if the destination is available on that database, since the exception would be unnecessary. An exception does not change the FK on other databases.
 

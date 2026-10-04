@@ -343,6 +343,7 @@ public class Schema
           _Migration.validate(PS, this);
 
         _DBCompatibility.resolveEntityTargets(PS, this);
+        _DBCompatibility.validateIndexDetails(PS, this);
         _DBCompatibility.validateForeignKeysAndViewDependencies(PS, this);
 
         /*

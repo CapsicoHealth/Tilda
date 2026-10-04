@@ -37,8 +37,6 @@ public class DBCompatibility
     @SerializedName("default"   ) public String[] _Default    ;
     @SchemaDoc(description = "Database-specific object/view routing rules for this schema.")
     @SerializedName("targets"   ) public List<DBCompatibilityTarget> _Targets = new ArrayList<DBCompatibilityTarget>();
-    @SchemaDoc(description = "Explicit exceptions allowing listed foreign-key declarations to be omitted on databases where their destination objects are absent.")
-    @SerializedName("fkEnforcementExceptions") public List<DBCompatibilityFKEnforcementException> _FKEnforcementExceptions = new ArrayList<DBCompatibilityFKEnforcementException>();
     /*@formatter:on*/
 
     transient public Set<String> _ResolvedDefaultTargets = Collections.emptySet();
@@ -59,9 +57,9 @@ public class DBCompatibility
 
         boolean IsCoreTilda = parentSchema.isCoreTildaSchema();
         if (IsCoreTilda == true && _Targets != null && _Targets.isEmpty() == false)
-          PS.AddError("Core TILDA schema '" + parentSchema.getFullName() + "' cannot define dbCompatibility.targets; it must provide only the stable PostgreSQL baseline.");
-        if (IsCoreTilda == true && _FKEnforcementExceptions != null && _FKEnforcementExceptions.isEmpty() == false)
-          PS.AddError("Core TILDA schema '" + parentSchema.getFullName() + "' cannot define dbCompatibility.fkEnforcementExceptions.");
+          for (DBCompatibilityTarget Target : _Targets)
+            if (Target != null && (Boolean.FALSE.equals(Target._Only) == false || Target._Objects == null || Target._Objects.length != 1 || "MaintenanceLog".equalsIgnoreCase(Target._Objects[0]) == false || Target._Views == null || Target._Views.length != 0))
+              PS.AddError("Core TILDA schema '" + parentSchema.getFullName() + "' may only add non-exclusive dbCompatibility targets for the MaintenanceLog object.");
         if (_Default != null)
           {
             if (IsCoreTilda == false)
@@ -100,22 +98,6 @@ public class DBCompatibility
             for (DBCompatibilityTarget Target : _Targets)
               if (Target == null)
                 PS.AddError("Schema '" + parentSchema.getFullName() + "' defines a null entry in dbCompatibility.targets.");
-          }
-
-        if (_FKEnforcementExceptions == null)
-          PS.AddError("Schema '" + parentSchema.getFullName() + "' defines dbCompatibility.fkEnforcementExceptions as null; it must be an array.");
-        else
-          {
-            Set<String> ExceptionDBs = new HashSet<String>();
-            for (DBCompatibilityFKEnforcementException Exception : _FKEnforcementExceptions)
-              if (Exception == null)
-                PS.AddError("Schema '" + parentSchema.getFullName() + "' defines a null entry in dbCompatibility.fkEnforcementExceptions.");
-              else
-                {
-                  Exception.validate(PS, parentSchema);
-                  if (Exception._ResolvedDB != null && ExceptionDBs.add(Exception._ResolvedDB) == false)
-                    PS.AddError("Schema '" + parentSchema.getFullName() + "' defines more than one fkEnforcementExceptions entry for database '" + Exception._ResolvedDB + "'. Combine the FK references into one entry.");
-                }
           }
 
         _Validated = Errs == PS.getErrorCount();
@@ -205,46 +187,103 @@ public class DBCompatibility
           }
       }
 
+    public void validateIndexDetails(ParserSession PS, Schema parentSchema)
+      {
+        if (_Validated != Boolean.TRUE || parentSchema._Objects == null)
+          return;
+
+        for (Object O : parentSchema._Objects)
+          if (O != null && O._Indices != null)
+            for (Index IX : O._Indices)
+              if (IX != null && IX._Db == true && IX.isVectorIndex() == true)
+                for (DBType DB : DBType._DBTypes)
+                  if (O._DBCompatibilityTargets.contains(canonicalizeBackendId(DB.getName())) == true)
+                    if (DB.supportsVectorIndices() == false)
+                      PS.AddError("Object '" + O.getFullName() + "' index '" + IX._Name + "' is a physical vector index, but database '" + DB.getName() + "' does not support vector indices.");
+                    else
+                      try
+                        {
+                          if (IX.getDetails(DB) == null)
+                            PS.AddError("Object '" + O.getFullName() + "' index '" + IX._Name + "' targets database '" + DB.getName() + "' but has no matching vector.details entry.");
+                        }
+                      catch (Exception e)
+                      {
+                        PS.AddError(e.getMessage());
+                      }
+      }
+
     public void validateForeignKeysAndViewDependencies(ParserSession PS, Schema parentSchema)
       {
         if (_Validated != Boolean.TRUE)
           return;
 
         Set<String> ExceptionKeys = new HashSet<String>();
-        for (DBCompatibilityFKEnforcementException Exception : _FKEnforcementExceptions)
-          if (Exception != null && Exception._Validated == Boolean.TRUE && Exception._ResolvedDB != null)
-            for (String FKReference : Exception._FKs)
+        if (_Targets != null)
+          for (DBCompatibilityTarget Target : _Targets)
+            if (Target != null && Target._Validated == Boolean.TRUE && Target._ResolvedDB != null && Target._FKEnforcementExceptions != null)
+              for (String FKReference : Target._FKEnforcementExceptions)
               {
                 String[] Parts = FKReference.split("\\.", -1);
                 Object Source = parentSchema.getObject(Parts[0]);
                 if (Source == null)
                   {
-                    PS.AddError("Schema '" + parentSchema.getFullName() + "' lists foreign key '" + FKReference + "' in dbCompatibility.fkEnforcementExceptions, but source object '" + Parts[0] + "' is not declared in this schema.");
+                    PS.AddError("Schema '" + parentSchema.getFullName() + "' lists foreign key '" + FKReference + "' in dbCompatibility.targets for database '" + Target._ResolvedDB + "', but source object '" + Parts[0] + "' is not declared in this schema.");
                     continue;
                   }
-                ForeignKey FK = null;
-                if (Source._ForeignKeys != null)
-                  for (ForeignKey Candidate : Source._ForeignKeys)
-                    if (Candidate != null && Candidate._Name != null && Candidate._Name.equalsIgnoreCase(Parts[1]) == true)
-                      {
-                        FK = Candidate;
-                        break;
-                      }
-                if (FK == null)
+                if (Target.matchesObject(Source._Name) == false || Source._DBCompatibilityTargets.contains(Target._ResolvedDB) == false)
                   {
-                    PS.AddError("Schema '" + parentSchema.getFullName() + "' lists unknown foreign key '" + FKReference + "' in dbCompatibility.fkEnforcementExceptions.");
+                    PS.AddError("Schema '" + parentSchema.getFullName() + "' lists foreign key exception '" + FKReference + "' for database '" + Target._ResolvedDB + "', but its source object is not included in that target route.");
                     continue;
                   }
-                if (Source._DBCompatibilityTargets.contains(Exception._ResolvedDB) == false)
-                  PS.AddError("Schema '" + parentSchema.getFullName() + "' lists foreign key '" + FKReference + "' for database '" + Exception._ResolvedDB + "', but its source object is not routed to that database.");
-                if (FK._DestObjectObj == null)
-                  continue;
-                if (FK._DestObjectObj._DBCompatibilityTargets.contains(Exception._ResolvedDB) == true)
-                  PS.AddError("Schema '" + parentSchema.getFullName() + "' lists foreign key '" + FKReference + "' as an enforcement exception for database '" + Exception._ResolvedDB + "', but its destination is present there; remove the unnecessary exception.");
-                String Key = getForeignKeyKey(Exception._ResolvedDB, Source, FK);
-                if (ExceptionKeys.add(Key) == false)
-                  PS.AddError("Schema '" + parentSchema.getFullName() + "' repeats foreign key '" + FKReference + "' as an enforcement exception for database '" + Exception._ResolvedDB + "'.");
-                FK._EnforcementExceptionDBs.add(Exception._ResolvedDB);
+
+                List<ForeignKey> ForeignKeys = new ArrayList<ForeignKey>();
+                if (Parts.length == 1)
+                  {
+                    if (Source._ForeignKeys != null)
+                      for (ForeignKey FK : Source._ForeignKeys)
+                        if (FK != null)
+                          ForeignKeys.add(FK);
+                    if (ForeignKeys.isEmpty() == true)
+                      {
+                        PS.AddError("Schema '" + parentSchema.getFullName() + "' lists object '" + Parts[0] + "' in dbCompatibility.targets.fkEnforcementExceptions, but it declares no foreign keys.");
+                        continue;
+                      }
+                  }
+                else
+                  {
+                    ForeignKey Match = null;
+                    if (Source._ForeignKeys != null)
+                      for (ForeignKey Candidate : Source._ForeignKeys)
+                        if (Candidate != null && Candidate._Name != null && Candidate._Name.equalsIgnoreCase(Parts[1]) == true)
+                          {
+                            Match = Candidate;
+                            break;
+                          }
+                    if (Match == null)
+                      {
+                        PS.AddError("Schema '" + parentSchema.getFullName() + "' lists unknown foreign key '" + FKReference + "' in dbCompatibility.targets for database '" + Target._ResolvedDB + "'.");
+                        continue;
+                      }
+                    ForeignKeys.add(Match);
+                  }
+
+                for (ForeignKey FK : ForeignKeys)
+                  {
+                    if (FK._DestObjectObj == null)
+                      continue;
+                    if (FK._DestObjectObj._DBCompatibilityTargets.contains(Target._ResolvedDB) == true)
+                      {
+                        PS.AddError("Schema '" + parentSchema.getFullName() + "' lists foreign key '" + Source._Name + "." + FK._Name + "' as an enforcement exception for database '" + Target._ResolvedDB + "', but its destination is present there; remove the unnecessary exception.");
+                        continue;
+                      }
+                    String Key = getForeignKeyKey(Target._ResolvedDB, Source, FK);
+                    if (ExceptionKeys.add(Key) == false)
+                      {
+                        PS.AddError("Schema '" + parentSchema.getFullName() + "' repeats foreign key '" + Source._Name + "." + FK._Name + "' as an enforcement exception for database '" + Target._ResolvedDB + "'.");
+                        continue;
+                      }
+                    FK._EnforcementExceptionDBs.add(Target._ResolvedDB);
+                  }
               }
 
         if (parentSchema._Objects != null)
@@ -254,7 +293,7 @@ public class DBCompatibility
                 if (FK != null && FK._DestObjectObj != null)
                   for (String DB : Source._DBCompatibilityTargets)
                     if (FK._DestObjectObj._DBCompatibilityTargets.contains(DB) == false && FK._EnforcementExceptionDBs.contains(DB) == false)
-                      PS.AddError("Foreign key '" + Source.getShortName() + "." + FK._Name + "' targets '" + FK._DestObjectObj.getShortName() + "', which is not available on database '" + DB + "'. Add this exact FK to dbCompatibility.fkEnforcementExceptions only if it is a logical cross-database relationship.");
+                      PS.AddError("Foreign key '" + Source.getShortName() + "." + FK._Name + "' targets '" + FK._DestObjectObj.getShortName() + "', which is not available on database '" + DB + "'. Add this FK, or its source object to exempt all its FKs, in the matching dbCompatibility.targets entry only if it is a logical cross-database relationship.");
 
         if (parentSchema._Views != null)
           for (View V : parentSchema._Views)
