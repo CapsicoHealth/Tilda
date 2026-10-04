@@ -337,19 +337,19 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_type != null) Obj.setType(_type);
+       if (_type != null ) Obj.setType(_type);
 
        vals = Values.get("src");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("src", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _src = ParseUtil.parseString("src", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_src != null) Obj.setSrc(_src);
+       if (_src != null ) Obj.setSrc(_src);
 
        vals = Values.get("dst");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dst", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _dst = ParseUtil.parseString("dst", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dst != null) Obj.setDst(_dst);
+       if (_dst != null ) Obj.setDst(_dst);
 
 
        return (tilda.data.Mapping_Data) Obj;
@@ -398,7 +398,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -512,9 +512,9 @@ Lookup one record by the unique index 'TypeSrcDst': type, src, dst.
        tilda.data._Tilda.TILDA__MAPPING Obj = new tilda.data.Mapping_Data();
        Obj.initForLookup(0);
 
-       Obj.setType       (type       ); 
-       Obj.setSrc        (src        ); 
-       Obj.setDst        (dst        ); 
+       Obj.setType       (type       ); Obj.__Saved_type        = Obj._type       ;
+       Obj.setSrc        (src        ); Obj.__Saved_src         = Obj._src        ;
+       Obj.setDst        (dst        ); Obj.__Saved_dst         = Obj._dst        ;
 
        return (tilda.data.Mapping_Data) Obj;
      }

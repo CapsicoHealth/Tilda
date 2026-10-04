@@ -24,6 +24,7 @@ COMMENT ON COLUMN TILDA.ZoneInfo."deactivated" IS E'The datetime when this enume
 COMMENT ON COLUMN TILDA.ZoneInfo."created" IS E'The timestamp for when the record was created. (TILDA.ZoneInfo)';
 COMMENT ON COLUMN TILDA.ZoneInfo."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ZoneInfo)';
 COMMENT ON COLUMN TILDA.ZoneInfo."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ZoneInfo)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS ZoneInfo_Id ON TILDA.ZoneInfo ("id");
 CREATE UNIQUE INDEX IF NOT EXISTS ZoneInfo_Value ON TILDA.ZoneInfo ("value");
 -- app-level index only -- CREATE INDEX IF NOT EXISTS ZoneInfo_All ON TILDA.ZoneInfo ("id" ASC);
@@ -48,6 +49,7 @@ COMMENT ON COLUMN TILDA.Key."count" IS E'The size of the pre-allocation required
 COMMENT ON COLUMN TILDA.Key."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.Key."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.Key."deleted" IS E'The timestamp for when the record was deleted.';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Key_Name ON TILDA.Key ("name");
 -- app-level index only -- CREATE INDEX IF NOT EXISTS Key_AllByName ON TILDA.Key ("name" ASC) where TILDA.Key."deleted" is null;
 
@@ -95,9 +97,11 @@ COMMENT ON COLUMN TILDA.Catalog."referencedFormulas" IS E'The list of columns th
 COMMENT ON COLUMN TILDA.Catalog."created" IS E'The timestamp for when the record was created. (TILDA.Catalog)';
 COMMENT ON COLUMN TILDA.Catalog."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Catalog)';
 COMMENT ON COLUMN TILDA.Catalog."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Catalog)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Catalog_Column ON TILDA.Catalog ("schemaName", "tableViewName", "columnName");
-CREATE INDEX IF NOT EXISTS Catalog_RefColumns ON TILDA.Catalog USING gin  ("referencedColumns" );
-CREATE INDEX IF NOT EXISTS Catalog_RefFormulas ON TILDA.Catalog USING gin  ("referencedFormulas" );
+CREATE INDEX IF NOT EXISTS Catalog_RefColumns ON TILDA.Catalog USING gin ("referencedColumns" );
+CREATE INDEX IF NOT EXISTS Catalog_RefFormulas ON TILDA.Catalog USING gin ("referencedFormulas" );
+
 delete from TILDA.Key where "name" = 'TILDA.CATALOG';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.CATALOG',(select COALESCE(max("refnum"),0)+1 from TILDA.Catalog), 250, current_timestamp, current_timestamp);
 
@@ -123,22 +127,24 @@ COMMENT ON COLUMN TILDA.CatalogFormulaResult."deleted" IS E'The timestamp for wh
 
 
 
+
 create table if not exists TILDA.MaintenanceLog -- Maintenance information
- (  "refnum"       bigint         not null   -- The primary key for this record
-  , "type"         varchar(64)    not null   -- The type of maintenance, e.g., Migration, Reorg...
-  , "schemaName"   varchar(128)   not null   -- The name of the schema for the resource.
-  , "objectName"   varchar(1024)             -- The name of the resource.
-  , "objectType"   varchar(128)              -- The type of the resource.
-  , "action"       varchar(64)               -- The name of the maintenance resource to track.
-  , "startTimeTZ"  character(5)   not null   -- Generated helper column to hold the time zone ID for 'startTime'.
-  , "startTime"    timestamptz    not null   -- The timestamp for when the refill started.
-  , "endTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
-  , "endTime"      timestamptz               -- The timestamp for when the refill ended.
-  , "statement"    text                      -- The value of the maintenance resource to track.
-  , "descr"        text                      -- The name of the maintenance resource to track.
-  , "created"      timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.MaintenanceLog)
-  , "lastUpdated"  timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.MaintenanceLog)
-  , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDA.MaintenanceLog)
+ (  "refnum"         bigint         not null   -- The primary key for this record
+  , "type"           varchar(64)    not null   -- The type of maintenance, e.g., Migration, Reorg...
+  , "schemaName"     varchar(128)   not null   -- The name of the schema for the resource.
+  , "objectName"     varchar(1024)             -- The name of the resource.
+  , "objectType"     varchar(128)              -- The type of the resource.
+  , "action"         varchar(64)               -- The name of the maintenance resource to track.
+  , "startTimeTZ"    character(5)   not null   -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"      timestamptz    not null   -- The timestamp for when the refill started.
+  , "endTimeTZ"      character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"        timestamptz               -- The timestamp for when the refill ended.
+  , "statement"      text                      -- The value of the maintenance resource to track.
+  , "statementHash"  varchar(64)               -- SHA-256 hash of the maintenance statement for staleness checks.
+  , "descr"          text                      -- The name of the maintenance resource to track.
+  , "created"        timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was created. (TILDA.MaintenanceLog)
+  , "lastUpdated"    timestamptz    not null DEFAULT statement_timestamp()   -- The timestamp for when the record was last updated. (TILDA.MaintenanceLog)
+  , "deleted"        timestamptz               -- The timestamp for when the record was deleted. (TILDA.MaintenanceLog)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_MaintenanceLog_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_MaintenanceLog_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -155,12 +161,15 @@ COMMENT ON COLUMN TILDA.MaintenanceLog."startTime" IS E'The timestamp for when t
 COMMENT ON COLUMN TILDA.MaintenanceLog."endTimeTZ" IS E'Generated helper column to hold the time zone ID for ''endTime''.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."endTime" IS E'The timestamp for when the refill ended.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."statement" IS E'The value of the maintenance resource to track.';
+COMMENT ON COLUMN TILDA.MaintenanceLog."statementHash" IS E'SHA-256 hash of the maintenance statement for staleness checks.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."descr" IS E'The name of the maintenance resource to track.';
 COMMENT ON COLUMN TILDA.MaintenanceLog."created" IS E'The timestamp for when the record was created. (TILDA.MaintenanceLog)';
 COMMENT ON COLUMN TILDA.MaintenanceLog."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.MaintenanceLog)';
 COMMENT ON COLUMN TILDA.MaintenanceLog."deleted" IS E'The timestamp for when the record was deleted. (TILDA.MaintenanceLog)';
+
 CREATE INDEX IF NOT EXISTS MaintenanceLog_SchemaObjectStart ON TILDA.MaintenanceLog ("schemaName", "objectName", "startTime" DESC);
 CREATE INDEX IF NOT EXISTS MaintenanceLog_TypeStart ON TILDA.MaintenanceLog ("type", "startTime" DESC);
+
 delete from TILDA.Key where "name" = 'TILDA.MAINTENANCELOG';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.MAINTENANCELOG',(select COALESCE(max("refnum"),0)+1 from TILDA.MaintenanceLog), 250, current_timestamp, current_timestamp);
 
@@ -237,6 +246,7 @@ COMMENT ON COLUMN TILDA.TransPerf."deleted" IS E'The timestamp for when the reco
 
 
 
+
 create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Refills
  (  "schemaName"      varchar(64)   not null   -- The name of the schema tracked
   , "objectName"      varchar(64)   not null   -- The name of the table/object tracked
@@ -275,6 +285,7 @@ COMMENT ON COLUMN TILDA.RefillPerf."deleteCount" IS E'The count of rows deleted.
 COMMENT ON COLUMN TILDA.RefillPerf."created" IS E'The timestamp for when the record was created. (TILDA.RefillPerf)';
 COMMENT ON COLUMN TILDA.RefillPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.RefillPerf)';
 COMMENT ON COLUMN TILDA.RefillPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.RefillPerf)';
+
 CREATE INDEX IF NOT EXISTS RefillPerf_SchemaByObjectStart ON TILDA.RefillPerf ("schemaName", "objectName" ASC, "startTime" DESC);
 -- app-level index only -- CREATE INDEX IF NOT EXISTS RefillPerf_SchemaObjectByStart ON TILDA.RefillPerf ("schemaName", "objectName", "startTime" DESC);
 
@@ -295,6 +306,7 @@ COMMENT ON COLUMN TILDA.Mapping."dst" IS E'The the destination (mapped) value fo
 COMMENT ON COLUMN TILDA.Mapping."created" IS E'The timestamp for when the record was created. (TILDA.Mapping)';
 COMMENT ON COLUMN TILDA.Mapping."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Mapping)';
 COMMENT ON COLUMN TILDA.Mapping."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Mapping)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS Mapping_TypeSrcDst ON TILDA.Mapping ("type", "src", "dst");
 
 
@@ -327,6 +339,7 @@ COMMENT ON COLUMN TILDA.Connection."schemas" IS E'Schemas';
 COMMENT ON COLUMN TILDA.Connection."created" IS E'The timestamp for when the record was created. (TILDA.Connection)';
 COMMENT ON COLUMN TILDA.Connection."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Connection)';
 COMMENT ON COLUMN TILDA.Connection."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Connection)';
+
 CREATE INDEX IF NOT EXISTS Connection_AllById ON TILDA.Connection ("id" ASC);
 
 
@@ -369,8 +382,10 @@ COMMENT ON COLUMN TILDA.Job."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.Job."created" IS E'The timestamp for when the record was created. (TILDA.Job)';
 COMMENT ON COLUMN TILDA.Job."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Job)';
 COMMENT ON COLUMN TILDA.Job."deleted" IS E'The timestamp for when the record was deleted. (TILDA.Job)';
+
 CREATE INDEX IF NOT EXISTS Job_JobName ON TILDA.Job ("name", "start" DESC);
 CREATE INDEX IF NOT EXISTS Job_JobType ON TILDA.Job ("type", "start" DESC);
+
 delete from TILDA.Key where "name" = 'TILDA.JOB';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOB',(select COALESCE(max("refnum"),0)+1 from TILDA.Job), 250, current_timestamp, current_timestamp);
 
@@ -415,9 +430,11 @@ COMMENT ON COLUMN TILDA.JobPart."status" IS E'Status flag, i.e., success=true an
 COMMENT ON COLUMN TILDA.JobPart."created" IS E'The timestamp for when the record was created. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPart)';
 COMMENT ON COLUMN TILDA.JobPart."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPart)';
+
 CREATE INDEX IF NOT EXISTS JobPart_Job ON TILDA.JobPart ("jobRefnum", "start" DESC);
 CREATE INDEX IF NOT EXISTS JobPart_JobPartName ON TILDA.JobPart ("name", "start" DESC);
 CREATE INDEX IF NOT EXISTS JobPart_JobPartType ON TILDA.JobPart ("type", "start" DESC);
+
 delete from TILDA.Key where "name" = 'TILDA.JOBPART';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPART',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPart), 250, current_timestamp, current_timestamp);
 
@@ -445,8 +462,10 @@ COMMENT ON COLUMN TILDA.JobPartMessage."msg" IS E'Message details';
 COMMENT ON COLUMN TILDA.JobPartMessage."created" IS E'The timestamp for when the record was created. (TILDA.JobPartMessage)';
 COMMENT ON COLUMN TILDA.JobPartMessage."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.JobPartMessage)';
 COMMENT ON COLUMN TILDA.JobPartMessage."deleted" IS E'The timestamp for when the record was deleted. (TILDA.JobPartMessage)';
+
 CREATE INDEX IF NOT EXISTS JobPartMessage_Job ON TILDA.JobPartMessage ("jobRefnum", "created" DESC);
 CREATE INDEX IF NOT EXISTS JobPartMessage_JobPart ON TILDA.JobPartMessage ("jobPartRefnum", "created" DESC);
+
 delete from TILDA.Key where "name" = 'TILDA.JOBPARTMESSAGE';
 insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.JOBPARTMESSAGE',(select COALESCE(max("refnum"),0)+1 from TILDA.JobPartMessage), 250, current_timestamp, current_timestamp);
 
@@ -500,6 +519,7 @@ COMMENT ON COLUMN TILDA.ObjectPerf."deleteRecords" IS E'Blah...';
 COMMENT ON COLUMN TILDA.ObjectPerf."created" IS E'The timestamp for when the record was created. (TILDA.ObjectPerf)';
 COMMENT ON COLUMN TILDA.ObjectPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.ObjectPerf)';
 COMMENT ON COLUMN TILDA.ObjectPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.ObjectPerf)';
+
 CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
 -- app-level index only -- CREATE INDEX IF NOT EXISTS ObjectPerf_SchemaObjectByStart ON TILDA.ObjectPerf ("schemaName", "objectName", "startPeriod" DESC);
 
@@ -526,6 +546,7 @@ COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."restoreScript" IS E'The resu
 COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."created" IS E'The timestamp for when the record was created. (TILDA.FailedDependencyDDLScripts)';
 COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.FailedDependencyDDLScripts)';
 COMMENT ON COLUMN TILDA.FailedDependencyDDLScripts."deleted" IS E'The timestamp for when the record was deleted. (TILDA.FailedDependencyDDLScripts)';
+
 CREATE UNIQUE INDEX IF NOT EXISTS FailedDependencyDDLScripts_DepedencySequence ON TILDA.FailedDependencyDDLScripts ("srcSchemaName", "srcTVName", "created", "seq");
 
 
@@ -589,6 +610,7 @@ COMMENT ON COLUMN TILDA.DateDim."deleted" IS E'The timestamp for when the record
 
 
 
+
 create table if not exists TILDA.DateLimitDim -- A single row for min, max and invalid dates for the Date_Dim
  (  "invalidDate"  date  not null   -- The invalid date, e.g., '1111-11-11'.
   , "minDate"      date  not null   -- The min date included in the DIM
@@ -601,6 +623,7 @@ COMMENT ON TABLE TILDA.DateLimitDim IS E'A single row for min, max and invalid d
 COMMENT ON COLUMN TILDA.DateLimitDim."invalidDate" IS E'The invalid date, e.g., ''1111-11-11''.';
 COMMENT ON COLUMN TILDA.DateLimitDim."minDate" IS E'The min date included in the DIM';
 COMMENT ON COLUMN TILDA.DateLimitDim."maxDate" IS E'The max date included in the DIM';
+
 CREATE UNIQUE INDEX IF NOT EXISTS DateLimitDim_InvalidDate ON TILDA.DateLimitDim ("invalidDate");
 
 

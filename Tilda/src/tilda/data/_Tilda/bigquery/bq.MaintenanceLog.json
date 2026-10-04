@@ -10,6 +10,7 @@
    ,{ "name":"endTimeTZ","type":"STRING","mode":"NULLABLE","description":"Generated helper column to hold the time zone ID for 'endTime'." }
    ,{ "name":"endTime","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the refill ended." }
    ,{ "name":"statement","type":"STRING","mode":"NULLABLE","description":"The value of the maintenance resource to track." }
+   ,{ "name":"statementHash","type":"STRING","mode":"NULLABLE","description":"SHA-256 hash of the maintenance statement for staleness checks." }
    ,{ "name":"descr","type":"STRING","mode":"NULLABLE","description":"The name of the maintenance resource to track." }
    ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.MaintenanceLog)" }
    ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.MaintenanceLog)" }

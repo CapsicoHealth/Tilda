@@ -335,19 +335,19 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("formulaRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _formulaRefnum = ParseUtil.parseLong("formulaRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_formulaRefnum != null) Obj.setFormulaRefnum(_formulaRefnum);
+       if (_formulaRefnum != null  && _formulaRefnum != SystemValues.EVIL_VALUE) Obj.setFormulaRefnum(_formulaRefnum);
 
        vals = Values.get("value");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("value", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _value = ParseUtil.parseString("value", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_value != null) Obj.setValue(_value);
+       if (_value != null ) Obj.setValue(_value);
 
        vals = Values.get("description");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _description = ParseUtil.parseString("description", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_description != null) Obj.setDescription(_description);
+       if (_description != null ) Obj.setDescription(_description);
 
 
        return (tilda.data.CatalogFormulaResult_Data) Obj;
@@ -396,7 +396,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -473,7 +473,7 @@ object. The generic init method defaults to this general data structure as a gen
                if (failedRec != -1)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'CatalogFormulaResult_Data' objects ending at position #" + index + " failed being written to the database.");
-                   return L.size() - insertCount + failedRec;
+                   return L.size() - insertCount+failedRec;
                  }
                for (int index2 = batchStart; index2 <= index; ++index2)
                  L.get(index2).stateUpdatePostWrite();

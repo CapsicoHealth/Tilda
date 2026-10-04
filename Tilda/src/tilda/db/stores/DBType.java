@@ -22,7 +22,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
@@ -30,6 +32,7 @@ import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -54,18 +57,86 @@ import tilda.utils.pairs.StringStringPair;
 public interface DBType
   {
     public String   getName();
+    public static DBType fromURL(String url)
+      {
+        if (url == null)
+          return null;
+        if (url.startsWith("jdbc:postgresql:"))
+          return Postgres;
+        if (url.startsWith("jdbc:datadirect:googlebigquery:") || url.startsWith("jdbc:bigquery:") || url.startsWith("bigquery://"))
+          return BigQuery;
+        if (url.startsWith("jdbc:sqlserver:"))
+          return SQLServer;
+        return null;
+      }
 //    public boolean isErrNoData(SQLException t);
 //    public boolean isLockOrConnectionError(SQLException t);
 //    public boolean isCanceledError(SQLException t);
     public boolean  needsSavepoint();
     public boolean  supportsArrays();
+    public boolean  isColumnArrayCompatible(Column column, ColumnMeta columnMeta);
+    public boolean  isVectorTypeCompatible(Column column, ColumnMeta columnMeta);
+    public default boolean isColumnTypeCompatible(Column column, ColumnMeta columnMeta)
+      {
+        return column.getType() == columnMeta._TildaType;
+      }
+    public default boolean supportsStringSizeLimits()
+      {
+        return true;
+      }
+    public boolean  supportsDDLDependencyManagement();
     public boolean  supportsSelectLimit();
     public boolean  supportsSelectOffset();
     public boolean  supportsFilterClause();
     public boolean  supportsFirstLastAggregates();
     public boolean  supportsPrimaryKeys();
     public boolean  supportsForeignKeys();
+    public default boolean supportsTildaCatalog()
+      {
+        return true;
+      }
     public boolean  supportsIndices();
+    public default boolean supportsRegularIndices()
+      {
+        return supportsIndices();
+      }
+    public default boolean supportsVectorIndices()
+      {
+        return false;
+      }
+    public default boolean supportsVectorIndicesInlineOnCreateTable()
+      {
+        return true;
+      }
+    public default boolean supportsVectorIndexMetadata()
+      {
+        return false;
+      }
+    public default void loadVectorIndexMetadata(Connection con, TableMeta tableMeta)
+    throws Exception
+      {
+        throw new UnsupportedOperationException(getName() + " declares vector-index metadata support but does not implement its loader.");
+      }
+    public static class DatabaseSchemaMetadata
+      {
+        public final Map<String, String> _TableDescriptions = new HashMap<String, String>();
+        public final Map<String, Map<String, String>> _ColumnDefaults = new HashMap<String, Map<String, String>>();
+      }
+    public default DatabaseSchemaMetadata loadSchemaMetadata(Connection con, String schemaName)
+    throws Exception
+      {
+        return new DatabaseSchemaMetadata();
+      }
+    public default boolean hasVectorIndexDataForIndexCreation(Connection con, Index index)
+    throws Exception
+      {
+        return true;
+      }
+    public default Map<String, PKMeta> loadPrimaryKeyMetadata(Connection con, String schemaName)
+    throws Exception
+      {
+        return PKMeta.loadSchemaPrimaryKeys(con, schemaName);
+      }
     public boolean  supportsSuperMetaDataQueries();
     public String   getSelectLimitClause(int Start, int Size);
     public int      getMaxColumnNameSize();

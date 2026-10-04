@@ -1880,21 +1880,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
             String columnIndexModifier = indexColumnModifiers == null ? null : indexColumnModifiers.get(C.getName());
             if ("lal".equals(columnIndexModifier) == true)
               Out.print(" text_pattern_ops");
-            else if (C.getType() == ColumnType.VECTOR)
-              {
-                String operatorClass="vector_cosine_ops"; // default
-                if (TextUtil.isNullOrEmpty(columnIndexModifier) == false)
-                  {
-                    Matcher m = _PATTERN_VECTOR_INDEX.matcher(columnIndexModifier);
-                    if (m.find() == true)
-                      {
-                        String operator = m.group(2);
-                        if (TextUtil.isNullOrEmpty(operator) == false)
-                          operatorClass = operator;
-                      }
-                    Out.print(" "+operatorClass);
-                  }
-              }
           }
         return First != true;
       }

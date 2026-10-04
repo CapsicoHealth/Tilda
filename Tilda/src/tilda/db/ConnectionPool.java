@@ -26,11 +26,13 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -49,6 +51,7 @@ import tilda.db.config.Conn;
 import tilda.db.config.ConnDefs;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.MetaPerformance;
+import tilda.db.stores.DBType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
@@ -111,6 +114,9 @@ public class ConnectionPool
                 readConnections(conKeys);
                 conKeys.rollback();
 
+                List<String> migrationConnectionIds = new ArrayList<>(getUniqueDataSourceIds().keySet());
+                if (migrationConnectionIds.remove("MAIN") == true)
+                  migrationConnectionIds.add(0, "MAIN");
                 if (Migrate.isMigrationActive() == true)
                   {
                     LOG.info("\n");
@@ -123,7 +129,7 @@ public class ConnectionPool
                     LOG.info("!!!  \\____/ \\____/ /_/    /_____//_/  |_|\\____//_/ |_|\\____//_/    /____/    (_)    ");
                     LOG.info("!!!");
                     LOG.info("!!! THE FOLLOWING DATABASE(S) WILL BE ANALYZED:");
-                    Iterator<String> I = getUniqueDataSourceIds().keySet().iterator();
+                    Iterator<String> I = migrationConnectionIds.iterator();
                     while (I.hasNext())
                       {
                         String Id = I.next();
@@ -144,8 +150,10 @@ public class ConnectionPool
 
                 boolean first = true;
                 List<Schema> TildaList = null;
-                Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
-                List<String> connectionUrls = new ArrayList<>(getUniqueDataSourceIds().values());
+                Iterator<String> connectionIds = migrationConnectionIds.iterator();
+                List<String> connectionUrls = new ArrayList<>(migrationConnectionIds.size());
+                for (String connectionId : migrationConnectionIds)
+                  connectionUrls.add(getUniqueDataSourceIds().get(connectionId));
                 if (_SkipTildaLoading == false)
                   while (connectionIds.hasNext())
                     {
@@ -171,6 +179,13 @@ public class ConnectionPool
 
                       if (Migrate.isMigrationActive() == true || _SkipValidation == false)
                         {
+                          LOG.info("");
+                          LOG.info("          ============================================================================== ");
+                          LOG.info("          DATABASE MIGRATION: " + conMain.getPoolId());
+                          LOG.info("          URL: " + conMain.getURL());
+                          LOG.info("          Engine: " + conMain.getDBTypeName());
+                          LOG.info("          ============================================================================== ");
+                          LOG.info("");
                           DatabaseMeta DBMeta = loadDatabaseMetaData(conMain, TildaList);
                           Migrator.MigrateDatabase(conMain, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, _DependencySchemas);
                         }
@@ -355,9 +370,32 @@ public class ConnectionPool
         BDS.setInitialSize(initial);
         BDS.setMaxTotal(max);
         BDS.setDefaultAutoCommit(false);
-        BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-        BDS.setDefaultQueryTimeout(20000);
+        if (DBType.fromURL(db) != DBType.BigQuery)
+          BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+        BDS.setDefaultQueryTimeout(Duration.ofSeconds(60));
         return BDS;
+      }
+
+    private static String enableBigQuerySession(String db)
+      {
+        if (db == null)
+          return db;
+        db = db.trim();
+        if (DBType.fromURL(db) != DBType.BigQuery)
+          return db;
+
+        int sessionIndex = db.toLowerCase(Locale.ROOT).indexOf("enablesession");
+        if (sessionIndex >= 0)
+          {
+            int valueStart = db.indexOf('=', sessionIndex) + 1;
+            int valueEnd = db.indexOf(';', valueStart);
+            String value = db.substring(valueStart, valueEnd < 0 ? db.length() : valueEnd).trim();
+            if ("true".equalsIgnoreCase(value) == false && "1".equals(value) == false)
+              throw new IllegalArgumentException("TILDA requires EnableSession=true for BigQuery JDBC connections because it uses JDBC transactions.");
+            return db;
+          }
+
+        return db + (db.endsWith(";") == true ? "" : ";") + "EnableSession=true;";
       }
 
     private static void addDatasource(String id, String driver, String db, String user, String pswd, int initial, int max)
@@ -365,6 +403,8 @@ public class ConnectionPool
       {
         if (_DataSourcesById.get(id) != null)
           throw new Exception("Connection with Id: " + id + " is defined in the database but has been defined in /tilda.config.json.");
+
+        db = enableBigQuerySession(db);
 
         synchronized (_DataSourcesById)
           {
@@ -535,7 +575,8 @@ public class ConnectionPool
                 else
                   C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
                 C.setAutoCommit(false);
-                C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                if (DBType.fromURL(BDS.getUrl()) != DBType.BigQuery)
+                  C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
 //                C.setClientInfo("defaultRowFetchSize", "10000");
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;

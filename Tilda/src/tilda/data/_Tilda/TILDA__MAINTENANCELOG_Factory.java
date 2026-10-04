@@ -60,7 +60,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_LongPrimitive                REFNUM     = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record", null, null, null);
+     public final Type_LongPrimitive                REFNUM       = new Type_LongPrimitive               (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_StringPrimitive              TYPE       = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 1/*1*/, 64, "The type of maintenance, e.g., Migration, Reorg...", null, null, new String[][] {{"Migration","A migration operation"}, {"Optimize","A vaccuum/reorg operation typically"}});
+     public final Type_StringPrimitive              TYPE         = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "type"         , 1/*1*/, 64, "The type of maintenance, e.g., Migration, Reorg...", null, null, new String[][] {{"Migration","A migration operation"}, {"Optimize","A vaccuum/reorg operation typically"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive              SCHEMANAME = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName" , 2/*2*/, 128, "The name of the schema for the resource.", null, null, null);
+     public final Type_StringPrimitive              SCHEMANAME   = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 2/*2*/, 128, "The name of the schema for the resource.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          OBJECTNAME = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "objectName" , 3/*3*/, 1024, "The name of the resource.", null, null, null);
+     public final Type_StringPrimitiveNull          OBJECTNAME   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 3/*3*/, 1024, "The name of the resource.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +172,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          OBJECTTYPE = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "objectType" , 4/*4*/, 128, "The type of the resource.", null, null, new String[][] {{"Schema","A schema"}, {"Table","A table"}, {"View","A view"}, {"Column","A column"}, {"Index","An index."}, {"ForeignKey","An foreign key."}, {"PrimaryKey","An primary key."}, {"Function","A function"}, {"Procedure","A procedure"}, {"Script","A script"}});
+     public final Type_StringPrimitiveNull          OBJECTTYPE   = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "objectType"   , 4/*4*/, 128, "The type of the resource.", null, null, new String[][] {{"Schema","A schema"}, {"Table","A table"}, {"View","A view"}, {"Column","A column"}, {"Index","An index."}, {"ForeignKey","An foreign key."}, {"PrimaryKey","An primary key."}, {"Function","A function"}, {"Procedure","A procedure"}, {"Script","A script"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +212,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          ACTION     = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "action"     , 5/*5*/, 64, "The name of the maintenance resource to track.", null, null, new String[][] {{"Execute","Execute"}, {"Create","Create"}, {"Update","Update"}, {"Drop","Drop"}, {"Rename","Rename"}, {"Comment","Comment"}, {"Optimize","Optimize"}, {"Vacuum","Vacuum"}, {"Reorg","Reorg"}, {"Cluster","Cluster"}, {"Access","Access Control"}, {"Catalog","Catalog"}});
+     public final Type_StringPrimitiveNull          ACTION       = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "action"       , 5/*5*/, 64, "The name of the maintenance resource to track.", null, null, new String[][] {{"Execute","Execute"}, {"Create","Create"}, {"Update","Update"}, {"Drop","Drop"}, {"Rename","Rename"}, {"Comment","Comment"}, {"Optimize","Optimize"}, {"Vacuum","Vacuum"}, {"Reorg","Reorg"}, {"Cluster","Cluster"}, {"Access","Access Control"}, {"Catalog","Catalog"}});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +234,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitive              STARTTIMETZ= new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ", 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'startTime'.", null, null, null);
+     public final Type_StringPrimitive              STARTTIMETZ  = new Type_StringPrimitive             (SCHEMA_LABEL, TABLENAME_LABEL, "startTimeTZ"  , 6/*6*/, 5, "Generated helper column to hold the time zone ID for 'startTime'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,7 +260,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            STARTTIME  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "startTime"  , 7/*7*/, "The timestamp for when the refill started.", null, null, STARTTIMETZ);
+     public final Type_DatetimePrimitive            STARTTIME    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "startTime"    , 7/*7*/, "The timestamp for when the refill started.", null, null, STARTTIMETZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -282,7 +282,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          ENDTIMETZ  = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"  , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'endTime'.", null, null, null);
+     public final Type_StringPrimitiveNull          ENDTIMETZ    = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "endTimeTZ"    , 8/*8*/, 5, "Generated helper column to hold the time zone ID for 'endTime'.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,7 +308,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        ENDTIME    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "endTime"    , 9/*9*/, "The timestamp for when the refill ended.", null, null, ENDTIMETZ);
+     public final Type_DatetimePrimitiveNull        ENDTIME      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "endTime"      , 9/*9*/, "The timestamp for when the refill ended.", null, null, ENDTIMETZ);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -330,7 +330,29 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          STATEMENT  = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "statement"  , 10/*10*/, 8388608, "The value of the maintenance resource to track.", null, null, null);
+     public final Type_StringPrimitiveNull          STATEMENT    = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "statement"    , 10/*10*/, 8388608, "The value of the maintenance resource to track.", null, null, null);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public final Type_StringPrimitiveNull          STATEMENTHASH= new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "statementHash", 11/*11*/, 64, "SHA-256 hash of the maintenance statement for staleness checks.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -352,7 +374,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_StringPrimitiveNull          DESCR      = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "descr"      , 11/*11*/, 32000, "The name of the maintenance resource to track.", null, null, null);
+     public final Type_StringPrimitiveNull          DESCR        = new Type_StringPrimitiveNull         (SCHEMA_LABEL, TABLENAME_LABEL, "descr"        , 12/*12*/, 32000, "The name of the maintenance resource to track.", null, null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -380,7 +402,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            CREATED    = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 12/*12*/, "The timestamp for when the record was created. (TILDA.MaintenanceLog)", null, null);
+     public final Type_DatetimePrimitive            CREATED      = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 13/*13*/, "The timestamp for when the record was created. (TILDA.MaintenanceLog)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -408,7 +430,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public final Type_DatetimePrimitive            LASTUPDATED= new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 13/*13*/, "The timestamp for when the record was last updated. (TILDA.MaintenanceLog)", null, null);
+     public final Type_DatetimePrimitive            LASTUPDATED  = new Type_DatetimePrimitive           (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 14/*14*/, "The timestamp for when the record was last updated. (TILDA.MaintenanceLog)", null, null);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -429,11 +451,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public final Type_DatetimePrimitiveNull        DELETED    = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 14/*14*/, "The timestamp for when the record was deleted. (TILDA.MaintenanceLog)", null, null);
+     public final Type_DatetimePrimitiveNull        DELETED      = new Type_DatetimePrimitiveNull       (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 15/*15*/, "The timestamp for when the record was deleted. (TILDA.MaintenanceLog)", null, null);
    }
 
    public static COLS_BASE COLS = new COLS_BASE();
-   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.TYPE,COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.OBJECTTYPE,COLS.ACTION,COLS.STARTTIMETZ,COLS.STARTTIME,COLS.ENDTIMETZ,COLS.ENDTIME,COLS.STATEMENT,COLS.DESCR,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
+   public static final ColumnDefinition[] COLUMNS = new ColumnDefinition[] { COLS.REFNUM,COLS.TYPE,COLS.SCHEMANAME,COLS.OBJECTNAME,COLS.OBJECTTYPE,COLS.ACTION,COLS.STARTTIMETZ,COLS.STARTTIME,COLS.ENDTIMETZ,COLS.ENDTIME,COLS.STATEMENT,COLS.STATEMENTHASH,COLS.DESCR,COLS.CREATED,COLS.LASTUPDATED,COLS.DELETED };
 
    public static final ColumnDefinition[] COLUMNS_PRIMARY = new ColumnDefinition[] { COLS.REFNUM };
 
@@ -551,12 +573,12 @@ This is the column definition for:<BR>
              case -7:
                 break;
              case 1: {  // Index 'SchemaObjectStart'
-               PS.setString    (++i, Obj._schemaName );
-               if (Obj.isNullObjectName() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._objectName );
+               PS.setString    (++i, Obj._schemaName   );
+               if (Obj.isNullObjectName() == true) PS.setNull(++i, java.sql.Types.VARCHAR   );  else PS.setString    (++i, Obj._objectName   );
                break;
              }
              case 2: {  // Index 'TypeStart'
-               PS.setString    (++i, Obj._type       );
+               PS.setString    (++i, Obj._type         );
                break;
              }
              case 3: { // Query 'All'
@@ -603,61 +625,67 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("type");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_type != null) Obj.setType(_type);
+       if (_type != null ) Obj.setType(_type);
 
        vals = Values.get("schemaName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("schemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _schemaName = ParseUtil.parseString("schemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_schemaName != null) Obj.setSchemaName(_schemaName);
+       if (_schemaName != null ) Obj.setSchemaName(_schemaName);
 
        vals = Values.get("objectName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("objectName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _objectName = ParseUtil.parseString("objectName", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_objectName != null) Obj.setObjectName(_objectName);
+       if (_objectName != null ) Obj.setObjectName(_objectName);
 
        vals = Values.get("objectType");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("objectType", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _objectType = ParseUtil.parseString("objectType", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_objectType != null) Obj.setObjectType(_objectType);
+       if (_objectType != null ) Obj.setObjectType(_objectType);
 
        vals = Values.get("action");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("action", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _action = ParseUtil.parseString("action", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_action != null) Obj.setAction(_action);
+       if (_action != null ) Obj.setAction(_action);
 
        vals = Values.get("startTime");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("startTime", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _startTime = ParseUtil.parseZonedDateTime("startTime", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_startTime != null) Obj.setStartTime(_startTime);
+       if (_startTime != null ) Obj.setStartTime(_startTime);
 
        vals = Values.get("endTime");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("endTime", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _endTime = ParseUtil.parseZonedDateTime("endTime", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_endTime != null) Obj.setEndTime(_endTime);
+       if (_endTime != null ) Obj.setEndTime(_endTime);
 
        vals = Values.get("statement");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("statement", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _statement = ParseUtil.parseString("statement", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_statement != null) Obj.setStatement(_statement);
+       if (_statement != null ) Obj.setStatement(_statement);
+
+       vals = Values.get("statementHash");
+       if (vals!=null && vals.length > 1)
+        Errors.add(new StringStringPair("statementHash", "Parameter is not a list or a set and yet received "+vals.length+" values"));
+       String _statementHash = ParseUtil.parseString("statementHash", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
+       if (_statementHash != null ) Obj.setStatementHash(_statementHash);
 
        vals = Values.get("descr");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("descr", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _descr = ParseUtil.parseString("descr", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_descr != null) Obj.setDescr(_descr);
+       if (_descr != null ) Obj.setDescr(_descr);
 
 
        return (tilda.data.MaintenanceLog_Data) Obj;
@@ -666,9 +694,9 @@ object. The generic init method defaults to this general data structure as a gen
 /**
  Creates a new object in memory, which you can subsequently {@link #write()} to the data store.
  current object to the destination. 
- @param type        (max size 64) The type of maintenance, e.g., Migration, Reorg...
- @param schemaName  (max size 128) The name of the schema for the resource.
- @param startTime   The timestamp for when the refill started.
+ @param type          (max size 64) The type of maintenance, e.g., Migration, Reorg...
+ @param schemaName    (max size 128) The name of the schema for the resource.
+ @param startTime     The timestamp for when the refill started.
 */
    static public tilda.data.MaintenanceLog_Data create(String type, String schemaName, ZonedDateTime startTime) throws Exception
      {
@@ -680,9 +708,9 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.MAINTENANCELOG"));
 
        // Explicit setters
-       Obj.setType       (type       );
-       Obj.setSchemaName (schemaName );
-       Obj.setStartTime  (startTime  );
+       Obj.setType         (type         );
+       Obj.setSchemaName   (schemaName   );
+       Obj.setStartTime    (startTime    );
 
        // Default Create-time setters
        Obj.setCreatedNow       ();
@@ -694,6 +722,7 @@ object. The generic init method defaults to this general data structure as a gen
        Obj.__Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask);
        Obj.__Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
        Obj.__Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask);
+       Obj.__Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
        Obj.__Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask);
 
        return (tilda.data.MaintenanceLog_Data) Obj;
@@ -717,7 +746,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -831,7 +860,7 @@ Lookup one record by the primary key: refnum.
        tilda.data._Tilda.TILDA__MAINTENANCELOG Obj = new tilda.data.MaintenanceLog_Data();
        Obj.initForLookup(0);
 
-       Obj.setRefnum     (refnum     ); Obj.__Saved_refnum      = Obj._refnum     ;
+       Obj.setRefnum       (refnum       ); Obj.__Saved_refnum        = Obj._refnum       ;
 
        return (tilda.data.MaintenanceLog_Data) Obj;
      }
@@ -844,8 +873,8 @@ Lookup records by the index 'SchemaObjectStart' over  schemaName, objectName.<BR
        tilda.data._Tilda.TILDA__MAINTENANCELOG Obj = new tilda.data.MaintenanceLog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setSchemaName (schemaName );
-       Obj.setObjectName (objectName );
+       Obj.setSchemaName   (schemaName   );
+       Obj.setObjectName   (objectName   );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
@@ -861,8 +890,8 @@ Lookup records by the index 'SchemaObjectStart' over  schemaName, objectName.<BR
        tilda.data._Tilda.TILDA__MAINTENANCELOG Obj = new tilda.data.MaintenanceLog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setSchemaName (schemaName );
-       Obj.setObjectName (objectName );
+       Obj.setSchemaName   (schemaName   );
+       Obj.setObjectName   (objectName   );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
@@ -879,7 +908,7 @@ Lookup records by the index 'TypeStart' over  type.<BR>The results are ordered b
        tilda.data._Tilda.TILDA__MAINTENANCELOG Obj = new tilda.data.MaintenanceLog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setType       (type       );
+       Obj.setType         (type         );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, __start__);
@@ -895,7 +924,7 @@ Lookup records by the index 'TypeStart' over  type.<BR>The results are ordered b
        tilda.data._Tilda.TILDA__MAINTENANCELOG Obj = new tilda.data.MaintenanceLog_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setType       (type       );
+       Obj.setType         (type         );
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
@@ -961,7 +990,7 @@ The results are ordered by: refnum asc
 
    public static String getCSVHeader()
     {
-      return "\"refnum\",\"type\",\"schemaName\",\"objectName\",\"objectType\",\"action\",\"startTimeTZ\",\"startTime\",\"endTimeTZ\",\"endTime\",\"statement\",\"descr\",\"created\",\"lastUpdated\",\"deleted\"";
+      return "\"refnum\",\"type\",\"schemaName\",\"objectName\",\"objectType\",\"action\",\"startTimeTZ\",\"startTime\",\"endTimeTZ\",\"endTime\",\"statement\",\"statementHash\",\"descr\",\"created\",\"lastUpdated\",\"deleted\"";
     }
 
    public static void toCSV(java.io.Writer out, List<tilda.data.MaintenanceLog_Data> L, boolean includeHeader) throws java.io.IOException
@@ -1005,6 +1034,8 @@ The results are ordered by: refnum asc
       TextUtil.escapeDoubleQuoteForCSV(Str, DateTimeUtil.printDateTimeForSQL(Obj.getEndTime()));
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getStatement());
+      Str.append(",");
+      TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getStatementHash());
       Str.append(",");
       TextUtil.escapeDoubleQuoteForCSV(Str, Obj.getDescr());
       Str.append(",");
@@ -1100,6 +1131,9 @@ The results are ordered by: refnum asc
 
       if (Obj.isNullStatement() == false && Obj.getStatement() != null)
         JSONUtil.print(out, "statement", ++i==0, Obj.getStatement());
+
+      if (Obj.isNullStatementHash() == false && Obj.getStatementHash() != null)
+        JSONUtil.print(out, "statementHash", ++i==0, Obj.getStatementHash());
 
       if (Obj.isNullDescr() == false && Obj.getDescr() != null)
         JSONUtil.print(out, "descr", ++i==0, Obj.getDescr());

@@ -17,6 +17,8 @@
 package tilda.db.metadata;
 
 import java.sql.ResultSet;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,5 +102,38 @@ public class PKMeta
         PKProcessor pkp = new PKProcessor();
         C.executeSelect(schemaName, null, q, pkp);
         return pkp._Map;
+      }
+
+    public static Map<String, PKMeta> loadSchemaPrimaryKeysFromJdbc(Connection C, String schemaName)
+    throws SQLException, Exception
+      {
+        Map<String, PKMeta> primaryKeys = new HashMap<String, PKMeta>();
+        DatabaseMetaData metadata = C.getMetaData();
+        try (ResultSet tables = metadata.getTables(null, schemaName, null, new String[] { "TABLE" }))
+          {
+            while (tables.next() == true)
+              {
+                String tableName = tables.getString("TABLE_NAME");
+                try (ResultSet keys = metadata.getPrimaryKeys(null, schemaName, tableName))
+                  {
+                    while (keys.next() == true)
+                      {
+                        String keyTable = keys.getString("TABLE_NAME");
+                        String keyName = keys.getString("PK_NAME");
+                        String columnName = keys.getString("COLUMN_NAME");
+                        String key = keyTable.toLowerCase();
+                        PKMeta primaryKey = primaryKeys.get(key);
+                        if (primaryKey == null)
+                          {
+                            primaryKey = new PKMeta(schemaName, keyTable, keyName, columnName, false);
+                            primaryKeys.put(key, primaryKey);
+                          }
+                        else
+                          primaryKey._Columns.add(columnName);
+                      }
+                  }
+              }
+          }
+        return primaryKeys;
       }
   }

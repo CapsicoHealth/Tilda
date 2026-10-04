@@ -35,6 +35,14 @@ public class IndexColumnMeta
         _Asc = _AscStr == null ? null : _AscStr.equalsIgnoreCase("A") == true ? true : _AscStr.equalsIgnoreCase("D") ? false : null;
       }
 
+    protected IndexColumnMeta(int position, String columnName)
+      {
+        _Pos = position;
+        _Col = columnName;
+        _AscStr = "A";
+        _Asc = true;
+      }
+
     public final int        _Pos;
     public final String     _Col;
     public final String     _AscStr;

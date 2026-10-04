@@ -18,6 +18,8 @@
 -- Documentation: https://github.com/CapsicoHealth/Tilda/wiki/Tilda-Common-Helper-Database-Functions
 
 
+select 1;
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 --- TILDA KEY-related functions
@@ -122,8 +124,5 @@ CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar, varchar)
   STABLE COST 200 LANGUAGE SQL AS
 'SELECT coalesce(TILDA.map($1, $2), $3)';
 */
-
-
-
 
 

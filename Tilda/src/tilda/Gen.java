@@ -18,6 +18,7 @@ package tilda;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -26,6 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.generation.Generator;
+import tilda.generation.GenerationCache;
 import tilda.generation.GeneratorSession;
 import tilda.generation.Manifest;
 import tilda.generation.html.DocGen;
@@ -66,7 +68,9 @@ public class Gen
             System.exit(-1);
           }
         long TS = System.nanoTime();
+        int SkippedSchemas = 0;
         Map<String, Schema> SchemaCache = new HashMap<String, Schema>();
+        Map<String, ParserSession> GeneratedSessions = new LinkedHashMap<String, ParserSession>();
         for (String path : Args)
           {
             if (path.endsWith(".jsonX") == true)
@@ -76,6 +80,13 @@ public class Gen
               }
             try
               {
+                if (GenerationCache.isUpToDate(path) == true)
+                  {
+                    LOG.info("Skipping Tilda schema '" + path + "'; its source and transitive dependencies are unchanged.");
+                    ++SkippedSchemas;
+                    continue;
+                  }
+
                 GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, 6);
                 ParserSession PS = Parser.parse(path, G.getSql(), SchemaCache, false);
                 if (PS == null)
@@ -98,6 +109,7 @@ public class Gen
                 Manifest.update(PS);
                 // new GraphvizUtil(PS._Main, G).writeSchema();
                 new DocGen(PS._Main, G).writeSchema(PS);
+                GeneratedSessions.put(path, PS);
                 LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
 
                 if (PS.getNoteCount() > 0)
@@ -145,6 +157,16 @@ public class Gen
             System.exit(-1);
           }
 
+        try
+          {
+            for (Map.Entry<String, ParserSession> entry : GeneratedSessions.entrySet())
+              GenerationCache.writeInputs(entry.getKey(), entry.getValue());
+          }
+        catch (Throwable T)
+          {
+            LOG.warn("Cannot record the generated schema dependency timestamps; affected schemas will be regenerated on the next run.", T);
+          }
+
         if (NOTES.size() > 0)
           {
             LOG.info("\n");
@@ -162,7 +184,8 @@ public class Gen
         + "\n"
         + "              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
         + "                            " + DurationUtil.printDuration(System.nanoTime() - TS) + "\n"
-        + "                            " + (SchemaCache.size() - 1) + " Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
+        + "                            " + Math.max(0, SchemaCache.size() - 1) + " Parsed Schemas, " + countTables(SchemaCache) + " Tables, and " + countViews(SchemaCache) + " Views\n"
+        + "                            " + SkippedSchemas + " requested schemas skipped as up to date\n"
         + "          ======================================================================================");
       }
 

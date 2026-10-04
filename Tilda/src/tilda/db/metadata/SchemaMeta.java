@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
 import tilda.db.JDBCHelper;
+import tilda.db.stores.DBType;
 
 public class SchemaMeta
   {
@@ -52,14 +54,16 @@ public class SchemaMeta
         Map<String, FKMeta> inFKs = null;
         if (C.supportsSuperMetaDataQueries() == true)
          {
-           outFKs = loadForeignKeys(meta, _SchemaName, TablePattern, true);
-           inFKs = loadForeignKeys(meta, _SchemaName, TablePattern, false);
+           outFKs = loadForeignKeys(meta, _SchemaName, TablePattern, true, C.isCaseSentitiveSchemaTableViewNames());
+           inFKs = loadForeignKeys(meta, _SchemaName, TablePattern, false, C.isCaseSentitiveSchemaTableViewNames());
          }
-        Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern);
+        DBType.DatabaseSchemaMetadata schemaMetadata = C.getDBType().loadSchemaMetadata(C, _SchemaName);
+        Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern, schemaMetadata._ColumnDefaults);
         long pkTS = System.nanoTime();
-        Map<String, PKMeta> PKs = PKMeta.loadSchemaPrimaryKeys(C, _SchemaName);
+        Map<String, PKMeta> PKs = C.getDBType().loadPrimaryKeyMetadata(C, _SchemaName);
         MetaPerformance._PKNano += (System.nanoTime() - pkTS);
         MetaPerformance._PKCount+=PKs.size();
+        Map<String, String> tableDescriptions = schemaMetadata._TableDescriptions;
 
         String schemaName = _SchemaName;
         String tablePattern = TablePattern;
@@ -80,23 +84,29 @@ public class SchemaMeta
             String Descr = RS.getString("REMARKS");
             if ("table".equalsIgnoreCase(Type) == true)
               {
+                if (Descr == null || Descr.isEmpty() == true)
+                  {
+                    String tableDescription = tableDescriptions.get(Name.toLowerCase(Locale.ROOT));
+                    if (tableDescription != null)
+                      Descr = tableDescription;
+                  }
                 long TS = System.nanoTime();
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
                 if (C.supportsSuperMetaDataQueries() == false)
                   {
-                    outFKs = loadForeignKeys(meta, _SchemaName, T._TableName, true);
-                    inFKs = loadForeignKeys(meta, _SchemaName, T._TableName, false);
+                    outFKs = loadForeignKeys(meta, _SchemaName, T._TableName, true, C.isCaseSentitiveSchemaTableViewNames());
+                    inFKs = loadForeignKeys(meta, _SchemaName, T._TableName, false, C.isCaseSentitiveSchemaTableViewNames());
                   }
                 setColumns(columns, T);
                 setFKs(inFKs, outFKs, T);
                 setPKs(PKs, T);
                 MetaPerformance._TableNano += (System.nanoTime() - TS);
                 ++MetaPerformance._TableCount;
-                if (_DBTables.get(Name) != null)
+                if (_DBTables.get(Name.toLowerCase()) != null)
                   LOG.warn("        The table '" + Name + "' seems to have come more than once through the information schema query !!! " + JDBCHelper.printResultSet(RS));
                 else
                   {
-                    _DBTables.put(Name, T);
+                    _DBTables.put(Name.toLowerCase(), T);
                     T.load(C);
                   }
               }
@@ -107,11 +117,11 @@ public class SchemaMeta
                 setColumns(columns, V);
                 ++MetaPerformance._ViewCount;
                 MetaPerformance._ViewNano += (System.nanoTime() - TS);
-                if (_DBViews.get(Name) != null)
+                if (_DBViews.get(Name.toLowerCase()) != null)
                   LOG.warn("        The view '" + Name + "' seems to have come more than once through the information schema query !!! " + JDBCHelper.printResultSet(RS));
                 else
                   {
-                    _DBViews.put(Name, V);
+                    _DBViews.put(Name.toLowerCase(), V);
                     // V.load(C);
                   }
               }
@@ -131,7 +141,7 @@ public class SchemaMeta
      * @return
      * @throws Exception
      */
-    protected static Map<String, Map<String, Map<String, ColumnMeta>>> loadColumns(Connection C, DatabaseMetaData meta, String SchemaName, String TableName)
+    protected static Map<String, Map<String, Map<String, ColumnMeta>>> loadColumns(Connection C, DatabaseMetaData meta, String SchemaName, String TableName, Map<String, Map<String, String>> columnDefaults)
     throws Exception
       {
         long TS = System.nanoTime();
@@ -150,6 +160,9 @@ public class SchemaMeta
               continue;
 //            LOG.debug(JDBCHelper.printResultSet(RS));
             ColumnMeta CI = new ColumnMeta(C, RS);
+            Map<String, String> tableDefaults = columnDefaults.get(CI._SrcTable.toLowerCase(Locale.ROOT));
+            if (CI._Default == null && tableDefaults != null)
+              CI._Default = tableDefaults.get(CI._Name.toLowerCase(Locale.ROOT));
             Map<String, Map<String, ColumnMeta>> schema = columns.get(CI._SrcSchema.toLowerCase());
             if (schema == null)
               {
@@ -226,13 +239,15 @@ public class SchemaMeta
      * @throws SQLException
      * @throws Exception
      */
-    protected static Map<String, FKMeta> loadForeignKeys(DatabaseMetaData meta, String SchemaName, String TableName, boolean Outgoing)
+    protected static Map<String, FKMeta> loadForeignKeys(DatabaseMetaData meta, String SchemaName, String TableName, boolean Outgoing, boolean caseSensitive)
     throws SQLException, Exception
       {
         long TS = System.nanoTime();
         Map<String, FKMeta> FKs = new HashMap<String, FKMeta>();
-        ResultSet RS = Outgoing == true ? meta.getImportedKeys(null, SchemaName == null ? null : SchemaName.toLowerCase(), TableName == null ? null : TableName.toLowerCase())
-                                        : meta.getExportedKeys(null, SchemaName == null ? null : SchemaName.toLowerCase(), TableName == null ? null : TableName.toLowerCase());
+        String schemaName = caseSensitive == true || SchemaName == null ? SchemaName : SchemaName.toLowerCase();
+        String tableName = caseSensitive == true || TableName == null ? TableName : TableName.toLowerCase();
+        ResultSet RS = Outgoing == true ? meta.getImportedKeys(null, schemaName, tableName)
+                : meta.getExportedKeys(null, schemaName, tableName);
         while (RS.next() != false)
           {
             FKMeta FKM = new FKMeta(RS, Outgoing);
@@ -261,13 +276,13 @@ public class SchemaMeta
     private static void setFKs(Map<String, FKMeta> inFKs, Map<String, FKMeta> outFKs, TableMeta T)
       {
         for (FKMeta fk : inFKs.values())
-          if (fk._SrcSchema.equals(T._SchemaName) == true && fk._SrcTable.equals(T._TableName) == true)
+          if (fk._SrcSchema.equalsIgnoreCase(T._SchemaName) == true && fk._SrcTable.equalsIgnoreCase(T._TableName) == true)
             {
               fk.attachToTable(T);
               T._ForeignKeysIn.put(fk._Name, fk);
             }
         for (FKMeta fk : outFKs.values())
-          if (fk._SrcSchema.equals(T._SchemaName) == true && fk._SrcTable.equals(T._TableName) == true)
+          if (fk._SrcSchema.equalsIgnoreCase(T._SchemaName) == true && fk._SrcTable.equalsIgnoreCase(T._TableName) == true)
             {
               fk.attachToTable(T);
               T._ForeignKeysOut.put(fk._Name, fk);
@@ -277,7 +292,7 @@ public class SchemaMeta
     private static void setPKs(Map<String, PKMeta> pKs, TableMeta t)
       {
         for (PKMeta pk : pKs.values())
-          if (pk._TableName.equals(t._TableName) == true)
+          if (pk._TableName.equalsIgnoreCase(t._TableName) == true)
             {
               t._PrimaryKey = pk;
               return;

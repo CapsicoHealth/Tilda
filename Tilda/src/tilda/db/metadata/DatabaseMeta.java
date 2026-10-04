@@ -51,17 +51,21 @@ public class DatabaseMeta
         DatabaseMetaData meta = C.getMetaData();
 
         long TS = System.nanoTime();
-        ResultSet RS = meta.getSchemas(null, SchemaPattern == null ? SchemaPattern : SchemaPattern.toLowerCase());
+        String schemaPattern = SchemaPattern;
+        if (C.isCaseSentitiveSchemaTableViewNames() == false && schemaPattern != null)
+          schemaPattern = schemaPattern.toLowerCase();
+        ResultSet RS = meta.getSchemas(null, schemaPattern);
         while (RS.next() != false)
           {
-            String SchemaName = RS.getString("TABLE_SCHEM").toLowerCase();
-            if (excludedSchemas != null && TextUtil.contains(excludedSchemas, SchemaName, true, 0) == true)
+            String SchemaName = RS.getString("TABLE_SCHEM");
+            String schemaKey = SchemaName.toLowerCase();
+            if (excludedSchemas != null && TextUtil.contains(excludedSchemas, schemaKey, true, 0) == true)
              continue;
             LOG.debug("Reading metadata for schema '" + SchemaName + "'.");
-            SchemaMeta S = _DBSchemas.get(SchemaName);
+            SchemaMeta S = _DBSchemas.get(schemaKey);
             if (S == null)
               S = new SchemaMeta(SchemaName);
-            _DBSchemas.put(SchemaName, S);
+            _DBSchemas.put(schemaKey, S);
             MetaPerformance._SchemaNano += (System.nanoTime() - TS);
             S.load(C, TablePattern);
             TS = System.nanoTime();

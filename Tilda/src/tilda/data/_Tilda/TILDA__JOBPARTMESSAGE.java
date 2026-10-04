@@ -168,7 +168,12 @@ public abstract class TILDA__JOBPARTMESSAGE implements tilda.interfaces.WriterOb
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -481,9 +486,9 @@ This is the null setter for:<BR>
    public void setNullJobPartRefnum()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask);
        _jobPartRefnum=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1277,9 +1282,9 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1436,14 +1441,28 @@ This is the hasChanged for:<BR>
 */
    public final boolean write(Connection C) throws Exception
      {
+       return write(C, false);
+     }
+
+   protected final boolean write(Connection C, boolean upsert) throws Exception
+     {
        long T0 = System.nanoTime();
 
        if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
         {
           validateDeserialization();
-          initForCreate();
-          // Auto PK
-          setRefnum(tilda.db.KeysManager.getKey("TILDA.JOBPARTMESSAGE"));
+          if (_refnum != null) // is an update
+           {
+             __Changes.andNot(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask);
+             __Saved_refnum = _refnum;
+             initForLookup(0); // Read/update with PK
+           }
+          else // is a create
+           {
+             initForCreate();
+             // Auto PK
+             setRefnum(tilda.db.KeysManager.getKey("TILDA.JOBPARTMESSAGE"));
+           }
         }
 
        if (hasChanged() == false)
@@ -1461,7 +1480,7 @@ This is the hasChanged for:<BR>
           return false;
         }
 
-       String Q = getWriteQuery(C);
+       String Q = getWriteQuery(C, upsert);
 
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -1471,17 +1490,31 @@ This is the hasChanged for:<BR>
           PS = C.prepareStatement(Q);
           int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
+          if (__Init != InitMode.CREATE)
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum       );
+               PS.setLong      (++i, __Saved_refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
           C.setSavepoint();
-          count = PS.executeUpdate();
+          if (upsert == false || __Init != InitMode.CREATE)
+            count = PS.executeUpdate();
+          else if (__Init == InitMode.CREATE)
+           {
+             PS.execute();
+             java.sql.ResultSet rs = PS.getResultSet();
+             if (rs.next() == true)
+              {
+                 _refnum = rs.getLong(1);
+                 count = 1;
+              }
+             else
+              count = 0;
+           }
           C.releaseSavepoint(true);
           if (count == 0)
            return false;
@@ -1535,7 +1568,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
-   protected String getWriteQuery(Connection C) throws Exception
+
+
+
+   protected String getWriteQuery(Connection C, boolean upsert) throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
 
@@ -1669,7 +1705,8 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           __Init = InitMode.WRITTEN;
-          __LookupId = 0;
+          if (__LookupId == SystemValues.EVIL_VALUE)
+            __LookupId = 0;
         }
        else
         {
@@ -1775,19 +1812,24 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
+      String OCCLocalZone = ZoneId.systemDefault().getId();
       __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.REFNUM._Mask       ); _refnum = null; }
                               _jobRefnum     =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBREFNUM._Mask    ); _jobRefnum = null; }
                               _jobPartRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.JOBPARTREFNUM._Mask); _jobPartRefnum = null; }
                               _notify        =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.NOTIFY._Mask       ); _notify = null; }
                               _msg           = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.MSG._Mask          ); _msg = null; }
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask      ); _created = null; }
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask      ); _deleted = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
+                                                        _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.CREATED._Mask      ); _created = null; }
+                                                        _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                                                        _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBPARTMESSAGE_Factory.COLS.DELETED._Mask      ); _deleted = null; }
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -1828,6 +1870,14 @@ This is the hasChanged for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.JobPartMessage_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data.JobPartMessage_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.JobPartMessage_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

@@ -1,8 +1,0 @@
-[
-    { "name":"type","type":"STRING","mode":"REQUIRED","description":"The type this mapping is for" }
-   ,{ "name":"src","type":"STRING","mode":"REQUIRED","description":"The source value for this mapping" }
-   ,{ "name":"dst","type":"STRING","mode":"REQUIRED","description":"The the destination (mapped) value for this mapping." }
-   ,{ "name":"created","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was created. (TILDA.Mapping)" }
-   ,{ "name":"lastUpdated","type":"TIMESTAMP","mode":"REQUIRED","description":"The timestamp for when the record was last updated. (TILDA.Mapping)" }
-   ,{ "name":"deleted","type":"TIMESTAMP","mode":"NULLABLE","description":"The timestamp for when the record was deleted. (TILDA.Mapping)" }
-]

@@ -635,93 +635,93 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("schemaName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("schemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _schemaName = ParseUtil.parseString("schemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_schemaName != null) Obj.setSchemaName(_schemaName);
+       if (_schemaName != null ) Obj.setSchemaName(_schemaName);
 
        vals = Values.get("tableViewName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("tableViewName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _tableViewName = ParseUtil.parseString("tableViewName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_tableViewName != null) Obj.setTableViewName(_tableViewName);
+       if (_tableViewName != null ) Obj.setTableViewName(_tableViewName);
 
        vals = Values.get("columnName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("columnName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _columnName = ParseUtil.parseString("columnName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_columnName != null) Obj.setColumnName(_columnName);
+       if (_columnName != null ) Obj.setColumnName(_columnName);
 
        vals = Values.get("type");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _type = ParseUtil.parseString("type", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_type != null) Obj.setType(_type);
+       if (_type != null ) Obj.setType(_type);
 
        vals = Values.get("nullable");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("nullable", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _nullable = ParseUtil.parseBoolean("nullable", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_nullable != null) Obj.setNullable(_nullable);
+       if (_nullable != null ) Obj.setNullable(_nullable);
 
        vals = Values.get("collection");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("collection", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _collection = ParseUtil.parseBoolean("collection", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_collection != null) Obj.setCollection(_collection);
+       if (_collection != null ) Obj.setCollection(_collection);
 
        vals = Values.get("description");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("description", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _description = ParseUtil.parseString("description", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_description != null) Obj.setDescription(_description);
+       if (_description != null ) Obj.setDescription(_description);
 
        vals = Values.get("tableViewName2");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("tableViewName2", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _tableViewName2 = ParseUtil.parseString("tableViewName2", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_tableViewName2 != null) Obj.setTableViewName2(_tableViewName2);
+       if (_tableViewName2 != null ) Obj.setTableViewName2(_tableViewName2);
 
        vals = Values.get("aggregate");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("aggregate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _aggregate = ParseUtil.parseString("aggregate", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_aggregate != null) Obj.setAggregate(_aggregate);
+       if (_aggregate != null ) Obj.setAggregate(_aggregate);
 
        vals = Values.get("title");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("title", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _title = ParseUtil.parseString("title", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_title != null) Obj.setTitle(_title);
+       if (_title != null ) Obj.setTitle(_title);
 
        vals = Values.get("formula");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("formula", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _formula = ParseUtil.parseString("formula", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_formula != null) Obj.setFormula(_formula);
+       if (_formula != null ) Obj.setFormula(_formula);
 
        vals = Values.get("measure");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("measure", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _measure = ParseUtil.parseBoolean("measure", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_measure != null) Obj.setMeasure(_measure);
+       if (_measure != null ) Obj.setMeasure(_measure);
 
        vals = Values.get("htmlDoc");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("htmlDoc", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _htmlDoc = ParseUtil.parseString("htmlDoc", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_htmlDoc != null) Obj.setHtmlDoc(_htmlDoc);
+       if (_htmlDoc != null ) Obj.setHtmlDoc(_htmlDoc);
 
        vals = Values.get("referencedColumns");
        List<String> _referencedColumns = CollectionUtil.toList(ParseUtil.parseString("referencedColumns", false, vals, Errors));
-       if (_referencedColumns != null) Obj.setReferencedColumns(_referencedColumns);
+       if (_referencedColumns != null ) Obj.setReferencedColumns(_referencedColumns);
 
        vals = Values.get("referencedFormulas");
        List<String> _referencedFormulas = CollectionUtil.toList(ParseUtil.parseString("referencedFormulas", false, vals, Errors));
-       if (_referencedFormulas != null) Obj.setReferencedFormulas(_referencedFormulas);
+       if (_referencedFormulas != null ) Obj.setReferencedFormulas(_referencedFormulas);
 
 
        return (tilda.data.Catalog_Data) Obj;
@@ -789,7 +789,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -916,9 +916,9 @@ Lookup one record by the unique index 'Column': schemaName, tableViewName, colum
        tilda.data._Tilda.TILDA__CATALOG Obj = new tilda.data.Catalog_Data();
        Obj.initForLookup(1);
 
-       Obj.setSchemaName        (schemaName        ); 
-       Obj.setTableViewName     (tableViewName     ); 
-       Obj.setColumnName        (columnName        ); 
+       Obj.setSchemaName        (schemaName        ); Obj.__Saved_schemaName         = Obj._schemaName        ;
+       Obj.setTableViewName     (tableViewName     ); Obj.__Saved_tableViewName      = Obj._tableViewName     ;
+       Obj.setColumnName        (columnName        ); Obj.__Saved_columnName         = Obj._columnName        ;
 
        return (tilda.data.Catalog_Data) Obj;
      }

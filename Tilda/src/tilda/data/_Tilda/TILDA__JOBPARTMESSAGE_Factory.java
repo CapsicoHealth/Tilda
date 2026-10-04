@@ -395,31 +395,31 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("jobRefnum");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("jobRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _jobRefnum = ParseUtil.parseLong("jobRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_jobRefnum != null) Obj.setJobRefnum(_jobRefnum);
+       if (_jobRefnum != null  && _jobRefnum != SystemValues.EVIL_VALUE) Obj.setJobRefnum(_jobRefnum);
 
        vals = Values.get("jobPartRefnum");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("jobPartRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _jobPartRefnum = ParseUtil.parseLong("jobPartRefnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_jobPartRefnum != null) Obj.setJobPartRefnum(_jobPartRefnum);
+       if (_jobPartRefnum != null  && _jobPartRefnum != SystemValues.EVIL_VALUE) Obj.setJobPartRefnum(_jobPartRefnum);
 
        vals = Values.get("notify");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("notify", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _notify = ParseUtil.parseBoolean("notify", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_notify != null) Obj.setNotify(_notify);
+       if (_notify != null ) Obj.setNotify(_notify);
 
        vals = Values.get("msg");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("msg", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _msg = ParseUtil.parseString("msg", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_msg != null) Obj.setMsg(_msg);
+       if (_msg != null ) Obj.setMsg(_msg);
 
 
        return (tilda.data.JobPartMessage_Data) Obj;
@@ -474,7 +474,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 

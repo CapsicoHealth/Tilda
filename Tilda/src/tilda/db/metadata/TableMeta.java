@@ -83,19 +83,31 @@ public class TableMeta implements TableViewMeta
         if (_ColumnsList.isEmpty() == true)
           {
             long TS = System.nanoTime();
-            ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
+            String schemaName = C.isCaseSentitiveSchemaTableViewNames() == true ? _SchemaName : _SchemaName.toLowerCase();
+            String tableName = C.isCaseSentitiveSchemaTableViewNames() == true ? _TableName : _TableName.toLowerCase();
+            ResultSet RS = meta.getColumns(null, schemaName, tableName, null);
             loadColumns(C, RS);
             RS.close();
             MetaPerformance._TableColumnNano += (System.nanoTime() - TS);
             MetaPerformance._TableColumnCount += _ColumnsList.size();
           }
-        // Loading all indices
-        long TS = System.nanoTime();
-        ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
-        loadIndices(RS);
-        RS.close();
-        MetaPerformance._IndexNano += (System.nanoTime() - TS);
-        MetaPerformance._IndexCount += _Indices.size();
+        if (C.getDBType().supportsRegularIndices() == true)
+          {
+            // Loading all indices
+            long TS = System.nanoTime();
+            ResultSet RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), false, true);
+            loadIndices(RS);
+            RS.close();
+            MetaPerformance._IndexNano += (System.nanoTime() - TS);
+            MetaPerformance._IndexCount += _Indices.size();
+          }
+        else if (C.getDBType().supportsVectorIndices() == true && C.getDBType().supportsVectorIndexMetadata() == true)
+          C.getDBType().loadVectorIndexMetadata(C, this);
+      }
+
+    public void addVectorIndexMetadata(String indexName, String columnName)
+      {
+        _Indices.put(indexName, new IndexMeta(indexName, this, columnName));
       }
 
     protected void loadColumns(Connection C, ResultSet RS)

@@ -77,7 +77,9 @@ public class ViewMeta implements TableViewMeta
         if (_ColumnsList.isEmpty() == true)
           {
             long TS = System.nanoTime();
-            ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
+            String schemaName = C.isCaseSentitiveSchemaTableViewNames() == true ? _SchemaName : _SchemaName.toLowerCase();
+            String viewName = C.isCaseSentitiveSchemaTableViewNames() == true ? _ViewName : _ViewName.toLowerCase();
+            ResultSet RS = meta.getColumns(null, schemaName, viewName, null);
             loadColumns(C, RS);
             RS.close();
             MetaPerformance._ViewColumnNano += (System.nanoTime() - TS);

@@ -617,61 +617,61 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("jobRefnum");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("jobRefnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _jobRefnum = ParseUtil.parseLong("jobRefnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_jobRefnum != null) Obj.setJobRefnum(_jobRefnum);
+       if (_jobRefnum != null  && _jobRefnum != SystemValues.EVIL_VALUE) Obj.setJobRefnum(_jobRefnum);
 
        vals = Values.get("name");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_name != null) Obj.setName(_name);
+       if (_name != null ) Obj.setName(_name);
 
        vals = Values.get("type");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("type", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _type = ParseUtil.parseString("type", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_type != null) Obj.setType(_type);
+       if (_type != null ) Obj.setType(_type);
 
        vals = Values.get("dataStart");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dataStart", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dataStart = ParseUtil.parseZonedDateTime("dataStart", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dataStart != null) Obj.setDataStart(_dataStart);
+       if (_dataStart != null ) Obj.setDataStart(_dataStart);
 
        vals = Values.get("dataEnd");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("dataEnd", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _dataEnd = ParseUtil.parseZonedDateTime("dataEnd", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_dataEnd != null) Obj.setDataEnd(_dataEnd);
+       if (_dataEnd != null ) Obj.setDataEnd(_dataEnd);
 
        vals = Values.get("start");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("start", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _start = ParseUtil.parseZonedDateTime("start", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_start != null) Obj.setStart(_start);
+       if (_start != null ) Obj.setStart(_start);
 
        vals = Values.get("end");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("end", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _end = ParseUtil.parseZonedDateTime("end", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_end != null) Obj.setEnd(_end);
+       if (_end != null ) Obj.setEnd(_end);
 
        vals = Values.get("recordsCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("recordsCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _recordsCount = ParseUtil.parseInteger("recordsCount", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_recordsCount != null) Obj.setRecordsCount(_recordsCount);
+       if (_recordsCount != null  && _recordsCount != SystemValues.EVIL_VALUE) Obj.setRecordsCount(_recordsCount);
 
        vals = Values.get("status");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("status", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _status = ParseUtil.parseBoolean("status", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_status != null) Obj.setStatus(_status);
+       if (_status != null ) Obj.setStatus(_status);
 
 
        return (tilda.data.JobPart_Data) Obj;
@@ -731,7 +731,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 

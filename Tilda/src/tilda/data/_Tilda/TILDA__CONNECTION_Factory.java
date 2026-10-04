@@ -480,53 +480,53 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("active", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Boolean _active = ParseUtil.parseBoolean("active", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_active != null) Obj.setActive(_active);
+       if (_active != null ) Obj.setActive(_active);
 
        vals = Values.get("id");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("id", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _id = ParseUtil.parseString("id", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_id != null) Obj.setId(_id);
+       if (_id != null ) Obj.setId(_id);
 
        vals = Values.get("driver");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("driver", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _driver = ParseUtil.parseString("driver", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_driver != null) Obj.setDriver(_driver);
+       if (_driver != null ) Obj.setDriver(_driver);
 
        vals = Values.get("db");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("db", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _db = ParseUtil.parseString("db", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_db != null) Obj.setDb(_db);
+       if (_db != null ) Obj.setDb(_db);
 
        vals = Values.get("user");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("user", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _user = ParseUtil.parseString("user", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_user != null) Obj.setUser(_user);
+       if (_user != null ) Obj.setUser(_user);
 
        vals = Values.get("pswd");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("pswd", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _pswd = ParseUtil.parseString("pswd", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_pswd != null) Obj.setPswd(_pswd);
+       if (_pswd != null ) Obj.setPswd(_pswd);
 
        vals = Values.get("initial");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("initial", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _initial = ParseUtil.parseInteger("initial", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_initial != null) Obj.setInitial(_initial);
+       if (_initial != null  && _initial != SystemValues.EVIL_VALUE) Obj.setInitial(_initial);
 
        vals = Values.get("max");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("max", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _max = ParseUtil.parseInteger("max", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_max != null) Obj.setMax(_max);
+       if (_max != null  && _max != SystemValues.EVIL_VALUE) Obj.setMax(_max);
 
        vals = Values.get("schemas");
        List<String> _schemas = CollectionUtil.toList(ParseUtil.parseString("schemas", true, vals, Errors));
-       if (_schemas != null) Obj.setSchemas(_schemas);
+       if (_schemas != null ) Obj.setSchemas(_schemas);
 
 
        return (tilda.data.Connection_Data) Obj;
@@ -588,7 +588,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 

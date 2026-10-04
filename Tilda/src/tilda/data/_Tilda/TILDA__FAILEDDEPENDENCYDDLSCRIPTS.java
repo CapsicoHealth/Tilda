@@ -164,7 +164,12 @@ public abstract class TILDA__FAILEDDEPENDENCYDDLSCRIPTS implements tilda.interfa
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -1377,9 +1382,9 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1538,12 +1543,18 @@ This is the hasChanged for:<BR>
 */
    public final boolean write(Connection C) throws Exception
      {
+       return write(C, false);
+     }
+
+   protected final boolean write(Connection C, boolean upsert) throws Exception
+     {
        long T0 = System.nanoTime();
 
        if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
         {
           validateDeserialization();
-          initForCreate();
+          if (upsert == true)
+           initForCreate();
         }
 
        if (hasChanged() == false)
@@ -1561,7 +1572,7 @@ This is the hasChanged for:<BR>
           return false;
         }
 
-       String Q = getWriteQuery(C);
+       String Q = getWriteQuery(C, upsert);
 
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -1571,13 +1582,14 @@ This is the hasChanged for:<BR>
           PS = C.prepareStatement(Q);
           int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
+          if (__Init != InitMode.CREATE)
           switch (__LookupId)
            {
              case 0: // Unique Index 'DepedencySequence'
-               PS.setString    (++i, _srcSchemaName);
-               PS.setString    (++i, _srcTVName    );
+               PS.setString    (++i, __Saved_srcSchemaName);
+               PS.setString    (++i, __Saved_srcTVName    );
                PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-               PS.setInt       (++i, _seq          );
+               PS.setInt       (++i, __Saved_seq          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1647,7 +1659,67 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
-   protected String getWriteQuery(Connection C) throws Exception
+
+   public final boolean upsert(Connection C) throws Exception
+     {
+       return write(C, true);
+     }
+
+   /**
+   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
+   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
+   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
+   * but also an identify over an email address for example. That email address for a given logical user should be
+   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
+   * on dynamic factors that are very likely to be different across systems.
+   */
+   protected int getFirstValidLookupBy() throws Exception
+     {
+
+       // Testing if cols for unique index DepedencySequence were set - Id: 0
+       if (TextUtil.isNullOrEmpty(_srcSchemaName) == false && TextUtil.isNullOrEmpty(_srcTVName) == false && _created != null && _seq != null)
+        return 0;
+
+       return SystemValues.EVIL_VALUE;
+     }
+
+
+   protected final void getUpsertQueryPart(Connection C, StringBuilder str) throws Exception
+     {
+       __LookupId = getFirstValidLookupBy();
+       if (__LookupId == SystemValues.EVIL_VALUE)
+        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
+       String partialIndexWhere = "";
+       str.append("\nON CONFLICT(");
+       switch (__LookupId)
+        {
+          case 0:
+                TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME.getShortColumnVarForSelect(C, str);
+                str.append(", ");
+                TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME.getShortColumnVarForSelect(C, str);
+                str.append(", ");
+                str.append(", ");
+                TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ.getShortColumnVarForSelect(C, str);
+             break;
+          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create upsert statement.");
+        }
+       str.append(") ");
+       str.append(partialIndexWhere);
+       str.append(" DO UPDATE\n");
+       boolean first = true;
+       str.append("set ");
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME._Mask) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME.getShortColumnVarForSelect(C, str); str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME.getShortColumnVarForSelect(C, str); str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME._Mask    ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME.getShortColumnVarForSelect(C, str)    ; str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME.getShortColumnVarForSelect(C, str)    ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ._Mask          ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ.getShortColumnVarForSelect(C, str)          ; str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ.getShortColumnVarForSelect(C, str)          ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME._Mask) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME.getShortColumnVarForSelect(C, str); str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME.getShortColumnVarForSelect(C, str); str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME._Mask  ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME.getShortColumnVarForSelect(C, str)  ; str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME.getShortColumnVarForSelect(C, str)  ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT._Mask) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT.getShortColumnVarForSelect(C, str); str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT.getShortColumnVarForSelect(C, str); str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask  ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED.getShortColumnVarForSelect(C, str)  ; str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED.getShortColumnVarForSelect(C, str)  ; str.append("\n"); }
+       if (__Changes.intersects(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask      ) == true) { if (first == true) first = false; else str.append("    ,"); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED.getShortColumnVarForSelect(C, str)      ; str.append("=EXCLUDED."); TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED.getShortColumnVarForSelect(C, str)      ; str.append("\n"); }
+     }
+
+
+   protected String getWriteQuery(Connection C, boolean upsert) throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
 
@@ -1733,6 +1805,8 @@ This is the hasChanged for:<BR>
           S.setCharAt(Pos, ' ');
         }
 
+       if (upsert == true && __Init == InitMode.CREATE)
+        getUpsertQueryPart(C, S);
        String Q = S.toString();
        S.setLength(0);
        S = null;
@@ -1787,7 +1861,8 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           __Init = InitMode.WRITTEN;
-          __LookupId = 0;
+          if (__LookupId == SystemValues.EVIL_VALUE)
+            __LookupId = 0;
         }
        else
         {
@@ -1808,73 +1883,6 @@ This is the hasChanged for:<BR>
 
        __Changes.clear();
      }
-/**
- Writes the object to the data store using an upsert approach and assumes the object is either
- in create or deserialized mode. 
- The parameter createFirst controls whether the logic should do an insert first and if it fails, then do 
- an update, or the opposite (update first and if it fails, then an insert). This is necessary for databases
- without a robust upsert SQL syntax where separate insert/update statements must be issued.
- The method will figure out based on the fields set which natural identity (a unique index) is applicable for
- the lookup operation.
- Note that when you use upsert() (right after a create or deserialization initialization), only the template
- fields (not null, natural identity and/or any field set prior to calling this method) exist in memory. Call
- refresh() to force a select and retrieve all the fields for that record.
-*/
-   public final boolean upsert(Connection C, boolean updateFirst) throws Exception
-     {
-       boolean OK =    __Init == InitMode.CREATE && __NewlyCreated == true && __LookupId == SystemValues.EVIL_VALUE // Create() through factory
-                    || __Init == null && __LookupId==0 // Loaded via some deserialization mechamism, e.g., Json or CSV loader
-               ;
-       if (OK == false)
-        throw new Exception("Object has not been instanciated via deserialization or the factory create() method: __Init:"+__Init+"; __NewlyCreated:"+__NewlyCreated+"; __LookupId: "+__LookupId+";");
-
-       if (__Init == null && __LookupId==0)  // object deserialized
-        validateDeserialization();
-
-       int lookupId = getFirstValidLookupBy();
-       if (lookupId == SystemValues.EVIL_VALUE)
-        throw new Exception("Object has not been intialized with sufficient data for any natural key to be available for a lookup.");
-
-       if (updateFirst == true)
-        {
-          initForLookup(lookupId);
-          if (write(C) == false)
-           {
-             initForCreate();
-             return write(C);
-           }
-        }
-       else
-        {
-          initForCreate();
-          if (write(C) == false)
-           {
-             initForLookup(lookupId);
-             return write(C);
-           }
-        }
-
-       return true;
-     }
-
-   /**
-   * Returns the first satisfied natural identify (i.e., unique indices), or if defined, the PK. by 'satisfied',
-   * we mean an identity whose columns have all been provided (i.e., not null). We prioritize natural identities
-   * over the PK since PKs are typically not stable across systems. For example, one might model a user with a PK
-   * but also an identify over an email address for example. That email address for a given logical user should be
-   * constant across multiple environments (e.g., a dev, staging or prod), where as a PK might be generated based
-   * on dynamic factors that are very likely to be different across systems.
-   */
-   protected int getFirstValidLookupBy() throws Exception
-     {
-
-       // Testing if cols for unique index DepedencySequence were set - Id: 0
-       if (TextUtil.isNullOrEmpty(_srcSchemaName) == false && TextUtil.isNullOrEmpty(_srcTVName) == false && _created != null && _seq != null)
-        return 0;
-
-       return SystemValues.EVIL_VALUE;
-     }
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1966,20 +1974,25 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
+      String OCCLocalZone = ZoneId.systemDefault().getId();
       __Saved_srcSchemaName = _srcSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCSCHEMANAME._Mask); _srcSchemaName = null; }
       __Saved_srcTVName     = _srcTVName     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SRCTVNAME._Mask    ); _srcTVName = null; }
       __Saved_seq           = _seq           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.SEQ._Mask          ); _seq = null; }
                               _depSchemaName = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPSCHEMANAME._Mask); _depSchemaName = null; }
                               _depViewName   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DEPVIEWNAME._Mask  ); _depViewName = null; }
                               _restoreScript = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.RESTORESCRIPT._Mask); _restoreScript = null; }
-      __Saved_created       = _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask      ); _created = null; }
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask      ); _deleted = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
+      __Saved_created       =                           _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.CREATED._Mask      ); _created = null; }
+                                                        _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                                                        _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__FAILEDDEPENDENCYDDLSCRIPTS_Factory.COLS.DELETED._Mask      ); _deleted = null; }
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -2021,6 +2034,14 @@ This is the hasChanged for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.FailedDependencyDDLScripts_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data.FailedDependencyDDLScripts_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.FailedDependencyDDLScripts_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

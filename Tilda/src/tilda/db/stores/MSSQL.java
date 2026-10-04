@@ -140,6 +140,24 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public boolean isColumnArrayCompatible(Column Col, ColumnMeta CMeta)
+      {
+        return supportsArrays() == false || CMeta.isArray() == Col.isCollection();
+      }
+
+    @Override
+    public boolean isVectorTypeCompatible(Column Col, ColumnMeta CMeta)
+      {
+        return true;
+      }
+
+    @Override
+    public boolean supportsDDLDependencyManagement()
+      {
+        return false;
+      }
+
+    @Override
     public boolean supportsSelectLimit()
       {
         return false;
@@ -298,7 +316,7 @@ public class MSSQL implements DBType
       {
         if (Col._Nullable == false && DefaultValue == null)
           throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD " + getShortColumnVar(Col) + " " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
             Q += " not null DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), Col.getName(), Col.getType(), Col.isCollection(), DefaultValue);

@@ -402,37 +402,37 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("srcSchemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _srcSchemaName = ParseUtil.parseString("srcSchemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_srcSchemaName != null) Obj.setSrcSchemaName(_srcSchemaName);
+       if (_srcSchemaName != null ) Obj.setSrcSchemaName(_srcSchemaName);
 
        vals = Values.get("srcTVName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("srcTVName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _srcTVName = ParseUtil.parseString("srcTVName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_srcTVName != null) Obj.setSrcTVName(_srcTVName);
+       if (_srcTVName != null ) Obj.setSrcTVName(_srcTVName);
 
        vals = Values.get("seq");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("seq", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _seq = ParseUtil.parseInteger("seq", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_seq != null) Obj.setSeq(_seq);
+       if (_seq != null  && _seq != SystemValues.EVIL_VALUE) Obj.setSeq(_seq);
 
        vals = Values.get("depSchemaName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("depSchemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _depSchemaName = ParseUtil.parseString("depSchemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_depSchemaName != null) Obj.setDepSchemaName(_depSchemaName);
+       if (_depSchemaName != null ) Obj.setDepSchemaName(_depSchemaName);
 
        vals = Values.get("depViewName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("depViewName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _depViewName = ParseUtil.parseString("depViewName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_depViewName != null) Obj.setDepViewName(_depViewName);
+       if (_depViewName != null ) Obj.setDepViewName(_depViewName);
 
        vals = Values.get("restoreScript");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("restoreScript", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _restoreScript = ParseUtil.parseString("restoreScript", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_restoreScript != null) Obj.setRestoreScript(_restoreScript);
+       if (_restoreScript != null ) Obj.setRestoreScript(_restoreScript);
 
 
        return (tilda.data.FailedDependencyDDLScripts_Data) Obj;
@@ -487,7 +487,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -601,10 +601,10 @@ Lookup one record by the unique index 'DepedencySequence': srcSchemaName, srcTVN
        tilda.data._Tilda.TILDA__FAILEDDEPENDENCYDDLSCRIPTS Obj = new tilda.data.FailedDependencyDDLScripts_Data();
        Obj.initForLookup(0);
 
-       Obj.setSrcSchemaName(srcSchemaName); 
-       Obj.setSrcTVName    (srcTVName    ); 
-       Obj.setCreated      (created      ); 
-       Obj.setSeq          (seq          ); 
+       Obj.setSrcSchemaName(srcSchemaName); Obj.__Saved_srcSchemaName = Obj._srcSchemaName;
+       Obj.setSrcTVName    (srcTVName    ); Obj.__Saved_srcTVName     = Obj._srcTVName    ;
+       Obj.setCreated      (created      ); Obj.__Saved_created       = Obj._created      ;
+       Obj.setSeq          (seq          ); Obj.__Saved_seq           = Obj._seq          ;
 
        return (tilda.data.FailedDependencyDDLScripts_Data) Obj;
      }

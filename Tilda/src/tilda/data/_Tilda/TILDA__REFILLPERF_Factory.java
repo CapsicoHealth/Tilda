@@ -582,67 +582,67 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("schemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _schemaName = ParseUtil.parseString("schemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_schemaName != null) Obj.setSchemaName(_schemaName);
+       if (_schemaName != null ) Obj.setSchemaName(_schemaName);
 
        vals = Values.get("objectName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("objectName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _objectName = ParseUtil.parseString("objectName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_objectName != null) Obj.setObjectName(_objectName);
+       if (_objectName != null ) Obj.setObjectName(_objectName);
 
        vals = Values.get("startDateIncr");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("startDateIncr", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        LocalDate _startDateIncr = ParseUtil.parseLocalDate("startDateIncr", false, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_startDateIncr != null) Obj.setStartDateIncr(_startDateIncr);
+       if (_startDateIncr != null ) Obj.setStartDateIncr(_startDateIncr);
 
        vals = Values.get("startTime");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("startTime", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _startTime = ParseUtil.parseZonedDateTime("startTime", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_startTime != null) Obj.setStartTime(_startTime);
+       if (_startTime != null ) Obj.setStartTime(_startTime);
 
        vals = Values.get("endTime");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("endTime", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _endTime = ParseUtil.parseZonedDateTime("endTime", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_endTime != null) Obj.setEndTime(_endTime);
+       if (_endTime != null ) Obj.setEndTime(_endTime);
 
        vals = Values.get("timeInsertSec");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("timeInsertSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _timeInsertSec = ParseUtil.parseLong("timeInsertSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeInsertSec != null) Obj.setTimeInsertSec(_timeInsertSec);
+       if (_timeInsertSec != null  && _timeInsertSec != SystemValues.EVIL_VALUE) Obj.setTimeInsertSec(_timeInsertSec);
 
        vals = Values.get("timeDeleteSec");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("timeDeleteSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _timeDeleteSec = ParseUtil.parseLong("timeDeleteSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeDeleteSec != null) Obj.setTimeDeleteSec(_timeDeleteSec);
+       if (_timeDeleteSec != null  && _timeDeleteSec != SystemValues.EVIL_VALUE) Obj.setTimeDeleteSec(_timeDeleteSec);
 
        vals = Values.get("timeAnalyzeSec");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("timeAnalyzeSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _timeAnalyzeSec = ParseUtil.parseLong("timeAnalyzeSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeAnalyzeSec != null) Obj.setTimeAnalyzeSec(_timeAnalyzeSec);
+       if (_timeAnalyzeSec != null  && _timeAnalyzeSec != SystemValues.EVIL_VALUE) Obj.setTimeAnalyzeSec(_timeAnalyzeSec);
 
        vals = Values.get("timeTotalSec");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("timeTotalSec", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _timeTotalSec = ParseUtil.parseLong("timeTotalSec", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_timeTotalSec != null) Obj.setTimeTotalSec(_timeTotalSec);
+       if (_timeTotalSec != null  && _timeTotalSec != SystemValues.EVIL_VALUE) Obj.setTimeTotalSec(_timeTotalSec);
 
        vals = Values.get("insertCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("insertCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _insertCount = ParseUtil.parseLong("insertCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_insertCount != null) Obj.setInsertCount(_insertCount);
+       if (_insertCount != null  && _insertCount != SystemValues.EVIL_VALUE) Obj.setInsertCount(_insertCount);
 
        vals = Values.get("deleteCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("deleteCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _deleteCount = ParseUtil.parseLong("deleteCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_deleteCount != null) Obj.setDeleteCount(_deleteCount);
+       if (_deleteCount != null  && _deleteCount != SystemValues.EVIL_VALUE) Obj.setDeleteCount(_deleteCount);
 
 
        return (tilda.data.RefillPerf_Data) Obj;
@@ -706,7 +706,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 

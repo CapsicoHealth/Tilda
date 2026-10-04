@@ -433,37 +433,8 @@
           },
           "description": "Database-specific object/view routing rules for this schema.",
           "default": []
-        },
-        "fkEnforcementExceptions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/tildaDBCompatibilityFKEnforcementException"
-          },
-          "description": "Explicit exceptions allowing listed foreign-key declarations to be omitted on databases where their destination objects are absent.",
-          "default": []
         }
       }
-    },
-    "tildaDBCompatibilityFKEnforcementException": {
-      "type": "object",
-      "properties": {
-        "db": {
-          "type": "string",
-          "description": "Database where listed foreign-key declarations may be omitted when their destination objects are unavailable."
-        },
-        "fks": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Source object and foreign-key names in ObjectName.ForeignKeyName form.",
-          "default": []
-        }
-      },
-      "required": [
-        "db",
-        "fks"
-      ]
     },
     "tildaDBCompatibilityTarget": {
       "type": "object",
@@ -492,6 +463,37 @@
           },
           "description": "View names or supported wildcard patterns routed to this database.",
           "default": []
+        },
+        "fkEnforcementExceptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Object names to exempt all their foreign keys, or exact ObjectName.ForeignKeyName references, when destinations are absent from this database route.",
+          "default": []
+        }
+      },
+      "required": [
+        "db"
+      ]
+    },
+    "tildaDetails": {
+      "type": "object",
+      "properties": {
+        "db": {
+          "type": "string",
+          "description": "Database type this vector detail applies to; '*' is an all-database default."
+        },
+        "algorithm": {
+          "type": "string",
+          "description": "Database-specific approximate-nearest-neighbor algorithm; mutually exclusive with vector.algorithm. If one detail specifies an algorithm, all details must."
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaOption"
+          },
+          "description": "Algorithm-specific options as name/value strings."
         }
       },
       "required": [
@@ -785,6 +787,10 @@
         "subQuery": {
           "$ref": "#/$defs/tildaSubWhereClause",
           "description": "Structured, per-database partial-index WHERE clause (preferred over 'subWhere')."
+        },
+        "vector": {
+          "$ref": "#/$defs/tildaVector",
+          "description": "Shared vector-index semantics and backend-specific options."
         }
       },
       "required": [
@@ -814,6 +820,10 @@
         },
         "subQuery": {
           "$ref": "#/$defs/tildaSubWhereClause"
+        },
+        "vector": {
+          "$ref": "#/$defs/tildaVector",
+          "description": "Shared vector-index semantics and backend-specific options."
         }
       }
     },
@@ -1269,6 +1279,23 @@
         "columns"
       ]
     },
+    "tildaOption": {
+      "type": "object",
+      "properties": {
+        "option": {
+          "type": "string",
+          "description": "Option name interpreted by the selected database and algorithm."
+        },
+        "value": {
+          "type": "string",
+          "description": "Option value represented as a string and validated by the selected database."
+        }
+      },
+      "required": [
+        "option",
+        "value"
+      ]
+    },
     "tildaOutputMap": {
       "type": "object",
       "properties": {
@@ -1459,6 +1486,26 @@
         "value",
         "description"
       ]
+    },
+    "tildaVector": {
+      "type": "object",
+      "properties": {
+        "distance": {
+          "type": "string",
+          "description": "Shared distance metric for this vector index; defaults to euclidean."
+        },
+        "algorithm": {
+          "type": "string",
+          "description": "Approximate-nearest-neighbor algorithm shared by every database in details; mutually exclusive with detail-level algorithms."
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaDetails"
+          },
+          "description": "Backend-specific details; define one '*' entry or database-specific entries."
+        }
+      }
     },
     "tildaView": {
       "type": "object",

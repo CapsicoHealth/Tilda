@@ -257,7 +257,12 @@ public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -589,9 +594,9 @@ This is the null setter for:<BR>
    public void setNullType()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.TYPE._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.TYPE._Mask);
        _type=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -750,9 +755,9 @@ This is the null setter for:<BR>
    public void setNullUserId()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.USERID._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.USERID._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.USERID._Mask);
        _userId=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -910,9 +915,9 @@ This is the null setter for:<BR>
     void setNullDataStartTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask);
        _dataStartTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1097,9 +1102,9 @@ This is the null setter for:<BR>
    public void setNullDataStart()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DATASTART._Mask);
        _dataStart=null;
        setNullDataStartTZ();
@@ -1346,9 +1351,9 @@ This is the null setter for:<BR>
     void setNullDataEndTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask);
        _dataEndTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1533,9 +1538,9 @@ This is the null setter for:<BR>
    public void setNullDataEnd()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DATAEND._Mask);
        _dataEnd=null;
        setNullDataEndTZ();
@@ -2101,9 +2106,9 @@ This is the null setter for:<BR>
     void setNullEndTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.ENDTZ._Mask);
        _endTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2288,9 +2293,9 @@ This is the null setter for:<BR>
    public void setNullEnd()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.END._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.END._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.END._Mask);
        _end=null;
        setNullEndTZ();
@@ -2527,9 +2532,9 @@ This is the null setter for:<BR>
    public void setNullStatus()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.STATUS._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.STATUS._Mask);
        _status=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2687,9 +2692,9 @@ This is the null setter for:<BR>
    public void setNullMsg()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.MSG._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.MSG._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.MSG._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.MSG._Mask);
        _msg=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3278,9 +3283,9 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOB_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOB_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__JOB_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3397,33 +3402,19 @@ This is the hasChanged for:<BR>
         Dst.setNullUserId     ();
        else
         Dst.setUserId     (_userId     );
-       if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTARTTZ._Mask) == true || _dataStartTZ==null)
-        Dst.setNullDataStartTZ();
-       else
-        Dst.setDataStartTZ(_dataStartTZ);
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATASTART._Mask) == true || _dataStart  ==null)
         Dst.setNullDataStart  ();
        else
         Dst.setDataStart  (_dataStart  );
        Dst.Str_dataStart = Str_dataStart;
-       if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAENDTZ._Mask) == true || _dataEndTZ  ==null)
-        Dst.setNullDataEndTZ  ();
-       else
-        Dst.setDataEndTZ  (_dataEndTZ  );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.DATAEND._Mask) == true || _dataEnd    ==null)
         Dst.setNullDataEnd    ();
        else
         Dst.setDataEnd    (_dataEnd    );
        Dst.Str_dataEnd = Str_dataEnd;
-       if (_startTZ     != null)
-        Dst.setStartTZ    (_startTZ    );
        if (_start       != null)
         Dst.setStart      (_start      );
        Dst.Str_start = Str_start;
-       if (__Nulls.intersects(TILDA__JOB_Factory.COLS.ENDTZ._Mask) == true || _endTZ      ==null)
-        Dst.setNullEndTZ      ();
-       else
-        Dst.setEndTZ      (_endTZ      );
        if (__Nulls.intersects(TILDA__JOB_Factory.COLS.END._Mask) == true || _end        ==null)
         Dst.setNullEnd        ();
        else
@@ -3477,14 +3468,28 @@ This is the hasChanged for:<BR>
 */
    public final boolean write(Connection C) throws Exception
      {
+       return write(C, false);
+     }
+
+   protected final boolean write(Connection C, boolean upsert) throws Exception
+     {
        long T0 = System.nanoTime();
 
        if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
         {
           validateDeserialization();
-          initForCreate();
-          // Auto PK
-          setRefnum(tilda.db.KeysManager.getKey("TILDA.JOB"));
+          if (_refnum != null) // is an update
+           {
+             __Changes.andNot(TILDA__JOB_Factory.COLS.REFNUM._Mask);
+             __Saved_refnum = _refnum;
+             initForLookup(0); // Read/update with PK
+           }
+          else // is a create
+           {
+             initForCreate();
+             // Auto PK
+             setRefnum(tilda.db.KeysManager.getKey("TILDA.JOB"));
+           }
         }
 
        if (hasChanged() == false)
@@ -3502,7 +3507,7 @@ This is the hasChanged for:<BR>
           return false;
         }
 
-       String Q = getWriteQuery(C);
+       String Q = getWriteQuery(C, upsert);
 
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -3512,17 +3517,31 @@ This is the hasChanged for:<BR>
           PS = C.prepareStatement(Q);
           int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
+          if (__Init != InitMode.CREATE)
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum     );
+               PS.setLong      (++i, __Saved_refnum     );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
           C.setSavepoint();
-          count = PS.executeUpdate();
+          if (upsert == false || __Init != InitMode.CREATE)
+            count = PS.executeUpdate();
+          else if (__Init == InitMode.CREATE)
+           {
+             PS.execute();
+             java.sql.ResultSet rs = PS.getResultSet();
+             if (rs.next() == true)
+              {
+                 _refnum = rs.getLong(1);
+                 count = 1;
+              }
+             else
+              count = 0;
+           }
           C.releaseSavepoint(true);
           if (count == 0)
            return false;
@@ -3647,7 +3666,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__JOB_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
-   protected String getWriteQuery(Connection C) throws Exception
+
+
+
+   protected String getWriteQuery(Connection C, boolean upsert) throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
 
@@ -3875,7 +3897,8 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           __Init = InitMode.WRITTEN;
-          __LookupId = 0;
+          if (__LookupId == SystemValues.EVIL_VALUE)
+            __LookupId = 0;
         }
        else
         {
@@ -3981,6 +4004,7 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
+      String OCCLocalZone = ZoneId.systemDefault().getId();
       __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
                             _name        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.NAME._Mask       ); _name = null; }
                             _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.TYPE._Mask       ); _type = null; }
@@ -3995,14 +4019,18 @@ This is the hasChanged for:<BR>
                             _end         = JDBCHelper.processZDT(_endTZ        , "tilda.data.TILDA.Job.end"        , RS, ++i, TILDA__JOB_Factory.COLS.END        , TILDA__JOB_Factory.COLS.ENDTZ        , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.END._Mask        ); _end = null; }
                             _status      =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.STATUS._Mask     ); _status = null; }
                             _msg         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.MSG._Mask        ); _msg = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.DELETED._Mask    ); _deleted = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
+                                                    _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.CREATED._Mask    ); _created = null; }
+                                                    _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
+                                                    _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__JOB_Factory.COLS.DELETED._Mask    ); _deleted = null; }
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -4048,6 +4076,14 @@ This is the hasChanged for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.Job_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data.Job_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.Job_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

@@ -363,25 +363,25 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("refnum", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _refnum = ParseUtil.parseLong("refnum", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_refnum != null) Obj.setRefnum(_refnum);
+       if (_refnum != null  && _refnum != SystemValues.EVIL_VALUE) Obj.setRefnum(_refnum);
 
        vals = Values.get("name");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("name", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _name = ParseUtil.parseString("name", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_name != null) Obj.setName(_name);
+       if (_name != null ) Obj.setName(_name);
 
        vals = Values.get("max");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("max", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _max = ParseUtil.parseLong("max", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_max != null) Obj.setMax(_max);
+       if (_max != null  && _max != SystemValues.EVIL_VALUE) Obj.setMax(_max);
 
        vals = Values.get("count");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("count", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _count = ParseUtil.parseInteger("count", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_count != null) Obj.setCount(_count);
+       if (_count != null  && _count != SystemValues.EVIL_VALUE) Obj.setCount(_count);
 
 
        return (tilda.data.Key_Data) Obj;
@@ -432,7 +432,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -559,7 +559,7 @@ Lookup one record by the unique index 'Name': name.
        tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
        Obj.initForLookup(1);
 
-       Obj.setName          (name          ); 
+       Obj.setName          (name          ); Obj.__Saved_name           = Obj._name          ;
 
        return (tilda.data.Key_Data) Obj;
      }

@@ -62,7 +62,7 @@ public class ColumnMeta
     public final String     _TypeSql;
     public final String     _TypeName;
     public final String     _Descr;
-    public final String     _Default;
+    public String           _Default;
     protected TableMeta     _ParentTable;
     protected ViewMeta      _ParentView;
 

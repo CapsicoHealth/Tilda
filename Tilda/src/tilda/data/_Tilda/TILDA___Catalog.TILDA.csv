@@ -52,6 +52,7 @@
 "TILDA","MaintenanceLog","endTimeTZ","STRING","true","false","Generated helper column to hold the time zone ID for 'endTime'.","","false","","",""
 "TILDA","MaintenanceLog","endTime","DATETIME","true","false","The timestamp for when the refill ended.","","false","","",""
 "TILDA","MaintenanceLog","statement","STRING","true","false","The value of the maintenance resource to track.","","false","","",""
+"TILDA","MaintenanceLog","statementHash","STRING","true","false","SHA-256 hash of the maintenance statement for staleness checks.","","false","","",""
 "TILDA","MaintenanceLog","descr","STRING","true","false","The name of the maintenance resource to track.","","false","","",""
 "TILDA","MaintenanceLog","created","DATETIME","false","false","The timestamp for when the record was created. (TILDA.MaintenanceLog)","","false","","",""
 "TILDA","MaintenanceLog","lastUpdated","DATETIME","false","false","The timestamp for when the record was last updated. (TILDA.MaintenanceLog)","","false","","",""

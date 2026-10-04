@@ -6,6 +6,12 @@ Make the existing PostgreSQL-first assumption explicit, then let application sch
 
 This phase keeps PostgreSQL as the stable inherited baseline and preserves established applications, while allowing a schema to explicitly add BigQuery as a migration target. It must support tables/views that target PostgreSQL only, PostgreSQL plus BigQuery, or BigQuery only. The initial goal is BigQuery schema lifecycle automation, not a claim of portable application runtime behavior across relational databases.
 
+## Current Status
+
+The compatibility model, PostgreSQL inheritance, route validation/resolution, BigQuery-filtered SQL and JSON generation, and initial config-driven BigQuery migration path are implemented. BigQuery metadata fallbacks cover table descriptions and column defaults; vector-index presence discovery and creation are also implemented. Offline migration runs against the application's current corpus (dozens of schemas and thousands of tables/views) are the primary regression test-bed and have exercised the current limited deployment successfully.
+
+Phase 1a is not complete yet. BigQuery `NOT ENFORCED` primary/foreign key metadata and migration planning are still TODO; the store currently reports no PK/FK support, so generated constraint DDL is not reconciled by migration. Repeatable generated-output and multi-pool regression tests, credentialed BigQuery DDL/metadata verification, second-analysis checks, and adoption of a formerly manual schema also remain to do. The project does not currently have a more sophisticated automated integration-test environment, so the offline application-corpus checks remain valuable evidence but do not replace those verification items.
+
 ## Scope and Boundaries
 
 In scope:
@@ -43,10 +49,9 @@ The schema-level contract uses one `dbCompatibility` object. The core TILDA sche
   "dbCompatibility": {
     "targets": [
       { "db": "bigquery", "objects": ["*"], "views": ["*"] },
-      { "db": "bigquery", "only": true, "objects": ["C*"], "views": [] }
-    ],
-    "fkEnforcementExceptions": [
-      { "db": "bigquery", "fks": ["CohortMartX.CohortDefinitionFK"] }
+      { "db": "bigquery", "only": true, "objects": ["C*"], "views": [],
+        "fkEnforcementExceptions": ["CohortMartX.CohortDefinitionFK"]
+      }
     ]
   },
   "objects": [
@@ -59,7 +64,7 @@ The schema-level contract uses one `dbCompatibility` object. The core TILDA sche
 
 The TILDA-schema PostgreSQL baseline flows to dependent schemas through the existing schema dependency graph (see `Schema.setDefaultDependencies` and `Schema._DependencySchemas`), not through runtime `tilda.config.json`. Route patterns select objects/views in the declaring schema; support exact names, `*`, prefix patterns such as `a*`, and suffix patterns such as `*a`, case-insensitively. A normal route adds its database to the PostgreSQL baseline. An `only: true` route replaces the baseline for wildcard-matched entities; exact selectors that conflict with that override and overlapping exclusive routes are errors. Use a wildcard selector, even when it expands to one entity, to carve out a BigQuery-only entity. Do not inherit target routes from dependencies or infer compatibility from backend availability.
 
-Database placement and FK enforcement are separate. A foreign key whose source and destination are both present on a target follows normal backend behavior. If the source is present but its destination is not, validation fails unless that specific FK is listed under `fkEnforcementExceptions` for that database. The exception retains the logical relationship but omits physical FK DDL on that database; it does not mean `NOT ENFORCED`. For example, a mart can retain a real PostgreSQL FK to `CohortDefinition` while the BigQuery mart stores only `cohortRefnum`. If both ends become available on that database, an exception is invalid/redundant and normal FK handling applies. View dependencies must be compatible with every target on which the view is routed; no view exception is defined in Phase 1a.
+Database placement and FK enforcement are separate. A foreign key whose source and destination are both present on a target follows normal backend behavior. If the source is present but its destination is not, validation fails unless that FK, or its source object as shorthand for all of its FKs, is listed in that target's `fkEnforcementExceptions`. The exception retains the logical relationship but omits physical FK DDL on that database; it does not mean `NOT ENFORCED`. For example, a mart can retain a real PostgreSQL FK to `CohortDefinition` while the BigQuery mart stores only `cohortRefnum`. If both ends become available on that database, an exception is invalid/redundant and normal FK handling applies. View dependencies must be compatible with every target on which the view is routed; no view exception is defined in Phase 1a.
 
 Canonical backend IDs must map consistently to Tilda's `DBType` registry and JDBC URL handling. Establish values such as `postgres` and `bigquery` from current backend names before fixing the JSON contract. Keep the registry of implemented backends distinct from the schema's explicit compatibility targets. Do not infer model compatibility from arbitrary URL strings.
 
@@ -67,7 +72,7 @@ Keep schema placement distinct from runtime portability certification. The inher
 
 For legacy schemas with no new declarations, preserve current PostgreSQL-first behavior. Define a clear migration/adoption rule for declarations that opt into the new contract. Validate duplicate/unknown backend IDs, duplicate/missing object names, invalid route combinations, and references to objects unavailable on a target. A view or foreign key must not silently depend on an omitted table/view; apply the same checks across schema dependencies.
 
-Runtime `tilda.config.json` serves a different role: it supplies concrete connections for runtime operations and is not guaranteed during generation. At migration runtime, resolve configured connection URLs to actual `DBType`s and intersect those available targets with the schema/object targets. A connection does not opt a schema into a backend. If a migration explicitly requests BigQuery but no BigQuery connection exists, fail clearly; do not silently skip it. Existing empty PostgreSQL development databases remain useful: objects declared BigQuery-only are excluded from PostgreSQL migration, while PostgreSQL-only/shared objects remain visible to PostgreSQL development and validation.
+Runtime `tilda.config.json` serves a different role: it supplies concrete connections for runtime operations and is not guaranteed during generation. At migration runtime, resolve configured connection URLs to actual `DBType`s and intersect those available targets with the schema/object targets. A connection does not opt a schema into a backend. A schema may declare support for backends not configured in a particular deployment, and a configured backend may have no compatible active schemas; both are valid. Only the configured/declared intersection is migrated. Existing empty PostgreSQL development databases remain useful: objects declared BigQuery-only are excluded from PostgreSQL migration, while PostgreSQL-only/shared objects remain visible to PostgreSQL development and validation.
 
 ## Generation and Migration Boundaries
 
@@ -91,24 +96,25 @@ For `Migrate`, `tilda.config.json` is the complete source of configured migratio
 
 ## BigQuery Constraints and DDL
 
-BigQuery supports primary and foreign key declarations only as `NOT ENFORCED`. Preserve these declarations when the Tilda model includes them and BigQuery supports their representation. Capture, compare, create, and drop them during migration. They remain metadata/optimizer declarations, not database-enforced primary-key uniqueness or referential integrity.
+BigQuery supports primary and foreign key declarations only as `NOT ENFORCED`. The BigQuery SQL generator emits these declarations, but migration currently reports PK/FK as unsupported and skips their reconciliation. This is an outstanding Phase 1a item: preserve declarations when the Tilda model includes them, acquire and normalize their metadata, and capture, compare, create, and drop them during migration. They remain metadata/optimizer declarations, not database-enforced primary-key uniqueness or referential integrity.
 
 GoogleSQL's table-constraint grammar has no general `UNIQUE` constraint. Therefore:
 
 - Never translate a Tilda UNIQUE index into an alleged BigQuery unique constraint.
 - Never report physical uniqueness enforcement as successful on BigQuery.
 - Preserve logical unique/index metadata for Tilda validation or query planning only where useful, and explicitly report unsupported physical behavior.
+- Skip ordinary index metadata discovery and reconciliation whenever the selected store reports `supportsRegularIndices() == false`. BigQuery VECTOR indexes use the separate `supportsVectorIndices()` and `supportsVectorIndexMetadata()` capabilities; their dataset-scoped column metadata is used to create missing table/column indexes, replacing a same-name index when its column differs. Algorithm, distance, and option changes and cleanup of unrelated stale indexes remain deferred.
 ### VECTOR Columns and Indexes
 
 TILDA already models `VECTOR(n)` columns and requires each vector column to be covered by an index. The current index declaration can also carry PostgreSQL-specific vector settings in a column modifier. PostgreSQL turns these into pgvector indexes (`ivfflat` or `hnsw`) with PostgreSQL-specific operator classes and options.
 
 BigQuery has a related but not equivalent use case: TILDA emits vector columns as `ARRAY<FLOAT64>`, while BigQuery creates a separate `CREATE VECTOR INDEX` using IVF or TreeAH and options such as distance type, index-specific configuration, stored columns, and optional partitioning. PostgreSQL settings must not be silently translated to BigQuery settings; for example, PostgreSQL `hnsw` does not imply BigQuery TreeAH.
 
-Phase 1a should consider BigQuery vector-column and vector-index support, but the JSON contract and compatibility behavior are not decided. One likely direction is optional database-specific index details, preserving the common index declaration while attaching backend-specific options, analogous to TILDA's database-aware SQL/where-clause variants in view and query definitions. Compare this with a typed, portable index model plus backend option blocks before choosing.
+The index JSON contract supports optional database-specific `details`, with a vector block containing `distance`, `algorithm`, and string-valued `options`. A single `db: "*"` entry or database-specific entries are allowed, but they cannot be mixed. PostgreSQL and BigQuery validate their own algorithm, metric, and options during SQL code generation. The retired PostgreSQL column-modifier format is rejected with migration guidance. BigQuery emits native VECTOR index DDL and uses `INFORMATION_SCHEMA.VECTOR_INDEX_COLUMNS` to detect whether a modeled table/column vector index is present before scheduling its creation.
 
-Review backward compatibility before choosing: existing PostgreSQL index JSON and modifier behavior must continue unchanged; decide whether BigQuery vector indexes need explicit backend settings, a portable subset/defaults, or a clear missing-settings diagnostic; and include backend-specific kind/options in migration comparisons. Keep database-only indexes non-destructive. BigQuery's physical `ARRAY<FLOAT64>` metadata must also normalize as TILDA `VECTOR`, not an ordinary collection, and vector-index metadata should be acquired at dataset scope where possible rather than forced into ordinary JDBC index metadata.
+Existing PostgreSQL index JSON remains unchanged except that its retired vector modifier syntax now receives a targeted generation error. BigQuery vector indexes need explicit backend settings and must include backend-specific kind/options in future migration comparisons. Keep database-only indexes non-destructive. BigQuery's physical `ARRAY<FLOAT64>` metadata must normalize as TILDA `VECTOR`, not an ordinary collection, and vector-index metadata should be acquired at dataset scope where possible rather than forced into ordinary JDBC index metadata.
 
-Do not implement a new JSON shape or claim BigQuery vector-index support complete until the options and PostgreSQL backward-compatibility effects have been reviewed.
+This is presence-focused reconciliation: algorithm, distance, and option changes are not detected, and unrelated stale vector indexes are not dropped. Do not claim full BigQuery vector-index lifecycle support until those policies and PostgreSQL compatibility effects have been implemented and tested.
 
 Audit `supportsPrimaryKeys`, `supportsForeignKeys`, `supportsIndices`, migration `handleKeys`/`handleIndices`, and BigQuery's existing DDL generation. An unsupported request must not return success without applying the behavior, nor recur indefinitely as a migration no-op.
 
@@ -120,9 +126,11 @@ Permanent BigQuery DDL is not a transactionally atomic migration. Each action mu
 
 Keep the existing normalized Tilda metadata model as the migration boundary where practical:
 
+Current implementation uses JDBC metadata for schema/table/view/column discovery and BigQuery primary-key discovery (`getTables()` / `getPrimaryKeys()`). BigQuery table descriptions and column defaults have schema-level metadata fallbacks; VECTOR-indexed columns are read from the dataset-scoped `INFORMATION_SCHEMA.VECTOR_INDEX_COLUMNS` view. Proxy-based tests and offline application-corpus migration runs provide current regression coverage. The configured BigQuery JDBC driver and metadata/DDL behavior have not yet been fully verified against a credentialed dataset; do not treat FK metadata or `NOT ENFORCED` constraint round-tripping as certified.
+
 1. Use JDBC `DatabaseMetaData` only for metadata shown to be accurate for the selected BigQuery driver and object type.
 2. Add BigQuery `INFORMATION_SCHEMA` or native API acquisition for incomplete JDBC metadata, especially constraints and table/view properties.
-3. Normalize into current database/table/column/PK/FK/index metadata classes where they represent source semantics; use a BigQuery-specific vector-index representation if generic index metadata would lose index kind/options.
+3. Normalize into current database/table/column/PK/FK/index metadata classes where they represent source semantics; only load ordinary index metadata for stores that report regular-index support. Load BigQuery vector-index columns from its dataset-scoped `INFORMATION_SCHEMA.VECTOR_INDEX_COLUMNS` view for presence reconciliation.
 4. Keep BigQuery-specific queries and API calls behind a provider/capability boundary; do not spread them throughout migration comparison logic.
 5. Compare only objects compatible with the current target database.
 
@@ -130,49 +138,33 @@ A JDBC metadata call returning successfully is not proof its result is complete 
 
 ## Work Sequence
 
-Implement the remaining Phase 1a work in this order. Finish and validate each stage before starting the next.
+Complete the remaining Phase 1a work in this order. Implemented milestones are recorded here so the remaining verification is not confused with unstarted functionality.
 
-### 1. Complete the Gen Utility Path
+### 1. Gen Utility Path — Implemented; Output Tests Remain
 
-The compatibility model and strict validation are in place. First finish the `Gen` integration, without changing its explicit-file input model:
+`Gen` keeps its explicit-file input model, validates compatibility before generation, filters BigQuery SQL and JSON by resolved entity targets, and recreates `_Tilda` so stale BigQuery outputs are removed when routes change or disappear. Java/PostgreSQL output paths remain in place.
 
-1. Confirm compatibility validation errors terminate generation before output is written.
-2. Keep existing Java and PostgreSQL outputs unchanged.
-3. Emit the existing per-entity BigQuery schema JSON only for BigQuery-routed objects/views under `_tilda/bigquery/`.
-4. Emit the BigQuery SQL file only when there are BigQuery-routed entities, and include only those objects and views.
-5. Verify repeated generation removes stale BigQuery files when routes change or no entities remain BigQuery-compatible.
-6. Test exact, wildcard, additive, wildcard-exclusive, and invalid routes against both generated artifact sets.
+TODO: add repeatable output-level tests for validation-before-output, Java/PostgreSQL stability, exact/wildcard/additive/exclusive routing, BigQuery JSON and SQL filtering, and stale-output removal.
 
-Do not modify migration connection selection or BigQuery metadata/actions during this stage.
+### 2. Config-Driven Migrate Path — Initial Integration Implemented
 
-### 2. Integrate the Existing Config-Driven Migrate Path
+The no-argument CLI, unique datasource-pool iteration, URL-based DB detection, classpath schema loading, and per-target entity filtering are in place. Runtime configuration defines the deployment subset, not schema compatibility; missing configured connections for other declared targets and configured connections with no compatible schemas are both valid.
 
-After the `Gen` path is stable, keep the existing no-argument CLI and datasource iteration. `tilda.config.json` remains the ground truth for which unique pools Migrate processes:
+TODO: add repeatable tests for ordinary PostgreSQL configuration, `MAIN`/`KEYS` shared-pool deduplication, distinct configured pools, and configured backends with zero compatible schemas. Offline application runs currently exercise the deployed subset.
 
-1. Preserve iteration over unique datasource IDs assembled by `ConnectionPool`; do not add CLI target arguments or change the configured target set.
-2. Preserve existing pool deduplication. If `MAIN` and `KEYS` resolve to the same datasource signature, migrate that pool once; distinct datasource pools are handled independently.
-3. For every pool, detect the actual backend from its established connection/dialect path and filter schema migration by effective entity compatibility.
-4. Load and validate classpath schemas independently of the datasource iteration, then build and apply a plan for each distinct pool.
-5. Keep connection presence independent of schema opt-in: a configured BigQuery pool does not route any entities to BigQuery by itself.
+### 3. BigQuery Dataset Migration — Partial; Constraints and Verification Remain
 
-Regression coverage must include a normal `MAIN` PostgreSQL setup, a shared `MAIN`/`KEYS` pool, distinct configured pools, and a configured BigQuery pool.
+Initial dataset migration is implemented for the exercised supported paths, including schema/table/view changes, metadata fallbacks, descriptions/defaults, and vector-index presence. The broader application-corpus runs complete for the current limited test case.
 
-### 3. Implement BigQuery Dataset Migration
+TODO:
 
-Add the BigQuery migration path for compatible entities on each configured BigQuery datasource:
-
-1. Determine the supported DDL execution path and verify each configured BigQuery connection can execute it.
-2. Acquire and normalize BigQuery dataset/table/view/column/constraint metadata.
-3. Before implementing vector-index actions, review and decide the database-specific index-details contract described above; keep the current PostgreSQL JSON form backward compatible.
-4. If approved for Phase 1a, acquire BigQuery vector-index definitions/options and plan/apply dataset-level DDL without translating PostgreSQL-specific index settings.
-5. Plan and apply other dataset-level schema changes using the existing migration action boundary where practical.
-6. Preserve `NOT ENFORCED` PK/FK metadata and omit only FK constraints explicitly excepted for that BigQuery target.
-7. Support safe, idempotent actions; report unsupported operations and partial permanent-DDL application accurately.
-8. Confirm a second migration analysis is clean after supported changes.
+1. Implement BigQuery `NOT ENFORCED` PK/FK metadata acquisition, comparison, creation, and removal; retain FK exceptions only where the destination is absent.
+2. Verify the configured driver and DDL execution path against a credentialed dataset, including unsupported-operation reporting and partial permanent-DDL recovery.
+3. Confirm a second migration analysis is clean after supported changes and adopt a representative schema previously managed from generated SQL.
 
 ### 4. Validate End to End
 
-Test `Gen` first, then config-driven Migrate iteration, then the BigQuery migration actions. Cover route filtering, stale artifact cleanup, validation failures, all configured unique datasource pools, `MAIN`/`KEYS` shared-pool deduplication, distinct configured connections, actual backend detection, metadata normalization, supported/unsupported DDL, cross-store FKs, and re-analysis. Run credentialed BigQuery integration checks where available and preserve PostgreSQL generation/migration regressions. Adopt a representative schema previously managed manually from generated BigQuery SQL.
+Current regression evidence includes offline migration runs against the application's deployed schema corpus (dozens of schemas and thousands of tables/views), plus focused proxy-based tests. Future repeatable coverage should test generated artifacts and route transitions, validation failures, pool deduplication/selection, metadata normalization, supported and unsupported DDL, cross-store FKs, and re-analysis. Run credentialed BigQuery integration checks where available, preserve PostgreSQL regressions, and adopt a representative schema previously managed manually from generated BigQuery SQL.
 
 ## Repository Entry Points
 
@@ -205,14 +197,14 @@ These are expected ownership boundaries; verify exact call sites during implemen
 - Generation and migration analyze only compatible objects for each target database.
 - BigQuery PK/FK constraints are preserved and round-trip as `NOT ENFORCED`; tests do not mistake them for enforced integrity.
 - Physical UNIQUE constraints/indexes are explicitly unsupported, never emitted as invalid DDL or reported as applied.
-- BigQuery VECTOR columns and vector indexes have a reviewed compatibility contract before implementation; existing PostgreSQL vector declarations remain backward compatible, and backend-specific settings are never silently cross-translated.
+- BigQuery ordinary index metadata is not discovered or reconciled, and ordinary BigQuery indexes have no migration actions. BigQuery VECTOR metadata is discovered by indexed table/column; missing indexes are created and same-name indexes on a different column are replaced. Changes to algorithm/distance/options and cleanup of unrelated stale indexes are not reconciled. PostgreSQL and BigQuery VECTOR DDL use structured details and target-time validation.
 - Supported migration actions apply successfully, and a second analysis is clean. Unsupported cases are diagnosed; interrupted migrations can be resumed/re-analyzed without false success.
 - Dependency graph/package effects for the chosen DDL/metadata access path are measured and recorded.
 - Existing PostgreSQL generation and migration regressions pass.
 
 ## Deferred/Open Decisions
 
-- BigQuery VECTOR index schema design: compare database-specific index details with typed portable fields plus backend option blocks; decide how existing PostgreSQL modifiers coexist, what BigQuery defaults are valid, and how backend-specific options participate in migration comparison. Leave unresolved until backward compatibility has been reviewed.
+- Follow-up: BigQuery VECTOR index schema design. Compare database-specific index details with typed portable fields plus backend option blocks; decide how existing PostgreSQL modifiers coexist, what BigQuery defaults are valid, and how backend-specific options participate in migration comparison. Leave unresolved until backward compatibility has been reviewed.
 - Whether Phase 1a supports route patterns that refer to objects in dependent schema files; initial implementation scopes route patterns to the declaring schema.
 - Whether cross-store logical FK relationships need a richer model than explicit DDL-suppression exceptions.
 - JDBC versus `INFORMATION_SCHEMA` versus native API on a metadata-type-by-type basis; choose based on tested results.
@@ -222,13 +214,11 @@ These are expected ownership boundaries; verify exact call sites during implemen
 
 ## Resume Checklist
 
-1. Check current branch/worktree and determine which compatibility and migration changes are already present.
-2. Complete the `Gen` utility path first: verify strict compatibility validation, preserve Java/PostgreSQL output, filter per-entity BigQuery JSON and SQL by resolved entity routes, and test stale output cleanup.
-3. Only after Gen is stable, integrate route filtering into the existing no-argument, config-driven Migrate path. Keep `tilda.config.json` as the target list and preserve unique-pool deduplication, including shared `MAIN`/`KEYS` datasources.
-4. For each configured unique datasource pool, detect the actual database type, load/validate classpath schemas independently, and filter migration planning by compatibility.
-5. Verify the BigQuery DDL/metadata access path and measure dependency/package impact, then implement dataset-level planning, metadata, safe migration actions, and explicit unsupported-operation reporting.
-6. Test the full sequence: Gen route/output cases, config-driven migration across distinct pools, `MAIN`/`KEYS` deduplication, BigQuery integration and re-analysis, and PostgreSQL regressions. Adopt one formerly manual BigQuery schema.
-7. Only then begin [Phase 1b](bq-full-enablement-1b-readonly-runtime.md).
+1. Add output-level `Gen` regression tests, including route changes that remove stale BigQuery files.
+2. Add repeatable config-driven migration tests for unique pools, aliases, route filtering, and a configured backend with no compatible entities; continue treating deployment connections as an allowed subset of schema targets.
+3. Implement BigQuery `NOT ENFORCED` PK/FK metadata and migration lifecycle.
+4. Run credentialed BigQuery DDL/metadata checks, confirm re-analysis is clean, and adopt a formerly manual schema; preserve PostgreSQL regressions.
+5. Only after these Phase 1a items are complete, begin [Phase 1b](bq-full-enablement-1b-readonly-runtime.md).
 
 ## References
 

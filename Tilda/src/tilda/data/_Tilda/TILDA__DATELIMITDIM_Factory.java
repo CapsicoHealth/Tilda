@@ -257,19 +257,19 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("invalidDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        LocalDate _invalidDate = ParseUtil.parseLocalDate("invalidDate", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_invalidDate != null) Obj.setInvalidDate(_invalidDate);
+       if (_invalidDate != null ) Obj.setInvalidDate(_invalidDate);
 
        vals = Values.get("minDate");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("minDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        LocalDate _minDate = ParseUtil.parseLocalDate("minDate", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_minDate != null) Obj.setMinDate(_minDate);
+       if (_minDate != null ) Obj.setMinDate(_minDate);
 
        vals = Values.get("maxDate");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("maxDate", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        LocalDate _maxDate = ParseUtil.parseLocalDate("maxDate", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_maxDate != null) Obj.setMaxDate(_maxDate);
+       if (_maxDate != null ) Obj.setMaxDate(_maxDate);
 
 
        return (tilda.data.DateLimitDim_Data) Obj;
@@ -314,7 +314,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 
@@ -427,7 +427,7 @@ Lookup one record by the unique index 'InvalidDate': invalidDate.
        tilda.data._Tilda.TILDA__DATELIMITDIM Obj = new tilda.data.DateLimitDim_Data();
        Obj.initForLookup(0);
 
-       Obj.setInvalidDate(invalidDate); 
+       Obj.setInvalidDate(invalidDate); Obj.__Saved_invalidDate = Obj._invalidDate;
 
        return (tilda.data.DateLimitDim_Data) Obj;
      }

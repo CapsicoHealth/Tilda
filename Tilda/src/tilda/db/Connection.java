@@ -90,13 +90,7 @@ public final class Connection
       {
         _C = C;
         _Url = _C.getMetaData().getURL();
-        // LDH-NOTE: YEAH YEAH.... This is ugly!!! Need a virtual constructor pattern here.
-        _DB = _Url.startsWith("jdbc:postgresql:") ? DBType.Postgres
-        : _Url.startsWith("jdbc:datadirect:googlebigquery:") ? DBType.BigQuery
-        : _Url.startsWith("jdbc:bigquery:") ? DBType.BigQuery
-        : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
-        // : _Url.startsWith("jdbc:db2:") ? DBType.DB2
-        : null;
+        _DB = DBType.fromURL(_Url);
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
         _PoolId = PoolId;
@@ -146,6 +140,11 @@ public final class Connection
     public final String getDBTypeName()
       {
         return _DB.getName();
+      }
+
+    public final DBType getDBType()
+      {
+        return _DB;
       }
 
     /**
@@ -545,7 +544,21 @@ public final class Connection
     public boolean executeDDL(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        return JDBCHelper.executeDDL(_C, SchemaName, TableName, Query);
+        boolean restoreAutoCommit = _DB == DBType.BigQuery && JDBCHelper.isRehearsal() == false && getAutoCommit() == false;
+        if (restoreAutoCommit == true)
+          {
+            commit();
+            setAutoCommit(true);
+          }
+        try
+          {
+            return JDBCHelper.executeDDL(_C, SchemaName, TableName, Query);
+          }
+        finally
+          {
+            if (restoreAutoCommit == true)
+              setAutoCommit(false);
+          }
       }
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)

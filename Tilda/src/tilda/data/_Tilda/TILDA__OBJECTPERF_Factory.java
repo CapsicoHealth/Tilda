@@ -764,97 +764,97 @@ object. The generic init method defaults to this general data structure as a gen
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("schemaName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _schemaName = ParseUtil.parseString("schemaName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_schemaName != null) Obj.setSchemaName(_schemaName);
+       if (_schemaName != null ) Obj.setSchemaName(_schemaName);
 
        vals = Values.get("objectName");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("objectName", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        String _objectName = ParseUtil.parseString("objectName", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_objectName != null) Obj.setObjectName(_objectName);
+       if (_objectName != null ) Obj.setObjectName(_objectName);
 
        vals = Values.get("startPeriod");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("startPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _startPeriod = ParseUtil.parseZonedDateTime("startPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_startPeriod != null) Obj.setStartPeriod(_startPeriod);
+       if (_startPeriod != null ) Obj.setStartPeriod(_startPeriod);
 
        vals = Values.get("endPeriod");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("endPeriod", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        ZonedDateTime _endPeriod = ParseUtil.parseZonedDateTime("endPeriod", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_endPeriod != null) Obj.setEndPeriod(_endPeriod);
+       if (_endPeriod != null ) Obj.setEndPeriod(_endPeriod);
 
        vals = Values.get("selectNano");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("selectNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _selectNano = ParseUtil.parseLong("selectNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_selectNano != null) Obj.setSelectNano(_selectNano);
+       if (_selectNano != null  && _selectNano != SystemValues.EVIL_VALUE) Obj.setSelectNano(_selectNano);
 
        vals = Values.get("selectCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("selectCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _selectCount = ParseUtil.parseInteger("selectCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_selectCount != null) Obj.setSelectCount(_selectCount);
+       if (_selectCount != null  && _selectCount != SystemValues.EVIL_VALUE) Obj.setSelectCount(_selectCount);
 
        vals = Values.get("selectRecords");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("selectRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _selectRecords = ParseUtil.parseInteger("selectRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_selectRecords != null) Obj.setSelectRecords(_selectRecords);
+       if (_selectRecords != null  && _selectRecords != SystemValues.EVIL_VALUE) Obj.setSelectRecords(_selectRecords);
 
        vals = Values.get("insertNano");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("insertNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _insertNano = ParseUtil.parseLong("insertNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_insertNano != null) Obj.setInsertNano(_insertNano);
+       if (_insertNano != null  && _insertNano != SystemValues.EVIL_VALUE) Obj.setInsertNano(_insertNano);
 
        vals = Values.get("insertCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("insertCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _insertCount = ParseUtil.parseInteger("insertCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_insertCount != null) Obj.setInsertCount(_insertCount);
+       if (_insertCount != null  && _insertCount != SystemValues.EVIL_VALUE) Obj.setInsertCount(_insertCount);
 
        vals = Values.get("insertRecords");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("insertRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _insertRecords = ParseUtil.parseInteger("insertRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_insertRecords != null) Obj.setInsertRecords(_insertRecords);
+       if (_insertRecords != null  && _insertRecords != SystemValues.EVIL_VALUE) Obj.setInsertRecords(_insertRecords);
 
        vals = Values.get("updateNano");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("updateNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _updateNano = ParseUtil.parseLong("updateNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_updateNano != null) Obj.setUpdateNano(_updateNano);
+       if (_updateNano != null  && _updateNano != SystemValues.EVIL_VALUE) Obj.setUpdateNano(_updateNano);
 
        vals = Values.get("updateCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("updateCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _updateCount = ParseUtil.parseInteger("updateCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_updateCount != null) Obj.setUpdateCount(_updateCount);
+       if (_updateCount != null  && _updateCount != SystemValues.EVIL_VALUE) Obj.setUpdateCount(_updateCount);
 
        vals = Values.get("updateRecords");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("updateRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _updateRecords = ParseUtil.parseInteger("updateRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_updateRecords != null) Obj.setUpdateRecords(_updateRecords);
+       if (_updateRecords != null  && _updateRecords != SystemValues.EVIL_VALUE) Obj.setUpdateRecords(_updateRecords);
 
        vals = Values.get("deleteNano");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("deleteNano", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Long _deleteNano = ParseUtil.parseLong("deleteNano", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_deleteNano != null) Obj.setDeleteNano(_deleteNano);
+       if (_deleteNano != null  && _deleteNano != SystemValues.EVIL_VALUE) Obj.setDeleteNano(_deleteNano);
 
        vals = Values.get("deleteCount");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("deleteCount", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _deleteCount = ParseUtil.parseInteger("deleteCount", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_deleteCount != null) Obj.setDeleteCount(_deleteCount);
+       if (_deleteCount != null  && _deleteCount != SystemValues.EVIL_VALUE) Obj.setDeleteCount(_deleteCount);
 
        vals = Values.get("deleteRecords");
        if (vals!=null && vals.length > 1)
         Errors.add(new StringStringPair("deleteRecords", "Parameter is not a list or a set and yet received "+vals.length+" values"));
        Integer _deleteRecords = ParseUtil.parseInteger("deleteRecords", true, vals!=null && vals.length > 0 ? vals[0] : null, Errors);
-       if (_deleteRecords != null) Obj.setDeleteRecords(_deleteRecords);
+       if (_deleteRecords != null  && _deleteRecords != SystemValues.EVIL_VALUE) Obj.setDeleteRecords(_deleteRecords);
 
 
        return (tilda.data.ObjectPerf_Data) Obj;
@@ -917,7 +917,7 @@ object. The generic init method defaults to this general data structure as a gen
        try
          {
            C.setSavepoint();
-           String Q = L.get(0).getWriteQuery(C);
+           String Q = L.get(0).getWriteQuery(C, false);
            PS = C.prepareStatement(Q);
            int insertCount = 0;
 

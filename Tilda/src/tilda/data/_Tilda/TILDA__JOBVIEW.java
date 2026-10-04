@@ -377,7 +377,12 @@ public abstract class TILDA__JOBVIEW implements tilda.interfaces.ReaderObject, t
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -701,9 +706,9 @@ This is the null setter for:<BR>
     void setNullJobType()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBTYPE._Mask);
        _jobType=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -842,9 +847,9 @@ This is the null setter for:<BR>
     void setNullJobUserId()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBUSERID._Mask);
        _jobUserId=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -982,9 +987,9 @@ This is the null setter for:<BR>
     void setNullJobDataStartTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTARTTZ._Mask);
        _jobDataStartTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1149,9 +1154,9 @@ This is the null setter for:<BR>
     void setNullJobDataStart()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATASTART._Mask);
        _jobDataStart=null;
        setNullJobDataStartTZ();
@@ -1290,9 +1295,9 @@ This is the null setter for:<BR>
     void setNullJobDataEndTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAENDTZ._Mask);
        _jobDataEndTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1457,9 +1462,9 @@ This is the null setter for:<BR>
     void setNullJobDataEnd()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBDATAEND._Mask);
        _jobDataEnd=null;
        setNullJobDataEndTZ();
@@ -1789,9 +1794,9 @@ This is the null setter for:<BR>
     void setNullJobEndTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBENDTZ._Mask);
        _jobEndTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1956,9 +1961,9 @@ This is the null setter for:<BR>
     void setNullJobEnd()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBEND._Mask);
        _jobEnd=null;
        setNullJobEndTZ();
@@ -2087,9 +2092,9 @@ This is the null setter for:<BR>
     void setNullJobStatus()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBSTATUS._Mask);
        _jobStatus=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2228,9 +2233,9 @@ This is the null setter for:<BR>
     void setNullJobMsg()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBMSG._Mask);
        _jobMsg=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2456,9 +2461,9 @@ This is the null setter for:<BR>
     void setNullJobPartType()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTTYPE._Mask);
        _jobPartType=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2596,9 +2601,9 @@ This is the null setter for:<BR>
     void setNullJobPartDataStartTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTARTTZ._Mask);
        _jobPartDataStartTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2763,9 +2768,9 @@ This is the null setter for:<BR>
     void setNullJobPartDataStart()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATASTART._Mask);
        _jobPartDataStart=null;
        setNullJobPartDataStartTZ();
@@ -2904,9 +2909,9 @@ This is the null setter for:<BR>
     void setNullJobPartDataEndTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAENDTZ._Mask);
        _jobPartDataEndTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3071,9 +3076,9 @@ This is the null setter for:<BR>
     void setNullJobPartDataEnd()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTDATAEND._Mask);
        _jobPartDataEnd=null;
        setNullJobPartDataEndTZ();
@@ -3403,9 +3408,9 @@ This is the null setter for:<BR>
     void setNullJobPartEndTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTENDTZ._Mask);
        _jobPartEndTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3570,9 +3575,9 @@ This is the null setter for:<BR>
     void setNullJobPartEnd()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTEND._Mask);
        _jobPartEnd=null;
        setNullJobPartEndTZ();
@@ -3701,9 +3706,9 @@ This is the null setter for:<BR>
     void setNullJobPartRecordsCount()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTRECORDSCOUNT._Mask);
        _jobPartRecordsCount=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3831,9 +3836,9 @@ This is the null setter for:<BR>
     void setNullJobPartStatus()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask);
        if (__Nulls.intersects(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask);
        __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask);
        _jobPartStatus=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4123,11 +4128,15 @@ This is the setter for:<BR>
                                     _jobPartStatus       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTSTATUS._Mask      ); _jobPartStatus = null; }
                                     _jobPartNotify       =                              RS.getBoolean   (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTNOTIFY._Mask      ); _jobPartNotify = null; }
                                     _jobPartMessage      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__JOBVIEW_Factory.COLS.JOBPARTMESSAGE._Mask     ); _jobPartMessage = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -4180,6 +4189,14 @@ This is the setter for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.JobView_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        { 
+          case "": return tilda.data.JobView_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.JobView_Factory");
+        } 
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

@@ -38,9 +38,22 @@ public class IndexMeta
         _Cluster = RS.getInt("TYPE") == 1;
         _FilterCondition = RS.getString("FILTER_CONDITION");
         _ParentTable = parentTable;
+        _VectorIndex = false;
+      }
+
+    public IndexMeta(String name, TableMeta parentTable, String columnName)
+      {
+        _Name = name;
+        _Unique = false;
+        _Cluster = false;
+        _FilterCondition = null;
+        _ParentTable = parentTable;
+        _VectorIndex = true;
+        _Columns.add(new IndexColumnMeta(1, columnName));
       }
 
     public final String     _Name  ;
+    public final boolean    _VectorIndex;
     public final boolean    _Unique;
     public final TableMeta  _ParentTable;    
     public final boolean    _Cluster;

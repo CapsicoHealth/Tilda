@@ -220,6 +220,17 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" style="background-color:#FFFFFF;">
     <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='MaintenanceLog-statementHash_DIV' class='columns'>statementHash</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>SHA-256 hash of the maintenance statement for staleness checks.</TD>
+</TR>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='MaintenanceLog-descr_DIV' class='columns'>descr</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -229,8 +240,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The name of the maintenance resource to track.</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='MaintenanceLog-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -240,8 +251,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created. (TILDA.MaintenanceLog)</TD>
 </TR>
-  <TR valign="top" style="background-color:#FFFFFF;">
-    <TD>14&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='MaintenanceLog-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -251,8 +262,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated. (TILDA.MaintenanceLog)</TD>
 </TR>
-  <TR valign="top" style="background-color:rgba(160, 199, 234, 0.2);">
-    <TD>15&nbsp;&nbsp;</TD>
+  <TR valign="top" style="background-color:#FFFFFF;">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='MaintenanceLog-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -283,7 +294,12 @@ public abstract class TILDA__MAINTENANCELOG implements tilda.interfaces.WriterOb
    transient int      __LookupId;
 
    public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
+   /** The object has just been newly created, but not written yet. **/
    public  boolean isNewlyCreated() { return __NewlyCreated; }
+   /** The object has just been read successfully from the database. **/
+   public  boolean isSuccessfullyRead   () { return __Init == InitMode.READ; }
+   /** The object has just been written successfully to the database. **/
+   public  boolean isSuccessfullyWritten   () { return __Init == InitMode.WRITTEN; }
 
    void initForCreate()
      {
@@ -844,9 +860,9 @@ This is the null setter for:<BR>
    public void setNullObjectName()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask);
        _objectName=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1279,9 +1295,9 @@ This is the null setter for:<BR>
    public void setNullObjectType()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask);
        _objectType=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1914,9 +1930,9 @@ This is the null setter for:<BR>
    public void setNullAction()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask);
        _action=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2585,9 +2601,9 @@ This is the null setter for:<BR>
     void setNullEndTimeTZ()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask);
        _endTimeTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2774,9 +2790,9 @@ This is the null setter for:<BR>
    public void setNullEndTime()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask);
        _endTime=null;
        setNullEndTimeTZ();
@@ -3026,9 +3042,9 @@ This is the null setter for:<BR>
    public void setNullStatement()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask);
        _statement=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3055,6 +3071,169 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedStatement()
      { return __Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   @SerializedName("statementHash")
+   String _statementHash=null;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getStatementHash()
+      { return _statementHash; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullStatementHash()
+     { return __Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setStatementHash(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (TextUtil.isNullOrEmpty(v) == true)
+        {
+          setNullStatementHash();
+        }
+       else if (v.length() > 64)
+        throw new Exception("Cannot set tilda.data.TILDA.MaintenanceLog.statementHash: the size "+v.length()+" is larger than the max allowed of 64: "+TextUtil.escapeDoubleQuoteWithSlash(TextUtil.toMaxLength(v, 250)));
+       else if (v.equals(_statementHash) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP && __Init != null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.MaintenanceLog.statementHash' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
+          __Nulls.andNot(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
+       _statementHash = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullStatementHash()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
+       __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
+       _statementHash=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.MaintenanceLog.statementHash -> TILDA.MaintenanceLog."statementHash"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>statementHash of type String</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>SHA-256 hash of the maintenance statement for staleness checks.</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MaintenanceLog.statementHash of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Full Name</B></TD><TD>tilda.data.TILDA.MaintenanceLog.statementHash</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedStatementHash()
+     { return __Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask); }
 
 
 
@@ -3189,9 +3368,9 @@ This is the null setter for:<BR>
    public void setNullDescr()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask);
        _descr=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3784,9 +3963,9 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask);
        if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
+       __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask);
        __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3893,52 +4072,50 @@ This is the hasChanged for:<BR>
 */
    public void copyTo(tilda.data._Tilda.TILDA__MAINTENANCELOG Dst) throws Exception
      {
-       if (_type        != null)
-        Dst.setType       (_type       );
-       if (_schemaName  != null)
-        Dst.setSchemaName (_schemaName );
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask) == true || _objectName ==null)
-        Dst.setNullObjectName ();
+       if (_type          != null)
+        Dst.setType         (_type         );
+       if (_schemaName    != null)
+        Dst.setSchemaName   (_schemaName   );
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask) == true || _objectName   ==null)
+        Dst.setNullObjectName   ();
        else
-        Dst.setObjectName (_objectName );
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask) == true || _objectType ==null)
-        Dst.setNullObjectType ();
+        Dst.setObjectName   (_objectName   );
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask) == true || _objectType   ==null)
+        Dst.setNullObjectType   ();
        else
-        Dst.setObjectType (_objectType );
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask) == true || _action     ==null)
-        Dst.setNullAction     ();
+        Dst.setObjectType   (_objectType   );
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask) == true || _action       ==null)
+        Dst.setNullAction       ();
        else
-        Dst.setAction     (_action     );
-       if (_startTimeTZ != null)
-        Dst.setStartTimeTZ(_startTimeTZ);
-       if (_startTime   != null)
-        Dst.setStartTime  (_startTime  );
+        Dst.setAction       (_action       );
+       if (_startTime     != null)
+        Dst.setStartTime    (_startTime    );
        Dst.Str_startTime = Str_startTime;
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask) == true || _endTimeTZ  ==null)
-        Dst.setNullEndTimeTZ  ();
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == true || _endTime      ==null)
+        Dst.setNullEndTime      ();
        else
-        Dst.setEndTimeTZ  (_endTimeTZ  );
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == true || _endTime    ==null)
-        Dst.setNullEndTime    ();
-       else
-        Dst.setEndTime    (_endTime    );
+        Dst.setEndTime      (_endTime      );
        Dst.Str_endTime = Str_endTime;
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true || _statement  ==null)
-        Dst.setNullStatement  ();
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true || _statement    ==null)
+        Dst.setNullStatement    ();
        else
-        Dst.setStatement  (_statement  );
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true || _descr      ==null)
-        Dst.setNullDescr      ();
+        Dst.setStatement    (_statement    );
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true || _statementHash==null)
+        Dst.setNullStatementHash();
        else
-        Dst.setDescr      (_descr      );
-       if (__Init == InitMode.CREATE && _created     != null)
-        Dst.setCreated    (_created    );
-       if (_lastUpdated != null)
-        Dst.setLastUpdated(_lastUpdated);
-       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == true || _deleted    ==null)
-        Dst.setNullDeleted    ();
+        Dst.setStatementHash(_statementHash);
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true || _descr        ==null)
+        Dst.setNullDescr        ();
        else
-        Dst.setDeleted    (_deleted    );
+        Dst.setDescr        (_descr        );
+       if (__Init == InitMode.CREATE && _created       != null)
+        Dst.setCreated      (_created      );
+       if (_lastUpdated   != null)
+        Dst.setLastUpdated  (_lastUpdated  );
+       if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == true || _deleted      ==null)
+        Dst.setNullDeleted      ();
+       else
+        Dst.setDeleted      (_deleted      );
      }
 
 
@@ -3971,14 +4148,28 @@ This is the hasChanged for:<BR>
 */
    public final boolean write(Connection C) throws Exception
      {
+       return write(C, false);
+     }
+
+   protected final boolean write(Connection C, boolean upsert) throws Exception
+     {
        long T0 = System.nanoTime();
 
        if (__Init == null && __LookupId==0) // Loaded via some other mechamism, e.g., Json or CSV loader
         {
           validateDeserialization();
-          initForCreate();
-          // Auto PK
-          setRefnum(tilda.db.KeysManager.getKey("TILDA.MAINTENANCELOG"));
+          if (_refnum != null) // is an update
+           {
+             __Changes.andNot(TILDA__MAINTENANCELOG_Factory.COLS.REFNUM._Mask);
+             __Saved_refnum = _refnum;
+             initForLookup(0); // Read/update with PK
+           }
+          else // is a create
+           {
+             initForCreate();
+             // Auto PK
+             setRefnum(tilda.db.KeysManager.getKey("TILDA.MAINTENANCELOG"));
+           }
         }
 
        if (hasChanged() == false)
@@ -3996,7 +4187,7 @@ This is the hasChanged for:<BR>
           return false;
         }
 
-       String Q = getWriteQuery(C);
+       String Q = getWriteQuery(C, upsert);
 
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -4006,17 +4197,31 @@ This is the hasChanged for:<BR>
           PS = C.prepareStatement(Q);
           int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
+          if (__Init != InitMode.CREATE)
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum     );
+               PS.setLong      (++i, __Saved_refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
           C.setSavepoint();
-          count = PS.executeUpdate();
+          if (upsert == false || __Init != InitMode.CREATE)
+            count = PS.executeUpdate();
+          else if (__Init == InitMode.CREATE)
+           {
+             PS.execute();
+             java.sql.ResultSet rs = PS.getResultSet();
+             if (rs.next() == true)
+              {
+                 _refnum = rs.getLong(1);
+                 count = 1;
+              }
+             else
+              count = 0;
+           }
           C.releaseSavepoint(true);
           if (count == 0)
            return false;
@@ -4106,6 +4311,12 @@ This is the hasChanged for:<BR>
           __Nulls.andNot(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask);
         }
 
+       if (TextUtil.isNullOrEmpty(_statementHash) == false)
+        {
+          __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
+          __Nulls.andNot(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask);
+        }
+
        if (TextUtil.isNullOrEmpty(_descr) == false)
         {
           __Changes.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask);
@@ -4122,7 +4333,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
        return S.toString();
      }
-   protected String getWriteQuery(Connection C) throws Exception
+
+
+
+   protected String getWriteQuery(Connection C, boolean upsert) throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
 
@@ -4148,6 +4362,7 @@ This is the hasChanged for:<BR>
              V.append(__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask) == false && DateTimeUtil.isNowPlaceholder(_endTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);
            }
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.DESCR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__2_5._COMMAQUESTION);  }
 
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask) == true) { TILDA__MAINTENANCELOG_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
@@ -4197,6 +4412,7 @@ This is the hasChanged for:<BR>
               TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME.getFullColumnVarForUpdate(C, S);
            }
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true) TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true) TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH.getFullColumnVarForUpdate(C, S);
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) TILDA__MAINTENANCELOG_Factory.COLS.DESCR.getFullColumnVarForUpdate(C, S);
 
           if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask) == true)
@@ -4295,6 +4511,10 @@ This is the hasChanged for:<BR>
         { 
           if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _statement);
         } 
+       if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true)
+        {
+          if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _statementHash);
+        }
        if (__Changes.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) 
         { 
           if (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask) == true) PS.setNull(++i, java.sql.Types.VARCHAR   ); else PS.setString    (++i, _descr);
@@ -4318,7 +4538,8 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           __Init = InitMode.WRITTEN;
-          __LookupId = 0;
+          if (__LookupId == SystemValues.EVIL_VALUE)
+            __LookupId = 0;
         }
        else
         {
@@ -4328,7 +4549,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_refnum      = _refnum     ;
+             __Saved_refnum        = _refnum       ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -4393,7 +4614,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0: // PK
-               PS.setLong      (++i, _refnum     );
+               PS.setLong      (++i, _refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -4424,26 +4645,32 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.REFNUM._Mask     ); _refnum = null; }
-                            _type        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.TYPE._Mask       ); _type = null; }
-                            _schemaName  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.SCHEMANAME._Mask ); _schemaName = null; }
-                            _objectName  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask ); _objectName = null; }
-                            _objectType  = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask ); _objectType = null; }
-                            _action      = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask     ); _action = null; }
-                            _startTimeTZ = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ._Mask); _startTimeTZ = null; } else _startTimeTZ = _startTimeTZ.trim();
-                            _startTime   = JDBCHelper.processZDT(_startTimeTZ  , "tilda.data.TILDA.MaintenanceLog.startTime"  , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME  , TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ  , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask  ); _startTime = null; }
-                            _endTimeTZ   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask  ); _endTimeTZ = null; } else _endTimeTZ   = _endTimeTZ  .trim();
-                            _endTime     = JDBCHelper.processZDT(_endTimeTZ    , "tilda.data.TILDA.MaintenanceLog.endTime"    , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME    , TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask    ); _endTime = null; }
-                            _statement   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask  ); _statement = null; }
-                            _descr       = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask      ); _descr = null; }
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask    ); _created = null; }
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask); _lastUpdated = null; }
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), null); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask    ); _deleted = null; }
-     __LookupId = 0;
-     __Init     = InitMode.READ;
-     __Changes.clear();
+      String OCCLocalZone = ZoneId.systemDefault().getId();
+      __Saved_refnum        = _refnum        =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.REFNUM._Mask       ); _refnum = null; }
+                              _type          = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.TYPE._Mask         ); _type = null; }
+                              _schemaName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.SCHEMANAME._Mask   ); _schemaName = null; }
+                              _objectName    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask   ); _objectName = null; }
+                              _objectType    = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask   ); _objectType = null; }
+                              _action        = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask       ); _action = null; }
+                              _startTimeTZ   = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ._Mask  ); _startTimeTZ = null; } else _startTimeTZ   = _startTimeTZ  .trim();
+                              _startTime     = JDBCHelper.processZDT(_startTimeTZ    , "tilda.data.TILDA.MaintenanceLog.startTime"    , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME    , TILDA__MAINTENANCELOG_Factory.COLS.STARTTIMETZ    , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STARTTIME._Mask    ); _startTime = null; }
+                              _endTimeTZ     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ._Mask    ); _endTimeTZ = null; } else _endTimeTZ     = _endTimeTZ    .trim();
+                              _endTime       = JDBCHelper.processZDT(_endTimeTZ      , "tilda.data.TILDA.MaintenanceLog.endTime"      , RS, ++i, TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME      , TILDA__MAINTENANCELOG_Factory.COLS.ENDTIMETZ      , __Nulls); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask      ); _endTime = null; }
+                              _statement     = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask    ); _statement = null; }
+                              _statementHash = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask); _statementHash = null; }
+                              _descr         = TextUtil.trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask        ); _descr = null; }
+                                                        _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.CREATED._Mask      ); _created = null; }
+                                                        _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.LASTUPDATED._Mask  ); _lastUpdated = null; }
+                                                        _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i), OCCLocalZone); if (RS.wasNull() == true) { __Nulls.or(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask      ); _deleted = null; }
 
-     return afterRead(C);
+     boolean success = afterRead(C);
+     if (success == true)
+      {
+        __LookupId = 0;
+        __Init     = InitMode.READ;
+        __Changes.clear();
+      }
+     return success;
    }
 
    protected abstract boolean afterRead(Connection C) throws Exception;
@@ -4452,19 +4679,20 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                                  +                                   getRefnum     ()
-               + "; type: "                                                                                                    + TextUtil.printVariableStr        (getType       ())
-               + "; schemaName: "                                                                                              + TextUtil.printVariableStr        (getSchemaName ())
-               + "; objectName"    + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getObjectName ()))
-               + "; objectType"    + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getObjectType ()))
-               + "; action"        + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask     ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getAction     ()))
-               + "; startTime: "                                                                                               + DateTimeUtil.printDateTimeForJSON(getStartTime  ())
-               + "; endTime"       + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime    ()))
-               + "; statement"     + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask  ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getStatement  ()))
-               + "; descr"         + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask      ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDescr      ()))
-               + "; created: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getCreated    ())
-               + "; lastUpdated: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
-               + "; deleted"       + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask    ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
+                   "refnum: "                                                                                                      +                                   getRefnum       ()
+               + "; type: "                                                                                                        + TextUtil.printVariableStr        (getType         ())
+               + "; schemaName: "                                                                                                  + TextUtil.printVariableStr        (getSchemaName   ())
+               + "; objectName"      + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTNAME._Mask   ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getObjectName   ()))
+               + "; objectType"      + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.OBJECTTYPE._Mask   ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getObjectType   ()))
+               + "; action"          + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ACTION._Mask       ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getAction       ()))
+               + "; startTime: "                                                                                                   + DateTimeUtil.printDateTimeForJSON(getStartTime    ())
+               + "; endTime"         + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.ENDTIME._Mask      ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime      ()))
+               + "; statement"       + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENT._Mask    ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getStatement    ()))
+               + "; statementHash"   + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.STATEMENTHASH._Mask) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getStatementHash()))
+               + "; descr"           + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DESCR._Mask        ) == true ? ": NULL" : ": " + TextUtil.printVariableStr        (getDescr        ()))
+               + "; created: "                                                                                                     + DateTimeUtil.printDateTimeForJSON(getCreated      ())
+               + "; lastUpdated: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
+               + "; deleted"         + (__Nulls.intersects(TILDA__MAINTENANCELOG_Factory.COLS.DELETED._Mask      ) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
@@ -4489,6 +4717,14 @@ This is the hasChanged for:<BR>
    public void toJSON(java.io.Writer out, String exportName, String lead, boolean fullObject, java.time.ZonedDateTime lastsync) throws Exception
     {
       throw new Exception("Unknown JSON sync exporter '"+exportName+"' for tilda.data.MaintenanceLog_Factory");
+    }
+   public String getCSVHeader(String exportName) throws Exception
+    {
+      switch (exportName)
+        {
+          case "": return tilda.data.MaintenanceLog_Factory.getCSVHeader();
+          default: throw new Exception("Unknown CSV exporter '"+exportName+"' for tilda.data.MaintenanceLog_Factory");
+        }
     }
    public void toCSV(java.io.Writer out, String exportName) throws Exception
     {

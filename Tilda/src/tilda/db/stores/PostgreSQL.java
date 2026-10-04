@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import org.postgresql.core.BaseConnection;
 
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
@@ -36,6 +37,8 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
+import tilda.parsing.parts.Index.Option;
+import tilda.parsing.parts.Index.Option;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Schema;
@@ -141,6 +144,18 @@ public class PostgreSQL extends CommonStoreImpl
 
     @Override
     public boolean supportsIndices()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean supportsVectorIndices()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean supportsVectorIndexMetadata()
       {
         return true;
       }
@@ -272,6 +287,23 @@ public class PostgreSQL extends CommonStoreImpl
         return Size <= 8 ? DBStringType.CHARACTER
         : Size <= 4090 ? DBStringType.VARCHAR
         : DBStringType.TEXT;
+      }
+
+    @Override
+    public boolean isVectorTypeCompatible(Column Col, ColumnMeta CMeta)
+      {
+        if (Col.getType() != ColumnType.VECTOR)
+          return true;
+        String Modifier = Col.getTypeModifier();
+        return !(("bit".equals(Modifier) && CMeta._TildaType != ColumnType.BOOLEAN)
+        || ("vector".equals(Modifier) && CMeta._TildaType != ColumnType.VECTOR)
+        || ("halfvec".equals(Modifier) && "HALFVECTOR".equalsIgnoreCase(CMeta._TypeSql) == false));
+      }
+
+    @Override
+    public boolean supportsDDLDependencyManagement()
+      {
+        return true;
       }
 
     protected static String[] VECTOR_TYPES = new String[] { "vector", "halfvec", "bit", "sparsevec"
@@ -538,13 +570,6 @@ public class PostgreSQL extends CommonStoreImpl
         return false;
       }
 
-    public static final Pattern  _PATTERN_VECTOR_INDEX = Pattern.compile("\\(\\s*type\\s*=\\s*(\\w+)\\s*;\\s*operator\\s*=\\s*(\\w+)\\s*;(\\s*lists\\s*=\\s*(\\d+)\\s*;)?\\s*\\)");
-
-    public static final String[] VECTOR_INDEX_TYPES    = new String[] { "ivfflat", "hnsw"
-    };
-    public static final String[] VECTOR_OPERATOR_TYPES = new String[] { "vector_l2_ops", "vector_ip_ops", "vector_cosine_ops"
-    };
-
     @Override
     public String alterTableAddIndexUsingDDL(Index IX)
     throws Exception
@@ -569,24 +594,7 @@ public class PostgreSQL extends CommonStoreImpl
 
         if (vectorColumn != null)
           {
-            String indexColumnModifier = IX._IndexColumnModifiers.get(vectorColumn.getName());
-            if (TextUtil.isNullOrEmpty(indexColumnModifier) == false)
-              {
-                Matcher M = _PATTERN_VECTOR_INDEX.matcher(indexColumnModifier);
-                if (M.matches() == true)
-                  {
-                    String type = M.group(1);
-                    if (TextUtil.isNullOrEmpty(type) == true)
-                      type = "ivfflat";
-                    else if (TextUtil.findElement(VECTOR_INDEX_TYPES, type, true, 0) < 0)
-                      throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' with type '" + type + "' which is not supported. Supported types are: " + TextUtil.print(VECTOR_INDEX_TYPES));
-                    return " USING " + type;
-                  }
-              }
-            else
-              {
-                return " USING ivfflat";
-              }
+            return " USING " + getVectorIndexConfiguration(IX)._Algorithm;
           }
 
         return null;
@@ -599,40 +607,151 @@ public class PostgreSQL extends CommonStoreImpl
           {
             if (C.getType() == ColumnType.VECTOR)
               {
-                String indexColumnModifier = IX._IndexColumnModifiers.get(C.getName());
-                if (TextUtil.isNullOrEmpty(indexColumnModifier) == false)
-                  {
-                    Matcher M = _PATTERN_VECTOR_INDEX.matcher(indexColumnModifier);
-                    if (M.matches() == true)
-                      {
-                        String type = M.group(1);
-                        String lists = M.group(4);
-                        if (TextUtil.isNullOrEmpty(type) == true)
-                          type = "ivfflat";
-                        if (type.equals("ivfflat") == true)
-                          {
-                            if (TextUtil.isNullOrEmpty(lists) == true)
-                              lists = "1000";
-                            else if (ParseUtil.parseInteger(lists, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                              throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' with lists='" + lists + "' which is not a valid integer.");
-                            return " WITH (lists=" + lists + ")";
-                          }
-                        else if (type.equals("hnsw") == true)
-                          {
-                            if (TextUtil.isNullOrEmpty(lists) == false)
-                              throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' with type='" + type + "' which does not support lists, yet lists='" + lists + "' is defined.");
-                            return " WITH (m=16, ef_construction=200)";
-                          }
-                      }
-                  }
-                else
-                  {
-                    return " WITH (lists=1000)";
-                  }
+                VectorIndexConfiguration details = getVectorIndexConfiguration(IX);
+                if ("ivfflat".equals(details._Algorithm) == true)
+                  return " WITH (lists=" + getPositiveOption(IX, details, "lists", "1000") + ")";
+                return " WITH (m=" + getPositiveOption(IX, details, "m", "16")
+                + ", ef_construction=" + getPositiveOption(IX, details, "ef_construction", "200") + ")";
               }
           }
 
         return null;
+      }
+
+    @Override
+    protected String getIndexColumnModifier(Index IX, Column C)
+    throws Exception
+      {
+        if (C.getType() == ColumnType.VECTOR)
+          return " " + getVectorOperatorClass(IX, C, getVectorIndexConfiguration(IX));
+        return super.getIndexColumnModifier(IX, C);
+      }
+
+    private static VectorIndexConfiguration getVectorIndexConfiguration(Index IX)
+    throws Exception
+      {
+        for (Column C : IX._ColumnObjs)
+          if (C != null && C.getType() == ColumnType.VECTOR && TextUtil.isNullOrEmpty(IX._IndexColumnModifiers.get(C.getName())) == false)
+            throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' uses the retired vector column-modifier syntax. Move its settings into the index 'vector' object.");
+
+        Index.Details selected = IX.getDetails(DBType.Postgres);
+
+        VectorIndexConfiguration details = new VectorIndexConfiguration();
+        String algorithm = IX._Vector == null ? null : IX._Vector._Algorithm;
+        if (selected != null && TextUtil.isNullOrEmpty(selected._Algorithm) == false)
+          {
+            if (TextUtil.isNullOrEmpty(algorithm) == false)
+              throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' cannot specify both vector.algorithm and vector.details[].algorithm.");
+            algorithm = selected._Algorithm;
+          }
+        details._Algorithm = algorithm;
+        details._Options = selected == null ? null : selected._Options;
+        details._Distance = IX._Vector == null || TextUtil.isNullOrEmpty(IX._Vector._Distance) == true ? "euclidean" : IX._Vector._Distance.toLowerCase();
+        if (TextUtil.isNullOrEmpty(details._Algorithm) == true)
+          details._Algorithm = "ivfflat";
+        else
+          details._Algorithm = details._Algorithm.toLowerCase();
+        if ("ivf".equals(details._Algorithm) == true)
+          details._Algorithm = "ivfflat";
+        if ("ivfflat".equals(details._Algorithm) == false && "hnsw".equals(details._Algorithm) == false)
+          throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has unsupported PostgreSQL vector algorithm '" + details._Algorithm + "'. Supported algorithms: ivf, hnsw.");
+
+        if (TextUtil.isNullOrEmpty(details._Distance) == true)
+          details._Distance = "euclidean";
+        else
+          details._Distance = details._Distance.toLowerCase();
+        Column vectorColumn = null;
+        for (Column C : IX._ColumnObjs)
+          if (C != null && C.getType() == ColumnType.VECTOR)
+            {
+              vectorColumn = C;
+              break;
+            }
+        getVectorOperatorClass(IX, vectorColumn, details);
+
+        java.util.Map<String, String> options = new java.util.HashMap<String, String>();
+        if (details._Options != null)
+          for (Option option : details._Options)
+            {
+              if (option == null || TextUtil.isNullOrEmpty(option._Option) == true || TextUtil.isNullOrEmpty(option._Value) == true)
+                throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has a vector option without both 'option' and 'value'.");
+              if (options.put(option._Option.toLowerCase(), option._Value) != null)
+                throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has duplicate vector option '" + option._Option + "'.");
+            }
+        if ("ivfflat".equals(details._Algorithm) == true)
+          {
+            for (String option : options.keySet())
+              if ("lists".equals(option) == false)
+                throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has unsupported ivfflat option '" + option + "'.");
+          }
+        else
+          for (String option : options.keySet())
+            if ("m".equals(option) == false && "ef_construction".equals(option) == false)
+              throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has unsupported hnsw option '" + option + "'.");
+
+        return details;
+      }
+
+    private static String getPositiveOption(Index IX, VectorIndexConfiguration details, String name, String defaultValue)
+    throws Exception
+      {
+        if (details._Options != null)
+          for (Option option : details._Options)
+            if (name.equalsIgnoreCase(option._Option) == true)
+              {
+                try
+                  {
+                    int value = Integer.parseInt(option._Value);
+                    if (value > 0)
+                      return Integer.toString(value);
+                  }
+                catch (NumberFormatException ignored)
+                  {
+                  }
+                throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has invalid positive integer vector option '" + name + "': '" + option._Value + "'.");
+              }
+        return defaultValue;
+      }
+
+    private static String getVectorOperatorClass(Index IX, Column vectorColumn, VectorIndexConfiguration details)
+    throws Exception
+      {
+        String type = vectorColumn == null || TextUtil.isNullOrEmpty(vectorColumn.getTypeModifier()) == true ? "vector" : vectorColumn.getTypeModifier().toLowerCase();
+        String distance = details._Distance;
+        boolean hnsw = "hnsw".equals(details._Algorithm);
+
+        if ("vector".equals(type) == true || "halfvec".equals(type) == true || "sparsevec".equals(type) == true)
+          {
+            if ("euclidean".equals(distance) == true)
+              return type + "_l2_ops";
+            if ("dot".equals(distance) == true)
+              return type + "_ip_ops";
+            if ("cosine".equals(distance) == true)
+              return type + "_cosine_ops";
+            if ("l1".equals(distance) == true && hnsw == true)
+              return type + "_l1_ops";
+          }
+        else if ("bit".equals(type) == true)
+          {
+            if ("hamming".equals(distance) == true)
+              return "bit_hamming_ops";
+            if ("jaccard".equals(distance) == true && hnsw == true)
+              return "bit_jaccard_ops";
+          }
+
+        String supported = "vector".equals(type) == true || "halfvec".equals(type) == true
+        ? hnsw == true ? "euclidean, dot, cosine, l1" : "euclidean, dot, cosine"
+        : "sparsevec".equals(type) == true ? "hnsw: euclidean, dot, cosine, l1"
+        : "bit".equals(type) == true ? hnsw == true ? "hamming, jaccard" : "hamming"
+        : "none";
+        throw new Exception(IX._Parent.getFullName() + " index '" + IX.getName() + "' has unsupported PostgreSQL vector distance '" + distance + "' for type '" + type + "' and algorithm '" + details._Algorithm + "'. Supported distances: " + supported + ".");
+      }
+
+    private static class VectorIndexConfiguration
+      {
+        String _Distance;
+        String _Algorithm;
+        java.util.List<Option> _Options;
       }
 
   }
