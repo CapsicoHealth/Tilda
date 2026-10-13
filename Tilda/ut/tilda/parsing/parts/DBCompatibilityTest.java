@@ -35,7 +35,7 @@ public class DBCompatibilityTest
         Object BigQueryObject = addObject(BigQueryOnly, "BigQueryObject");
         BigQueryObject._DBCompatibilityTargets = java.util.Collections.singleton("bigquery");
         BigQueryObject._Mode = tilda.enums.ObjectMode.NORMAL;
-        if (BigQueryOnly.hasCompatibleEntities("bigquery") == false || BigQueryOnly.hasCompatibleEntities("postgres") == true)
+        if (BigQueryOnly.isCompatibleWith("bigquery") == false || BigQueryOnly.isCompatibleWith("postgres") == true)
           throw new IllegalStateException("Schema compatibility did not correctly scope database-backed entities to their configured backend.");
 
         Schema App = parseSchema("{\"dbCompatibility\":{\"targets\":[{\"db\":\"bigquery\",\"objects\":[\"*\"],\"views\":[\"*\"]},{\"db\":\"bigquery\",\"only\":true,\"objects\":[\"C*\"],\"views\":[]}]}}", "test.data", "APP");
