@@ -34,7 +34,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-codec-1.22.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-codec-1.23.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -64,7 +64,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-lang3-3.20.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/apache/commons-lang3-3.21.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -234,7 +234,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/api-common-2.69.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/api-common-2.70.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -269,7 +269,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/exporter-metrics-0.31.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/exporter-metrics-0.33.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -284,22 +284,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/gapic-google-cloud-storage-v2-2.42.0-alpha.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/gapic-google-cloud-storage-v2-2.75.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/gax-2.86.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/gax-2.87.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/gax-grpc-2.86.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/gax-grpc-2.87.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/gax-httpjson-2.86.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/gax-httpjson-2.87.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -314,82 +314,87 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20260908-2.0.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-healthcare-v1-rev20260924-2.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-storage-v1-rev20240706-2.0.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-api-services-storage-v1-rev20260524-2.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-auth-library-credentials-1.53.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-auth-library-credentials-1.54.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-auth-library-oauth2-http-1.53.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-auth-library-oauth2-http-1.54.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-aiplatform-3.49.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-aiplatform-3.100.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-bigquery-2.72.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-bigquery-2.73.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-bigquery-jdbc-1.5.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-bigquery-jdbc-1.6.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-bigquerystorage-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-bigquerystorage-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-compute-1.58.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-compute-1.109.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-core-2.76.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-core-2.77.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-core-grpc-2.76.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-core-grpc-2.77.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-core-http-2.76.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-core-http-2.77.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-logging-3.39.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-logging-3.40.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-monitoring-3.49.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-monitoring-3.100.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-pubsub-1.132.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-pubsub-1.157.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-storage-2.42.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-storage-2.75.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-cloud-storage-control-2.75.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -419,7 +424,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-jackson2-1.44.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/google-http-client-jackson2-2.2.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -459,37 +464,32 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-bigquerystorage-v1-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-bigquerystorage-v1-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-bigquerystorage-v1beta1-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-bigquerystorage-v1beta1-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-bigquerystorage-v1beta2-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-bigquerystorage-v1beta2-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-storage-v2-2.42.0-alpha.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-storage-control-v2-2.75.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-common-protos-2.43.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-cloud-storage-v2-2.75.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-google-iam-v1-1.38.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-grpclb-1.66.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-grpclb-1.83.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -519,7 +519,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-rls-1.66.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/grpc-rls-1.83.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -564,22 +564,27 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-annotations-2.21.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-annotations-2.22.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-core-2.21.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-core-2.22.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-databind-2.21.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-databind-2.22.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-datatype-jsr310-2.21.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-dataformat-xml-2.22.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/jackson-datatype-jsr310-2.22.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -634,17 +639,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/opencensus-proto-0.2.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/google/opentelemetry-api-1.62.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/opentelemetry-api-incubator-1.41.0-alpha.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -719,7 +714,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/opentelemetry-semconv-1.25.0-alpha.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/opentelemetry-semconv-1.29.0-alpha.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -739,72 +734,77 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-aiplatform-v1-3.49.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-aiplatform-v1-3.100.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-aiplatform-v1beta1-0.65.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-aiplatform-v1beta1-3.100.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1alpha-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1alpha-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1beta1-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1beta1-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1beta2-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1beta2-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1beta-3.34.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-bigquerystorage-v1beta-3.35.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-compute-v1-1.58.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-compute-v1-1.109.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-logging-v2-3.39.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-logging-v2-3.40.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-monitoring-v3-3.49.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-monitoring-v3-3.100.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-pubsub-v1-1.114.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-pubsub-v1-1.157.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-storage-v2-2.42.0-alpha.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-storage-control-v2-2.75.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-common-protos-2.77.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-cloud-storage-v2-2.75.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-iam-v1-1.72.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-common-protos-2.78.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/proto-google-iam-v1-1.73.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -814,7 +814,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/google/shared-resourcemapping-0.31.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/shared-resourcemapping-0.33.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -825,6 +825,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/deps/google/threeten-extra-1.8.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/google/woodstox-core-7.0.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -919,7 +924,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/other/postgresql-42.7.13.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/postgresql-42.7.14.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -989,7 +994,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/jakartaee-pac4j-8.0.3.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/other/stax2-api-4.2.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/jakartaee-pac4j-8.0.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
@@ -1074,12 +1084,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-core-6.4.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-core-6.5.9.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-jakartaee-6.4.2.jar">
+	<classpathentry exported="true" kind="lib" path="lib/deps/security/pac4j-jakartaee-6.5.9.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>

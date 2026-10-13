@@ -79,8 +79,9 @@ dependencies {
 //    implementation 'org.glassfish.hk2:hk2:3+'
 
     // Google GCP
-    implementation platform('com.google.cloud:libraries-bom:26.45.0')
+    implementation platform('com.google.cloud:libraries-bom:26.+')
     implementation 'com.google.cloud:google-cloud-storage'
+    implementation 'com.google.cloud:google-cloud-storage-control'   // folder rename on hierarchical-namespace buckets
     implementation 'com.google.cloud:google-cloud-bigquery'
     implementation 'com.google.cloud:google-cloud-bigquery-jdbc:1.+'
     implementation 'com.google.cloud:google-cloud-compute'
