@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import tilda.db.stores.DBType;
+import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.SchemaMeta;
@@ -27,19 +28,20 @@ public class MigratorIndexTest
     public static void main(String[] args)
     throws Exception
       {
-        assertIndexPreserved(DBType.BigQuery, 0);
-        assertIndexPreserved(DBType.Postgres, 1);
-        assertRegularIndexMetadataCalls(DBType.BigQuery, 0);
-        assertRegularIndexMetadataCalls(DBType.Postgres, 1);
-        assertVectorMetadataMigration(null, 1);
-        assertVectorMetadataMigration("embedding", 0);
-        assertVectorMetadataMigration("other_embedding", 2);
-        assertVectorIndexMigration(DBType.Postgres, 1);
+        Connection C = null;
+        assertIndexPreserved(C, DBType.BigQuery, 0);
+        assertIndexPreserved(C, DBType.Postgres, 1);
+        assertRegularIndexMetadataCalls(C, DBType.BigQuery, 0);
+        assertRegularIndexMetadataCalls(C, DBType.Postgres, 1);
+        assertVectorMetadataMigration(C, null, 1);
+        assertVectorMetadataMigration(C, "embedding", 0);
+        assertVectorMetadataMigration(C, "other_embedding", 2);
+        assertVectorIndexMigration(C, DBType.Postgres, 1);
         assertBigQueryPrimaryKeyMetadata();
         assertBigQueryJdbcSchemaMetadata();
       }
 
-    private static void assertVectorIndexMigration(DBType store, int expectedActions)
+    private static void assertVectorIndexMigration(Connection C, DBType store, int expectedActions)
     throws Exception
       {
         Schema schema = new Schema();
@@ -56,13 +58,13 @@ public class MigratorIndexTest
 
         List<MigrationAction> actions = new ArrayList<MigrationAction>();
         List<String> errors = new ArrayList<String>();
-        Migrator.handleIndices(actions, errors, object, new TableMeta(schema._Name, object._Name, null), new SchemaMeta(schema._Name), store);
+        Migrator.handleIndices(C, actions, errors, object, new TableMeta(schema._Name, object._Name, null), new SchemaMeta(schema._Name), store);
 
         if (actions.size() != expectedActions)
           throw new IllegalStateException("Expected " + expectedActions + " vector index actions for " + store.getName() + " but found " + actions.size() + ".");
       }
 
-    private static void assertVectorMetadataMigration(String existingColumn, int expectedActions)
+    private static void assertVectorMetadataMigration(Connection C, String existingColumn, int expectedActions)
     throws Exception
       {
         Schema schema = new Schema();
@@ -107,7 +109,7 @@ public class MigratorIndexTest
 
         List<MigrationAction> actions = new ArrayList<MigrationAction>();
         List<String> errors = new ArrayList<String>();
-        Migrator.handleIndices(actions, errors, object, tableMeta, new SchemaMeta(schema._Name), DBType.BigQuery);
+        Migrator.handleIndices(C, actions, errors, object, tableMeta, new SchemaMeta(schema._Name), DBType.BigQuery);
 
         if (actions.size() != expectedActions)
           throw new IllegalStateException("Expected " + expectedActions + " vector index actions with existing column '" + existingColumn + "' but found " + actions.size() + ".");
@@ -303,7 +305,7 @@ public class MigratorIndexTest
         });
       }
 
-    private static void assertRegularIndexMetadataCalls(DBType store, int expectedCalls)
+    private static void assertRegularIndexMetadataCalls(Connection C, DBType store, int expectedCalls)
     throws Exception
       {
         AtomicInteger indexInfoCalls = new AtomicInteger();
@@ -344,7 +346,7 @@ public class MigratorIndexTest
         return (ResultSet) Proxy.newProxyInstance(ResultSet.class.getClassLoader(), new Class<?>[] { ResultSet.class }, (proxy, method, args) -> "next".equals(method.getName()) == true ? false : null);
       }
 
-    private static void assertIndexPreserved(DBType store, int expectedActions)
+    private static void assertIndexPreserved(Connection C, DBType store, int expectedActions)
     throws Exception
       {
         Schema schema = new Schema();
@@ -359,7 +361,7 @@ public class MigratorIndexTest
 
         List<MigrationAction> actions = new ArrayList<MigrationAction>();
         List<String> errors = new ArrayList<String>();
-        Migrator.handleIndices(actions, errors, object, tableMeta, new SchemaMeta(schema._Name), store);
+        Migrator.handleIndices(C, actions, errors, object, tableMeta, new SchemaMeta(schema._Name), store);
 
         if (actions.size() != expectedActions)
           throw new IllegalStateException("Expected " + expectedActions + " index actions for " + store.getName() + " but found " + actions.size() + ".");

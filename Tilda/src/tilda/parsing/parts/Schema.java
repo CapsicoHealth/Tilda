@@ -378,6 +378,23 @@ public class Schema
         return "TILDA".equalsIgnoreCase(_Name) && "tilda.data".equalsIgnoreCase(_Package);
       }
 
+    /**
+     * A schema exists on a given database if at least one of its objects or views is routed to that database
+     * through dbCompatibility.
+     */
+    public boolean isCompatibleWith(String database)
+      {
+        if (_Objects != null)
+          for (Object O : _Objects)
+            if (O != null && O.isCompatibleWith(database) == true)
+              return true;
+        if (_Views != null)
+          for (View V : _Views)
+            if (V != null && V.isCompatibleWith(database) == true)
+              return true;
+        return false;
+      }
+
     /*
      * private void CreateFormulaDocumentationTables(ParserSession PS)
      * {

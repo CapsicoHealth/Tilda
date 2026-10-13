@@ -385,6 +385,8 @@ public class PostgreSQL extends CommonStoreImpl
 
         for (Schema S : TildaList)
           {
+            if (S.isCompatibleWith(getName()) == false)
+              continue; // Schema is not deployed on this database (e.g., BigQuery-only schemas).
             Str.append("GRANT ALL ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");

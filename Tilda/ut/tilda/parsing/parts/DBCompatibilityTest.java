@@ -31,6 +31,13 @@ public class DBCompatibilityTest
         if (Core.validate(CorePS) == false)
           throw new IllegalStateException("Core TILDA compatibility declaration did not validate: " + CorePS.getErrors());
 
+        Schema BigQueryOnly = parseSchema("{}", "test.data", "BIGQUERYONLY");
+        Object BigQueryObject = addObject(BigQueryOnly, "BigQueryObject");
+        BigQueryObject._DBCompatibilityTargets = java.util.Collections.singleton("bigquery");
+        BigQueryObject._Mode = tilda.enums.ObjectMode.NORMAL;
+        if (BigQueryOnly.hasCompatibleEntities("bigquery") == false || BigQueryOnly.hasCompatibleEntities("postgres") == true)
+          throw new IllegalStateException("Schema compatibility did not correctly scope database-backed entities to their configured backend.");
+
         Schema App = parseSchema("{\"dbCompatibility\":{\"targets\":[{\"db\":\"bigquery\",\"objects\":[\"*\"],\"views\":[\"*\"]},{\"db\":\"bigquery\",\"only\":true,\"objects\":[\"C*\"],\"views\":[]}]}}", "test.data", "APP");
         App._ResourceName = "test/data/_tilda.APP.json";
         App._DependencySchemas.add(Core);
