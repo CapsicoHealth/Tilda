@@ -33,29 +33,37 @@ public class LogUtil
   {
     protected static final Logger LOG               = LogManager.getLogger(LogUtil.class.getName());
 
-    protected static Level        _originalLogLevel = null;
+    protected static java.util.Map<LoggerConfig, Level> _originalLogLevels = null;
 
-    public static void setLogLevel(Level NewLevel)
+    /**
+     * Sets the level on the root logger AND all explicitly configured loggers (which would otherwise
+     * ignore the root level), remembering the original levels so they can be restored by resetLogLevel().
+     */
+    public static synchronized void setLogLevel(Level NewLevel)
       {
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration config = ctx.getConfiguration();
-        LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
-        Level OldLevel = loggerConfig.getLevel();
-        if (OldLevel != NewLevel)
+        if (_originalLogLevels == null)
           {
-            loggerConfig.setLevel(NewLevel);
-            ctx.updateLoggers(); // This causes all Loggers to refetch information from their LoggerConfig.
+            _originalLogLevels = new java.util.IdentityHashMap<LoggerConfig, Level>();
+            _originalLogLevels.put(config.getRootLogger(), config.getRootLogger().getLevel());
+            for (LoggerConfig lc : config.getLoggers().values())
+              _originalLogLevels.put(lc, lc.getLevel());
           }
-        if (_originalLogLevel == null)
-          _originalLogLevel = OldLevel;
+        for (LoggerConfig lc : _originalLogLevels.keySet())
+          lc.setLevel(NewLevel);
+        ctx.updateLoggers(); // This causes all Loggers to refetch information from their LoggerConfig.
       }
 
-    public static void resetLogLevel()
+    public static synchronized void resetLogLevel()
       {
-        if (_originalLogLevel != null)
+        if (_originalLogLevels != null)
           {
-            setLogLevel(_originalLogLevel);
-            _originalLogLevel = null;
+            LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+            for (java.util.Map.Entry<LoggerConfig, Level> e : _originalLogLevels.entrySet())
+              e.getKey().setLevel(e.getValue());
+            _originalLogLevels = null;
+            ctx.updateLoggers();
           }
       }
 
