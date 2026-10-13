@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,12 +26,22 @@ import org.apache.logging.log4j.Logger;
 import com.google.api.gax.paging.Page;
 import com.google.cloud.WriteChannel;
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobAppendableUpload;
+import com.google.cloud.storage.BlobAppendableUploadConfig;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.rpc.NotFoundException;
+import com.google.storage.control.v2.FolderName;
+import com.google.storage.control.v2.StorageControlClient;
+import com.google.storage.control.v2.StorageControlSettings;
 
 import tilda.utils.DurationUtil;
+import tilda.utils.NumberFormatUtil;
+
 
 public class CSHelper
   {
@@ -54,8 +65,8 @@ public class CSHelper
     throws FileNotFoundException, IOException
       {
         long nanoTime = System.nanoTime();
-        Storage s =  StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
-        LOG.debug("Time to get a GCS storage object: "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-nanoTime));
+        Storage s = StorageOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
+        LOG.debug("Time to get a GCS storage object: " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - nanoTime));
         return s;
       }
 
@@ -135,6 +146,121 @@ public class CSHelper
           }
       }
 
+    /**
+     * Returns a gRPC-based Storage client, required for appendable uploads to zonal (Rapid) buckets.
+     */
+    public static Storage getStorageGrpc(String dataProjectName)
+    throws FileNotFoundException, IOException
+      {
+        long TS = System.nanoTime();
+        Storage S = StorageOptions.grpc().setCredentials(AuthHelper.getCredentials(dataProjectName, "cs")).setProjectId(dataProjectName).build().getService();
+        LOG.debug("Time to get a GCS gRPC storage object: " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - TS));
+        return S;
+      }
+
+    /**
+     * Uploads a stream to a zonal bucket using an appendable object (gRPC Storage required, see {@link #getStorageGrpc(String)}).
+     * Zonal buckets reject multipart and resumable uploads. The object is finalized on close.
+     * Fails if the object already exists.
+     */
+    public static long uploadAppendable(Storage cs, InputStream inputStream, String bucketName, String fullFileName, String mimeType)
+    throws IOException
+      {
+        return uploadAppendable(cs, inputStream, bucketName, fullFileName, mimeType, null).bytes;
+      }
+
+    /** Timing and volume statistics for a streaming upload. */
+    public static class UploadStats
+      {
+        /** Bytes streamed so far / in total. */
+        public long bytes;
+        /** Wall-clock nanoseconds since the upload started. */
+        public long totalNanos;
+        /** Nanoseconds spent blocked reading from the source stream (e.g., the client's network). */
+        public long readNanos;
+        /** Nanoseconds spent blocked writing to GCS (channel.write). */
+        public long writeNanos;
+        /** Nanoseconds spent closing/finalizing the object in GCS (only set once complete). */
+        public long finalizeNanos;
+
+        public double mbPerSecond()
+          {
+            return totalNanos <= 0 ? 0 : (bytes / 1048576.0) / (totalNanos / 1.0E9);
+          }
+
+        @Override
+        public String toString()
+          {
+            return NumberFormatUtil.printDataSize(bytes) + " in " + DurationUtil.printDuration(totalNanos)
+            + " (" + String.format("%.1f", mbPerSecond()) + " MB/s)"
+            + "; source read wait=" + DurationUtil.printDuration(readNanos)
+            + "; GCS write wait=" + DurationUtil.printDuration(writeNanos)
+            + "; GCS finalize=" + DurationUtil.printDuration(finalizeNanos);
+          }
+      }
+
+    /** Called after each chunk is written. May throw to abort the upload (e.g., size limit exceeded). */
+    public interface UploadProgressListener
+      {
+        void onProgress(UploadStats stats)
+        throws IOException;
+      }
+
+    /**
+     * Streams an input stream to a zonal bucket as an appendable object with no local copy: data is read in
+     * chunks and written straight to GCS. Returns timing statistics, and reports progress after every chunk
+     * to the (optional) listener.
+     */
+    public static UploadStats uploadAppendable(Storage cs, InputStream inputStream, String bucketName, String fullFileName, String mimeType, UploadProgressListener listener)
+    throws IOException
+      {
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fullFileName).setContentType(mimeType).build();
+        BlobAppendableUpload upload = cs.blobAppendableUpload(blobInfo
+        , BlobAppendableUploadConfig.of().withCloseAction(BlobAppendableUploadConfig.CloseAction.FINALIZE_WHEN_CLOSING)
+        , Storage.BlobWriteOption.doesNotExist());
+        UploadStats stats = new UploadStats();
+        long start = System.nanoTime();
+        byte[] chunk = new byte[1024 * 1024 * 4];
+        BlobAppendableUpload.AppendableUploadWriteableByteChannel channel = upload.open();
+        try
+          {
+            while (true)
+              {
+                long t0 = System.nanoTime();
+                int n = inputStream.readNBytes(chunk, 0, chunk.length); // fills the chunk unless EOF
+                stats.readNanos += System.nanoTime() - t0;
+                if (n <= 0)
+                  break;
+                ByteBuffer buf = ByteBuffer.wrap(chunk, 0, n);
+                t0 = System.nanoTime();
+                while (buf.hasRemaining())
+                  channel.write(buf);
+                stats.writeNanos += System.nanoTime() - t0;
+                stats.bytes += n;
+                stats.totalNanos = System.nanoTime() - start;
+                if (listener != null)
+                  listener.onProgress(stats);
+              }
+          }
+        catch (IOException | RuntimeException e)
+          {
+            try
+              {
+                channel.close();
+              }
+            catch (Exception ignore)
+              {
+                // the original failure is the interesting one
+              }
+            throw e;
+          }
+        long t0 = System.nanoTime();
+        channel.close(); // finalizes the object
+        stats.finalizeNanos = System.nanoTime() - t0;
+        stats.totalNanos = System.nanoTime() - start;
+        return stats;
+      }
+
     public static int upload(Storage cs, InputStream inputStream, String bucketName, String fullFileName, String mimeType)
     throws IOException
       {
@@ -146,12 +272,12 @@ public class CSHelper
             int totalSize = 0;
             while (channel.read(buf) != -1)
               {
-                totalSize+=buf.position();
+                totalSize += buf.position();
                 buf.flip(); // Prepare the buffer for writing
                 writer.write(buf);
                 buf.clear(); // Prepare the buffer for the next read
               }
-           return totalSize;
+            return totalSize;
           }
       }
 
@@ -199,33 +325,107 @@ public class CSHelper
 
     /**
      * Derives a MIME type from a GCS object path when the stored content-type
-     * is absent.  Falls back to {@code application/octet-stream}.
+     * is absent. Falls back to {@code application/octet-stream}.
      */
     public static String detectMimeType(String name)
       {
         if (name == null)
           return "application/octet-stream";
         String lc = name.toLowerCase();
-        if (lc.endsWith(".pdf"))                          return "application/pdf";
-        if (lc.endsWith(".jpg") || lc.endsWith(".jpeg")) return "image/jpeg";
-        if (lc.endsWith(".png"))                          return "image/png";
-        if (lc.endsWith(".gif"))                          return "image/gif";
-        if (lc.endsWith(".bmp"))                          return "image/bmp";
-        if (lc.endsWith(".zip"))                          return "application/zip";
-        if (lc.endsWith(".json"))                         return "application/json";
-        if (lc.endsWith(".csv"))                          return "text/csv";
-        if (lc.endsWith(".txt"))                          return "text/plain";
+        if (lc.endsWith(".pdf"))
+          return "application/pdf";
+        if (lc.endsWith(".jpg") || lc.endsWith(".jpeg"))
+          return "image/jpeg";
+        if (lc.endsWith(".png"))
+          return "image/png";
+        if (lc.endsWith(".gif"))
+          return "image/gif";
+        if (lc.endsWith(".bmp"))
+          return "image/bmp";
+        if (lc.endsWith(".zip"))
+          return "application/zip";
+        if (lc.endsWith(".json"))
+          return "application/json";
+        if (lc.endsWith(".csv"))
+          return "text/csv";
+        if (lc.endsWith(".txt"))
+          return "text/plain";
         return "application/octet-stream";
       }
 
+
+    public static int _DEFAULT_SIGNED_URL_MINUTES = 20;
+    
     public static URL genSignedUrl(Storage cs, String bucketName, String fullFileName, String mimeType)
+    throws IOException
+      {
+        return genSignedUrl(cs, bucketName, fullFileName, mimeType, _DEFAULT_SIGNED_URL_MINUTES);
+      }
+
+    public static URL genSignedUrl(Storage cs, String bucketName, String fullFileName, String mimeType, int expirationMinutes)
     throws IOException
       {
         long nanoTime = System.nanoTime();
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fullFileName).setContentType(mimeType).build();
-        URL url = cs.signUrl(blobInfo, 60, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
-        LOG.debug("Time to get a GCS signed link for a document: "+DurationUtil.printDurationMilliSeconds(System.nanoTime()-nanoTime));
+        URL url = cs.signUrl(blobInfo, expirationMinutes, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+        LOG.debug("Time to get a GCS signed link for a document: " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - nanoTime));
         return url;
       }
-    
+
+    /**
+     * Returns true if the bucket has hierarchical namespace (HNS) enabled, which is required for atomic folder renames
+     * and for zonal buckets.
+     */
+    public static boolean isHierarchicalNamespace(Storage cs, String bucketName)
+      {
+        Bucket b = cs.get(bucketName);
+        return b != null && b.getHierarchicalNamespace() != null && Boolean.TRUE.equals(b.getHierarchicalNamespace().getEnabled());
+      }
+
+    private static String withTrailingSlash(String folder)
+      {
+        return folder.endsWith("/") ? folder : folder + "/";
+      }
+
+    /**
+     * Renames a folder in a hierarchical-namespace bucket. This is a single metadata operation (no per-object copy),
+     * executed through the Storage Control API as a long-running operation which this method waits for.
+     * 
+     * @param oldFolder the current folder path within the bucket, e.g. "app/project (12)"
+     * @param newFolder the new folder path within the bucket
+     * @return true if the folder was renamed, false if there was nothing to do: the paths are the same, or the
+     *         source folder does not exist (e.g. a project that never had any file uploaded).
+     * @throws Exception on any other failure, in which case nothing was renamed.
+     */
+    public static boolean renameFolder(String dataProjectName, String bucketName, String oldFolder, String newFolder)
+    throws Exception
+      {
+        oldFolder = withTrailingSlash(oldFolder);
+        newFolder = withTrailingSlash(newFolder);
+        if (oldFolder.equals(newFolder))
+          return false;
+        StorageControlSettings settings = StorageControlSettings.newBuilder()
+        .setCredentialsProvider(FixedCredentialsProvider.create(AuthHelper.getCredentials(dataProjectName, "cs"))).build();
+        long start = System.nanoTime();
+        try (StorageControlClient client = StorageControlClient.create(settings))
+          {
+            client.renameFolderAsync(FolderName.format("_", bucketName, oldFolder), newFolder).get(5, TimeUnit.MINUTES);
+            LOG.info("Renamed folder 'gs://" + bucketName + "/" + oldFolder + "' to '" + newFolder + "' in " + DurationUtil.printDuration(System.nanoTime() - start));
+            return true;
+          }
+        catch (ExecutionException e)
+          {
+            Throwable cause = e.getCause();
+            if (cause instanceof NotFoundException)
+              {
+                LOG.warn("Folder 'gs://" + bucketName + "/" + oldFolder + "' does not exist: nothing to rename.");
+                return false;
+              }
+            if (cause instanceof Exception)
+              throw (Exception) cause;
+            throw e;
+          }
+      }
+
+
   }

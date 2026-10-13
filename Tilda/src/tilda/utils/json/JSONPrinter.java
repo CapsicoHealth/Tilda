@@ -49,6 +49,7 @@ import tilda.utils.json.elements.ElementDef.NestingStatus;
 import tilda.utils.json.elements.ElementDouble;
 import tilda.utils.json.elements.ElementDoubleArray;
 import tilda.utils.json.elements.ElementEnd;
+import tilda.utils.json.elements.ElementFloatArray;
 import tilda.utils.json.elements.ElementStart;
 import tilda.utils.json.elements.ElementList;
 import tilda.utils.json.elements.ElementLocalDate;
@@ -208,6 +209,18 @@ public class JSONPrinter
     public JSONPrinter addElement(String Name, Double[] Val)
       {
         _Elements.add(new ElementDoubleArray(Name, Val));
+        return this;
+      }
+
+    public JSONPrinter addElement(String Name, float[] Val)
+      {
+        _Elements.add(new ElementFloatArray(Name, Val));
+        return this;
+      }
+
+    public JSONPrinter addElement(String Name, Float[] Val)
+      {
+        _Elements.add(new ElementFloatArray(Name, Val));
         return this;
       }
 
