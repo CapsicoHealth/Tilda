@@ -19,6 +19,7 @@ import com.google.cloud.bigquery.BigQuery.DatasetListOption;
 import com.google.cloud.bigquery.BigQuery.TableListOption;
 import com.google.cloud.bigquery.BigQueryException;
 import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.Clustering;
 import com.google.cloud.bigquery.CopyJobConfiguration;
 import com.google.cloud.bigquery.Dataset;
 import com.google.cloud.bigquery.DatasetInfo;
@@ -564,6 +565,52 @@ public class BQHelper
         if (JobHelper.completeJob(out.getJob(), errMessages) == null)
           throw new Exception("Some error occurred");
         LOG.debug("SUCCESS!");
+      }
+
+    /**
+     * Sets, changes or removes the clustering specification of an existing BigQuery table <B>using the BigQuery client API</B>
+     * (<code>tables.patch</code> via the google-cloud-bigquery library), with the credentials resolved by {@link AuthHelper}.
+     * <P>
+     * This is done through the API because BigQuery SQL has no DDL (<code>ALTER TABLE ... CLUSTER BY</code> and
+     * <code>ALTER TABLE ... SET OPTIONS(clustering_fields=...)</code> are both rejected) to change the clustering of an existing table.
+     * <P>
+     * Only newly written data is clustered according to the new specification; BigQuery re-clusters existing data
+     * in the background. After the update, the table is re-read and the resulting clustering verified against what was requested.
+     *
+     * @param bq an authenticated BigQuery instance
+     * @param datasetName the dataset (Tilda schema) name
+     * @param tableName the table name
+     * @param clusterColumns the ordered list of clustering columns. If null or empty, clustering is removed.
+     * @throws Exception if the table doesn't exist, isn't a regular table, or the clustering after the update doesn't match.
+     */
+    public static void setClustering(BigQuery bq, String datasetName, String tableName, List<String> clusterColumns)
+    throws Exception
+      {
+        List<String> wanted = clusterColumns == null ? new ArrayList<String>() : clusterColumns;
+        Table table = bq.getTable(datasetName, tableName);
+        if (table == null)
+          throw new Exception("Cannot set clustering: table " + datasetName + "." + tableName + " was not found in BigQuery.");
+        if ((table.getDefinition() instanceof StandardTableDefinition) == false)
+          throw new Exception("Cannot set clustering: " + datasetName + "." + tableName + " is not a regular BigQuery table.");
+
+        StandardTableDefinition def = table.getDefinition();
+        // An empty field list is how the clustering is cleared in the patch (a null/absent clustering would leave it unchanged).
+        Clustering clustering = Clustering.newBuilder().setFields(wanted).build();
+        LOG.info("Setting clustering of BigQuery table " + datasetName + "." + tableName + " to " + (wanted.isEmpty() ? "[none]" : wanted.toString()) + " through the BigQuery API (tables.patch).");
+        bq.update(table.toBuilder().setDefinition(def.toBuilder().setClustering(clustering).build()).build());
+
+        // Verifying.
+        Table updated = bq.getTable(datasetName, tableName);
+        StandardTableDefinition updatedDef = updated == null ? null : updated.getDefinition();
+        List<String> actual = updatedDef == null || updatedDef.getClustering() == null || updatedDef.getClustering().getFields() == null
+        ? new ArrayList<String>()
+        : updatedDef.getClustering().getFields();
+        boolean same = actual.size() == wanted.size();
+        for (int i = 0; same == true && i < wanted.size(); ++i)
+          same = actual.get(i).equalsIgnoreCase(wanted.get(i));
+        if (same == false)
+          throw new Exception("The clustering of " + datasetName + "." + tableName + " was requested as " + wanted + " through the BigQuery API but is reported as " + actual
+          + ". The table needs to be migrated manually.");
       }
 
     public static boolean createTable(BigQuery bq, String datasetName, String tableName, Schema schema)
