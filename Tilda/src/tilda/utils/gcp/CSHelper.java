@@ -367,7 +367,18 @@ public class CSHelper
       {
         long nanoTime = System.nanoTime();
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fullFileName).setContentType(mimeType).build();
-        URL url = cs.signUrl(blobInfo, expirationMinutes, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+        URL url;
+        try
+          {
+            url = cs.signUrl(blobInfo, expirationMinutes, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+          }
+        catch (UnsupportedOperationException e)
+          {
+            // gRPC-based Storage instances cannot sign URLs: fall back to an HTTP instance with the same credentials.
+            StorageOptions o = cs.getOptions();
+            Storage http = StorageOptions.http().setCredentials(o.getCredentials()).setProjectId(o.getProjectId()).build().getService();
+            url = http.signUrl(blobInfo, expirationMinutes, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+          }
         LOG.debug("Time to get a GCS signed link for a document: " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - nanoTime));
         return url;
       }
