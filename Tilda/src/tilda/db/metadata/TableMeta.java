@@ -78,6 +78,17 @@ public class TableMeta implements TableViewMeta
     public void load(Connection C)
     throws Exception
       {
+        load(C, false);
+      }
+
+    /**
+     * @param C the connection
+     * @param vectorIndexesPreloaded true if the vector indices of the whole schema have been loaded in bulk already (and will be added to this
+     *        table by the caller), so they must not be looked up again for this table.
+     */
+    public void load(Connection C, boolean vectorIndexesPreloaded)
+    throws Exception
+      {
         DatabaseMetaData meta = C.getMetaData();
 
         if (_ColumnsList.isEmpty() == true)
@@ -101,13 +112,26 @@ public class TableMeta implements TableViewMeta
             MetaPerformance._IndexNano += (System.nanoTime() - TS);
             MetaPerformance._IndexCount += _Indices.size();
           }
-        else if (C.getDBType().supportsVectorIndices() == true && C.getDBType().supportsVectorIndexMetadata() == true)
-          C.getDBType().loadVectorIndexMetadata(C, this);
+        else if (vectorIndexesPreloaded == false && C.getDBType().supportsVectorIndices() == true && C.getDBType().supportsVectorIndexMetadata() == true)
+          {
+            long TS = System.nanoTime();
+            C.getDBType().loadVectorIndexMetadata(C, this);
+            MetaPerformance._VectorIndexNano += (System.nanoTime() - TS);
+            ++MetaPerformance._VectorIndexCount;
+          }
       }
 
     public void addVectorIndexMetadata(String indexName, String columnName)
       {
         _Indices.put(indexName, new IndexMeta(indexName, this, columnName));
+      }
+
+    public void addClusterIndexMetadata(List<String> clusterColumns)
+      {
+        if (clusterColumns == null || clusterColumns.isEmpty() == true)
+          return;
+        String name = _TableName + "_cluster";
+        _Indices.put(name, new IndexMeta(name, this, clusterColumns));
       }
 
     protected void loadColumns(Connection C, ResultSet RS)

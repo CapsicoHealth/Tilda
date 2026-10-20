@@ -51,6 +51,15 @@ import tilda.utils.TextUtil;
 
 public class PostgreSQL extends CommonStoreImpl
   {
+    @Override
+    public boolean alterTableRenameFK(Connection Con, tilda.parsing.parts.ForeignKey FK, tilda.db.metadata.FKMeta oldFK)
+    throws Exception
+      {
+        // The old name comes from the database so it is quoted to match it exactly. The new one is unquoted like in the CREATE TABLE statement.
+        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " RENAME CONSTRAINT \"" + oldFK._Name + "\" TO " + FK.getName() + ";";
+        return Con.executeDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
+      }
+
     static final Logger LOG = LogManager.getLogger(PostgreSQL.class.getName());
 
     @Override

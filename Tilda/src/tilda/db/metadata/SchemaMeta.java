@@ -48,17 +48,34 @@ public class SchemaMeta
     public void load(Connection C, String TablePattern)
     throws Exception
       {
+        load(C, TablePattern, true);
+      }
+
+    /**
+     * Loads the metadata of this schema.
+     *
+     * @param C the connection
+     * @param TablePattern an optional table name pattern
+     * @param loadForeignKeys if false, foreign key metadata (incoming and outgoing) is not loaded. Loading it table by table costs 2 remote calls
+     *        per table, which is expensive for some databases.
+     */
+    public void load(Connection C, String TablePattern, boolean loadForeignKeys)
+    throws Exception
+      {
         DatabaseMetaData meta = C.getMetaData();
 
-        Map<String, FKMeta> outFKs = null;
-        Map<String, FKMeta> inFKs = null;
-        if (C.supportsSuperMetaDataQueries() == true)
+        Map<String, FKMeta> outFKs = new HashMap<String, FKMeta>();
+        Map<String, FKMeta> inFKs = new HashMap<String, FKMeta>();
+        if (loadForeignKeys == true && C.supportsSuperMetaDataQueries() == true)
          {
            outFKs = loadForeignKeys(meta, _SchemaName, TablePattern, true, C.isCaseSentitiveSchemaTableViewNames());
            inFKs = loadForeignKeys(meta, _SchemaName, TablePattern, false, C.isCaseSentitiveSchemaTableViewNames());
          }
+        long smTS = System.nanoTime();
         DBType.DatabaseSchemaMetadata schemaMetadata = C.getDBType().loadSchemaMetadata(C, _SchemaName);
-        Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern, schemaMetadata._ColumnDefaults);
+        MetaPerformance._SchemaMetadataNano += (System.nanoTime() - smTS);
+        ++MetaPerformance._SchemaMetadataCount;
+        Map<String, Map<String, Map<String, ColumnMeta>>> columns = loadColumns(C, meta, _SchemaName, TablePattern, schemaMetadata);
         long pkTS = System.nanoTime();
         Map<String, PKMeta> PKs = C.getDBType().loadPrimaryKeyMetadata(C, _SchemaName);
         MetaPerformance._PKNano += (System.nanoTime() - pkTS);
@@ -74,7 +91,10 @@ public class SchemaMeta
             if (tablePattern != null)
               tablePattern = tablePattern.toLowerCase();
           }
+        long tlTS = System.nanoTime();
         ResultSet RS = meta.getTables(null, schemaName, tablePattern, null);
+        MetaPerformance._TableListNano += (System.nanoTime() - tlTS);
+        ++MetaPerformance._TableListCount;
         boolean caseSensitive = C.isCaseSentitiveSchemaTableViewNames();
         while (RS.next() != false)
           {
@@ -91,23 +111,42 @@ public class SchemaMeta
                       Descr = tableDescription;
                   }
                 long TS = System.nanoTime();
+                // The per-table FK lookups have their own timers: track them so they can be excluded from the 'Tables' bucket below.
+                long fkNanoBefore = MetaPerformance._FKOutNano + MetaPerformance._FKInNano;
                 TableMeta T = new TableMeta(_SchemaName, Name, Descr);
-                if (C.supportsSuperMetaDataQueries() == false)
+                if (loadForeignKeys == true && C.supportsSuperMetaDataQueries() == false)
                   {
-                    outFKs = loadForeignKeys(meta, _SchemaName, T._TableName, true, C.isCaseSentitiveSchemaTableViewNames());
-                    inFKs = loadForeignKeys(meta, _SchemaName, T._TableName, false, C.isCaseSentitiveSchemaTableViewNames());
+                    // JDBC can only look up foreign keys one table at a time, which is a remote call each. So when the database could tell us in bulk
+                    // which tables have FKs at all, the others are skipped, and incoming FKs are derived later (see DatabaseMeta) when so requested.
+                    if (schemaMetadata._TablesWithForeignKeys == null || schemaMetadata._TablesWithForeignKeys.contains(Name.toLowerCase(Locale.ROOT)) == true)
+                      outFKs = loadForeignKeys(meta, _SchemaName, T._TableName, true, C.isCaseSentitiveSchemaTableViewNames());
+                    else
+                      outFKs = new HashMap<String, FKMeta>();
+                    if (C.getDBType().loadsIncomingForeignKeysByInversion() == true)
+                      inFKs = new HashMap<String, FKMeta>();
+                    else
+                      inFKs = loadForeignKeys(meta, _SchemaName, T._TableName, false, C.isCaseSentitiveSchemaTableViewNames());
                   }
                 setColumns(columns, T);
                 setFKs(inFKs, outFKs, T);
                 setPKs(PKs, T);
-                MetaPerformance._TableNano += (System.nanoTime() - TS);
+                MetaPerformance._TableNano += (System.nanoTime() - TS) - ((MetaPerformance._FKOutNano + MetaPerformance._FKInNano) - fkNanoBefore);
                 ++MetaPerformance._TableCount;
                 if (_DBTables.get(Name.toLowerCase()) != null)
                   LOG.warn("        The table '" + Name + "' seems to have come more than once through the information schema query !!! " + JDBCHelper.printResultSet(RS));
                 else
                   {
                     _DBTables.put(Name.toLowerCase(), T);
-                    T.load(C);
+                    T.load(C, schemaMetadata._VectorIndexesLoaded);
+                    if (schemaMetadata._VectorIndexesLoaded == true)
+                      {
+                        java.util.List<String[]> vectorIndexes = schemaMetadata._VectorIndexes.get(Name.toLowerCase(Locale.ROOT));
+                        if (vectorIndexes != null)
+                          for (String[] vi : vectorIndexes)
+                            T.addVectorIndexMetadata(vi[0], vi[1]);
+                      }
+                    if (C.getDBType().supportsClusterMetadata() == true)
+                      T.addClusterIndexMetadata(schemaMetadata._ClusterColumns.get(Name.toLowerCase(Locale.ROOT)));
                   }
               }
             else if ("view".equalsIgnoreCase(Type) == true)
@@ -141,9 +180,10 @@ public class SchemaMeta
      * @return
      * @throws Exception
      */
-    protected static Map<String, Map<String, Map<String, ColumnMeta>>> loadColumns(Connection C, DatabaseMetaData meta, String SchemaName, String TableName, Map<String, Map<String, String>> columnDefaults)
+    protected static Map<String, Map<String, Map<String, ColumnMeta>>> loadColumns(Connection C, DatabaseMetaData meta, String SchemaName, String TableName, DBType.DatabaseSchemaMetadata schemaMetadata)
     throws Exception
       {
+        Map<String, Map<String, String>> columnDefaults = schemaMetadata._ColumnDefaults;
         long TS = System.nanoTime();
         if (C.isCaseSentitiveSchemaTableViewNames() == false)
           {
@@ -163,6 +203,14 @@ public class SchemaMeta
             Map<String, String> tableDefaults = columnDefaults.get(CI._SrcTable.toLowerCase(Locale.ROOT));
             if (CI._Default == null && tableDefaults != null)
               CI._Default = tableDefaults.get(CI._Name.toLowerCase(Locale.ROOT));
+            // Completing the type of columns for which JDBC doesn't tell the full story (e.g., the element type of BigQuery arrays).
+            Map<String, String> tableDataTypes = schemaMetadata._ColumnDataTypes.get(CI._SrcTable.toLowerCase(Locale.ROOT));
+            if (tableDataTypes != null)
+              {
+                CI._DbDataType = tableDataTypes.get(CI._Name.toLowerCase(Locale.ROOT));
+                if (CI._DbDataType != null && CI._TildaType == null)
+                  CI._TildaType = C.getDBType().getArrayElementColumnType(CI._DbDataType);
+              }
             Map<String, Map<String, ColumnMeta>> schema = columns.get(CI._SrcSchema.toLowerCase());
             if (schema == null)
               {

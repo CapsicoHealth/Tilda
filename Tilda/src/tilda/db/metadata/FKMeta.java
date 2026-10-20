@@ -39,6 +39,27 @@ public class FKMeta
         _Outgoing = Outgoing;
       }
 
+    private FKMeta(String name, String srcSchema, String srcTable, String otherSchema, String otherTable, boolean outgoing)
+      {
+        _Name = name;
+        _SrcSchema = srcSchema;
+        _SrcTable = srcTable;
+        _OtherSchema = otherSchema;
+        _OtherTable = otherTable;
+        _Outgoing = outgoing;
+      }
+
+    /**
+     * For an outgoing foreign key (from table A to table B), returns the equivalent incoming foreign key as seen from table B. This is
+     * used for databases where incoming foreign keys can't be looked up efficiently, and are derived from the outgoing ones instead.
+     */
+    public FKMeta invert()
+      {
+        FKMeta inverted = new FKMeta(_Name, _OtherSchema, _OtherTable, _SrcSchema, _SrcTable, _Outgoing == false);
+        for (FKColumnMeta col : _Columns)
+          inverted._Columns.add(new FKColumnMeta(col._Pos, col._PKCol, col._FKCol, inverted));
+        return inverted;
+      }
     public final String             _Name;
     public final String             _SrcSchema;
     public final String             _SrcTable;

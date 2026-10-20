@@ -369,13 +369,20 @@ public class Object extends Base
           _PrimaryKey.validate(PS, this);
 
         Set<String> FKNames = new HashSet<String>();
+        Set<String> FKSignatures = new HashSet<String>();
         for (ForeignKey FK : _ForeignKeys)
           {
             if (FK == null)
               continue;
             if (FK.validate(PS, this) == true)
-              if (FKNames.add(FK._Name.toUpperCase()) == false)
-                PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey named '" + FK._Name + "'.");
+              {
+                if (FKNames.add(FK._Name.toUpperCase()) == false)
+                  PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey named '" + FK._Name + "'.");
+                // Two foreign keys with the same source columns and destination are logically identical, whatever their names, and
+                // would be reconciled (and created in the database) as duplicates.
+                else if (FKSignatures.add(FK.getSignature().toUpperCase()) == false)
+                  PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey '" + FK._Name + "' on signature '" + FK.getSignature() + "': another foreign key already has the same source columns and destination object.");
+              }
           }
 
         if (_PrimaryKey == null && _HasUniqueIndex == false && _FST != FrameworkSourcedType.VIEW)

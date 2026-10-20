@@ -69,6 +69,7 @@ import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableFKAdd;
 import tilda.migration.actions.TableFKDrop;
+import tilda.migration.actions.TableFKRename;
 import tilda.migration.actions.TableIndexAdd;
 import tilda.migration.actions.TableIndexAddCluster;
 import tilda.migration.actions.TableIndexDrop;
@@ -1133,10 +1134,48 @@ public class Migrator
               if (Sig.equals(fk.getSignature()) == true)
                 {
                   Found = true;
+                  // Same logical FK, but not named as per the convention (e.g., created by an older version or with a default name).
+                  // Names are compared case-insensitively since some databases fold the case of unquoted names.
+                  if (FK._multi == false && fk._Name.equalsIgnoreCase(FK.getName()) == false)
+                    Actions.add(new TableFKRename(FK, fk));
                   break;
                 }
             if (Found == false && FK._multi == false)
               Actions.add(new TableFKAdd(FK));
+          }
+      }
+
+    protected static void handleTableClusterIndex(List<MigrationAction> Actions, Object Obj, TableMeta TMeta)
+      {
+        Index modelCluster = null;
+        for (Index IX : Obj._Indices)
+          if (IX != null && IX._Db == true && IX._Cluster == true)
+            {
+              modelCluster = IX;
+              break;
+            }
+        IndexMeta dbCluster = TMeta.getClusterIndex();
+
+        List<String> modelCols = new java.util.ArrayList<String>();
+        if (modelCluster != null)
+          for (Column C : modelCluster._ColumnObjs)
+            if (C != null)
+              modelCols.add(C.getName());
+        List<String> dbCols = dbCluster == null ? new java.util.ArrayList<String>() : dbCluster.getColumnNames();
+
+        boolean same = modelCols.size() == dbCols.size();
+        for (int i = 0; same == true && i < modelCols.size(); ++i)
+          same = modelCols.get(i).equalsIgnoreCase(dbCols.get(i));
+        if (same == false)
+          {
+            // BigQuery cannot alter clustering through SQL: these actions are executed through the BigQuery client API
+            // (see BigQuery.alterTableIndexAddCluster/DropCluster and BQHelper.setClustering). "Add" also covers a modification
+            // of the cluster columns, since it sets the full new clustering specification.
+            LOG.info("Cluster definition of " + Obj.getFullName() + " differs: model " + modelCols + " vs database " + dbCols + ". Migrating through the BigQuery API.");
+            if (modelCluster != null)
+              Actions.add(new TableIndexAddCluster(modelCluster));
+            else
+              Actions.add(new TableIndexDropCluster(dbCluster));
           }
       }
 
@@ -1148,6 +1187,8 @@ public class Migrator
         boolean supportsVectorMetadata = Store.supportsVectorIndexMetadata();
         if (supportsRegularIndices == false)
           {
+            if (Store.supportsClusterMetadata() == true)
+              handleTableClusterIndex(Actions, Obj, TMeta);
             if (supportsVectorIndices == false)
               return;
             for (Index IX : Obj._Indices)

@@ -67,12 +67,36 @@ public class DatabaseMeta
               S = new SchemaMeta(SchemaName);
             _DBSchemas.put(schemaKey, S);
             MetaPerformance._SchemaNano += (System.nanoTime() - TS);
-            S.load(C, TablePattern);
+            // Databases that don't support foreign keys don't need that metadata (the migration never looks at it), and it is expensive
+            // to load since JDBC can only retrieve it table by table.
+            S.load(C, TablePattern, C.getDBType().supportsForeignKeys());
             TS = System.nanoTime();
             ++MetaPerformance._SchemaCount;
           }
         RS.close();
         _SupportsArrays = C.supportsArrays();
+        if (C.getDBType().supportsForeignKeys() == true && C.getDBType().loadsIncomingForeignKeysByInversion() == true)
+          deriveIncomingForeignKeys();
+      }
+
+    /**
+     * Derives the incoming foreign keys of all the loaded tables by inverting the outgoing foreign keys of all the loaded tables (as opposed to
+     * looking them up table by table). It can be called repeatedly as more schemas get loaded: it is idempotent.
+     */
+    private void deriveIncomingForeignKeys()
+      {
+        for (SchemaMeta S : _DBSchemas.values())
+          for (TableMeta T : S.getTableMetas())
+            for (FKMeta fk : T._ForeignKeysOut.values())
+              {
+                SchemaMeta otherSchema = getSchemaMeta(fk._OtherSchema);
+                TableMeta otherTable = otherSchema == null ? null : otherSchema.getTableMeta(fk._OtherTable);
+                if (otherTable == null)
+                  continue;
+                FKMeta incoming = fk.invert();
+                incoming.attachToTable(otherTable);
+                otherTable._ForeignKeysIn.put(incoming._OtherSchema + "." + incoming._OtherTable + "." + incoming._Name, incoming);
+              }
       }
 
     public void load(Connection C, String SchemaPattern)

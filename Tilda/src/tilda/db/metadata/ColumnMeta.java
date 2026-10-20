@@ -58,7 +58,10 @@ public class ColumnMeta
     public final int        _Precision;
     public final int        _Scale;
     public final int        _Type;
-    public final ColumnType _TildaType;
+    /** Mapped from the JDBC metadata; for databases where that isn't enough (e.g., BigQuery arrays), the loader may complete it from the database's own catalog. */
+    public ColumnType       _TildaType;
+    /** The full native data type as per the database's catalog (e.g., ARRAY<INT64>), when the JDBC metadata isn't enough. Null if not loaded. */
+    public String           _DbDataType;
     public final String     _TypeSql;
     public final String     _TypeName;
     public final String     _Descr;

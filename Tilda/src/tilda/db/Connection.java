@@ -935,6 +935,12 @@ public final class Connection
         return _DB.alterTableAddFK(this, FK);
       }
 
+    public boolean alterTableRenameFK(ForeignKey FK, FKMeta oldFK)
+    throws Exception
+      {
+        return _DB.alterTableRenameFK(this, FK, oldFK);
+      }
+
     public boolean alterTableDropIndex(Object Obj, IndexMeta IX)
     throws Exception
       {

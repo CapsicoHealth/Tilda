@@ -91,6 +91,15 @@ public interface DBType
     public boolean  supportsFirstLastAggregates();
     public boolean  supportsPrimaryKeys();
     public boolean  supportsForeignKeys();
+    /**
+     * Returns true if the incoming foreign keys of tables must not be looked up (JDBC can only do that table by table, which is very slow
+     * for some databases), but derived instead by inverting the outgoing foreign keys of all the loaded schemas.
+     * Note that foreign keys defined in schemas that are not loaded are therefore not visible as incoming foreign keys.
+     */
+    public default boolean loadsIncomingForeignKeysByInversion()
+      {
+        return false;
+      }
     public default boolean supportsTildaCatalog()
       {
         return true;
@@ -121,6 +130,41 @@ public interface DBType
       {
         public final Map<String, String> _TableDescriptions = new HashMap<String, String>();
         public final Map<String, Map<String, String>> _ColumnDefaults = new HashMap<String, Map<String, String>>();
+        /**
+         * Lowercase table name -> lowercase column name -> native data type (e.g., ARRAY&lt;INT64&gt;), for the columns whose JDBC metadata isn't enough
+         * to know their complete type (e.g., BigQuery arrays, for which the JDBC metadata doesn't tell the element type).
+         */
+        public final Map<String, Map<String, String>> _ColumnDataTypes = new HashMap<String, Map<String, String>>();
+        /** Lowercase table name -> ordered (by clustering position) list of clustering column names. */
+        public final Map<String, java.util.List<String>> _ClusterColumns = new HashMap<String, java.util.List<String>>();
+        /**
+         * True if the vector indices of the whole schema were loaded in bulk in {@link #_VectorIndexes}, in which case they must not be
+         * looked up again table by table (see {@link DBType#loadVectorIndexMetadata}).
+         */
+        public boolean _VectorIndexesLoaded = false;
+        /** Lowercase table name -> list of {indexName, columnName} pairs. Only valid if {@link #_VectorIndexesLoaded} is true. */
+        public final Map<String, java.util.List<String[]>> _VectorIndexes = new HashMap<String, java.util.List<String[]>>();
+        /**
+         * If not null, the lowercase names of the tables of the schema that have at least one foreign key. This lets the loader skip the
+         * (expensive, per-table) foreign key lookups for all the other tables. If null, every table must be looked up.
+         */
+        public java.util.Set<String> _TablesWithForeignKeys = null;
+      }
+    /**
+     * Returns true if the database exposes table clustering only as table-level metadata (not through regular indices),
+     * and loadSchemaMetadata populates DatabaseSchemaMetadata._ClusterColumns accordingly.
+     */
+    public default boolean supportsClusterMetadata()
+      {
+        return false;
+      }
+    /**
+     * Maps the native data type of an array column, as found in {@link DatabaseSchemaMetadata#_ColumnDataTypes}, to the Tilda type of its elements.
+     * Returns null if the type is unknown or the database doesn't need this.
+     */
+    public default ColumnType getArrayElementColumnType(String dbDataType)
+      {
+        return null;
       }
     public default DatabaseSchemaMetadata loadSchemaMetadata(Connection con, String schemaName)
     throws Exception
@@ -179,6 +223,14 @@ public interface DBType
     public boolean alterTableSwitchTablePKType     (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK                (Connection Con, Object Obj, FKMeta FK) throws Exception;
     public boolean alterTableAddFK                 (Connection Con, ForeignKey FK) throws Exception;
+    /**
+     * Renames an existing database foreign key to the name defined by the model (see {@link ForeignKey#getName()}). The default implementation
+     * is for databases that cannot rename constraints: it drops the old foreign key and adds the new one.
+     */
+    public default boolean alterTableRenameFK      (Connection Con, ForeignKey FK, FKMeta oldFK) throws Exception
+      {
+        return alterTableDropFK(Con, FK._ParentObject, oldFK) && alterTableAddFK(Con, FK);
+      }
     public boolean alterTableDropIndex             (Connection Con, Object Obj, IndexMeta IX) throws Exception;
     public String  alterTableAddIndexDDL           (Index IX) throws Exception;
     public String  alterTableAddIndexUsingDDL      (Index IX) throws Exception;

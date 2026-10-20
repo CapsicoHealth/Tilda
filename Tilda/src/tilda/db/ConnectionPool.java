@@ -455,6 +455,7 @@ public class ConnectionPool
         DatabaseMeta DBMeta = new DatabaseMeta();
         LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
         long TS = System.nanoTime();
+        MetaPerformance.reset(); // counters are static and cumulative: report each database on its own.
         // Loading ALL schemas from the DB can be really a lot, especially in development environment where some orgs may
         // have multiple sandbox schemas and other dev artifacts. So let's focus on loading what's defined in TILDA files.
         // DBMeta.load(C, null);
@@ -462,7 +463,7 @@ public class ConnectionPool
           {
             DBMeta.load(C, S._Name);
           }
-        MetaPerformance.print();
+        MetaPerformance.print(C.getPoolName(), System.nanoTime() - TS);
         LOG.debug("--> Metadata fetching took " + DurationUtil.printDurationMilliSeconds(System.nanoTime() - TS));
         return DBMeta;
       }

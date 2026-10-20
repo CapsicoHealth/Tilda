@@ -34,6 +34,7 @@ import org.postgresql.core.BaseConnection;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
+import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.TableMeta;
@@ -48,6 +49,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.Sql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Index.Option;
 import tilda.parsing.parts.Index.Option;
@@ -59,6 +61,7 @@ import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.gcp.BQHelper;
 import tilda.utils.pairs.ColMetaColPair;
 
 public class BigQuery extends CommonStoreImpl
@@ -82,6 +85,9 @@ public class BigQuery extends CommonStoreImpl
     @Override
     public boolean isColumnTypeCompatible(Column Col, ColumnMeta CMeta)
       {
+        // The JDBC metadata doesn't tell the element type of arrays, so it comes from INFORMATION_SCHEMA (e.g., ARRAY<INT64>).
+        if (Col.isCollection() == true && CMeta._DbDataType != null)
+          return normalizeDataType(getColumnType(Col)).equalsIgnoreCase(normalizeDataType(CMeta._DbDataType));
         if (Col.getType() == CMeta._TildaType)
           return true;
         String modelType = getColumnType(Col);
@@ -89,6 +95,52 @@ public class BigQuery extends CommonStoreImpl
         if (precisionStart >= 0)
           modelType = modelType.substring(0, precisionStart);
         return modelType.equalsIgnoreCase(CMeta._TypeName);
+      }
+
+    /**
+     * Removes any parameterization (e.g., NUMERIC(10,2) becomes NUMERIC, STRING(256) becomes STRING) and spaces from a data type, so model and database types can be compared.
+     */
+    static String normalizeDataType(String dataType)
+      {
+        return dataType.replaceAll("\\([^)]*\\)", "").replace(" ", "");
+      }
+
+    /**
+     * Maps the native data type of an array column (e.g., ARRAY&lt;INT64&gt;) to the Tilda type of its elements.
+     */
+    @Override
+    public ColumnType getArrayElementColumnType(String dbDataType)
+      {
+        if (dbDataType == null)
+          return null;
+        String type = normalizeDataType(dbDataType).toUpperCase(Locale.ROOT);
+        if (type.startsWith("ARRAY<") == true && type.endsWith(">") == true)
+          type = type.substring("ARRAY<".length(), type.length() - 1);
+        switch (type)
+          {
+            case "STRING":
+              return ColumnType.STRING;
+            case "INT64":
+            case "INTEGER":
+              return ColumnType.LONG;
+            case "FLOAT64":
+            case "FLOAT":
+              return ColumnType.DOUBLE;
+            case "NUMERIC":
+            case "BIGNUMERIC":
+              return ColumnType.NUMERIC;
+            case "BOOL":
+            case "BOOLEAN":
+              return ColumnType.BOOLEAN;
+            case "DATE":
+              return ColumnType.DATE;
+            case "TIMESTAMP":
+              return ColumnType.DATETIME;
+            case "DATETIME":
+              return ColumnType.DATETIME_PLAIN;
+            default:
+              return null;
+          }
       }
 
     @Override
@@ -266,36 +318,170 @@ public class BigQuery extends CommonStoreImpl
       {
         String query = buildSchemaMetadataQuery(schemaName);
         DatabaseSchemaMetadata metadata = new DatabaseSchemaMetadata();
+        Map<String, java.util.TreeMap<Long, String>> clusterColumns = new HashMap<String, java.util.TreeMap<Long, String>>();
         try (Statement statement = Con.createStatement(); ResultSet rows = statement.executeQuery(query))
           {
             while (rows.next() == true)
               {
                 String tableName = rows.getString("table_name").toLowerCase(Locale.ROOT);
                 String metadataValue = rows.getString("metadata_value");
-                if ("TABLE_DESCRIPTION".equals(rows.getString("metadata_kind")) == true)
+                String kind = rows.getString("metadata_kind");
+                if ("TABLE_DESCRIPTION".equals(kind) == true)
                   metadata._TableDescriptions.put(tableName, metadataValue);
-                else if (metadataValue != null)
+                else if ("CLUSTER_COLUMN".equals(kind) == true)
                   {
-                    Map<String, String> tableDefaults = metadata._ColumnDefaults.get(tableName);
-                    if (tableDefaults == null)
+                    java.util.TreeMap<Long, String> cols = clusterColumns.get(tableName);
+                    if (cols == null)
                       {
-                        tableDefaults = new HashMap<String, String>();
-                        metadata._ColumnDefaults.put(tableName, tableDefaults);
+                        cols = new java.util.TreeMap<Long, String>();
+                        clusterColumns.put(tableName, cols);
                       }
-                    tableDefaults.put(rows.getString("column_name").toLowerCase(Locale.ROOT), metadataValue);
+                    cols.put(rows.getLong("clustering_position"), rows.getString("column_name"));
+                  }
+                else // COLUMN_DEFAULT rows: carry the column default (if any) and the native data type of array columns.
+                  {
+                    String columnName = rows.getString("column_name").toLowerCase(Locale.ROOT);
+                    String dataType = rows.getString("data_type");
+                    if (dataType != null && dataType.toUpperCase(Locale.ROOT).startsWith("ARRAY<") == true)
+                      {
+                        Map<String, String> tableTypes = metadata._ColumnDataTypes.get(tableName);
+                        if (tableTypes == null)
+                          {
+                            tableTypes = new HashMap<String, String>();
+                            metadata._ColumnDataTypes.put(tableName, tableTypes);
+                          }
+                        tableTypes.put(columnName, dataType);
+                      }
+                    if (metadataValue != null)
+                      {
+                        Map<String, String> tableDefaults = metadata._ColumnDefaults.get(tableName);
+                        if (tableDefaults == null)
+                          {
+                            tableDefaults = new HashMap<String, String>();
+                            metadata._ColumnDefaults.put(tableName, tableDefaults);
+                          }
+                        tableDefaults.put(columnName, metadataValue);
+                      }
                   }
               }
           }
+        for (Map.Entry<String, java.util.TreeMap<Long, String>> e : clusterColumns.entrySet())
+          metadata._ClusterColumns.put(e.getKey(), new java.util.ArrayList<String>(e.getValue().values()));
+
+        // Vector indices for the whole schema in one query, instead of one query per table (see TableMeta.load).
+        try
+          {
+            try (Statement statement = Con.createStatement(); ResultSet rows = statement.executeQuery(buildVectorIndexMetadataQuery(schemaName)))
+              {
+                while (rows.next() == true)
+                  {
+                    String tableName = rows.getString("table_name").toLowerCase(Locale.ROOT);
+                    java.util.List<String[]> indexes = metadata._VectorIndexes.get(tableName);
+                    if (indexes == null)
+                      {
+                        indexes = new java.util.ArrayList<String[]>();
+                        metadata._VectorIndexes.put(tableName, indexes);
+                      }
+                    indexes.add(new String[] { rows.getString("index_name"), rows.getString("index_column_name") });
+                  }
+              }
+            metadata._VectorIndexesLoaded = true;
+          }
+        catch (Exception E)
+          {
+            LOG.warn("Cannot load the vector indices of schema '" + schemaName + "' in bulk from INFORMATION_SCHEMA: falling back to slow table-by-table lookups.", E);
+            metadata._VectorIndexes.clear();
+            metadata._VectorIndexesLoaded = false;
+          }
+        // The tables that have foreign keys, in one query, so the per-table JDBC foreign key lookups can be skipped for all the others.
+        try
+          {
+            java.util.Set<String> tablesWithFKs = new java.util.HashSet<String>();
+            try (Statement statement = Con.createStatement(); ResultSet rows = statement.executeQuery(buildTablesWithForeignKeysQuery(schemaName)))
+              {
+                while (rows.next() == true)
+                  tablesWithFKs.add(rows.getString("table_name").toLowerCase(Locale.ROOT));
+              }
+            metadata._TablesWithForeignKeys = tablesWithFKs;
+          }
+        catch (Exception E)
+          {
+            LOG.warn("Cannot find the tables with foreign keys of schema '" + schemaName + "' in bulk from INFORMATION_SCHEMA: falling back to looking up every table.", E);
+            metadata._TablesWithForeignKeys = null;
+          }
         return metadata;
+      }
+
+    static String buildTablesWithForeignKeysQuery(String schemaName)
+      {
+        return "SELECT DISTINCT table_name FROM " + quoteIdentifier(schemaName + ".INFORMATION_SCHEMA.TABLE_CONSTRAINTS") + " WHERE constraint_type = 'FOREIGN KEY'";
+      }
+
+    static String buildVectorIndexMetadataQuery(String schemaName)
+      {
+        return "SELECT table_name, index_name, index_column_name FROM " + quoteIdentifier(schemaName + ".INFORMATION_SCHEMA.VECTOR_INDEX_COLUMNS");
+      }
+
+    @Override
+    public boolean supportsClusterMetadata()
+      {
+        return true;
+      }
+
+    /**
+     * BigQuery has no SQL DDL to change the clustering of an existing table: <code>ALTER TABLE ... SET CLUSTER BY</code> and
+     * <code>SET OPTIONS(clustering_fields=...)</code> are not supported. Clustering is only definable in SQL at CREATE TABLE time.
+     * <P>
+     * So, <B>cluster migrations (add, modify, remove) are NOT executed through JDBC/SQL: they are performed through the
+     * BigQuery client API</B> (see {@link BQHelper#setClustering}), using the credentials resolved by {@link tilda.utils.gcp.AuthHelper}
+     * for the project found in the connection's JDBC URL. The change is not transactional, and only affects newly written data: BigQuery
+     * re-clusters existing data in the background.
+     */
+    @Override
+    public boolean alterTableIndexAddCluster(Connection Con, Index IX)
+    throws Exception
+      {
+        List<String> cols = new java.util.ArrayList<String>();
+        for (Column C : IX._ColumnObjs)
+          if (C != null)
+            cols.add(C.getName());
+        BQHelper.setClustering(BQHelper.getBigQuery(getProjectId(Con)), IX._Parent._ParentSchema._Name, IX._Parent._Name, cols);
+        return true;
+      }
+
+    /**
+     * Removes the clustering of a BigQuery table through the BigQuery client API (see {@link #alterTableIndexAddCluster(Connection, Index)}).
+     */
+    @Override
+    public boolean alterTableIndexDropCluster(Connection Con, IndexMeta IX)
+    throws Exception
+      {
+        BQHelper.setClustering(BQHelper.getBigQuery(getProjectId(Con)), IX._ParentTable._SchemaName, IX._ParentTable._TableName, null);
+        return true;
+      }
+
+    /**
+     * Extracts the GCP project id from the connection's JDBC URL (the "ProjectId=xxx;" property), which is needed to
+     * authenticate with the BigQuery client API.
+     */
+    static String getProjectId(Connection Con)
+    throws Exception
+      {
+        String url = Con.getURL();
+        java.util.regex.Matcher M = url == null ? null : java.util.regex.Pattern.compile("(?i)[;?&]ProjectId=([^;&]+)").matcher(url);
+        if (M == null || M.find() == false)
+          throw new Exception("Cannot determine the GCP project from the BigQuery JDBC URL (no 'ProjectId=' property): the cluster change needs to be migrated manually.");
+        return M.group(1);
       }
 
     static String buildSchemaMetadataQuery(String schemaName)
       {
         String tableOptions = quoteIdentifier(schemaName + ".INFORMATION_SCHEMA.TABLE_OPTIONS");
         String columns = quoteIdentifier(schemaName + ".INFORMATION_SCHEMA.COLUMNS");
-        return "SELECT 'TABLE_DESCRIPTION' AS metadata_kind, table_name, CAST(NULL AS STRING) AS column_name, JSON_VALUE(option_value, '$') AS metadata_value FROM "
-        + tableOptions + " WHERE option_name = 'description' UNION ALL SELECT 'COLUMN_DEFAULT' AS metadata_kind, table_name, column_name, column_default AS metadata_value FROM "
-        + columns + " WHERE column_default IS NOT NULL";
+        return "SELECT 'TABLE_DESCRIPTION' AS metadata_kind, table_name, CAST(NULL AS STRING) AS column_name, JSON_VALUE(option_value, '$') AS metadata_value, CAST(NULL AS INT64) AS clustering_position, CAST(NULL AS STRING) AS data_type FROM "
+        + tableOptions + " WHERE option_name = 'description' UNION ALL SELECT 'COLUMN_DEFAULT' AS metadata_kind, table_name, column_name, column_default AS metadata_value, CAST(NULL AS INT64) AS clustering_position, data_type FROM "
+        + columns + " WHERE column_default IS NOT NULL OR data_type LIKE 'ARRAY<%' UNION ALL SELECT 'CLUSTER_COLUMN' AS metadata_kind, table_name, column_name, CAST(NULL AS STRING) AS metadata_value, clustering_ordinal_position AS clustering_position, CAST(NULL AS STRING) AS data_type FROM "
+        + columns + " WHERE clustering_ordinal_position IS NOT NULL";
       }
     @Override
     public boolean hasVectorIndexDataForIndexCreation(Connection Con, Index IX)
@@ -749,7 +935,7 @@ public class BigQuery extends CommonStoreImpl
         Out.print("\n");
 
         if (IX._Cluster == true)
-          Out.print("-- app-level index only -- ALTER TABLE " + IX._Parent.getShortName() + " CLUSTER on " + IX.getName() + ";\n");
+          Out.print("-- cluster index: defined through the CLUSTER BY clause of the CREATE TABLE statement\n");
 
         return OutStr.toString();
       }

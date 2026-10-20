@@ -864,7 +864,8 @@ public abstract class CommonStoreImpl implements DBType
         if (supportsForeignKeys() == false)
           return true;
 
-        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\""
+        // Named as per the convention fk_<tableName>_<fkName>, unquoted exactly as in the CREATE TABLE statement, so both end up with the same name.
+        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT " + FK.getName()
         + " FOREIGN KEY (" + PrintColumnList(FK._SrcColumnObjs) + ") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
         + " ON DELETE restrict ON UPDATE cascade";
         return Con.executeDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);

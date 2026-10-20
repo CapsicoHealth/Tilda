@@ -170,14 +170,42 @@ public class Sql extends BigQuery implements CodeGenSql
           for (ForeignKey FK : O._ForeignKeys)
             if (FK != null && FK.isEnforcementExceptionFor(getName()) == false)
               {
-                Out.print("  , FOREIGN KEY (");
+                if (FK._multi == true)
+                  {
+                    Out.println("  -- FK '" + FK.getName() + "' defined from an array column. FK won't be created on DB");
+                    continue;
+                  }
+                // Named as per the convention fk_<tableName>_<fkName>, like in other databases.
+                Out.print("  , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
                 PrintColumnList(Out, FK._SrcColumnObjs);
                 Out.print(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name+"(");
                 PrintColumnList(Out, FK._DestObjectObj._PrimaryKey._ColumnObjs);
                 Out.println(") NOT ENFORCED");
               }
         Out.println(" )");
-        Out.println("OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(O._Description)+");");
+        Index ClusterIndex = null;
+        if (O._Indices != null)
+          for (Index IX : O._Indices)
+            if (IX != null && IX._Db == true && IX._Cluster == true)
+              {
+                ClusterIndex = IX;
+                break;
+              }
+        if (ClusterIndex != null)
+          {
+            if (ClusterIndex._ColumnObjs.size() > 4)
+              throw new Exception("Object " + O.getFullName() + " defines cluster index '" + ClusterIndex.getName() + "' with " + ClusterIndex._ColumnObjs.size() + " columns: BigQuery supports at most 4 clustering columns.");
+            for (Column C : ClusterIndex._ColumnObjs)
+              if (C != null && (C.isCollection() == true || C.getType() == ColumnType.JSON || C.getType() == ColumnType.FLOAT || C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.VECTOR))
+                throw new Exception("Object " + O.getFullName() + " defines cluster index '" + ClusterIndex.getName() + "' on column '" + C.getName() + "' whose type is not supported for BigQuery clustering.");
+            Out.print("CLUSTER BY ");
+            PrintColumnList(Out, ClusterIndex._ColumnObjs);
+            Out.println();
+          }
+        Out.println("OPTIONS (");
+        Out.println("   description=" + TextUtil.escapeDoubleQuoteWithSlash(O._Description));
+        Out.println("--  ,require_partition_filter = true -- Forces users to include a WHERE clause");
+        Out.println(");");
       }
 
 

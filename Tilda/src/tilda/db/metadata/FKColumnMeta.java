@@ -29,6 +29,14 @@ public class FKColumnMeta
         _ParentFK=FK; 
       }
 
+    protected FKColumnMeta(int pos, String pkCol, String fkCol, FKMeta FK)
+      {
+        _Pos = pos;
+        _PKCol = pkCol;
+        _FKCol = fkCol;
+        _ParentFK = FK;
+      }
+
     public final int        _Pos;
     public final String     _PKCol;
     public final String     _FKCol;

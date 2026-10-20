@@ -104,6 +104,19 @@ public class PKMeta
         return pkp._Map;
       }
 
+    /**
+     * Loads all the primary keys of a schema with a single query (as opposed to {@link #loadSchemaPrimaryKeysFromJdbc}, which costs one
+     * remote call per table). The query must return, ordered by table and key position, the columns: table_schema, table_name,
+     * primary_key_name, column_name and is_identity (boolean).
+     */
+    public static Map<String, PKMeta> loadSchemaPrimaryKeysFromQuery(Connection C, String schemaName, String query)
+    throws Exception
+      {
+        PKProcessor pkp = new PKProcessor();
+        C.executeSelect(schemaName, "PrimaryKeys", query, pkp);
+        return pkp._Map;
+      }
+
     public static Map<String, PKMeta> loadSchemaPrimaryKeysFromJdbc(Connection C, String schemaName)
     throws SQLException, Exception
       {

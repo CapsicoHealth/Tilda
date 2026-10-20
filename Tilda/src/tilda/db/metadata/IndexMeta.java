@@ -52,6 +52,22 @@ public class IndexMeta
         _Columns.add(new IndexColumnMeta(1, columnName));
       }
 
+    /**
+     * Creates a "fake" clustered index representing a table-level cluster definition (e.g., BigQuery CLUSTER BY).
+     */
+    public IndexMeta(String name, TableMeta parentTable, List<String> clusterColumns)
+      {
+        _Name = name;
+        _Unique = false;
+        _Cluster = true;
+        _FilterCondition = null;
+        _ParentTable = parentTable;
+        _VectorIndex = false;
+        int pos = 0;
+        for (String col : clusterColumns)
+          _Columns.add(new IndexColumnMeta(++pos, col));
+      }
+
     public final String     _Name  ;
     public final boolean    _VectorIndex;
     public final boolean    _Unique;
