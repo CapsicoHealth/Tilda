@@ -196,11 +196,15 @@ task syncTildaDependencies(type: Sync) {
    dependsOn copyDependencies
    def generatedDependencyDir = file("$buildDir/libs/deps")
    def tildaDependencyDir = file("$tildaProjectDir/lib/deps")
+   // Always reconcile the checked-in tree; Gradle's up-to-date check can miss
+   // extra files that were added to the destination outside this task.
+   outputs.upToDateWhen { false }
    from generatedDependencyDir
    into tildaDependencyDir
    doFirst {
       tildaDependencyChanges.before = relativeJarPaths(tildaDependencyDir)
       tildaDependencyChanges.after = relativeJarPaths(generatedDependencyDir)
+      delete tildaDependencyDir
    }
 }
 
