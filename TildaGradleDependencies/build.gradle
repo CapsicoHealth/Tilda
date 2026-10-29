@@ -164,7 +164,6 @@ task copyDependencies {
       
       // copy stuff
       configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.each { artifact ->
-          println artifact
           for (def dep : dependencyGroups) {
              if (artifact.moduleVersion.id.group.startsWith(dep.group)) {
                 copy {
@@ -179,8 +178,121 @@ task copyDependencies {
  }
 
 
+def tildaProjectDir = file("../Tilda")
+def tildaDependencyChanges = [:]
+def relativeJarPaths = { root ->
+   fileTree(root).matching { include '**/*.jar' }.files.collect { jar ->
+      root.toPath().relativize(jar.toPath()).toString().replace('\\', '/')
+   }.sort()
+}
+def dependencyIdentity = { relativePath ->
+   def fileName = relativePath.substring(relativePath.lastIndexOf('/') + 1)
+   def matcher = fileName =~ /^(.*?)-(?=\d)(.+)\.jar$/
+   matcher.matches() ? "${relativePath.substring(0, relativePath.lastIndexOf('/') + 1)}${matcher[0][1]}" : relativePath
+}
+
+// Sync generated dependencies into the Tilda project's checked-in library folder.
+task syncTildaDependencies(type: Sync) {
+   dependsOn copyDependencies
+   def generatedDependencyDir = file("$buildDir/libs/deps")
+   def tildaDependencyDir = file("$tildaProjectDir/lib/deps")
+   from generatedDependencyDir
+   into tildaDependencyDir
+   doFirst {
+      tildaDependencyChanges.before = relativeJarPaths(tildaDependencyDir)
+      tildaDependencyChanges.after = relativeJarPaths(generatedDependencyDir)
+   }
+}
+
+// Keep Eclipse's Java Build Path and WTP Deployment Assembly aligned with the synced JARs.
+task updateTildaClasspath {
+   dependsOn syncTildaDependencies
+   doLast {
+      def classpathFile = new File(tildaProjectDir, ".classpath")
+      if (!classpathFile.isFile()) {
+         throw new GradleException("Tilda Eclipse classpath file not found: $classpathFile")
+       }
+
+      def classpath = new groovy.util.XmlParser().parse(classpathFile)
+      def entries = classpath.children()
+      def dependencyEntries = entries.findAll { entry ->
+         entry instanceof groovy.util.Node && entry.attribute('kind') == 'lib' &&
+            entry.attribute('path')?.startsWith('lib/deps/')
+       }
+      def insertAt = dependencyEntries ? entries.indexOf(dependencyEntries.first()) :
+         entries.findIndexOf { entry -> entry instanceof groovy.util.Node && entry.attribute('kind') == 'output' }
+      if (insertAt < 0) {
+         insertAt = entries.size()
+       }
+      entries.removeAll(dependencyEntries)
+
+      def dependencyRoot = new File(tildaProjectDir, 'lib')
+      def jars = fileTree(new File(dependencyRoot, 'deps')).matching { include '**/*.jar' }.files.toList()
+      jars.sort { left, right -> left.path <=> right.path }
+      if (jars.isEmpty()) {
+         throw new GradleException("No dependency JARs found under ${new File(dependencyRoot, 'deps')}")
+       }
+
+      jars.each { jar ->
+         def relativePath = dependencyRoot.toPath().relativize(jar.toPath()).toString().replace('\\', '/')
+         def entry = new groovy.util.Node(null, 'classpathentry', [
+            exported: 'true',
+            kind: 'lib',
+            path: "lib/$relativePath"
+         ])
+         def attributes = entry.appendNode('attributes')
+         attributes.appendNode('attribute', [
+            name: 'org.eclipse.jst.component.dependency',
+            value: '../'
+         ])
+         entries.add(insertAt++, entry)
+       }
+
+      classpathFile.setText(groovy.xml.XmlUtil.serialize(classpath), 'UTF-8')
+   }
+}
+
 // Add tasks to the build process
-build.dependsOn(copyDependencies)
+build.dependsOn(updateTildaClasspath)
+build.doLast {
+   def removed = (tildaDependencyChanges.before ?: []) - (tildaDependencyChanges.after ?: [])
+   def added = (tildaDependencyChanges.after ?: []) - (tildaDependencyChanges.before ?: [])
+   def removedByIdentity = removed.groupBy(dependencyIdentity)
+   def addedByIdentity = added.groupBy(dependencyIdentity)
+   def replacements = []
+
+   removedByIdentity.each { identity, oldFiles ->
+      def newFiles = addedByIdentity.get(identity)
+      if (newFiles != null) {
+         oldFiles.sort()
+         newFiles.sort()
+         def pairCount = Math.min(oldFiles.size(), newFiles.size())
+         for (int i = 0; i < pairCount; i++) {
+            replacements << [oldFiles[i], newFiles[i]]
+            removed.remove(oldFiles[i])
+            added.remove(newFiles[i])
+          }
+       }
+    }
+
+   if (replacements.isEmpty() && added.isEmpty() && removed.isEmpty()) {
+      logger.lifecycle('Tilda dependency JARs: no added, removed, or version-replaced files.')
+    } else {
+      logger.lifecycle('Tilda dependency JAR changes:')
+      if (!replacements.isEmpty()) {
+         logger.lifecycle('  Replaced:')
+         replacements.each { pair -> logger.lifecycle("    ${pair[0]} -> ${pair[1]}") }
+       }
+      if (!added.isEmpty()) {
+         logger.lifecycle('  Added:')
+         added.sort().each { path -> logger.lifecycle("    ${path}") }
+       }
+      if (!removed.isEmpty()) {
+         logger.lifecycle('  Removed:')
+         removed.sort().each { path -> logger.lifecycle("    ${path}") }
+       }
+    }
+}
 
 
 
