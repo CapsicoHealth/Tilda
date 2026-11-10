@@ -1,11 +1,52 @@
-<P align="center"><IMG height="150px" src="docs/documentation/tilda-logo.gif">&nbsp;&nbsp;&nbsp;&nbsp;<IMG height="150px" src="docs/documentation/tilda.gif">
-</P>
-<H1>Intro</H1>
+<P align="center"><IMG height="150px" src="docs/documentation/tilda-logo.gif">&nbsp;&nbsp;&nbsp;&nbsp;<IMG height="150px" src="docs/documentation/tilda.gif"></P>
+
+# TILDA
+
+**Model your data once. Build, evolve, and explore entire data platforms.**
+
+TILDA (*Transparent Iterative Light Data Architecture*) is a **model-first framework for data-intensive applications**. Define your data structures and higher-level data patterns in readable JSON; let TILDA turn those definitions into database assets, migrations, Java APIs, and reusable analytics building blocks.
+
+It goes beyond a traditional ORM. TILDA starts at the **data model**, not at an object mapping layer: schemas, relationships, views, history, datamarts, formulas, pivots, and search capabilities are first-class parts of the design. It helps teams build transactional products, analytical systems, and research platforms without hand-maintaining the same design across SQL scripts, application code, and documentation.
+
+```mermaid
+flowchart LR
+    M["🧩 One declarative<br/>JSON data model"]
+    M --> D["🗄️ Database schemas<br/>and migrations"]
+    M --> J["☕ Generated Java<br/>compile-time contracts"]
+    M --> A["📊 Views, datamarts<br/>and formulas"]
+    M --> E["📦 CSV / JSON<br/>and documentation"]
+    D --> P["PostgreSQL"]
+    D --> S["SQL Server"]
+    D --> B["BigQuery"]
+    classDef core fill:#176a9b,color:#fff,stroke:#4ebdf0,stroke-width:2px;
+    classDef branch fill:#eaf5fc,color:#14334d,stroke:#65a8c9;
+    classDef db fill:#e9f5ef,color:#185c40,stroke:#72b391;
+    class M core;
+    class D,J,A,E branch;
+    class P,S,B db;
+```
+
+### Why TILDA?
+
+- **Design first, generate the repetitive work.** A schema definition drives database objects, Java access code, and model documentation.
+- **Evolve without migration-script sprawl.** Model-aware migration tooling helps manage changes, including nontrivial schema and data patterns.
+- **Catch model drift earlier.** Generated Java interfaces bring database structure into compile-time checks instead of leaving every mismatch for runtime.
+- **Make analytics part of the model.** Describe derived views, aggregations, pivots, time-oriented structures, formulas, and reusable datamarts alongside operational tables.
+- **Be transparent, not magical.** Generated artifacts are inspectable, and the database remains an explicit part of your architecture.
+- **Grow across database workloads.** The evolving v2.7 branch targets PostgreSQL, SQL Server, and BigQuery, with capabilities varying by backend and feature.
+
+**One framework, many kinds of systems:** OLTP applications, data warehouses and marts, research repositories, reporting platforms, and hybrid operational/analytical products.
+
+**[Read the 4-minute introduction](https://github.com/CapsicoHealth/Tilda/wiki/Introduction)** · [Explore the JSON syntax](https://github.com/CapsicoHealth/Tilda/wiki/Tilda-JSON-Syntax) · [Browse the v2.7 JSON schema](https://github.com/CapsicoHealth/Tilda/blob/r2.7/Tilda/src/tilda/TildaJsonSchema.json) · [Getting started](https://github.com/CapsicoHealth/Tilda/wiki/Getting-Started-Tutorial)
+
+---
+
+## Origins and design philosophy
 Tilda (Transparent Iterative Light Data Architecture) is not an ORM but a data-oriented platform that takes a model-driven approach at the database schema level and projects it out to various programming environments. It provides a JSON-based configuration language to define tables and higher level patterns such as complex views, exporters, history/versioning support, datamarts, pivots, formulas etc... It generates code so can focus on your business logic. It automates migration, deployments (in single-database or multi-tenant fashion), documentation, and increases team velocity by supporting iterative development cycles working with complex data models from design to deployment.<BR>
 <BR>
 This work is based on ideas and experience building complex data systems and applications using at times EJBs, Hibernate, myBatis or even plain JDBC. Those systems have included real-time predictive modeling, standard 3-tier transactional web applications, and classical data warehousing. Tilda aims to be as transparent and simple as possible for the modern data engineer. Its transparency is critical in helping use Tilda simply as a model management tool with minimal adoption risk, or as a full fledge data application building block (the all-in approach). All assets generated are human-readable from the get go and are easy to walk through and understand if need be (but you don't have to). Tilda takes a decidely model- and data-centric view of the world: we believe you cannot build a complex data application without thinking about your data model. <B>We believe that no framework can hide your database, so why try</B>? This is Data to the metal, all the way up full stack.<BR>
 <BR>
-At this time, Tilda only supports Java 1.8+ as a target language, and Postgres 9.5+ as a target Database (while exploiting features from V10, V11 and V12 if available). However, it may not be too hard to implement other target languages in the future  (such as JavaSCript or .Net for example), and other data stores (MS SQL Server, mySQL, and also non-relational backends such as Cassandra,  MongoDB or Hadoop). Ultimately, we are aiming for an extensible data architecture that would enable integration with different formats, such as CSV, or HL7 (a standard healthcare data exchange format), and the ability to extend the patterns supported (feeding data to predictive models for example). Tilda ultimately strives at identifying core patterns used in a complex data-driven application, and capture them as reusable declarative bits so you can assemble them to match your needs.<BR>
+At this time, Tilda supports Java 17+ as a target language, Postgres 15+ and BigQuery as a target Database (while exploiting additional features such as pgvector in more recent versions or PG). TILDA is an extensible data architecture that would enable integration with different formats, such as CSV, or HL7 (a standard healthcare data exchange format), and the ability to extend the patterns supported (feeding data to predictive models for example). Tilda ultimately strives at identifying core patterns used in a complex data-driven application, and capture them as reusable declarative bits so you can assemble them to match your needs.<BR>
 
 <H1>Docs</H1>
 We are making progress on the overall documentation for the project:
