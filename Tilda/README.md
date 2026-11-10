@@ -9,20 +9,35 @@ TILDA (*Transparent Iterative Light Data Architecture*) is a **model-first frame
 It goes beyond a traditional ORM. TILDA starts at the **data model**, not at an object mapping layer: schemas, relationships, views, history, datamarts, formulas, pivots, and search capabilities are first-class parts of the design. It helps teams build transactional products, analytical systems, and research platforms without hand-maintaining the same design across SQL scripts, application code, and documentation.
 
 ```mermaid
-flowchart LR
-    M["🧩 One declarative<br/>JSON data model"]
-    M --> D["🗄️ Database schemas<br/>and migrations"]
-    M --> J["☕ Generated Java<br/>compile-time contracts"]
-    M --> A["📊 Views, datamarts<br/>and formulas"]
-    M --> E["📦 CSV / JSON<br/>and documentation"]
-    D --> P["PostgreSQL"]
-    D --> S["SQL Server"]
-    D --> B["BigQuery"]
-    classDef core fill:#176a9b,color:#fff,stroke:#4ebdf0,stroke-width:2px;
-    classDef branch fill:#eaf5fc,color:#14334d,stroke:#65a8c9;
-    classDef db fill:#e9f5ef,color:#185c40,stroke:#72b391;
+---
+config:
+  theme: base
+  flowchart:
+    nodeSpacing: 30
+    rankSpacing: 42
+    wrappingWidth: 240
+    markdownAutoWrap: false
+    curve: linear
+---
+flowchart TB
+    M["🧩 TILDA JSON Model<br/>Structure · Behavior · Analytics"]
+    G["Validate & Generate"]
+
+    M --> G
+    G --> D["Database Schemas<br/>& Model-Aware Migrations"]
+    G --> J["Typed Java APIs<br/>& Compile-Time Checks"]
+    G --> A["Views · Datamarts<br/>Formulas · Pivots"]
+    G --> E["Documentation<br/>CSV · JSON Exports"]
+
+    D --> P[(PostgreSQL)]
+    D --> S[(SQL Server)]
+    D --> B[(BigQuery)]
+
+    classDef core fill:#24638e,color:#ffffff,stroke:#6bb6da,stroke-width:2px;
+    classDef branch fill:#eaf3f9,color:#163a56,stroke:#9dc3de,stroke-width:1px;
+    classDef db fill:#e5f5eb,color:#15543a,stroke:#87c7a5,stroke-width:1px;
     class M core;
-    class D,J,A,E branch;
+    class G,D,J,A,E branch;
     class P,S,B db;
 ```
 
