@@ -26,6 +26,7 @@ public class Conn
     @SerializedName("db"     ) public String   _DB      = null;
     @SerializedName("user"   ) public String   _User    = null;
     @SerializedName("pswd"   ) public String   _Pswd    = null;
+    // Number of connections created at first pool use; <= 0 defers normal startup initialization (except MAIN/KEYS).
     @SerializedName("initial") public int      _Initial =  3;
     @SerializedName("max"    ) public int      _Max     = 30;
     @SerializedName("schemas") public String[] _Schemas = new String[]{};

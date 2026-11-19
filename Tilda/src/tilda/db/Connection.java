@@ -125,6 +125,12 @@ public final class Connection
         return _Url;
       }
 
+    public final String getCatalog()
+    throws SQLException
+      {
+        return _C.getCatalog();
+      }
+
     public final String getDatabaseProductName()
     throws SQLException
       {
@@ -873,6 +879,12 @@ public final class Connection
     throws Exception
       {
         return _DB.alterTableComment(this, Obj);
+      }
+
+    public boolean alterTableComments(Object obj, boolean tableComment, List<Column> columns)
+    throws Exception
+      {
+        return _DB.alterTableComments(this, obj, tableComment, columns);
       }
 
     public boolean alterTableAlterColumnComment(Column Col)

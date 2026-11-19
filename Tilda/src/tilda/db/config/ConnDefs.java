@@ -69,6 +69,11 @@ public class ConnDefs
                 LOG.error("Connection id=" + C._Id + " didn't define a DB connection string!");
                 OK = false;
               }
+            if (("MAIN".equalsIgnoreCase(C._Id) == true || "KEYS".equalsIgnoreCase(C._Id) == true) && C._Initial <= 0)
+              {
+                LOG.error("Connection id=" + C._Id + " must have an initial pool size greater than 0.");
+                OK = false;
+              }
           }
         return OK;
       }

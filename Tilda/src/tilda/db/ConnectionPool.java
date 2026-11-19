@@ -83,6 +83,7 @@ public class ConnectionPool
 
     protected static Map<String, BasicDataSource> _DataSourcesById     = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig    = new HashMap<String, BasicDataSource>();
+    protected static Map<String, Integer>         _InitialSizesById    = new HashMap<String, Integer>();
     protected static Map<String, Schema>          _Schemas             = new HashMap<String, Schema>();
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
@@ -110,11 +111,28 @@ public class ConnectionPool
               }
             if (isTildaEnabled() == true)
               {
-                conKeys = get("KEYS");
-                readConnections(conKeys);
-                conKeys.rollback();
+                if (isConnectionStartupDeferred("KEYS") == false)
+                  {
+                    conKeys = get("KEYS");
+                    readConnections(conKeys);
+                    conKeys.rollback();
+                    conKeys.close();
+                    conKeys = null;
+                  }
+                else
+                  LOG.info("Skipping connection KEYS during startup because its configured initial pool size is <= 0.");
 
                 List<String> migrationConnectionIds = new ArrayList<>(getUniqueDataSourceIds().keySet());
+                Iterator<String> startupConnectionIds = migrationConnectionIds.iterator();
+                while (startupConnectionIds.hasNext())
+                  {
+                    String Id = startupConnectionIds.next();
+                    if (isConnectionStartupDeferred(Id) == true)
+                      {
+                        LOG.info("Skipping startup initialization of connection " + Id + " because its configured initial pool size is <= 0; it remains available through ConnectionPool.get().");
+                        startupConnectionIds.remove();
+                      }
+                  }
                 if (migrationConnectionIds.remove("MAIN") == true)
                   migrationConnectionIds.add(0, "MAIN");
                 if (Migrate.isMigrationActive() == true)
@@ -367,12 +385,12 @@ public class ConnectionPool
             BDS.setUsername(user);
             BDS.setPassword(pswd);
           }
-        BDS.setInitialSize(initial);
+        BDS.setInitialSize(Math.max(0, initial));
         BDS.setMaxTotal(max);
         BDS.setDefaultAutoCommit(false);
         if (DBType.fromURL(db) != DBType.BigQuery)
           BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-        BDS.setDefaultQueryTimeout(Duration.ofSeconds(60));
+        BDS.setDefaultQueryTimeout(Duration.ofSeconds(Migrate.isMigrationActive() == true ? 3600 : 60));
         return BDS;
       }
 
@@ -445,6 +463,7 @@ public class ConnectionPool
                       BDS.setMaxTotal(max);
                   }
                 _DataSourcesById.put(id, BDS);
+                _InitialSizesById.put(id, initial);
               }
           }
       }
@@ -546,6 +565,12 @@ public class ConnectionPool
     private static boolean isTildaEnabled()
       {
         return _DataSourcesById.get("MAIN") != null && _DataSourcesById.get("KEYS") != null;
+      }
+
+    public static boolean isConnectionStartupDeferred(String Id)
+      {
+        Integer initial = _InitialSizesById.get(Id);
+        return Migrate.isMigrationActive() == false && initial != null && initial <= 0;
       }
 
     public static Connection get(String Id)
