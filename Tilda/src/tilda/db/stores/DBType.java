@@ -206,14 +206,39 @@ public interface DBType
     public boolean createSchema                    (Connection Con, Schema S) throws Exception;
     public boolean createTable                     (Connection Con, Object Obj) throws Exception;
     public boolean alterTableComment               (Connection Con, Object Obj) throws Exception;
+    /** Whether comment changes on a table can be submitted as one migration action. */
+    public default boolean supportsBatchTableComments()
+      {
+        return false;
+      }
+
+    public default boolean alterTableComments(Connection con, Object obj, boolean tableComment, List<Column> columns) throws Exception
+      {
+        if (tableComment == true && alterTableComment(con, obj) == false)
+          return false;
+        for (Column col : columns)
+          if (alterTableAlterColumnComment(con, col) == false)
+            return false;
+        return true;
+      }
     public boolean createKeysEntry                 (Connection Con, Object Obj) throws Exception;
     public boolean dropView                        (Connection Con, View V) throws Exception;
     public boolean dropView                        (Connection con, ViewMeta v, boolean cascade) throws Exception;
     public boolean createView                      (Connection Con, View V) throws Exception;
     public boolean alterTableAddColumn             (Connection Con, Column Col, String DefaultValue, String temporaryDefaultValue) throws Exception;
+    /** Returns an explanation when a new column cannot be added to an existing table, or null when supported. */
+    public default String getAlterColumnAddError(Column col)
+      {
+        return null;
+      }
     public boolean alterTableAlterColumnDefault    (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnNumericSize(Connection connection, ColumnMeta colMeta, Column col) throws Exception;
     public boolean alterTableDropColumn            (Connection Con, Object Obj, String ColumnName) throws Exception;   
+    /** Returns an explanation when an existing column cannot be migrated to its model nullability, or null when supported. */
+    public default String getAlterColumnNullError(Column col)
+      {
+        return null;
+      }
     public boolean alterTableAlterColumnNull       (Connection Con, Column col, String defaultValue, String temporaryDefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment    (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnType       (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI, MigrationConversion mc) throws Exception;

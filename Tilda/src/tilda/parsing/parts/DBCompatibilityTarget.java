@@ -166,7 +166,7 @@ public class DBCompatibilityTarget
         if (pattern.indexOf('*', Star + 1) != -1 || Star != 0 && Star != pattern.length() - 1)
           return false;
         String Name = Star == 0 ? pattern.substring(1) : pattern.substring(0, pattern.length() - 1);
-        return isValidName(Name);
+        return isValidName(Name + "_");
       }
 
     private static boolean isValidName(String name)

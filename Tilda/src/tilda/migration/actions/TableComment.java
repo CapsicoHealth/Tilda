@@ -39,6 +39,6 @@ public class TableComment extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Set table "+_Obj.getFullName()+"'s comment";
+        return "Set comment on table "+_Obj.getFullName()+"'.";
       }
   }

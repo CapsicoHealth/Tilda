@@ -30,6 +30,9 @@ import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.cloud.bigquery.DatasetId;
+import com.google.cloud.bigquery.jdbc.BigQueryConnection;
+
 import tilda.Migrate;
 import tilda.data.Key_Factory;
 import tilda.data.MaintenanceLog_Data;
@@ -49,6 +52,7 @@ import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.db.stores.DBType;
+import tilda.db.stores.PostgreSQL;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
@@ -66,6 +70,7 @@ import tilda.migration.actions.DDLDependencyPreManagement;
 import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.TableColumnRename;
 import tilda.migration.actions.TableComment;
+import tilda.migration.actions.TableCommentMulti;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableFKAdd;
 import tilda.migration.actions.TableFKDrop;
@@ -75,6 +80,7 @@ import tilda.migration.actions.TableIndexAddCluster;
 import tilda.migration.actions.TableIndexDrop;
 import tilda.migration.actions.TableIndexDropCluster;
 import tilda.migration.actions.TableIndexRename;
+import tilda.migration.actions.FullTextIndexAdd;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TablePKSwitchType;
@@ -339,6 +345,9 @@ public class Migrator
         LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         LOG.info("!!! THE FOLLOWING DATABASE WILL NOW BE MIGRATED:");
         LOG.info("!!!    ==> " + C.getPoolName());
+        LOG.info("!!!    ==> JDBC catalog / job project: " + C.getCatalog());
+        if (C.getDBType() == DBType.BigQuery)
+          LOG.info("!!!    ==> BigQuery default dataset: " + describeBigQueryDefaultDataset(C));
         LOG.info("!!!     ______ ____  ______   ____   ___    ______ __ __ __  __ ____  _____    ___   ");
         LOG.info("!!!    / ____// __ \\/_  __/  / __ ) /   |  / ____// //_// / / // __ \\/ ___/   /__ \\ ");
         LOG.info("!!!   / / __ / / / / / /    / __  |/ /| | / /    / ,<  / / / // /_/ /\\__ \\     / _/ ");
@@ -360,6 +369,22 @@ public class Migrator
         catch (Exception E)
           {
             throw E;
+          }
+      }
+
+    private static String describeBigQueryDefaultDataset(Connection C)
+      {
+        try
+          {
+            DatasetId defaultDataset = C.unwrap(BigQueryConnection.class).getDefaultDataset();
+            if (defaultDataset == null)
+              return "<unset; unqualified dataset references use the query project>";
+            String projectId = defaultDataset.getProject();
+            return (projectId == null ? "<query project>" : projectId) + ":" + defaultDataset.getDataset();
+          }
+        catch (Exception e)
+          {
+            return "<unavailable: " + e.getClass().getSimpleName() + ">";
           }
       }
 
@@ -639,7 +664,8 @@ public class Migrator
               {
                 boolean tableCommentMatches = Obj._Description.equalsIgnoreCase(TMeta._Descr);
                 // LOG.debug("Migration metadata comparison (table comment) " + Obj.getFullName() + ": model=[" + Obj._Description + "], database=[" + TMeta._Descr + "], matches=" + tableCommentMatches);
-                if (tableCommentMatches == false)
+                TableCommentMulti comments = C.getDBType().supportsBatchTableComments() == true ? new TableCommentMulti(Obj, tableCommentMatches == false) : null;
+                if (comments == null && tableCommentMatches == false)
                   Actions.add(new TableComment(Obj));
 
                 ColumnAlterMulti CAM = new ColumnAlterMulti(C, Obj);
@@ -651,8 +677,14 @@ public class Migrator
                     ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName(), false);
                     if (CMeta == null)
                       {
-                        MigrationNotNull mnn = S._Migration == null ? null : S._Migration.getNotNull(Col);
-                        Actions.add(new ColumnAdd(Col, mnn == null ? null : mnn._Default));
+                        String error = C.getDBType().getAlterColumnAddError(Col);
+                        if (error != null)
+                          Errors.add(error);
+                        else
+                          {
+                            MigrationNotNull mnn = S._Migration == null ? null : S._Migration.getNotNull(Col);
+                            Actions.add(new ColumnAdd(Col, mnn == null ? null : mnn._Default));
+                          }
                       }
                     else
                       {
@@ -662,7 +694,12 @@ public class Migrator
                         boolean columnCommentMatches = Col._Description.equalsIgnoreCase(CMeta._Descr);
                         // LOG.debug("Migration metadata comparison (column comment) " + Col.getFullName() + ": model=[" + Col._Description + "], database=[" + CMeta._Descr + "], matches=" + columnCommentMatches);
                         if (columnCommentMatches == false)
-                          Actions.add(new ColumnComment(Col));
+                          {
+                            if (comments == null)
+                              Actions.add(new ColumnComment(Col));
+                            else
+                              comments.addColumn(Col);
+                          }
 
                         // Check default values
                         checkDefaultValue(CGSQL, Actions, Col, CMeta);
@@ -676,13 +713,21 @@ public class Migrator
 
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           {
-                            MigrationNotNull mnn = S._Migration == null ? null : S._Migration.getNotNull(Col);
-                            Actions.add(new ColumnAlterNull(Col, mnn == null ? null : mnn._Default));
+                            String error = C.getDBType().getAlterColumnNullError(Col);
+                            if (error != null)
+                              Errors.add(error);
+                            else
+                              {
+                                MigrationNotNull mnn = S._Migration == null ? null : S._Migration.getNotNull(Col);
+                                Actions.add(new ColumnAlterNull(Col, mnn == null ? null : mnn._Default));
+                              }
                           }
                       }
                   }
                 if (CAM.isEmpty() == false)
                   Actions.add(CAM);
+                if (comments != null && comments.isEmpty() == false)
+                  Actions.add(comments);
 
                 if (NeedsDdlDependencyManagement == true && C.getDBType().supportsDDLDependencyManagement() == true)
                   {
@@ -1193,7 +1238,7 @@ public class Migrator
               return;
             for (Index IX : Obj._Indices)
               {
-                if (IX == null || IX._Db == false || IX.isVectorIndex() == false)
+                if (IX == null || IX._Db == false || IX.isVectorIndex() == false || IX.isFullTextIndex() == true)
                   continue;
                 boolean Found = false;
                 if (supportsVectorMetadata == true)
@@ -1227,7 +1272,7 @@ public class Migrator
         TableIndexDropCluster TIDC = null;
         for (Index IX : Obj._Indices)
           {
-            if (IX == null || IX._Db == false)
+            if (IX == null || IX._Db == false || IX.isFullTextIndex() == true)
               continue;
             // Checking for dropped indices
             for (IndexMeta ix : TMeta._Indices.values())
@@ -1284,7 +1329,7 @@ public class Migrator
         // Checking any Indices which are not in the DB, so they can be added.
         for (Index IX : Obj._Indices)
           {
-            if (IX == null || IX._Db == false)
+            if (IX == null || IX._Db == false || IX.isFullTextIndex() == true)
               continue;
             boolean Found = false;
             String Sig = IX.getSignature();
@@ -1372,6 +1417,78 @@ public class Migrator
                 Actions.add(new TableIndexDrop(Obj, ix));
               }
           }
+
+        handleFullTextIndices(C, Actions, Errors, Obj, TMeta, SMeta, Store);
+      }
+
+    private static void handleFullTextIndices(Connection C, List<MigrationAction> Actions, List<String> Errors, Object Obj, TableMeta TMeta, SchemaMeta SMeta, DBType Store)
+    throws Exception
+      {
+        boolean hasFullText = false;
+        for (Index IX : Obj._Indices)
+          if (IX != null && IX._Db == true && IX.isFullTextIndex() == true)
+            {
+              hasFullText = true;
+              break;
+            }
+        if (hasFullText == false)
+          return;
+        if (Store instanceof PostgreSQL == false)
+          return;
+
+        for (Index IX : Obj._Indices)
+          {
+            if (IX == null || IX._Db == false || IX.isFullTextIndex() == false)
+              continue;
+
+            PostgreSQL.FullTextIndexMetadata metadata = PostgreSQL.loadFullTextIndexMetadata(C, IX);
+            if (metadata.matches(IX) == true)
+              continue;
+
+            boolean rebuild = false;
+            if (metadata._ArtifactExists == true)
+              {
+                if (metadata.isOwnedGeneratedTsvector() == false)
+                  {
+                    Errors.add("Full-text artifact '" + IX.getFullTextDetails("postgres")._TsvectorColumn + "' on " + Obj.getFullName()
+                    + " exists but is not a stored generated tsvector owned by a full-text definition; refusing to alter it.");
+                    continue;
+                  }
+                rebuild = true;
+              }
+
+            String otherTable = SMeta == null ? null : SMeta.findIndexOwner(IX.getName(), TMeta._TableName);
+            if (otherTable != null)
+              {
+                Errors.add("Full-text index '" + IX.getName() + "' is needed on " + Obj.getShortName()
+                + " but an index with that name already exists on '" + TMeta._SchemaName + "." + otherTable + "'. Rename or drop the conflicting index.");
+                continue;
+              }
+
+            IndexMeta localName = getIndexMetaIgnoreCase(TMeta, IX.getName());
+            if (localName != null && metadata.hasIndexNamed(localName._Name) == false)
+              {
+                Errors.add("Full-text index '" + IX.getName() + "' on " + Obj.getFullName()
+                + " conflicts with an existing index on a different artifact column.");
+                continue;
+              }
+            if (rebuild == false && metadata.hasIndexNamed(IX.getName()) == true && metadata.hasEquivalentGinIndex() == false)
+              {
+                Errors.add("Full-text index name '" + IX.getName() + "' on " + Obj.getFullName()
+                + " is occupied by an index that is not a valid single-column GIN index; refusing to overwrite it.");
+                continue;
+              }
+
+            Actions.add(new FullTextIndexAdd(IX, rebuild));
+          }
+      }
+
+    private static IndexMeta getIndexMetaIgnoreCase(TableMeta TMeta, String name)
+      {
+        for (IndexMeta index : TMeta._Indices.values())
+          if (index._Name.equalsIgnoreCase(name) == true)
+            return index;
+        return null;
       }
 
 
@@ -1482,7 +1599,7 @@ public class Migrator
                     // if (obj.getIndex(im._Name) == null)
                     // drops.add(new tilda.migration.drops.IndexDrop(im));
                     for (ColumnMeta cm : tm.getColumnMetaList())
-                      if (obj.getColumn(cm._NameOriginal) == null)
+                      if (obj.getColumn(cm._NameOriginal) == null && "tsvector".equalsIgnoreCase(cm._TypeName) == false)
                         drops.add(new tilda.migration.drops.ColumnDrop(cm));
                   }
               }

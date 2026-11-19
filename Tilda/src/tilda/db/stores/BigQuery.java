@@ -33,6 +33,7 @@ import org.postgresql.core.BaseConnection;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.JDBCHelper;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
@@ -72,6 +73,43 @@ public class BigQuery extends CommonStoreImpl
     public String getName()
       {
         return "BigQuery";
+      }
+
+    @Override
+    public String getAlterColumnNullError(Column col)
+      {
+        if (col._Nullable == false)
+          return "BigQuery cannot change existing column '" + col.getShortName() + "' from NULLABLE to REQUIRED in place. "
+          + "Recreate the table with the required schema using a data-preserving migration after resolving any NULL values, or change the model to allow NULL if appropriate";
+        return null;
+      }
+
+    @Override
+    public boolean alterTableAlterColumnNull(Connection con, Column col, String defaultValue, String temporaryDefaultValue)
+    throws Exception
+      {
+        String error = getAlterColumnNullError(col);
+        if (error != null)
+          throw new Exception(error);
+        return super.alterTableAlterColumnNull(con, col, defaultValue, temporaryDefaultValue);
+      }
+
+    @Override
+    public String getAlterColumnAddError(Column col)
+      {
+        if (col._Nullable == false)
+          return "BigQuery cannot add REQUIRED column '" + col.getShortName() + "' to an existing table. ADD COLUMN creates NULLABLE fields, and BigQuery cannot change them to REQUIRED in place. Recreate the table with the required schema and copy its data, or change the model to allow NULL if appropriate";
+        return null;
+      }
+
+    @Override
+    public boolean alterTableAddColumn(Connection con, Column col, String defaultValue, String temporaryDefaultValue)
+    throws Exception
+      {
+        String error = getAlterColumnAddError(col);
+        if (error != null)
+          throw new UnsupportedOperationException(error);
+        return super.alterTableAddColumn(con, col, defaultValue, temporaryDefaultValue);
       }
 
     @Override
@@ -467,11 +505,7 @@ public class BigQuery extends CommonStoreImpl
     static String getProjectId(Connection Con)
     throws Exception
       {
-        String url = Con.getURL();
-        java.util.regex.Matcher M = url == null ? null : java.util.regex.Pattern.compile("(?i)[;?&]ProjectId=([^;&]+)").matcher(url);
-        if (M == null || M.find() == false)
-          throw new Exception("Cannot determine the GCP project from the BigQuery JDBC URL (no 'ProjectId=' property): the cluster change needs to be migrated manually.");
-        return M.group(1);
+        return BQHelper.getProjectId(Con);
       }
 
     static String buildSchemaMetadataQuery(String schemaName)
@@ -727,16 +761,83 @@ public class BigQuery extends CommonStoreImpl
 
     static String buildTableCommentQuery(String tableName, String description)
       {
-        return "ALTER TABLE " + tableName + " SET OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(description) + ");";
+        return "ALTER TABLE " + tableName + " SET OPTIONS (description=" + quoteDescription(description) + ");";
+      }
+
+    @Override
+    public boolean supportsBatchTableComments()
+      {
+        return true;
+      }
+
+    @Override
+    public boolean alterTableComments(Connection con, Object obj, boolean tableComment, List<Column> columns)
+    throws Exception
+      {
+        List<String> rehearsalStatements = new java.util.ArrayList<String>();
+        Map<String, String> columnDescriptions = new HashMap<String, String>();
+        if (tableComment == true)
+          rehearsalStatements.add(buildTableCommentQuery(obj.getShortName(), obj._Description));
+        for (Column col : columns)
+          {
+            if (col._ParentObject != obj)
+              throw new IllegalArgumentException("A batched comment must belong to " + obj.getShortName());
+            rehearsalStatements.add(buildColumnCommentQuery(col));
+            columnDescriptions.put(col.getName(), col._Description);
+          }
+        if (rehearsalStatements.isEmpty() == true)
+          return true;
+        if (JDBCHelper.isRehearsal() == true)
+          {
+            StringBuilder script = new StringBuilder();
+            for (String statement : rehearsalStatements)
+              {
+                if (script.length() > 0)
+                  script.append('\n');
+                script.append(statement);
+              }
+            return con.executeDDL(obj._ParentSchema._Name, obj.getBaseName(), script.toString());
+          }
+        return BQHelper.updateTableComments(BQHelper.getBigQuery(con), obj._ParentSchema._Name, obj.getBaseName(), tableComment, obj._Description,
+        columnDescriptions);
+      }
+
+    private String buildColumnCommentQuery(Column col)
+      {
+        return "ALTER TABLE " + col._ParentObject.getShortName()
+        + " ALTER COLUMN " + getShortColumnVar(col)
+        + " SET OPTIONS (description=" + quoteDescription(col._Description) + ");";
+      }
+
+    private static String quoteDescription(String description)
+      {
+        StringBuilder text = new StringBuilder("\"");
+        if (description != null)
+          for (int i = 0; i < description.length(); ++i)
+            {
+              char c = description.charAt(i);
+              switch (c)
+                {
+                  case '\\': text.append("\\\\"); break;
+                  case '"': text.append("\\\""); break;
+                  case '\n': text.append("\\n"); break;
+                  case '\r': text.append("\\r"); break;
+                  case '\t': text.append("\\t"); break;
+                  default:
+                    if (c < 0x20 || c == 0x7f)
+                      text.append(String.format("\\u%04x", (int) c));
+                    else
+                      text.append(c);
+                }
+            }
+        return text.append('"').toString();
       }
 
     @Override
     public boolean alterTableAlterColumnComment(Connection con, Column col)
     throws Exception
       {
-        String Q = "ALTER TABLE " + col._ParentObject.getShortName()
-        + " ALTER COLUMN " + getShortColumnVar(col)
-        + " SET OPTIONS (description=" + TextUtil.escapeDoubleQuoteWithSlash(col._Description) + ");";
+        String Q = buildColumnCommentQuery(col);
         return con.executeDDL(col._ParentObject._ParentSchema._Name, col._ParentObject.getBaseName(), Q);
       }
 

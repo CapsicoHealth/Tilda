@@ -553,9 +553,9 @@ public class Column extends TypeDef
 
             if (Names.add(V._Name.toUpperCase()) == false)
               PS.AddError("Column '" + getFullName() + "' defines a duplicate value with 'variable'='" + V._Name + "'.");
-            if (Values.add(V._Value.toUpperCase()) == false)
+            if (V._Value != null && Values.add(V._Value.toUpperCase()) == false)
               PS.AddError("Column '" + getFullName() + "' defines a duplicate value with 'value'='" + V._Value + "'.");
-            if (Labels.add(V._Label.toUpperCase()) == false)
+            if (V._Label != null && Labels.add(V._Label.toUpperCase()) == false)
               PS.AddError("Column '" + getFullName() + "' defines a duplicate value with 'label'='" + V._Label + "'.");
             if (V._Default == DefaultType.CREATE || V._Default == DefaultType.ALWAYS)
               {

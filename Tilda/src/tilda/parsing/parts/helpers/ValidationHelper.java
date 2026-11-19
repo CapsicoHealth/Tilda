@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,18 +73,12 @@ public class ValidationHelper
         public boolean process(ParserSession PS, Base ParentObject, String What, Column C);
       }
 
-    public static String _ValidIdentifierMessage = "Names must conform to a common subset of SQL, C++, Java, .Net and JavaScript identifier conventions.";
+    public static String _ValidIdentifierMessage = "Names must start with an ASCII letter or underscore and contain only ASCII letters, digits, or underscores; '_' alone is not valid.";
+    private static final Pattern VALID_IDENTIFIER = Pattern.compile("[A-Za-z_][A-Za-z0-9_]*");
 
     public static boolean isValidIdentifier(String Name)
       {
-        char[] chars = Name.toCharArray();
-        if (Character.isJavaIdentifierStart(chars[0]) == false)
-          return false;
-        for (int i = 1; i < chars.length; ++i)
-          if (Character.isJavaIdentifierPart(chars[i]) == false)
-            return false;
-
-        return true;
+        return Name != null && "_".equals(Name) == false && VALID_IDENTIFIER.matcher(Name).matches();
       }
 
     public static boolean isReservedIdentifier(String name)
