@@ -9,11 +9,19 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.Data;
 import com.google.api.gax.paging.Page;
+import com.google.api.services.bigquery.Bigquery;
+import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQuery.DatasetListOption;
 import com.google.cloud.bigquery.BigQuery.TableListOption;
@@ -29,9 +37,12 @@ import com.google.cloud.bigquery.FieldValue;
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.FormatOptions;
 import com.google.cloud.bigquery.Job;
+import com.google.cloud.bigquery.JobException;
 import com.google.cloud.bigquery.JobId;
 import com.google.cloud.bigquery.JobInfo;
 import com.google.cloud.bigquery.JobInfo.WriteDisposition;
+import com.google.cloud.bigquery.JobStatistics;
+import com.google.cloud.bigquery.JobStatus;
 import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.Schema;
 import com.google.cloud.bigquery.StandardSQLTypeName;
@@ -54,11 +65,80 @@ import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
+import tilda.utils.NumberFormatUtil;
 import tilda.utils.TextUtil;
 
 public class BQHelper
   {
     protected static final Logger LOG = LogManager.getLogger(BQHelper.class.getName());
+
+    /**
+     * Tracks top-level runQuery attempts, including failed attempts but excluding script child jobs.
+     * Share across workers and read only after they finish. A null total means statistics were unavailable.
+     */
+    public static final class BilledBytesTracker
+      {
+        private final AtomicLong    _total      = new AtomicLong();
+        private final AtomicLong    _jobCount   = new AtomicLong();
+        private final AtomicBoolean _incomplete = new AtomicBoolean();
+
+        private void record(Long bytes)
+          {
+            if (bytes == null || bytes < 0)
+              {
+                _incomplete.set(true);
+                return;
+              }
+            long previous;
+            do
+              {
+                previous = _total.get();
+                if (bytes > Long.MAX_VALUE - previous)
+                  {
+                    _incomplete.set(true);
+                    return;
+                  }
+              } while (_total.compareAndSet(previous, previous + bytes) == false);
+          }
+
+        public Long getBytesBilled()
+          {
+            return _incomplete.get() == true ? null : Long.valueOf(_total.get());
+          }
+
+        public long getJobCount()
+          {
+            return _jobCount.get();
+          }
+      }
+
+    private static void collectBilledBytes(BigQuery bq, JobId jobId, BilledBytesTracker tracker)
+      {
+        Long bytes = null;
+        try
+          {
+            Job job = jobId == null ? null : bq.getJob(jobId);
+            if (job != null && job.getStatus() != null && job.getStatus().getState() == JobStatus.State.DONE)
+              {
+                JobStatistics stats = job.getStatistics();
+                if (stats instanceof JobStatistics.QueryStatistics)
+                  bytes = ((JobStatistics.QueryStatistics) stats).getTotalBytesBilled();
+              }
+            if (bytes == null)
+              LOG.warn("BigQuery billed-byte statistics are unavailable for job " + jobId);
+          }
+        catch (Exception E)
+          {
+            LOG.warn("Cannot retrieve BigQuery billed-byte statistics for job " + jobId, E);
+          }
+        // A script parent's statistics aggregate its child jobs; do not add the children again.
+        tracker.record(bytes);
+        if (bytes != null)
+         LOG.debug("    - query consumed " + NumberFormatUtil.printDataSize(bytes.longValue())+" of data.");
+        else
+         LOG.debug("    - query consumed no data, or that information couldn't be retrieved.");
+
+      }
 
     /**
      * Given the environment variable name passed in (default is {@link tilda.utils.FileUtil#_DEFAULT_ENV_VAR_NAME}),
@@ -77,6 +157,25 @@ public class BQHelper
     throws FileNotFoundException, IOException
       {
         return BigQueryOptions.newBuilder().setCredentials(AuthHelper.getCredentials(dataProjectName, "bq")).setProjectId(dataProjectName).build().getService();
+      }
+
+    /** Creates a native BigQuery client for the project configured on a Tilda JDBC connection. */
+    public static BigQuery getBigQuery(Connection con)
+    throws FileNotFoundException, IOException, java.sql.SQLException
+      {
+        return getBigQuery(getProjectId(con));
+      }
+
+    /** Returns the BigQuery project configured as the JDBC connection catalog. */
+    public static String getProjectId(Connection con)
+    throws java.sql.SQLException
+      {
+        if (con == null)
+          throw new IllegalArgumentException("A Tilda connection is required to resolve the BigQuery project.");
+        String projectId = con.getCatalog();
+        if (projectId == null || projectId.trim().isEmpty())
+          throw new IllegalArgumentException("Cannot determine the GCP project from the BigQuery JDBC connection (catalog is empty).");
+        return projectId;
       }
 
     /**
@@ -220,6 +319,15 @@ public class BQHelper
      */
     public static JobResults runQuery(BigQuery bq, String q, boolean returnJobAlways)
       {
+        return runQuery(bq, q, returnJobAlways, null);
+      }
+
+    /** Runs a query and optionally adds its job's billed bytes to the supplied tracker. */
+    public static JobResults runQuery(BigQuery bq, String q, boolean returnJobAlways, BilledBytesTracker tracker)
+      {
+        if (tracker != null)
+          tracker._jobCount.incrementAndGet();
+        JobId jobId = null;
         try
           {
             long ts = System.nanoTime();
@@ -232,7 +340,12 @@ public class BQHelper
             .build();
 
             // The query() method handles everything: job creation, waiting, and pagination
-            TableResult results = bq.query(queryConfig);
+            // Assign an ID when collecting so failed queries can also be looked up.
+            if (tracker != null)
+              jobId = JobId.newBuilder().setRandomJob().build();
+            TableResult results = tracker == null ? bq.query(queryConfig) : bq.query(queryConfig, jobId);
+            if (tracker != null && results != null && results.getJobId() != null)
+              jobId = results.getJobId();
             if (results != null)
               {
                 LOG.debug("    - query completed with " + results.getTotalRows() + " total rows (auto-paginated) in " + DurationUtil.printDuration(System.nanoTime() - ts));
@@ -244,8 +357,19 @@ public class BQHelper
           }
         catch (Exception E)
           {
+            if (tracker != null && E instanceof JobException && ((JobException) E).getId() != null)
+              jobId = ((JobException) E).getId();
+            if (E instanceof InterruptedException)
+              Thread.currentThread().interrupt();
             LOG.error("Cannot execute BigQuery query:\n", E);
             return returnJobAlways == false ? null : new JobResults(null, E.getMessage());
+          }
+        finally
+          {
+            if (tracker != null)
+              {
+                collectBilledBytes(bq, jobId, tracker);
+              }
           }
       }
 
@@ -466,7 +590,7 @@ public class BQHelper
         for (ColumnMeta col : cols)
           {
             if (col._TildaType == null)
-              throw new Exception("Column '" + col._SrcSchema+"."+col._SrcTable+"."+ col._Name + "' of type '" + col._Type + "' doesn't have a TildaType!");
+              throw new Exception("Column '" + col._SrcSchema + "." + col._SrcTable + "." + col._Name + "' of type '" + col._Type + "' doesn't have a TildaType!");
             Field F = Field.newBuilder(col._NameOriginal, StandardSQLTypeName.valueOf(col._TildaType.getBigQueryType()))
             .setMode(col.isArray() == true ? Field.Mode.REPEATED : col._Nullable == 1 ? Field.Mode.NULLABLE : Field.Mode.REQUIRED)
             .setDescription(col._Descr)
@@ -498,6 +622,71 @@ public class BQHelper
     public static Schema getBQTableSchema(BigQuery bq, String datasetName, String tableName)
       {
         return bq.getTable(datasetName, tableName).getDefinition().getSchema();
+      }
+
+    /**
+     * Updates a table description and any number of column descriptions with one table metadata PATCH.
+     * Existing table and field metadata are retained; only SCHEMA and DESCRIPTION are included in the update mask.
+     */
+    public static boolean updateTableComments(BigQuery bq, String datasetName, String tableName, boolean updateTableDescription, String tableDescription,
+    Map<String, String> columnDescriptions)
+      {
+        if (columnDescriptions == null)
+          throw new IllegalArgumentException("Column descriptions are required; use an empty map for a table-description-only update.");
+        Table table = bq.getTable(datasetName, tableName);
+        if (table == null)
+          throw new IllegalArgumentException("BigQuery table " + datasetName + "." + tableName + " was not found.");
+        if ((table.getDefinition() instanceof StandardTableDefinition) == false)
+          throw new IllegalArgumentException("BigQuery table " + datasetName + "." + tableName + " is not a standard table.");
+
+        StandardTableDefinition definition = (StandardTableDefinition) table.getDefinition();
+        Schema schema = definition.getSchema();
+        if (schema == null)
+          throw new IllegalArgumentException("BigQuery table " + datasetName + "." + tableName + " has no schema.");
+
+        List<Field> updatedFields = new ArrayList<Field>();
+        List<String> unmatchedColumns = new ArrayList<String>(columnDescriptions.keySet());
+        boolean schemaChanged = false;
+        for (Field field : schema.getFields())
+          {
+            if (columnDescriptions.containsKey(field.getName()) == false)
+              {
+                updatedFields.add(field);
+                continue;
+              }
+
+            unmatchedColumns.remove(field.getName());
+            String description = columnDescriptions.get(field.getName());
+            if (java.util.Objects.equals(field.getDescription(), description) == true)
+              updatedFields.add(field);
+            else
+              {
+                updatedFields.add(field.toBuilder().setDescription(description).build());
+                schemaChanged = true;
+              }
+          }
+        if (unmatchedColumns.isEmpty() == false)
+          throw new IllegalArgumentException("BigQuery table " + datasetName + "." + tableName + " has no column(s): " + String.join(", ", unmatchedColumns));
+
+        boolean descriptionChanged = updateTableDescription == true && java.util.Objects.equals(table.getDescription(), tableDescription) == false;
+        if (schemaChanged == false && descriptionChanged == false)
+          return true;
+
+        Table.Builder updatedTable = table.toBuilder();
+        List<BigQuery.TableField> updateMask = new ArrayList<BigQuery.TableField>();
+        if (schemaChanged == true)
+          {
+            updatedTable.setDefinition(definition.toBuilder().setSchema(Schema.of(updatedFields)).build());
+            updateMask.add(BigQuery.TableField.SCHEMA);
+          }
+        if (descriptionChanged == true)
+          {
+            updatedTable.setDescription(tableDescription);
+            updateMask.add(BigQuery.TableField.DESCRIPTION);
+          }
+
+        Table result = bq.update(updatedTable.build(), BigQuery.TableOption.fields(updateMask.toArray(new BigQuery.TableField[0])));
+        return result != null;
       }
 
     public static void copyComments(BigQuery bq, String srcDatasetName, String srcTableName, String destDatasetName, String destTableName)
@@ -569,13 +758,12 @@ public class BQHelper
 
     /**
      * Sets, changes or removes the clustering specification of an existing BigQuery table <B>using the BigQuery client API</B>
-     * (<code>tables.patch</code> via the google-cloud-bigquery library), with the credentials resolved by {@link AuthHelper}.
+     * (<code>tables.patch</code>), using the credentials of the supplied BigQuery client.
      * <P>
      * This is done through the API because BigQuery SQL has no DDL (<code>ALTER TABLE ... CLUSTER BY</code> and
      * <code>ALTER TABLE ... SET OPTIONS(clustering_fields=...)</code> are both rejected) to change the clustering of an existing table.
      * <P>
-     * Only newly written data is clustered according to the new specification; BigQuery re-clusters existing data
-     * in the background. After the update, the table is re-read and the resulting clustering verified against what was requested.
+     * After the update, the table is re-read and the resulting clustering verified against what was requested.
      *
      * @param bq an authenticated BigQuery instance
      * @param datasetName the dataset (Tilda schema) name
@@ -594,15 +782,18 @@ public class BQHelper
           throw new Exception("Cannot set clustering: " + datasetName + "." + tableName + " is not a regular BigQuery table.");
 
         StandardTableDefinition def = table.getDefinition();
-        // An empty field list is how the clustering is cleared in the patch (a null/absent clustering would leave it unchanged).
-        Clustering clustering = Clustering.newBuilder().setFields(wanted).build();
         LOG.info("Setting clustering of BigQuery table " + datasetName + "." + tableName + " to " + (wanted.isEmpty() ? "[none]" : wanted.toString()) + " through the BigQuery API (tables.patch).");
-        bq.update(table.toBuilder().setDefinition(def.toBuilder().setClustering(clustering).build()).build());
+        if (wanted.isEmpty() == true)
+          clearClustering(bq, datasetName, tableName);
+        else
+          bq.update(table.toBuilder().setDefinition(def.toBuilder().setClustering(Clustering.newBuilder().setFields(wanted).build()).build()).build());
 
         // Verifying.
         Table updated = bq.getTable(datasetName, tableName);
-        StandardTableDefinition updatedDef = updated == null ? null : updated.getDefinition();
-        List<String> actual = updatedDef == null || updatedDef.getClustering() == null || updatedDef.getClustering().getFields() == null
+        if (updated == null || (updated.getDefinition() instanceof StandardTableDefinition) == false)
+          throw new Exception("Cannot verify clustering: table " + datasetName + "." + tableName + " was not found or is not a regular BigQuery table.");
+        StandardTableDefinition updatedDef = updated.getDefinition();
+        List<String> actual = updatedDef.getClustering() == null || updatedDef.getClustering().getFields() == null
         ? new ArrayList<String>()
         : updatedDef.getClustering().getFields();
         boolean same = actual.size() == wanted.size();
@@ -611,6 +802,22 @@ public class BQHelper
         if (same == false)
           throw new Exception("The clustering of " + datasetName + "." + tableName + " was requested as " + wanted + " through the BigQuery API but is reported as " + actual
           + ". The table needs to be migrated manually.");
+      }
+
+    /** Sends an explicit null field because the Cloud BigQuery client omits nulls from its patch body. */
+    private static void clearClustering(BigQuery bq, String datasetName, String tableName)
+    throws IOException
+      {
+        String projectId = bq.getOptions().getProjectId();
+        HttpCredentialsAdapter credentials = new HttpCredentialsAdapter(bq.getOptions().getCredentials());
+        Bigquery api = new Bigquery.Builder(new NetHttpTransport(), new GsonFactory(), request -> {
+          credentials.initialize(request);
+          request.setConnectTimeout(80000);
+          request.setReadTimeout(80000);
+        }).setRootUrl(bq.getOptions().getResolvedApiaryHost("bigquery")).setApplicationName("Tilda").build();
+        com.google.api.services.bigquery.model.Table patch = new com.google.api.services.bigquery.model.Table()
+        .setClustering(Data.nullOf(com.google.api.services.bigquery.model.Clustering.class));
+        api.tables().patch(projectId, datasetName, tableName, patch).execute();
       }
 
     public static boolean createTable(BigQuery bq, String datasetName, String tableName, Schema schema)

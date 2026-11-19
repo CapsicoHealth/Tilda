@@ -356,6 +356,18 @@ public class CSHelper
 
     public static int _DEFAULT_SIGNED_URL_MINUTES = 20;
     
+    public static URL genSignedUrl(Storage cs, String fileUrl, String mimeType)
+    throws IOException
+      {
+        String[] parts = fileUrl.split("/", 4);
+        if (parts.length < 4)
+          throw new IOException("Invalid GCS URL: " + fileUrl);
+        String bucketName = parts[2];
+        String fullFileName = parts[3];
+        return genSignedUrl(cs, bucketName, fullFileName, mimeType, _DEFAULT_SIGNED_URL_MINUTES);
+      }
+    
+    
     public static URL genSignedUrl(Storage cs, String bucketName, String fullFileName, String mimeType)
     throws IOException
       {
