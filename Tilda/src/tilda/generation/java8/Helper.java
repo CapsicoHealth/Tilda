@@ -468,19 +468,29 @@ public class Helper
               ++LookupId;
               if (UniqueConstraints == false)
                 {
-                  Out.println(Lead + "   case " + LookupId + ": // Index '" + I._Name + "'");
-                  if (I._SubQuery != null && I._SubQuery._FromObj.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(I._SubQuery._FromObj)) + "); // Additional From's from the subwhereclause.");
-                  String WhereClause = PrintWhereClause(G, I._ColumnObjs, I._SubQuery);
-                  if (TextUtil.isNullOrEmpty(WhereClause) == false)
-                    Out.println(Lead + "      S.append(\" where (\"); " + WhereClause + " S.append(\")\");");
-                  // Out.println(Lead + " if (TextUtil.isNullOrEmpty(PartialWhereclause) == false)");
-                  // if (TextUtil.isNullOrEmpty(WhereClause) == false)
-                  // Out.println(Lead + " S.append(\" AND (\").append(PartialWhereclause).append(\")\");");
-                  // else
-                  // Out.println(Lead + " S.append(\" where \").append(PartialWhereclause);");
-                  if (I._OrderByObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(\"" + " order by " + PrintOrderByClause(G, I._OrderByObjs));
+                  if (I.isFullTextIndex() == true)
+                    {
+                      String config = I.getFullTextDetails("postgres")._Configuration;
+                      String schema = TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema._Name);
+                      String table = TextUtil.escapeDoubleQuoteWithSlash(O._Name);
+                      String tsvector = TextUtil.escapeDoubleQuoteWithSlash(I.getFullTextDetails("postgres")._TsvectorColumn);
+                      String rankQuery = " @@ websearch_to_tsquery('" + config + "', ?) order by ts_rank(";
+                      String rankEnd = ", websearch_to_tsquery('" + config + "', ?)) desc";
+                      Out.println(Lead + "   case " + LookupId + ": // Full-text Index '" + I._Name + "'");
+                      Out.println(Lead + "      S.append(\" where \" ); C.getFullColumnVar(S, " + schema + ", " + table + ", " + tsvector + ");");
+                      Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(rankQuery) + "); C.getFullColumnVar(S, " + schema + ", " + table + ", " + tsvector + "); S.append(" + TextUtil.escapeDoubleQuoteWithSlash(rankEnd) + ");");
+                    }
+                  else
+                    {
+                      Out.println(Lead + "   case " + LookupId + ": // Index '" + I._Name + "'");
+                      if (I._SubQuery != null && I._SubQuery._FromObj.isEmpty() == false)
+                        Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(I._SubQuery._FromObj)) + "); // Additional From's from the subwhereclause.");
+                      String WhereClause = PrintWhereClause(G, I._ColumnObjs, I._SubQuery);
+                      if (TextUtil.isNullOrEmpty(WhereClause) == false)
+                        Out.println(Lead + "      S.append(\" where (\"); " + WhereClause + " S.append(\")\");");
+                      if (I._OrderByObjs.isEmpty() == false)
+                        Out.println(Lead + "      S.append(\"" + " order by " + PrintOrderByClause(G, I._OrderByObjs));
+                    }
                   Out.println(Lead + "      break;");
                 }
             }
@@ -504,13 +514,41 @@ public class Helper
               if (UniqueConstraints == false)
                 {
                   Out.println(Lead + "   case " + LookupId + ": // Query '" + SWC._Name + "'");
-                  if (SWC._FromObj.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(SWC._FromObj)) + "); // Additional From's from the subwhereclause.");
-                  String WhereClause = PrintWhereClause(G, null, SWC);
-                  if (TextUtil.isNullOrEmpty(WhereClause) == false)
-                    Out.println(Lead + "      S.append(\" where (\"); " + WhereClause + " S.append(\")\");");
-                  if (SWC._OrderByObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(\" order by " + PrintOrderByClause(G, SWC._OrderByObjs));
+                    String schema = TextUtil.escapeDoubleQuoteWithSlash(O._ParentSchema._Name);
+                    String table = TextUtil.escapeDoubleQuoteWithSlash(O._Name);
+                    String artifact = TextUtil.escapeDoubleQuoteWithSlash(SWC._SearchArtifactColumnName);
+                    if (TextUtil.isNullOrEmpty(SWC._FullTextIndex) == false)
+                      {
+                        String config = TextUtil.escapeSingleQuoteForSQL(SWC._ResolvedSearchIndex.getFullTextDetails("postgres")._Configuration);
+                        String rankQuery = " @@ websearch_to_tsquery(" + config + ", ?) order by ts_rank(";
+                        String rankEnd = ", websearch_to_tsquery(" + config + ", ?)) desc";
+                        Out.println(Lead + "      S.append(\" where \" ); C.getFullColumnVar(S, " + schema + ", " + table + ", " + artifact + ");");
+                        Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(rankQuery) + "); C.getFullColumnVar(S, " + schema + ", " + table + ", " + artifact + "); S.append(" + TextUtil.escapeDoubleQuoteWithSlash(rankEnd) + ");");
+                      }
+                    else if (TextUtil.isNullOrEmpty(SWC._VectorIndex) == false)
+                      {
+                        Index vectorIndex = SWC._ResolvedSearchIndex;
+                        String distance = vectorIndex._Vector._Distance;
+                        String operator = "euclidean".equals(distance) == true ? "<->"
+                        : "dot".equals(distance) == true ? "<#>"
+                        : "cosine".equals(distance) == true ? "<=>"
+                        : "l1".equals(distance) == true ? "<+>" : null;
+                        if (operator == null)
+                          throw new Error("Unsupported vector search distance '" + distance + "' for view query '" + SWC._Name + "'.");
+                        Column vectorColumn = vectorIndex._ColumnObjs.get(0);
+                        String vectorType = TextUtil.isNullOrEmpty(vectorColumn.getTypeModifier()) == true ? "vector" : vectorColumn.getTypeModifier();
+                        Out.println(Lead + "      S.append(\" order by \" ); C.getFullColumnVar(S, " + schema + ", " + table + ", " + artifact + "); S.append(" + TextUtil.escapeDoubleQuoteWithSlash(" " + operator + " cast(? as " + vectorType + ")") + ");");
+                      }
+                    else
+                      {
+                        if (SWC._FromObj.isEmpty() == false)
+                          Out.println(Lead + "      S.append(" + TextUtil.escapeDoubleQuoteWithSlash(", " + PrintObjectList(SWC._FromObj)) + "); // Additional From's from the subwhereclause.");
+                        String WhereClause = PrintWhereClause(G, null, SWC);
+                        if (TextUtil.isNullOrEmpty(WhereClause) == false)
+                          Out.println(Lead + "      S.append(\" where (\"); " + WhereClause + " S.append(\")\");");
+                        if (SWC._OrderByObjs.isEmpty() == false)
+                          Out.println(Lead + "      S.append(\" order by " + PrintOrderByClause(G, SWC._OrderByObjs));
+                      }
                   Out.println(Lead + "      break;");
                 }
             }
@@ -582,37 +620,47 @@ public class Helper
               ++LookupId;
               if (UniqueConstraints == false)
                 {
-                  Out.println(Lead + "   case " + LookupId + ": {  // Index '" + I._Name + "'");
-                  for (Column C : I._ColumnObjs)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false, useWhereSaved);
-                  if (I._SubQuery != null && I._SubQuery._Attributes.isEmpty() == false)
+                  if (I.isFullTextIndex() == true)
                     {
-                      String MethodName = "lookupWhere" + I._Name;
-                      Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
-                      Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
-                      for (Query.Attribute A : I._SubQuery._Attributes)
-                        {
-                          Column C = A._Col;
-                          String V = A._VarName.replace('.', '_');
-                          // String Mask = getRuntimeMask(C);
-                          String Pad = O._PadderColumnNames.getPad(C.getName());
-                          Out.print(Lead + "     ");
-                          if (C.getType().isPrimitive() == false)
-                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
-                          if (C.getType() == ColumnType.DATETIME)
-                            Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
-                          else if (C.getType() == ColumnType.DATETIME_PLAIN)
-                            Out.println("PS.setObject(++i, P._" + V + ");");
-                          else if (C.getType() == ColumnType.DATE)
-                            Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
-                          else if (A._Multi == false)
-                            Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
-                          else
-                            Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, P._" + V + ");");
-                        }
+                      Out.println(Lead + "   case " + LookupId + ": // Full-text Index '" + I._Name + "'");
+                      Out.println(Lead + "     PS.setString(++i, (String) ExtraParams);");
+                      Out.println(Lead + "     PS.setString(++i, (String) ExtraParams);");
                     }
-                  Out.println(Lead + "     break;");
-                  Out.println(Lead + "   }");
+                  else
+                    {
+                      Out.println(Lead + "   case " + LookupId + ": {  // Index '" + I._Name + "'");
+                      for (Column C : I._ColumnObjs)
+                        PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static, false, useWhereSaved);
+                      if (I._SubQuery != null && I._SubQuery._Attributes.isEmpty() == false)
+                        {
+                          String MethodName = "lookupWhere" + I._Name;
+                          Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
+                          Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
+                          for (Query.Attribute A : I._SubQuery._Attributes)
+                            {
+                              Column C = A._Col;
+                              String V = A._VarName.replace('.', '_');
+                              String Pad = O._PadderColumnNames.getPad(C.getName());
+                              Out.print(Lead + "     ");
+                              if (C.getType().isPrimitive() == false)
+                                Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
+                              if (C.getType() == ColumnType.DATETIME)
+                                Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                              else if (C.getType() == ColumnType.DATETIME_PLAIN)
+                                Out.println("PS.setObject(++i, P._" + V + ");");
+                              else if (C.getType() == ColumnType.DATE)
+                                Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
+                              else if (A._Multi == false)
+                                Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
+                              else
+                                Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, P._" + V + ");");
+                            }
+                        }
+                      Out.println(Lead + "     break;");
+                      Out.println(Lead + "   }");
+                    }
+                  if (I.isFullTextIndex() == true)
+                    Out.println(Lead + "     break;");
                 }
             }
 
@@ -635,31 +683,40 @@ public class Helper
               if (UniqueConstraints == false)
                 {
                   Out.println(Lead + "   case " + LookupId + ": { // Query '" + SWC._Name + "'");
-                  String MethodName = "lookupWhere" + SWC._Name;
-                  if (SWC._Attributes.isEmpty() == false)
+                  if (TextUtil.isNullOrEmpty(SWC._FullTextIndex) == false)
                     {
-                      Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
-                      Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
+                      Out.println(Lead + "     PS.setString(++i, (String) ExtraParams);");
+                      Out.println(Lead + "     PS.setString(++i, (String) ExtraParams);");
                     }
-                  for (Query.Attribute A : SWC._Attributes)
+                  else if (TextUtil.isNullOrEmpty(SWC._VectorIndex) == false)
+                    Out.println(Lead + "     PS.setString(++i, java.util.Arrays.toString((float[]) ExtraParams));");
+                  else
                     {
-                      Column C = A._Col;
-                      String V = A._VarName.replace('.', '_');
-                      // String Mask = getRuntimeMask(C);
-                      String Pad = O._PadderColumnNames.getPad(C.getName());
-                      Out.print(Lead + "     ");
-                      if (C.getType().isPrimitive() == false || A._Multi == true)
-                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
-                      if (C.getType() == ColumnType.DATETIME)
-                        Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
-                      else if (C.getType() == ColumnType.DATETIME_PLAIN)
-                        Out.println("PS.setObject(++i, P._" + V + ");");
-                      else if (C.getType() == ColumnType.DATE)
-                        Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
-                      else if (A._Multi == false)
-                        Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
-                      else
-                        Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, P._" + V + ");");
+                      String MethodName = "lookupWhere" + SWC._Name;
+                      if (SWC._Attributes.isEmpty() == false)
+                        {
+                          Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
+                          Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
+                        }
+                      for (Query.Attribute A : SWC._Attributes)
+                        {
+                          Column C = A._Col;
+                          String V = A._VarName.replace('.', '_');
+                          String Pad = O._PadderColumnNames.getPad(C.getName());
+                          Out.print(Lead + "     ");
+                          if (C.getType().isPrimitive() == false || A._Multi == true)
+                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + (A._Multi == true ? "ARRAY" : JavaJDBCType.get(C.getType())._JDBCSQLType) + "); else ");
+                          if (C.getType() == ColumnType.DATETIME)
+                            Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                          else if (C.getType() == ColumnType.DATETIME_PLAIN)
+                            Out.println("PS.setObject(++i, P._" + V + ");");
+                          else if (C.getType() == ColumnType.DATE)
+                            Out.println("PS.setDate(++i, new java.sql.Date(P._" + V + ".getYear()-1900, P._" + V + ".getMonthValue()-1, P._" + V + ".getDayOfMonth()));");
+                          else if (A._Multi == false)
+                            Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
+                          else
+                            Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + ".getType(), AllocatedArrays, P._" + V + ");");
+                        }
                     }
                   Out.println(Lead + "     break;");
                   Out.println(Lead + "   }");

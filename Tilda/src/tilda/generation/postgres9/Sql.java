@@ -52,6 +52,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OrderBy;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
@@ -256,6 +257,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
               else if (C._DefaultCreateValue != null)
                 Out.print(" DEFAULT " + ValueHelper.printValueSQL(getSQlCodeGen(), C.getName(), C.getType(), C.isCollection(), C._DefaultCreateValue._Value));
               Out.println("   -- " + C._Description);
+            }
+        for (Index IX : O._Indices)
+          if (IX != null && IX.isFullTextIndex() == true)
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print("  , ");
+              Out.println(tilda.db.stores.PostgreSQL.getFullTextColumnDefinition(IX));
             }
         if (O._PrimaryKey != null && O._PrimaryKey._Sequence != true)
           {
@@ -484,6 +494,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       Str.append(count == 0 ? "     group by " : ", ");
                       Str.append(++count);
                     }
+                for (SubWhereClause query : V._Queries)
+                  if (query != null && query._SearchArtifactOrdinal > 0)
+                    {
+                      Str.append(count == 0 ? "     group by " : ", ");
+                      Str.append(query._SearchArtifactOrdinal);
+                      ++count;
+                    }
                 if (First == false)
                   Str.append("\n");
               }
@@ -525,9 +542,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
         List<TotalMess> FuckList = TotalMess.ScanView(V); // Sorry for the expletives here, but this code is really messed up in very impolite ways!!!
         Map<String, TableRankTracker> TableMap = new HashMap<String, TableRankTracker>();
         Deque<TableRankTracker> TableStack = new ArrayDeque<TableRankTracker>();
+        for (SubWhereClause query : V._Queries)
+          if (query != null)
+            {
+              query._SearchArtifactExpression = null;
+              query._SearchArtifactOrdinal = 0;
+            }
         int columnCount = -1;
         boolean First = true;
         boolean hasAggregates = false;
+        int selectOrdinal = 0;
         for (ViewColumn VC : V._ViewColumns)
           {
             ++columnCount;
@@ -606,8 +630,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Str.append("\n     , ");
                 if (PrintViewColumn(Str, VC, TI, false) == true) // V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
                   hasAggregates = true;
+                ++selectOrdinal;
+                for (SubWhereClause query : V._Queries)
+                  if (query != null && query._SearchIdentityViewColumn == VC)
+                    {
+                      String sourceColumn = query._ResolvedSearchIndex.isFullTextIndex() == true
+                      ? query._ResolvedSearchIndex.getFullTextDetails("postgres")._TsvectorColumn
+                      : query._ResolvedSearchIndex._ColumnObjs.get(0).getName();
+                      query._SearchArtifactExpression = TI.getFullName() + ".\"" + sourceColumn + "\"";
+                    }
               }
           }
+
+        for (SubWhereClause query : V._Queries)
+          if (query != null && query._SearchArtifactExpression != null)
+            {
+              Str.append(First == true ? "\n       " : "\n     , ")
+              .append(query._SearchArtifactExpression).append(" as \"").append(query._SearchArtifactColumnName).append("\"");
+              First = false;
+              query._SearchArtifactOrdinal = ++selectOrdinal;
+            }
         return new boolean[] { hasAggregates, First
         };
       }
@@ -1113,6 +1155,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
               b.append(", ");
             b.append("\"").append(VC.getName()).append("\"");
           }
+
+        for (SubWhereClause query : V._Queries)
+          if (query != null && query._SearchArtifactColumnName != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                b.append("\n     , ");
+              b.append("\"").append(query._SearchArtifactColumnName).append("\"");
+            }
 
         b.append("\n from (\n").append(Str).append("\n      ) as T\n");
         if (V._Realize != null)

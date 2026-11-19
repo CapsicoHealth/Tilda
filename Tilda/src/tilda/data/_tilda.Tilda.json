@@ -19,9 +19,9 @@
  ,"dependencies":["tilda/data/tmp/_tilda.TildaTmp.json"]
  ,"dbCompatibility":{
       "default":["postgres"]
-  ,"targets":[
-    {"db":"bigquery", "objects":["MaintenanceLog"], "fkEnforcementExceptions":["MaintenanceLog.startTime", "MaintenanceLog.endTime"]}
-   ]
+     ,"targets":[
+         {"db":"bigquery", "objects":["MaintenanceLog"], "fkEnforcementExceptions":["MaintenanceLog.startTime", "MaintenanceLog.endTime"]}
+       ]
    }
  ,"extraDDL":{
      "before":[]

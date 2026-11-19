@@ -403,6 +403,15 @@ public class Docs implements CodeGenDocs
     @Override
     public void docMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I)
       {
+        if (I.isFullTextIndex() == true)
+          {
+            Out.println(
+            Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
+            + "Search records by the full-text index '" + I._Name + "' using PostgreSQL web-search syntax. Results are ordered by descending text-search rank."
+            + SystemValues.NEWLINE
+            + Helper.getMultiLineCommentEnd());
+            return;
+          }
         Out.println(
         Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
         + "Lookup records by the index '" + I._Name + "' over  "

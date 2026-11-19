@@ -55,6 +55,22 @@ public class DBCompatibilityTest
         assertTargets(App.getObject("C"), "bigquery");
         assertTargets(App.getView("SummaryView"), "postgres", "bigquery");
 
+        for (String name : new String[] { "A", "C" })
+          {
+            Object table = App.getObject(name);
+            Index fullText = new Index();
+            fullText._Name = "Search";
+            fullText._Parent = table;
+            fullText._FullText = new Index.FullText();
+            Index.FullTextDetails detail = new Index.FullTextDetails();
+            detail._Db = "postgres";
+            fullText._FullText._Details = java.util.Collections.singletonList(detail);
+            table._Indices.add(fullText);
+          }
+        App._DBCompatibility.validateIndexDetails(AppPS, App);
+        if (AppPS.getErrorCount() != 0)
+          throw new IllegalStateException("A PostgreSQL fulltext index was rejected on a mixed or BigQuery-only table: " + AppPS.getErrors());
+
         Schema NoViews = parseSchema("{\"dbCompatibility\":{\"targets\":[{\"db\":\"bigquery\",\"objects\":[\"*\"],\"views\":[\"*\"]}]}}", "test.data", "NOVIEWS");
         NoViews._DependencySchemas.add(Core);
         addObject(NoViews, "TableOnly");
@@ -62,6 +78,14 @@ public class DBCompatibilityTest
         NoViewsPS.addDependencySchema(Core);
         if (NoViews._DBCompatibility.validate(NoViewsPS, NoViews) == false)
           throw new IllegalStateException("A wildcard view target did not validate for a schema with no views: " + NoViewsPS.getErrors());
+
+        Schema UnderscorePrefix = parseSchema("{\"dbCompatibility\":{\"targets\":[{\"db\":\"bigquery\",\"objects\":[\"_*\"],\"views\":[]}]}}", "test.data", "UNDERSCOREPREFIX");
+        UnderscorePrefix._DependencySchemas.add(Core);
+        addObject(UnderscorePrefix, "_Object");
+        ParserSession UnderscorePrefixPS = new ParserSession(UnderscorePrefix, null);
+        UnderscorePrefixPS.addDependencySchema(Core);
+        if (UnderscorePrefix._DBCompatibility.validate(UnderscorePrefixPS, UnderscorePrefix) == false)
+          throw new IllegalStateException("An underscore wildcard prefix did not validate: " + UnderscorePrefixPS.getErrors());
 
         Schema EmptySchema = parseSchema("{\"dbCompatibility\":{\"targets\":[{\"db\":\"bigquery\",\"objects\":[],\"views\":[\"*\"]}]}}", "test.data", "EMPTY");
         EmptySchema._DependencySchemas.add(Core);

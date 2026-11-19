@@ -49,12 +49,22 @@ public class SubWhereClause
     @SerializedName("wheres"     ) public Query [] _Wheres = { };
     @SchemaDoc(description = "Column expressions controlling result ordering.", refKind = SchemaRefKind.COLUMN_REFERENCE)
     @SerializedName("orderBy"    ) public String[] _OrderBy= { };
+    @SchemaDoc(description = "Table fulltext index used by this view lookup; mutually exclusive with 'vector'.")
+    @SerializedName("fulltext"   ) public String   _FullTextIndex;
+    @SchemaDoc(description = "Table vector index used by this view lookup; mutually exclusive with 'fulltext'.")
+    @SerializedName("vector"     ) public String   _VectorIndex;
     /*@formatter:on*/
 
     public transient List<Query.Attribute> _Attributes  = new ArrayList<Query.Attribute>();
     public transient List<Object>          _FromObj     = new ArrayList<Object>();
     public transient List<OrderBy>         _OrderByObjs = new ArrayList<OrderBy>();
     public transient boolean               _Unique;
+    public transient Index                  _ResolvedSearchIndex;
+    public transient Object                 _SearchSourceObject;
+    public transient ViewColumn             _SearchIdentityViewColumn;
+    public transient String                 _SearchArtifactColumnName;
+    public transient String                 _SearchArtifactExpression;
+    public transient int                    _SearchArtifactOrdinal;
 
 
     public transient Base                  _ParentObject;
@@ -78,11 +88,20 @@ public class SubWhereClause
         for (int i = 0; i < SWC._Wheres.length; ++i)
           _Wheres[i] = new Query(SWC._Wheres[i]);
         _OrderBy = Arrays.copyOf(SWC._OrderBy, SWC._OrderBy.length);
+        _FullTextIndex = SWC._FullTextIndex;
+        _VectorIndex = SWC._VectorIndex;
+        _ResolvedSearchIndex = SWC._ResolvedSearchIndex;
+        _SearchSourceObject = SWC._SearchSourceObject;
+        _SearchIdentityViewColumn = SWC._SearchIdentityViewColumn;
+        _SearchArtifactColumnName = SWC._SearchArtifactColumnName;
+        _SearchArtifactExpression = SWC._SearchArtifactExpression;
+        _SearchArtifactOrdinal = SWC._SearchArtifactOrdinal;
       }
 
     public boolean validate(ParserSession PS, Base ParentObject, String What, boolean TopLevel)
       {
         _ParentObject = ParentObject;
+        int Errs = PS.getErrorCount();
         
         // Does it have a name?
         if (TopLevel == true && TextUtil.isNullOrEmpty(_Name) == true)
@@ -91,13 +110,30 @@ public class SubWhereClause
         if (TopLevel == true && TextUtil.isNullOrEmpty(_Description) == true)
           return PS.AddError(What + " is defining a SubWhereClause '" + _Name + "' without a description.");
 
-        if (_Wheres.length == 0)
+        boolean hasFullText = TextUtil.isNullOrEmpty(_FullTextIndex) == false;
+        boolean hasVector = TextUtil.isNullOrEmpty(_VectorIndex) == false;
+        if (hasFullText == true || hasVector == true)
+          {
+            if (TopLevel == false || ParentObject instanceof View == false)
+              PS.AddError(What + " query '" + _Name + "' may use 'fulltext' or 'vector' only as a top-level named view query.");
+            if (hasFullText == true && hasVector == true)
+              PS.AddError(What + " is defining query '" + _Name + "' with both 'fulltext' and 'vector'; only one search index is allowed.");
+            if (_Wheres != null && _Wheres.length != 0)
+              PS.AddError(What + " is defining index search query '" + _Name + "' with 'wheres'; fulltext/vector queries cannot define a WHERE clause.");
+            if (_From != null && _From.length != 0)
+              PS.AddError(What + " is defining index search query '" + _Name + "' with 'from'; the source table is determined by the index reference.");
+            if (_OrderBy != null && _OrderBy.length != 0)
+              PS.AddError(What + " is defining index search query '" + _Name + "' with 'orderBy'; results are ordered by relevance or vector distance.");
+            _Attributes.clear();
+            _Unique = false;
+            return Errs == PS.getErrorCount();
+          }
+
+        if (_Wheres == null || _Wheres.length == 0)
           {
             PS.AddError(What + " is defining a SubWhereClause without any queries.");
             return true;
           }
-
-        int Errs = PS.getErrorCount();
 
         Set<String> DBs = new HashSet<String>();
         for (Query q : _Wheres)

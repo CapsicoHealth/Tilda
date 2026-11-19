@@ -55,6 +55,8 @@ public class Index
     @SerializedName("subQuery"        ) public SubWhereClause _SubQuery;
     @SchemaDoc(description = "Shared vector-index semantics and backend-specific options.")
     @SerializedName("vector"          ) public Vector         _Vector;
+    @SchemaDoc(description = "PostgreSQL full-text index and its hidden generated tsvector column.")
+    @SerializedName("fulltext"        ) public FullText       _FullText;
     /*@formatter:on*/
 
     public static class Details
@@ -75,6 +77,22 @@ public class Index
         @SerializedName("algorithm") public String _Algorithm;
         @SchemaDoc(description = "Backend-specific details; define one '*' entry or database-specific entries.")
         @SerializedName("details") public List<Details> _Details;
+      }
+
+    public static class FullText
+      {
+        @SchemaDoc(description = "Backend-specific full-text index settings.", required = true)
+        @SerializedName("details") public List<FullTextDetails> _Details;
+      }
+
+    public static class FullTextDetails
+      {
+        @SchemaDoc(description = "Database backend for this full-text index; currently only postgres is supported.", required = true)
+        @SerializedName("db") public String _Db;
+        @SchemaDoc(description = "Name of the hidden generated PostgreSQL tsvector column.", required = true)
+        @SerializedName("tsvectorColumn") public String _TsvectorColumn;
+        @SchemaDoc(description = "PostgreSQL text-search configuration; defaults to english.")
+        @SerializedName("configuration") public String _Configuration;
       }
 
     public static class Option
@@ -110,6 +128,11 @@ public class Index
             _Vector._Algorithm = I._Vector._Algorithm;
             _Vector._Details = I._Vector._Details;
           }
+        if (I._FullText != null)
+          {
+            _FullText = new FullText();
+            _FullText._Details = I._FullText._Details;
+          }
         if (I._SubQuery != null)
           _SubQuery = new SubWhereClause(I._SubQuery);
       }
@@ -126,6 +149,20 @@ public class Index
             if (column != null && column.getType() == ColumnType.VECTOR)
               return true;
         return false;
+      }
+
+    public boolean isFullTextIndex()
+      {
+        return _FullText != null;
+      }
+
+    public FullTextDetails getFullTextDetails(String database)
+      {
+        if (_FullText != null && _FullText._Details != null)
+          for (FullTextDetails detail : _FullText._Details)
+            if (detail != null && database.equals(detail._Db) == true)
+              return detail;
+        return null;
       }
 
     public Details getDetails(DBType DB)
@@ -187,12 +224,36 @@ public class Index
         if (TextUtil.isJavaIdentifier(_Name) == false)
           PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
-        if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
+        if (_FullText == null && (_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
           PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' without columns and/or order by.");
 
-        _Unique = _OrderBy == null || _OrderBy.length == 0;
+        _Unique = _FullText == null && (_OrderBy == null || _OrderBy.length == 0);
+        if (_FullText != null)
+          validateFullText(PS, Parent);
 
-        if (_Columns != null)
+        if (_FullText != null)
+          {
+            _ColumnObjs.clear();
+            if (_Columns == null || _Columns.length == 0)
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining full-text index '" + _Name + "' without a non-empty 'columns' array.");
+            else
+              for (int i = 0; i < _Columns.length; ++i)
+                {
+                  if (TextUtil.isNullOrEmpty(_Columns[i]) == true)
+                    {
+                      PS.AddError("Object '" + _Parent.getFullName() + "' is defining full-text index '" + _Name + "' with an empty source column name.");
+                      continue;
+                    }
+                  Matcher m = _PATTERN_INDEX_COLUMN.matcher(_Columns[i].trim());
+                  if (m.find() == true)
+                    {
+                      if (TextUtil.isNullOrEmpty(m.group(2)) == false)
+                        PS.AddError("Object '" + _Parent.getFullName() + "' is defining full-text index '" + _Name + "' with a source column modifier; full-text source columns must be plain column names.");
+                      _Columns[i] = m.group(1).trim();
+                    }
+                }
+          }
+        else if (_Columns != null)
           for (int i = 0; i < _Columns.length; ++i)
             {
               Matcher m = _PATTERN_INDEX_COLUMN.matcher(_Columns[i]);
@@ -227,19 +288,24 @@ public class Index
                 PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + _Columns[i] + "' which cannot be parsed as '<columnName> <indexModifier>?', e.g., 'someColumn', 'someColulm lal' or 'someColumn cosine'.");
             }
 
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor()
+        if (_Columns != null)
+          _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor()
           {
             @Override
             public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
               {
-                if (C._Mode == ColumnMode.CALCULATED)
-                  PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
-                // We think it's OK to have indices on null columns. Postgres will be smart about it for example, and SQLServer seems to handle it properly too.
-                // else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
-                // PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in a multi-column unique index.");
+                if (_FullText != null)
+                  {
+                    if (C.getType() != ColumnType.STRING || C.isCollection() == true)
+                      PS.AddError("Object '" + _Parent.getFullName() + "' is defining full-text index '" + _Name + "' with source column '" + C.getName() + "' which must be a scalar STRING column.");
+                    if (C._Mode == ColumnMode.CALCULATED)
+                      PS.AddError("Object '" + _Parent.getFullName() + "' is defining full-text index '" + _Name + "' with source column '" + C.getName() + "' which is calculated.");
+                  }
                 else
                   {
-                    if (_Unique == true)
+                    if (C._Mode == ColumnMode.CALCULATED)
+                      PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
+                    else if (_Unique == true)
                       C._UniqueIndex = true;
                   }
                 return true;
@@ -362,6 +428,74 @@ public class Index
               validateVectorAlgorithmForDatabase(PS, detail._Db, detail._Algorithm);
       }
 
+    private void validateFullText(ParserSession PS, Base Parent)
+      {
+        String what = "Object '" + Parent.getFullName() + "' full-text index '" + _Name + "'";
+        if (Parent instanceof Object == false)
+          PS.AddError(what + " must be defined on a table object.");
+        if (_Vector != null)
+          PS.AddError(what + " cannot define both 'fulltext' and 'vector'.");
+        if (_Db == false)
+          PS.AddError(what + " must be a database index ('db' must be true). ");
+        if (_Cluster == true)
+          PS.AddError(what + " cannot request clustering.");
+        if (_NullsNotDistinct == true)
+          PS.AddError(what + " cannot set 'nullsNotDistinct'.");
+        if (_SubQuery != null || TextUtil.isNullOrEmpty(_SubWhere) == false)
+          PS.AddError(what + " cannot define a partial-index predicate.");
+        if (_OrderBy != null && _OrderBy.length > 0)
+          PS.AddError(what + " cannot define 'orderBy'.");
+
+        if (_FullText._Details == null || _FullText._Details.isEmpty() == true)
+          {
+            PS.AddError(what + " requires a non-empty 'fulltext.details' array.");
+            return;
+          }
+        java.util.Set<String> databases = new java.util.HashSet<String>();
+        for (FullTextDetails detail : _FullText._Details)
+          {
+            if (detail == null || "postgres".equals(detail._Db) == false)
+              {
+                PS.AddError(what + " requires each fulltext.details[].db to be exactly 'postgres'.");
+                continue;
+              }
+            if (databases.add(detail._Db) == false)
+              PS.AddError(what + " has duplicate fulltext details for database 'postgres'.");
+            validateFullTextDetails(PS, Parent, what, detail);
+          }
+      }
+
+    private void validateFullTextDetails(ParserSession PS, Base Parent, String what, FullTextDetails detail)
+      {
+        if (TextUtil.isNullOrEmpty(detail._TsvectorColumn) == true)
+          PS.AddError(what + " is missing 'fulltext.details[].tsvectorColumn'.");
+        else
+          {
+            detail._TsvectorColumn = detail._TsvectorColumn.trim();
+            if (detail._TsvectorColumn.equals(TextUtil.sanitizeName(detail._TsvectorColumn)) == false
+            || TextUtil.isJavaIdentifier(detail._TsvectorColumn) == false)
+              PS.AddError(what + " has an invalid 'fulltext.tsvectorColumn' name '" + detail._TsvectorColumn + "'.");
+            if (detail._TsvectorColumn.length() > PS._CGSql.getMaxColumnNameSize())
+              PS.AddError(what + " has a 'fulltext.tsvectorColumn' name exceeding the database identifier limit.");
+            if (Parent.getColumn(detail._TsvectorColumn) != null)
+              PS.AddError(what + " uses '" + detail._TsvectorColumn + "' as its generated tsvector column, but a model column with that name already exists.");
+            if (Parent instanceof Object)
+              for (Index other : ((Object) Parent)._Indices)
+                if (other != null && other != this && other.getFullTextDetails("postgres") != null && other.getFullTextDetails("postgres")._TsvectorColumn != null
+                && other.getFullTextDetails("postgres")._TsvectorColumn.equalsIgnoreCase(detail._TsvectorColumn) == true)
+                  PS.AddError(what + " shares generated tsvector column '" + detail._TsvectorColumn + "' with index '" + other._Name + "'.");
+          }
+
+        if (TextUtil.isNullOrEmpty(detail._Configuration) == true)
+          detail._Configuration = "english";
+        else
+          detail._Configuration = detail._Configuration.trim();
+        if (TextUtil.isNullOrEmpty(detail._Configuration) == true)
+          PS.AddError(what + " has an empty 'fulltext.configuration'.");
+        else if (detail._Configuration.matches("[A-Za-z_][A-Za-z0-9_$]*(\\.[A-Za-z_][A-Za-z0-9_$]*)?") == false)
+          PS.AddError(what + " has an invalid PostgreSQL text-search configuration name '" + detail._Configuration + "'. Use a name or schema-qualified name.");
+      }
+
     private void validateVectorAlgorithmForDatabase(ParserSession PS, String database, String algorithm)
       {
         if ("*".equals(database) == true)
@@ -387,6 +521,18 @@ public class Index
 
     public String getSignature()
       {
+        if (_FullText != null)
+          {
+            FullTextDetails detail = getFullTextDetails("postgres");
+            StringBuilder fullTextSignature = new StringBuilder("ft|")
+            .append(detail == null || detail._TsvectorColumn == null ? "" : detail._TsvectorColumn.toLowerCase(Locale.ROOT))
+            .append("|").append(detail == null || detail._Configuration == null ? "" : detail._Configuration.toLowerCase(Locale.ROOT));
+            if (_Columns != null)
+              for (String source : _Columns)
+                fullTextSignature.append("|").append(source == null ? "" : source.toLowerCase(Locale.ROOT));
+            return fullTextSignature.toString();
+          }
+
         StringBuilder Str = new StringBuilder();
         // Defined Columns
         for (Column C : _ColumnObjs)

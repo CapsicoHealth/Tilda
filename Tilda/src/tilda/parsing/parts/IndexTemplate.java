@@ -33,6 +33,8 @@ public class IndexTemplate
     @SerializedName("subQuery") public SubWhereClause _SubQuery;
     @SchemaDoc(description = "Shared vector-index semantics and backend-specific options.")
     @SerializedName("vector"  ) public Index.Vector   _Vector;
+    @SchemaDoc(description = "Reserved and unsupported for index templates in this phase.")
+    @SerializedName("fulltext") public Index.FullText _FullText;
     /*@formatter:on*/
 
     public transient Base         _Parent;
@@ -54,6 +56,11 @@ public class IndexTemplate
             _Vector._Algorithm = I._Vector._Algorithm;
             _Vector._Details = I._Vector._Details;
           }
+        if (I._FullText != null)
+          {
+            _FullText = new Index.FullText();
+            _FullText._Details = I._FullText._Details;
+          }
         if (I._SubQuery != null)
           _SubQuery = new SubWhereClause(I._SubQuery);
       }
@@ -66,6 +73,9 @@ public class IndexTemplate
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index template without a name.");
+
+        if (_FullText != null)
+          PS.AddError("Object '" + _Parent.getFullName() + "' index template '" + _Name + "' cannot define 'fulltext'; full-text indexes must be declared directly on a table.");
 
         if (_Columns != null && _Columns.length > 0)
           _Columns = CollectionUtil.toStringArray(_Parent.expandColumnNames(_Columns, PS, "indexTemplate", _Name));

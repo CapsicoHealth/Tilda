@@ -51,6 +51,56 @@ import tilda.utils.TextUtil;
 
 public class PostgreSQL extends CommonStoreImpl
   {
+    public static class FullTextPhysicalIndex
+      {
+        public String _Name;
+        public String _Method;
+        public int _KeyCount;
+        public int _ColumnCount;
+        public boolean _FirstKeyIsArtifact;
+        public boolean _Valid;
+        public boolean _Ready;
+      }
+
+    public static class FullTextIndexMetadata
+      {
+        public boolean _ArtifactExists;
+        public String _ColumnType;
+        public String _Generated;
+        public String _Expression;
+        public final List<FullTextPhysicalIndex> _Indexes = new java.util.ArrayList<FullTextPhysicalIndex>();
+
+        public boolean hasEquivalentGinIndex()
+          {
+            for (FullTextPhysicalIndex index : _Indexes)
+              if ("gin".equalsIgnoreCase(index._Method) == true && index._KeyCount == 1 && index._ColumnCount == 1
+              && index._FirstKeyIsArtifact == true && index._Valid == true && index._Ready == true)
+                return true;
+            return false;
+          }
+
+        public boolean hasIndexNamed(String name)
+          {
+            for (FullTextPhysicalIndex index : _Indexes)
+              if (index._Name != null && index._Name.equalsIgnoreCase(name) == true)
+                return true;
+            return false;
+          }
+
+        public boolean matches(Index index)
+          {
+            return _ArtifactExists == true && "tsvector".equalsIgnoreCase(_ColumnType) == true && "s".equals(_Generated) == true
+            && normalizeFullTextExpression(_Expression).equals(normalizeFullTextExpression(getFullTextExpression(index))) == true
+            && hasEquivalentGinIndex() == true;
+          }
+
+        public boolean isOwnedGeneratedTsvector()
+          {
+            return _ArtifactExists == true && "tsvector".equalsIgnoreCase(_ColumnType) == true && "s".equals(_Generated) == true
+            && _Expression != null && Pattern.compile("(?is)^\\s*to_tsvector\\s*\\(").matcher(_Expression).find() == true;
+          }
+      }
+
     @Override
     public boolean alterTableRenameFK(Connection Con, tilda.parsing.parts.ForeignKey FK, tilda.db.metadata.FKMeta oldFK)
     throws Exception
@@ -579,6 +629,160 @@ public class PostgreSQL extends CommonStoreImpl
     public boolean isCaseSentitiveSchemaTableViewNames()
       {
         return false;
+      }
+
+    public static String getFullTextColumnDefinition(Index IX)
+      {
+        return "\"" + IX.getFullTextDetails("postgres")._TsvectorColumn.replace("\"", "\"\"") + "\" tsvector GENERATED ALWAYS AS (" + getFullTextExpression(IX) + ") STORED";
+      }
+
+    private static String getFullTextExpression(Index IX)
+      {
+        StringBuilder expression = new StringBuilder("to_tsvector('")
+        .append(IX.getFullTextDetails("postgres")._Configuration.replace("'", "''"))
+        .append("'::regconfig, ");
+        for (int i = 0; i < IX._Columns.length; ++i)
+          {
+            if (i > 0)
+              expression.append(" || ' ' || ");
+            expression.append("coalesce(\"")
+            .append(IX._Columns[i].replace("\"", "\"\""))
+            .append("\", '')");
+          }
+        expression.append(")");
+        return expression.toString();
+      }
+
+    public static FullTextIndexMetadata loadFullTextIndexMetadata(Connection Con, Index IX)
+    throws Exception
+      {
+        String Q = "SELECT format_type(a.atttypid, a.atttypmod) AS column_type, a.attgenerated AS generated_kind, "
+        + "pg_get_expr(d.adbin, d.adrelid) AS generated_expression, ci.relname AS index_name, am.amname AS access_method, "
+        + "i.indnkeyatts AS key_count, i.indnatts AS column_count, (i.indkey[0] = a.attnum) AS first_key_is_artifact, "
+        + "i.indisvalid AS index_valid, i.indisready AS index_ready "
+        + "FROM pg_class t JOIN pg_namespace n ON n.oid = t.relnamespace "
+        + "JOIN pg_attribute a ON a.attrelid = t.oid "
+        + "LEFT JOIN pg_attrdef d ON d.adrelid = a.attrelid AND d.adnum = a.attnum "
+        + "LEFT JOIN pg_index i ON i.indrelid = t.oid AND a.attnum = ANY(i.indkey) "
+        + "LEFT JOIN pg_class ci ON ci.oid = i.indexrelid LEFT JOIN pg_am am ON am.oid = ci.relam "
+        + "WHERE n.nspname = ? AND t.relname = ? AND a.attname = ? AND a.attnum > 0 AND a.attisdropped = false";
+        FullTextIndexMetadata metadata = new FullTextIndexMetadata();
+        java.sql.PreparedStatement PS = Con.prepareStatement(Q);
+        try
+          {
+            PS.setString(1, IX._Parent._ParentSchema._Name.toLowerCase(java.util.Locale.ROOT));
+            PS.setString(2, IX._Parent._Name.toLowerCase(java.util.Locale.ROOT));
+            PS.setString(3, IX.getFullTextDetails("postgres")._TsvectorColumn);
+            java.sql.ResultSet RS = PS.executeQuery();
+            try
+              {
+                while (RS.next() == true)
+                  {
+                    metadata._ArtifactExists = true;
+                    metadata._ColumnType = RS.getString("column_type");
+                    metadata._Generated = RS.getString("generated_kind");
+                    metadata._Expression = RS.getString("generated_expression");
+                    String indexName = RS.getString("index_name");
+                    if (indexName != null)
+                      {
+                        FullTextPhysicalIndex index = new FullTextPhysicalIndex();
+                        index._Name = indexName;
+                        index._Method = RS.getString("access_method");
+                        index._KeyCount = RS.getInt("key_count");
+                        index._ColumnCount = RS.getInt("column_count");
+                        index._FirstKeyIsArtifact = RS.getBoolean("first_key_is_artifact");
+                        index._Valid = RS.getBoolean("index_valid");
+                        index._Ready = RS.getBoolean("index_ready");
+                        metadata._Indexes.add(index);
+                      }
+                  }
+              }
+            finally
+              {
+                RS.close();
+              }
+          }
+        finally
+          {
+            PS.close();
+          }
+        return metadata;
+      }
+
+    private static String normalizeFullTextExpression(String expression)
+      {
+        if (expression == null)
+          return "";
+        StringBuilder normalized = new StringBuilder(expression.length());
+        java.util.regex.Matcher textCast = Pattern.compile("(?i)::(?:text|varchar|character\\s+varying)(?![a-z0-9_$])").matcher(expression);
+        boolean inString = false;
+        boolean inIdentifier = false;
+        for (int i = 0; i < expression.length(); ++i)
+          {
+            char c = expression.charAt(i);
+            if (inString == true)
+              {
+                normalized.append(c);
+                if (c == '\'' && i + 1 < expression.length() && expression.charAt(i + 1) == '\'')
+                  normalized.append(expression.charAt(++i));
+                else if (c == '\'')
+                  inString = false;
+              }
+            else if (inIdentifier == true)
+              {
+                normalized.append(c);
+                if (c == '"' && i + 1 < expression.length() && expression.charAt(i + 1) == '"')
+                  normalized.append(expression.charAt(++i));
+                else if (c == '"')
+                  inIdentifier = false;
+              }
+            else if (c == '\'')
+              {
+                inString = true;
+                normalized.append(c);
+              }
+            else if (c == '"')
+              {
+                inIdentifier = true;
+                normalized.append(c);
+              }
+            else if (c == ':' && textCast.region(i, expression.length()).lookingAt() == true)
+              {
+                int end = textCast.end();
+                int next = end;
+                while (next < expression.length() && Character.isWhitespace(expression.charAt(next)) == true)
+                  ++next;
+                if (next == expression.length() || expression.charAt(next) != '(')
+                  i = end - 1;
+                else
+                  normalized.append(c);
+              }
+            else if (Character.isWhitespace(c) == false && c != '(' && c != ')')
+              normalized.append(Character.toLowerCase(c));
+          }
+        return normalized.toString();
+      }
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        if (IX.isFullTextIndex() == false)
+          return super.alterTableAddIndexDDL(IX);
+        return "CREATE INDEX IF NOT EXISTS " + IX.getName() + " ON " + IX._Parent.getShortName() + " USING GIN (\""
+        + IX.getFullTextDetails("postgres")._TsvectorColumn.replace("\"", "\"\"") + "\");\n";
+      }
+
+    @Override
+    public boolean alterTableAddIndex(Connection Con, Index IX)
+    throws Exception
+      {
+        if (IX.isFullTextIndex() == false)
+          return super.alterTableAddIndex(Con, IX);
+        String addColumn = "ALTER TABLE " + IX._Parent.getShortName() + " ADD COLUMN IF NOT EXISTS " + getFullTextColumnDefinition(IX) + ";";
+        if (Con.executeDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), addColumn) == false)
+          return false;
+        return super.alterTableAddIndex(Con, IX);
       }
 
     @Override

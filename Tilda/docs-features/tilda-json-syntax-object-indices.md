@@ -11,17 +11,14 @@ Indices define methods of optimized access for tables. One cay say they are pref
 An object can define zero or more indices in its `indices` array:
 
 ```json
-  // Within an Object definition, you can define any number of indices (or none).
+{
   "indices": [
-     // a unique index on externalId
-    ,{ "name": "UniqueExternalId" , "columns": ["externalId"]                                 , "db": true  }
-     // a regular index on customerRefnum, created desc
-     { "name": "ByCustomerAndDate", "columns": ["customerRefnum"], "orderBy": ["created desc"], "db": true  }
-     // an application-only (no database) "unique index"
-    ,{ "name": "ApplicationSearch", "columns": ["status"]                                     , "db": false }
-     // a partial unique index on id for rows where deleted is null
-    ,{ "name": "AppId"            , "columns": ["id"], "subWhere":"deleted is null"           , "db": true  }
+    { "name": "UniqueExternalId", "columns": ["externalId"], "db": true },
+    { "name": "ByCustomerAndDate", "columns": ["customerRefnum"], "orderBy": ["created desc"], "db": true },
+    { "name": "ApplicationSearch", "columns": ["status"], "db": false },
+    { "name": "AppId", "columns": ["id"], "subWhere": "deleted is null", "db": true }
   ]
+}
 ```
 
 ## Index Fields
@@ -35,8 +32,31 @@ An object can define zero or more indices in its `indices` array:
 - `subWhere`: Raw partial-index predicate.
 - `subQuery`: Structured partial-index predicate. Use either `subWhere` or `subQuery`, not both.
 - `vector`: VECTOR-index semantics, including the shared distance and algorithm plus backend-specific `details`; see [VECTOR Indexes](#vector-indexes).
+- `fulltext`: PostgreSQL full-text semantics. Its ordered source columns are declared in `columns`, without modifiers. The index owns a hidden generated `tsvector` column and its GIN index.
 
 :balloon: **NOTE**: An index definition requires at least 1 column defined in either "columns" or "orderBy".
+
+For full-text indexes, `columns` contains one or more distinct scalar STRING source columns in text significance order:
+
+```json
+{
+  "name": "DocumentSearch",
+  "columns": ["documentTitle", "documentDescription"],
+  "fulltext": {
+    "details": [
+      { "db": "postgres", "tsvectorColumn": "search_tsv", "configuration": "english" }
+    ]
+  }
+}
+```
+
+Full-text indexes must be database-backed (`db` defaults to `true`). `fulltext.details` is a non-empty array of backend-specific settings; currently only one entry is supported, with `db` exactly `postgres` for PostgreSQL 15 or later. The previous flat `fulltext` syntax must be converted to a `details` entry. Wildcards and duplicate backend entries are not supported. The detail's `tsvectorColumn` is required, must be a valid identifier, and must not collide with a model column or another full-text artifact. `columns` must contain distinct, non-calculated scalar STRING columns from the same object without index modifiers. `configuration` defaults to `english` and names a PostgreSQL text-search configuration available on the target database. Nullable sources are treated as empty strings.
+
+A full-text index is created only on a database named in `details` that the table also targets. For example, a table can target PostgreSQL and BigQuery while its PostgreSQL full-text index and generated column exist only on PostgreSQL. A PostgreSQL detail is also valid when the table currently targets BigQuery only; it becomes active if the table later targets PostgreSQL. This does not change vector index targeting rules.
+
+Full-text indexes cannot be vector, unique, clustered, ordered, or partial indexes, and cannot set `nullsNotDistinct`. The generated artifact is omitted from application fields and writes. PostgreSQL stores the generated column and creates a GIN index; changing text-search dictionaries independently of the model may require `REINDEX`.
+
+For the example above, the generated table factory provides `lookupWhereDocumentSearch(Connection C, String query, int maxCount)`. It returns `ListResults` ordered by descending PostgreSQL `ts_rank`, using `websearch_to_tsquery` with the configured text-search configuration. Calling it with a non-PostgreSQL connection throws `UnsupportedOperationException`. The query must not be null; `maxCount` must be nonnegative and less than `Integer.MAX_VALUE`.
 
 :balloon: **NOTE**: Tilda will not warn you if you create a frivolous index. For example, an index on a, b and another on a, b and c. Avoid creating more physical indices than needed as they do put extra weight in **all** insert/update/delete operations.
 
@@ -59,18 +79,43 @@ A column in `columns` may use the `lal` modifier for left-anchored `LIKE` search
 A VECTOR index is declared in the ordinary `indices` array. Its `columns` entry names the VECTOR column, and its `vector` field contains the distance, algorithm, and backend-specific details:
 
 ```json
-{ "name": "EmbeddingByCosine", "columns": ["embedding"], "db": true,
-  "vector": { "distance": "cosine", "algorithm": "ivf", "details": [
-     { "db": "postgres", "options": [
-                                         { "option": "m"              , "value": "16" }
-                                        ,{ "option": "ef_construction", "value": "200" }
-                                       ]
-     }
-  ]
+{
+  "name": "EmbeddingByCosine",
+  "columns": ["embedding"],
+  "db": true,
+  "vector": {
+    "distance": "cosine",
+    "algorithm": "hnsw",
+    "details": [
+      { "db": "postgres", "options": [
+        { "option": "m", "value": "16" },
+        { "option": "ef_construction", "value": "200" }
+      ] }
+    ]
+  }
 }
 ```
 
 A VECTOR index may cover only one VECTOR column. Do not combine a VECTOR column with other index columns.
+
+## View Search Queries
+
+The view-query model supports a `fulltext` or `vector` marker referring to a direct table index. For example, inside a view definition:
+
+```json
+{
+  "queries": [
+    { "name": "DocumentSearch", "description": "Search documents", "fulltext": "Document.DocumentSearch" },
+    { "name": "NearestDocuments", "description": "Find similar documents", "vector": "Document.EmbeddingByCosine" }
+  ]
+}
+```
+
+**Current limitation:** View search markers are currently rejected when the view's generated proxy object revalidates the query. The syntax and lookup generation described here are not usable end to end until that validation issue is fixed.
+
+Markers are intended only for named top-level view queries, not table queries or nested subqueries. A query may specify only one marker and cannot supply nonempty `from`, `wheres`, or `orderBy` clauses. The index must be database-backed and belong to a direct table source, not a cascaded view. The view must project every column of a primary key or a non-partial, database-backed unique index with guaranteed unique values, as non-aggregated output from the same table instance. Pivot views are not supported.
+
+The PostgreSQL view generator projects the index value as an internal database-view column, not a public Tilda view field. The generated view factory is intended to provide `lookupWhereDocumentSearch(Connection C, String query, int maxCount)` for ranked full-text results and `lookupWhereNearestDocuments(Connection C, float[] query, int maxCount)` for nearest-neighbor results ordered by the index's configured distance. The query must not be null; `maxCount` must be nonnegative and less than `Integer.MAX_VALUE`. Vector view search supports PostgreSQL `vector` and `halfvec` columns with `euclidean`, `dot`, `cosine`, or `l1` distance, subject to the index-method restrictions below.
 
 ### Database Selection
 
@@ -206,4 +251,6 @@ The index-level `vector.distance` may be omitted to use `euclidean`, and options
 ## Index Templates
 
 Realized-view `indexTemplates` use the same index-template fields, including the nested `vector.details`. The selected configuration is copied to the realized index and validated by the target backend during code generation.
+
+Full-text indexes are currently supported only as direct table `indices`; they are not accepted through `indexTemplates` in this phase.
 

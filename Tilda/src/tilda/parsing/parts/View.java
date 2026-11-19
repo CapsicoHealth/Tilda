@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -391,6 +392,8 @@ public class View extends Base
               }
           }
 
+        validateIndexSearchQueries(PS);
+
 
         // super.validateOutputMaps(PS); // We do not need to do this. The ObjectProxy is the driver of the code-gen and so the additional validation needed will occur there.
 
@@ -407,6 +410,182 @@ public class View extends Base
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    void validateIndexSearchQueries(ParserSession PS)
+      {
+        if (_Queries == null)
+          return;
+
+        Set<String> artifactColumnNames = new HashSet<String>();
+        for (SubWhereClause query : _Queries)
+          {
+            if (query == null)
+              continue;
+            boolean fullText = TextUtil.isNullOrEmpty(query._FullTextIndex) == false;
+            boolean vector = TextUtil.isNullOrEmpty(query._VectorIndex) == false;
+            if (fullText == false && vector == false)
+              continue;
+            if (fullText == true && vector == true)
+              continue;
+            if (_Pivots.isEmpty() == false)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' cannot use an index search because pivot views do not retain internal search columns.");
+                continue;
+              }
+
+            String reference = fullText == true ? query._FullTextIndex.trim() : query._VectorIndex.trim();
+            int separator = reference.lastIndexOf('.');
+            if (separator <= 0 || separator == reference.length() - 1)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' must reference an index as '<table>.<indexName>'.");
+                continue;
+              }
+
+            String tableReference = reference.substring(0, separator);
+            String indexName = reference.substring(separator + 1);
+            ReferenceHelper objectReference = ReferenceHelper.parseObjectReference(tableReference, _ParentSchema);
+            Object source = PS.getObject(objectReference._P, objectReference._S, objectReference._O);
+            if (source == null)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' references table '" + tableReference + "' which cannot be found.");
+                continue;
+              }
+            if (source._FST != FrameworkSourcedType.NONE)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' must reference a direct table, not a view or other derived object.");
+                continue;
+              }
+
+            Index searchIndex = null;
+            for (Index index : source._Indices)
+              if (index != null && index._Name.equalsIgnoreCase(indexName) == true)
+                {
+                  searchIndex = index;
+                  break;
+                }
+            if (searchIndex == null)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' references missing index '" + reference + "'.");
+                continue;
+              }
+            if (fullText == true && searchIndex.isFullTextIndex() == false)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' references index '" + reference + "' which is not a fulltext index.");
+                continue;
+              }
+            if (vector == true && searchIndex.isVectorIndex() == false)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' references index '" + reference + "' which is not a vector index.");
+                continue;
+              }
+            if (vector == true)
+              {
+                if (searchIndex._Vector == null)
+                  {
+                    PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' references vector index '" + reference + "' without vector configuration.");
+                    continue;
+                  }
+                Column vectorColumn = searchIndex._ColumnObjs.get(0);
+                String vectorType = TextUtil.isNullOrEmpty(vectorColumn.getTypeModifier()) == true ? "vector" : vectorColumn.getTypeModifier();
+                if ("vector".equalsIgnoreCase(vectorType) == false && "halfvec".equalsIgnoreCase(vectorType) == false)
+                  {
+                    PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' uses vector type '" + vectorType + "', which cannot be bound by the float[] view lookup API. Supported types are vector and halfvec.");
+                    continue;
+                  }
+                String distance = searchIndex._Vector._Distance;
+                if ("euclidean".equals(distance) == false && "dot".equals(distance) == false && "cosine".equals(distance) == false && "l1".equals(distance) == false)
+                  {
+                    PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' uses unsupported float[] vector search distance '" + distance + "'. Supported distances are euclidean, dot, cosine, and l1.");
+                    continue;
+                  }
+              }
+            if (searchIndex._Db == false)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' references index '" + reference + "' which is not database-backed.");
+                continue;
+              }
+            if (DBCompatibility.resolveBackendId(PS._CGSql.getName()) == null
+            || DBCompatibility.resolveBackendId(PS._CGSql.getName()).equals("postgres") == false)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' uses an index search that is currently supported only for PostgreSQL view generation.");
+                continue;
+              }
+
+            List<List<Column>> identities = new ArrayList<List<Column>>();
+            if (source._PrimaryKey != null && source._PrimaryKey._ColumnObjs.isEmpty() == false)
+              identities.add(source._PrimaryKey._ColumnObjs);
+            for (Index index : source._Indices)
+              if (index != null && index._Db == true && index._Unique == true && index._Vector == null && index._FullText == null
+              && index._SubQuery == null && TextUtil.isNullOrEmpty(index._SubWhere) == true
+              && hasGuaranteedUniqueValues(index) == true)
+                identities.add(index._ColumnObjs);
+
+            Map<String, Map<Column, ViewColumn>> projectedByAlias = new java.util.LinkedHashMap<String, Map<Column, ViewColumn>>();
+            for (ViewColumn viewColumn : _ViewColumns)
+              if (viewColumn != null && viewColumn._SameAsObj != null && viewColumn._SameAsObj._ParentObject == source
+              && viewColumn._SameAsObj._Mode != ColumnMode.CALCULATED
+              && viewColumn._Aggregate == null && viewColumn._JoinOnly == false && viewColumn._FormulaOnly == false
+              && TextUtil.isNullOrEmpty(viewColumn._Expression) == true)
+                {
+                  String alias = TextUtil.isNullOrEmpty(viewColumn._As) == true ? "" : viewColumn._As.toUpperCase(Locale.ROOT);
+                  Map<Column, ViewColumn> columns = projectedByAlias.get(alias);
+                  if (columns == null)
+                    {
+                      columns = new java.util.IdentityHashMap<Column, ViewColumn>();
+                      projectedByAlias.put(alias, columns);
+                    }
+                  columns.put(viewColumn._SameAsObj, viewColumn);
+                }
+
+            List<ViewColumn> completeIdentityAnchors = new ArrayList<ViewColumn>();
+            for (List<Column> identity : identities)
+              for (Map<Column, ViewColumn> projected : projectedByAlias.values())
+                {
+                  boolean complete = identity != null && identity.isEmpty() == false;
+                  for (Column keyColumn : identity)
+                    if (projected.containsKey(keyColumn) == false)
+                      {
+                        complete = false;
+                        break;
+                      }
+                  if (complete == true)
+                    completeIdentityAnchors.add(projected.get(identity.get(0)));
+                }
+
+            Set<ViewColumn> uniqueAnchors = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<ViewColumn, Boolean>());
+            uniqueAnchors.addAll(completeIdentityAnchors);
+            if (uniqueAnchors.isEmpty() == true)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' must select a complete primary or unique key of table '" + source.getFullName() + "' in non-aggregated columns.");
+                continue;
+              }
+            if (uniqueAnchors.size() > 1)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' has more than one projected identity instance for table '" + source.getFullName() + "'; the index source is ambiguous.");
+                continue;
+              }
+
+            String artifactName = "__TILDA_SEARCH_" + Integer.toHexString((getFullName() + "." + query._Name).hashCode()).toUpperCase(Locale.ROOT);
+            if (getProxyColumn(artifactName) != null || artifactColumnNames.add(artifactName.toUpperCase(Locale.ROOT)) == false)
+              {
+                PS.AddError("View '" + getFullName() + "' query '" + query._Name + "' generates an internal search column that conflicts with another view column or query.");
+                continue;
+              }
+
+            query._ResolvedSearchIndex = searchIndex;
+            query._SearchSourceObject = source;
+            query._SearchIdentityViewColumn = uniqueAnchors.iterator().next();
+            query._SearchArtifactColumnName = artifactName;
+          }
+      }
+
+    private static boolean hasGuaranteedUniqueValues(Index index)
+      {
+        for (Column column : index._ColumnObjs)
+          if (column != null && column._Nullable == true && index._NullsNotDistinct == false)
+            return false;
+        return true;
       }
 
     private boolean HandleStarExpansion(ParserSession PS, int i, ViewColumn VC)

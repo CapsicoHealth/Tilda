@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
+import tilda.db.stores.PostgreSQL;
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
@@ -28,6 +30,19 @@ public class MigratorIndexTest
     public static void main(String[] args)
     throws Exception
       {
+        if (args != null && args.length > 0 && "--fulltext".equals(args[0]) == true)
+          {
+            assertFullTextIndexMigration(null, "", "", false, false, false, 1, 0, false);
+            assertFullTextIndexMigration("text", "", null, false, false, false, 0, 1, false);
+            assertFullTextIndexMigration("tsvector", "s", "to_tsvector('simple'::regconfig, COALESCE(\"documentTitle\", ''::text))", false, true, true, 1, 0, false);
+            assertFullTextIndexMigration("tsvector", "s", "to_tsvector('english'::regconfig, ((COALESCE(\"documentTitle\", ''::text) || ' '::text) || COALESCE(\"documentDescription\", ''::text)))", true, true, true, 0, 0, false);
+            assertFullTextIndexMigration("tsvector", "s", "to_tsvector('english'::regconfig, (((COALESCE(\"documentTitle\", ''::character varying))::text || ' '::text) || (COALESCE(\"documentDescription\", ''::character varying))::text))", true, true, true, 0, 0, false);
+            assertFullTextIndexMigration("tsvector", "s", "to_tsvector('english'::regconfig, ((COALESCE(\"documentTitle\", ''::varchar(20))::text || ' '::text) || COALESCE(\"documentDescription\", ''::text)))", true, true, true, 1, 0, false);
+            assertFullTextIndexMigration("tsvector", "s", "to_tsvector('english'::regconfig, ((COALESCE(\"documentTitle\", ''::text) || ' ::text'::text) || COALESCE(\"documentDescription\", ''::text)))", true, true, true, 1, 0, false);
+            assertFullTextIndexMigration(null, "", "", false, false, false, 0, 1, true);
+            return;
+          }
+
         Connection C = null;
         assertIndexPreserved(C, DBType.BigQuery, 0);
         assertIndexPreserved(C, DBType.Postgres, 1);
@@ -39,6 +54,117 @@ public class MigratorIndexTest
         assertVectorIndexMigration(C, DBType.Postgres, 1);
         assertBigQueryPrimaryKeyMetadata();
         assertBigQueryJdbcSchemaMetadata();
+      }
+
+    private static void assertFullTextIndexMigration(String columnType, String generated, String expression, boolean hasIndex, boolean valid, boolean ready, int expectedActions, int expectedErrors, boolean localNameConflict)
+    throws Exception
+      {
+        Schema schema = new Schema();
+        schema._Name = "TEST";
+        Object object = new Object();
+        object._Name = "ITEM";
+        object._OriginalName = "Item";
+        object._ParentSchema = schema;
+        Index index = new Index();
+        index._Name = "DocumentSearch";
+        index._Parent = object;
+        index._Columns = new String[] { "documentTitle", "documentDescription" };
+        index._FullText = new Index.FullText();
+        Index.FullTextDetails detail = new Index.FullTextDetails();
+        detail._Db = "postgres";
+        detail._TsvectorColumn = "search_tsv";
+        detail._Configuration = "english";
+        index._FullText._Details = java.util.Arrays.asList(detail);
+        object._Indices.add(index);
+
+        TableMeta table = new TableMeta(schema._Name, object._Name, null);
+        if (localNameConflict == true)
+          table._Indices.put(index.getName(), new IndexMeta(index.getName(), table, "unrelated"));
+
+        PreparedStatement preparedStatement = (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(), new Class<?>[] { PreparedStatement.class }, (proxy, method, args) -> {
+          if ("executeQuery".equals(method.getName()) == true)
+            return createFullTextCatalogResultSet(columnType, generated, expression, hasIndex, valid, ready);
+          return null;
+        });
+        DatabaseMetaData databaseMetadata = (DatabaseMetaData) Proxy.newProxyInstance(DatabaseMetaData.class.getClassLoader(), new Class<?>[] { DatabaseMetaData.class }, (proxy, method, args) -> {
+          if ("getURL".equals(method.getName()) == true)
+            return "jdbc:postgresql:test";
+          if ("getUserName".equals(method.getName()) == true)
+            return "test";
+          if ("getDatabaseProductName".equals(method.getName()) == true)
+            return "PostgreSQL";
+          if ("getDatabaseProductVersion".equals(method.getName()) == true)
+            return "15";
+          return null;
+        });
+        java.sql.Connection jdbcConnection = (java.sql.Connection) Proxy.newProxyInstance(java.sql.Connection.class.getClassLoader(), new Class<?>[] { java.sql.Connection.class }, (proxy, method, args) -> {
+          if ("getMetaData".equals(method.getName()) == true)
+            return databaseMetadata;
+          if ("prepareStatement".equals(method.getName()) == true)
+            return preparedStatement;
+          return null;
+        });
+        Connection connection = new Connection(jdbcConnection, "TEST");
+        List<MigrationAction> actions = new ArrayList<MigrationAction>();
+        List<String> errors = new ArrayList<String>();
+        Migrator.handleIndices(connection, actions, errors, object, table, new SchemaMeta(schema._Name), DBType.Postgres);
+
+        if (actions.size() != expectedActions || errors.size() != expectedErrors)
+          throw new IllegalStateException("Expected full-text migration actions/errors " + expectedActions + "/" + expectedErrors + " but got " + actions.size() + "/" + errors + ": " + errors);
+        if (expectedActions == 1)
+          {
+            String description = actions.get(0).getDescription();
+            if (columnType != null && description.startsWith("Rebuilding") == false)
+              throw new IllegalStateException("Expected a full-text rebuild action but got: " + description);
+            if (columnType == null && description.startsWith("Adding") == false)
+              throw new IllegalStateException("Expected a full-text add action but got: " + description);
+          }
+
+            actions.clear();
+            errors.clear();
+            Migrator.handleIndices(connection, actions, errors, object, table, new SchemaMeta(schema._Name), DBType.BigQuery);
+            if (actions.isEmpty() == false || errors.isEmpty() == false)
+              throw new IllegalStateException("BigQuery must ignore PostgreSQL fulltext indexes: " + actions + "; " + errors);
+      }
+
+    private static ResultSet createFullTextCatalogResultSet(String columnType, String generated, String expression, boolean hasIndex, boolean valid, boolean ready)
+      {
+        AtomicInteger row = new AtomicInteger(-1);
+        return (ResultSet) Proxy.newProxyInstance(ResultSet.class.getClassLoader(), new Class<?>[] { ResultSet.class }, (proxy, method, args) -> {
+          if ("next".equals(method.getName()) == true)
+            return columnType != null && row.incrementAndGet() == 0;
+          if ("getString".equals(method.getName()) == true)
+            {
+              String label = (String) args[0];
+              if ("column_type".equalsIgnoreCase(label) == true)
+                return columnType;
+              if ("generated_kind".equalsIgnoreCase(label) == true)
+                return generated;
+              if ("generated_expression".equalsIgnoreCase(label) == true)
+                return expression;
+              if ("index_name".equalsIgnoreCase(label) == true)
+                return hasIndex == true ? "idx_doclib_doc_search_tsv" : null;
+              if ("access_method".equalsIgnoreCase(label) == true)
+                return hasIndex == true ? "gin" : null;
+            }
+          if ("getInt".equals(method.getName()) == true)
+            {
+              String label = (String) args[0];
+              if ("key_count".equalsIgnoreCase(label) == true || "column_count".equalsIgnoreCase(label) == true)
+                return hasIndex == true ? 1 : 0;
+            }
+          if ("getBoolean".equals(method.getName()) == true)
+            {
+              String label = (String) args[0];
+              if ("first_key_is_artifact".equalsIgnoreCase(label) == true)
+                return hasIndex;
+              if ("index_valid".equalsIgnoreCase(label) == true)
+                return valid;
+              if ("index_ready".equalsIgnoreCase(label) == true)
+                return ready;
+            }
+          return null;
+        });
       }
 
     private static void assertVectorIndexMigration(Connection C, DBType store, int expectedActions)

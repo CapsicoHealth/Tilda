@@ -271,7 +271,9 @@ public class Docs
               if (I != null && I._Unique != true)
                 {
                   Out.print("<LI>");
-                  if (I._ColumnObjs.isEmpty() == false)
+                  if (I.isFullTextIndex() == true)
+                    Out.print("Full-text index on " + TextUtil.print(I._Columns) + " using " + I.getFullTextDetails("postgres")._Configuration + " (generated column " + I.getFullTextDetails("postgres")._TsvectorColumn + ")");
+                  else if (I._ColumnObjs.isEmpty() == false)
                     Out.print(Column.printColumnList(I._ColumnObjs, true));
                   if (I._OrderByObjs != null && I._OrderByObjs.isEmpty() == false)
                     Out.println((I._ColumnObjs.isEmpty() == false ? ", " : "") + OrderBy.printOrderByList(I._OrderByObjs));

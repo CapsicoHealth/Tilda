@@ -679,6 +679,42 @@
         "impls"
       ]
     },
+    "tildaFullText": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tildaFullTextDetails"
+          },
+          "description": "Backend-specific full-text index settings."
+        }
+      },
+      "required": [
+        "details"
+      ]
+    },
+    "tildaFullTextDetails": {
+      "type": "object",
+      "properties": {
+        "db": {
+          "type": "string",
+          "description": "Database backend for this full-text index; currently only postgres is supported."
+        },
+        "tsvectorColumn": {
+          "type": "string",
+          "description": "Name of the hidden generated PostgreSQL tsvector column."
+        },
+        "configuration": {
+          "type": "string",
+          "description": "PostgreSQL text-search configuration; defaults to english."
+        }
+      },
+      "required": [
+        "db",
+        "tsvectorColumn"
+      ]
+    },
     "tildaHistory": {
       "type": "object",
       "properties": {
@@ -791,6 +827,10 @@
         "vector": {
           "$ref": "#/$defs/tildaVector",
           "description": "Shared vector-index semantics and backend-specific options."
+        },
+        "fulltext": {
+          "$ref": "#/$defs/tildaFullText",
+          "description": "PostgreSQL full-text index and its hidden generated tsvector column."
         }
       },
       "required": [
@@ -824,6 +864,10 @@
         "vector": {
           "$ref": "#/$defs/tildaVector",
           "description": "Shared vector-index semantics and backend-specific options."
+        },
+        "fulltext": {
+          "$ref": "#/$defs/tildaFullText",
+          "description": "Reserved and unsupported for index templates in this phase."
         }
       }
     },
@@ -1411,6 +1455,14 @@
           },
           "description": "Column expressions controlling result ordering. Must resolve to a column, optionally qualified as \"package.schema.object.column\" (each segment defaulting to the current one); may also resolve to a view column where applicable.",
           "default": []
+        },
+        "fulltext": {
+          "type": "string",
+          "description": "Table fulltext index used by this view lookup; mutually exclusive with 'vector'."
+        },
+        "vector": {
+          "type": "string",
+          "description": "Table vector index used by this view lookup; mutually exclusive with 'fulltext'."
         }
       },
       "required": [

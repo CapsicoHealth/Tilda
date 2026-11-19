@@ -195,21 +195,24 @@ public class DBCompatibility
         for (Object O : parentSchema._Objects)
           if (O != null && O._Indices != null)
             for (Index IX : O._Indices)
-              if (IX != null && IX._Db == true && IX.isVectorIndex() == true)
+              if (IX != null && IX._Db == true)
                 for (DBType DB : DBType._DBTypes)
                   if (O._DBCompatibilityTargets.contains(canonicalizeBackendId(DB.getName())) == true)
-                    if (DB.supportsVectorIndices() == false)
-                      PS.AddError("Object '" + O.getFullName() + "' index '" + IX._Name + "' is a physical vector index, but database '" + DB.getName() + "' does not support vector indices.");
-                    else
-                      try
-                        {
-                          if (IX.getDetails(DB) == null)
-                            PS.AddError("Object '" + O.getFullName() + "' index '" + IX._Name + "' targets database '" + DB.getName() + "' but has no matching vector.details entry.");
-                        }
-                      catch (Exception e)
-                      {
-                        PS.AddError(e.getMessage());
-                      }
+                    {
+                      if (IX.isVectorIndex() == true)
+                        if (DB.supportsVectorIndices() == false)
+                          PS.AddError("Object '" + O.getFullName() + "' index '" + IX._Name + "' is a physical vector index, but database '" + DB.getName() + "' does not support vector indices.");
+                        else
+                          try
+                            {
+                              if (IX.getDetails(DB) == null)
+                                PS.AddError("Object '" + O.getFullName() + "' index '" + IX._Name + "' targets database '" + DB.getName() + "' but has no matching vector.details entry.");
+                            }
+                          catch (Exception e)
+                          {
+                            PS.AddError(e.getMessage());
+                          }
+                    }
       }
 
     public void validateForeignKeysAndViewDependencies(ParserSession PS, Schema parentSchema)

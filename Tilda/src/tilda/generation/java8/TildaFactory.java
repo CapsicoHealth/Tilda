@@ -602,6 +602,23 @@ public class TildaFactory implements CodeGenTildaFactory
         if (I._Unique == true)
           throw new Error("ERROR: called genMethodLookupWhereIndex with a Unique Index");
 
+        if (I.isFullTextIndex() == true)
+          {
+            String MethodName = "lookupWhere" + I._Name;
+            Out.println("   static public ListResults<" + Helper.getFullAppDataClassName(I._Parent) + "> " + MethodName + "(Connection C, String query, int maxCount) throws Exception");
+            Out.println("     {");
+            Out.println("       if (C.getDBType() instanceof tilda.db.stores.PostgreSQL == false) throw new UnsupportedOperationException(\"Full-text lookup " + MethodName + " requires PostgreSQL\");");
+            Out.println("       if (query == null) throw new IllegalArgumentException(\"query cannot be null\");");
+            Out.println("       if (maxCount < 0) throw new IllegalArgumentException(\"maxCount cannot be negative\");");
+            Out.println("       if (maxCount == Integer.MAX_VALUE) throw new IllegalArgumentException(\"maxCount is too large\");");
+            Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, 0);");
+            Out.println("       readMany(C, " + LookupId + ", RPI, null, query, 0, maxCount);");
+            Out.println("       return RPI._L;");
+            Out.println("     }");
+            Out.println();
+            return;
+          }
+
         Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
 
         String MethodName = "lookupWhere" + I._Name;
@@ -674,6 +691,25 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
       {
+        if (TextUtil.isNullOrEmpty(SWC._FullTextIndex) == false || TextUtil.isNullOrEmpty(SWC._VectorIndex) == false)
+          {
+            String MethodName = "lookupWhere" + SWC._Name;
+            String QueryType = TextUtil.isNullOrEmpty(SWC._FullTextIndex) == false ? "String" : "float[]";
+            Out.println("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C, " + QueryType + " query, int maxCount) throws Exception");
+            Out.println("     {");
+            if (TextUtil.isNullOrEmpty(SWC._FullTextIndex) == false)
+              Out.println("       if (C.getDBType() instanceof tilda.db.stores.PostgreSQL == false) throw new UnsupportedOperationException(\"Full-text lookup " + MethodName + " requires PostgreSQL\");");
+            Out.println("       if (query == null) throw new IllegalArgumentException(\"query cannot be null\");");
+            Out.println("       if (maxCount < 0) throw new IllegalArgumentException(\"maxCount cannot be negative\");");
+            Out.println("       if (maxCount == Integer.MAX_VALUE) throw new IllegalArgumentException(\"maxCount is too large\");");
+            Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, 0);");
+            Out.println("       readMany(C, " + LookupId + ", RPI, null, query, 0, maxCount);");
+            Out.println("       return RPI._L;");
+            Out.println("     }");
+            Out.println();
+            return;
+          }
+
         if (SWC._Unique == true)
           throw new Error("ERROR: called genMethodLookupWhereQuery with a Unique SubWhereclause");
 

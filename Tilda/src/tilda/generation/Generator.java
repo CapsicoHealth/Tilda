@@ -270,7 +270,8 @@ public class Generator
               Out.println("-- Indices are not supported for this database, so logical definition only");
 
             for (Index I : O._Indices)
-              if (I != null && (inlineVectorIndices == true || I.isVectorIndex() == false))
+              if (I != null && (inlineVectorIndices == true || I.isVectorIndex() == false)
+              && (I.isFullTextIndex() == false || I.getFullTextDetails(tilda.parsing.parts.DBCompatibility.canonicalizeBackendId(CG.getName())) != null))
                 CG.genIndex(Out, I);
           }
         if (keysDDL == true)
